@@ -101,7 +101,7 @@ Rectangle
         height: 30
 
         spacing: 2
-        visible: UM.Controller.activeStage.stageId != "MonitorStage"
+        visible: UM.Controller.activeStage.stageId != "NetworkMachineList"
 
         anchors
         {

@@ -243,7 +243,7 @@ class LegacyUM3OutputDevice(NetworkedPrinterOutputDevice):
         self._startPrint()
 
         # Notify the UI that a switch to the print monitor should happen
-        CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
+        #CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
 
     def _startPrint(self):
         Logger.log("i", "Sending print job to printer.")

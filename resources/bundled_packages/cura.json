@@ -271,20 +271,20 @@
             }
         }
     },
-    "MonitorStage": {
+    "NetworkMachineList": {
         "package_info": {
-            "package_id": "MonitorStage",
+            "package_id": "NetworkMachineList",
             "package_type": "plugin",
-            "display_name": "Monitor Stage",
-            "description": "Provides a monitor stage in Cura.",
+            "display_name": "Printer List",
+            "description": "Provides Zaxe netowork machine list",
             "package_version": "1.0.0",
             "sdk_version": 5,
-            "website": "https://ultimaker.com",
+            "website": "http://zaxe.com",
             "author": {
-                "author_id": "Ultimaker",
-                "display_name": "Ultimaker B.V.",
-                "email": "plugins@ultimaker.com",
-                "website": "https://ultimaker.com"
+                "author_id": "Zaxe",
+                "display_name": "Zaxe",
+                "email": "software@zaxe.com",
+                "website": "http://zaxe.com"
             }
         }
     },

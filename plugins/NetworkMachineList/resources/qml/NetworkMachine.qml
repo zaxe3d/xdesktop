@@ -5,16 +5,12 @@ import QtQuick 2.7
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
-import UM 1.2 as UM
+import UM 1.1 as UM
 import Cura 1.0 as Cura
 import QtGraphicalEffects 1.0
 
-import "Menus"
-import "Menus/ConfigurationMenu"
-
 Item {
     id: container
-    signal clicked(color cellColor)
 
     width: base.width - 20
     height: 165
@@ -69,7 +65,7 @@ Item {
         x: 90; y: 15
         width: 200; height: 25
         color: "white"; font.pointSize: 12; font.bold: true
-        text: "ZAXE Z1+"
+        text: lblDeviceName.text
         padding: 1
 
         background: Rectangle {
@@ -124,7 +120,7 @@ Item {
         id: btnSayHi
         font { family: zaxeIconFont.name; pointSize: 18; }
         text: "m"
-        onClicked: {}
+        onClicked: Cura.NetworkMachineManager.SayHi()
         contentItem: Label {
             text: btnSayHi.text
             font: btnSayHi.font
@@ -135,5 +131,4 @@ Item {
             radius: btnSayHi.radius
         }
     }
-
 }

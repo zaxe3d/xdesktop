@@ -478,11 +478,6 @@ msgctxt "@action"
 msgid "Connect via Network"
 msgstr "Ağ ile Bağlan"
 
-#: /home/ruben/Projects/Cura/plugins/MonitorStage/__init__.py:12
-msgctxt "@item:inmenu"
-msgid "Monitor"
-msgstr "Görüntüle"
-
 #: /home/ruben/Projects/Cura/plugins/FirmwareUpdateChecker/FirmwareUpdateCheckerJob.py:68
 #, python-brace-format
 msgctxt "@info Don't translate {machine_name}, since it gets replaced by a printer name!"
@@ -4645,15 +4640,10 @@ msgctxt "name"
 msgid "UM3 Network Connection"
 msgstr "UM3 Ağ Bağlantısı"
 
-#: MonitorStage/plugin.json
+#: NetworkMachineList/plugin.json
 msgctxt "description"
-msgid "Provides a monitor stage in Cura."
-msgstr "Cura’da görüntüleme aşaması sunar."
-
-#: MonitorStage/plugin.json
-msgctxt "name"
-msgid "Monitor Stage"
-msgstr "Görüntüleme Aşaması"
+msgid "Provides Zaxe network printer."
+msgstr "Zaxe yazıcı ağ bağlantı listesi."
 
 #: FirmwareUpdateChecker/plugin.json
 msgctxt "description"

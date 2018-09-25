@@ -106,6 +106,7 @@ from cura.Settings.ExtrudersModel import ExtrudersModel
 from cura.Settings.MaterialSettingsVisibilityHandler import MaterialSettingsVisibilityHandler
 from cura.Settings.ContainerManager import ContainerManager
 from cura.Settings.SidebarCustomMenuItemsModel import SidebarCustomMenuItemsModel
+from cura.NetworkMachineManager import NetworkMachineManager
 import cura.Settings.cura_empty_instance_containers
 
 from cura.ObjectsModel import ObjectsModel
@@ -190,6 +191,7 @@ class CuraApplication(QtApplication):
         self._quality_manager = None
         self._machine_manager = None
         self._extruder_manager = None
+        self._network_machine_manager = None
         self._container_manager = None
 
         self._object_manager = None
@@ -651,6 +653,7 @@ class CuraApplication(QtApplication):
             self._plugin_registry.addPluginLocation(os.path.join(os.path.abspath(os.path.dirname(__file__)), "..", "plugins"))
             self._plugin_registry.loadPlugin("ConsoleLogger")
             self._plugin_registry.loadPlugin("CuraEngineBackend")
+            self._plugin_registry.loadPlugin("NetworkMachineList")
 
         self._plugin_registry.loadPlugins()
 
@@ -818,6 +821,11 @@ class CuraApplication(QtApplication):
             self._extruder_manager = ExtruderManager()
         return self._extruder_manager
 
+    def getNetworkMachineManager(self, *args) -> NetworkMachineManager:
+        if self._network_machine_manager is None:
+            self._network_machine_manager = NetworkMachineManager()
+        return self._network_machine_manager
+
     def getVariantManager(self, *args) -> VariantManager:
         return self._variant_manager
 
@@ -915,6 +923,7 @@ class CuraApplication(QtApplication):
         qmlRegisterSingletonType(SettingInheritanceManager, "Cura", 1, 0, "SettingInheritanceManager", self.getSettingInheritanceManager)
         qmlRegisterSingletonType(SimpleModeSettingsManager, "Cura", 1, 0, "SimpleModeSettingsManager", self.getSimpleModeSettingsManager)
         qmlRegisterSingletonType(MachineActionManager.MachineActionManager, "Cura", 1, 0, "MachineActionManager", self.getMachineActionManager)
+        qmlRegisterSingletonType(NetworkMachineManager, "Cura", 1, 0, "NetworkMachineManager", self.getNetworkMachineManager)
 
         qmlRegisterSingletonType(ObjectsModel, "Cura", 1, 0, "ObjectsModel", self.getObjectsModel)
         qmlRegisterType(BuildPlateModel, "Cura", 1, 0, "BuildPlateModel")

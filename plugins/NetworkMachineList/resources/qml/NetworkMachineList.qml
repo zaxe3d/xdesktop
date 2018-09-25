@@ -7,8 +7,6 @@ import QtQuick.Layouts 1.3
 
 import UM 1.2 as UM
 import Cura 1.0 as Cura
-import "Menus"
-import "Menus/ConfigurationMenu"
 
 Rectangle
 {
@@ -73,5 +71,15 @@ Rectangle
         NetworkMachine { }
         NetworkMachine { }
     }
-
+    Text {
+        id: printerIcon
+        x: 50; y: 22
+        font { family: zaxeIconFont.name; pointSize: 18 }
+        color: "white"
+        text: NetworkMachineList.getExampleData
+    }
+    Connections
+    {
+        target: NetworkMachineList
+    }
 }

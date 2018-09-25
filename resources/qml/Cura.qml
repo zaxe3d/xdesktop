@@ -29,7 +29,7 @@ UM.MainWindow
         target: CuraApplication
         onShowPrintMonitor: {
             if (show) {
-                UM.Controller.setActiveStage("MonitorStage")
+                UM.Controller.setActiveStage("NetworkMachineList")
             } else {
                 UM.Controller.setActiveStage("PrepareStage")
             }

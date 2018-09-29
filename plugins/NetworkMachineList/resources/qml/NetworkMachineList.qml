@@ -12,8 +12,6 @@ Rectangle
 {
     id: base
 
-    property bool printerConnected: Cura.MachineManager.printerConnected
-
     color: "black"
     UM.I18nCatalog { id: catalog; name:"cura"}
 
@@ -44,6 +42,39 @@ Rectangle
         tooltip.hide();
     }
 
+    function onMachineAdded(id)
+    {
+        console.log("machine added" + id)
+    }
+
+    Component.onCompleted: {
+        //base.machineAdded.connect(onMachineAdded)
+        //machineList = Cura.NetworkMachineManager.machineList
+    }
+
+    Connections
+    {
+        target: Cura.NetworkMachineListModel
+        onItemsChanged: machineListModel.update()
+    }
+
+    ListModel
+    {
+        id: machineListModel
+
+        function update()
+        {
+            console.log("updated")
+            for (var i = 0; i < Cura.NetworkMachineListModel.rowCount(); i++)
+            {
+                var item = Cura.NetworkMachineListModel.getItem(i)
+
+                machineListModel.append(item)
+                console.log("adding machine" + item.mName)
+            }
+        }
+    }
+
     MouseArea
     {
         anchors.fill: parent
@@ -62,24 +93,17 @@ Rectangle
         anchors.fill: parent
     }
 
-    Grid {
-        id: nMMachineList
-        x: 10; anchors.top: page.top; anchors.bottomMargin: 20; anchors.topMargin: 20
-        rows: 2; columns: 1
+    Component {
+        id: nMachineListDelegate
+        NetworkMachine { uid: mID; name: mName; ip: mIP }
+    }
 
-        NetworkMachine { }
-        NetworkMachine { }
-        NetworkMachine { }
+    ListView {
+        id: nMachineList
+        x: 10; anchors.top: page.top; anchors.bottomMargin: 20; anchors.topMargin: 20
+        height: parent.height
+        model: machineListModel
+        delegate: nMachineListDelegate
     }
-    Text {
-        id: printerIcon
-        x: 50; y: 22
-        font { family: zaxeIconFont.name; pointSize: 18 }
-        color: "white"
-        text: NetworkMachineList.getExampleData
-    }
-    Connections
-    {
-        target: NetworkMachineList
-    }
+
 }

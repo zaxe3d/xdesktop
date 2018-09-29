@@ -10,10 +10,14 @@ import Cura 1.0 as Cura
 import QtGraphicalEffects 1.0
 
 Item {
-    id: container
+    id: device
 
     width: base.width - 20
     height: 165
+
+    property string uid
+    property string name
+    property string ip
 
 
     RectangularGlow {
@@ -94,7 +98,7 @@ Item {
         id: lblDeviceName
         x: 95; y: 20
         color: "white"; font.pointSize: 12; font.bold: true
-        text: "ZAXE Z1+"
+        text: device.name
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
@@ -120,7 +124,7 @@ Item {
         id: btnSayHi
         font { family: zaxeIconFont.name; pointSize: 18; }
         text: "m"
-        onClicked: Cura.NetworkMachineManager.SayHi()
+        onClicked: Cura.NetworkMachineManager.SayHi(device.uid)
         contentItem: Label {
             text: btnSayHi.text
             font: btnSayHi.font

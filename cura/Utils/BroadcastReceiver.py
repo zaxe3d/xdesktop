@@ -17,7 +17,7 @@ class BroadcastReceiver(QObject):
     def __init__(self, parent = None):
         try:
             super().__init__(parent)
-            Logger.log("w", "initializing BroadcastReceiver")
+            Logger.log("d", "initializing BroadcastReceiver")
             self.udpSocket = QtNetwork.QUdpSocket()
             self.udpSocket.bind(self._port)
             self.udpSocket.readyRead.connect(self.processPendingDatagrams)

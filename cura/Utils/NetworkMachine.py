@@ -1,6 +1,7 @@
 from PyQt5.QtCore import QUrl, QCoreApplication, QTimer, QObject, pyqtSignal
 from PyQt5 import QtCore, QtWebSockets, QtNetwork
 
+from threading import *
 import ssl
 import json
 import os
@@ -9,7 +10,7 @@ import ftplib
 import traceback
 import sys
 import uuid
-from threading import *
+from . import tool
 
 from UM.Logger import Logger
 
@@ -76,7 +77,6 @@ class NetworkMachine(QObject, Thread):
     def onConnected(self):
         if self.timer is not None:
             self.timer.cancel()
-        self.emit({"type": "open"})
         Logger.log("d", "connected: %s" % self.ip)
 
     def onDisconnected(self):
@@ -90,7 +90,6 @@ class NetworkMachine(QObject, Thread):
         self.startTimeout()
         message = json.loads(message)
 
-        #Logger.log("i", "%s: %s" % (self.name, message))
 
         if message['event'] == "hello":
             try:
@@ -154,22 +153,47 @@ class NetworkMachine(QObject, Thread):
         if message['event'] == "new_name":
             self.setName(message['name'])
 
+        # emit new machine after updating attributes with hello message
+        if message['event'] == "hello":
+            self.emit({"type": "open"})
+
         eventMessage = {"type": "new_message", "message": message}
         self.emit(eventMessage)
 
-    def onError(self, error):
-        Logger.log("w", "error connecting device: %s %s" % (self.ip, error))
-        self.close()
+    def onError(self, errorCode):
+        Logger.log("w", "error connecting device: %s - [%s]" % (self.ip, errorCode))
 
     def close(self):
-        Logger.log("i", "closing")
+        Logger.log("i", "closing - %s[%s]" % (self.name, self.ip))
         self.emit({"type": "close"})
         self.socket.close()
     # end of connection related
 
+    def setName(self, newName):
+        self.name = tool.clearChars(newName)
+
+    def getStates(self):
+        return tool.merge_two_dicts(self.__states, {"uploading": self.uploader is not None and self.uploader.isUploading()})
+
     # commands
+    def changeName(self, newName):
+        self.setName(newName)
+        self.write({"request": "change_name", "name": self.name})
+
     def sayHi(self):
         self.write({"request": "say_hi"})
+
+    def togglePreheat(self):
+        self.write({"request": "toggle_preheat"})
+
+    def pause(self, pin=None):
+        self.write({"request": "pause", "pin": pin})
+
+    def resume(self):
+        self.write({"request": "resume"})
+
+    def cancel(self, pin=None):
+        self.write({"request": "cancel", "pin": pin})
     # end of commands
 
     def startTimeout(self):

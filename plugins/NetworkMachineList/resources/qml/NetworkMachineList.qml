@@ -1,7 +1,7 @@
 // Copyright (c) 2017 Ultimaker B.V.
 // Cura is released under the terms of the LGPLv3 or higher.
 
-import QtQuick 2.7
+import QtQuick 2.10
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
@@ -16,6 +16,19 @@ Rectangle
     UM.I18nCatalog { id: catalog; name:"cura"}
 
     FontLoader { id: zaxeIconFont; source: "../fonts/zaxe.ttf" }
+    FontLoader { id: fontAwesomeSolid; source: "../fonts/fa-solid-900.ttf" }
+
+    MouseArea {
+        anchors.fill: parent
+        onWheel: nMachineList.flick(0, wheel.angleDelta.y * 5)
+    }
+
+    property var materialNames : {
+        "zaxe_abs": "Zaxe ABS",
+        "zaxe_pla": "Zaxe PLA",
+        "zaxe_tpu": "Zaxe FLEX",
+        "custom": "Custom"
+    }
 
     Timer {
         id: tooltipDelayTimer
@@ -42,47 +55,50 @@ Rectangle
         tooltip.hide();
     }
 
-    function onMachineAdded(id)
-    {
-        console.log("machine added" + id)
+    function toHHMMSS(str) {
+        var sec_num = parseInt(str, 10); // don't forget the second param
+        var hours   = Math.floor(sec_num / 3600);
+        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+        var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+        if (minutes < 10) { minutes = "0" + minutes; }
+        if (seconds < 10) { seconds = "0" + seconds }
+        return hours+':'+minutes+':'+seconds;
     }
 
+
     Component.onCompleted: {
-        //base.machineAdded.connect(onMachineAdded)
-        //machineList = Cura.NetworkMachineManager.machineList
     }
 
     Connections
     {
         target: Cura.NetworkMachineListModel
-        onItemsChanged: machineListModel.update()
+        onItemAdded: {
+            noPrinterWarning.visible = false
+            machineListModel.onAdded(arguments[0]) }
+        onItemRemoved: {
+            machineListModel.onRemoved(arguments[0])
+            if (machineListModel.count == 0)
+                noPrinterWarning.visible = true
+        }
     }
 
     ListModel
     {
         id: machineListModel
 
-        function update()
+        function onAdded(idx)
         {
-            console.log("updated")
-            for (var i = 0; i < Cura.NetworkMachineListModel.rowCount(); i++)
-            {
-                var item = Cura.NetworkMachineListModel.getItem(i)
+            var item = Cura.NetworkMachineListModel.getItem(idx)
 
-                machineListModel.append(item)
-                console.log("adding machine" + item.mName)
-            }
+            console.log("adding machine" + item.mName)
+            machineListModel.append(item)
         }
-    }
 
-    MouseArea
-    {
-        anchors.fill: parent
-        acceptedButtons: Qt.AllButtons
-
-        onWheel:
+        function onRemoved(idx)
         {
-            wheel.accepted = true;
+            console.log("removing machine" + idx)
+            machineListModel.remove(idx)
         }
     }
 
@@ -93,15 +109,62 @@ Rectangle
         anchors.fill: parent
     }
 
-    Component {
-        id: nMachineListDelegate
-        NetworkMachine { uid: mID; name: mName; ip: mIP }
+    Rectangle
+    {
+        id: "noPrinterWarning"
+        width: base.width - 20
+        height: 150
+        anchors { horizontalCenter: parent.horizontalCenter; top: parent.top; topMargin: 20 }
+        color: "#212121"
+        Image {
+            antialiasing: true
+            width: 137; height: 49
+            anchors.horizontalCenter: parent.horizontalCenter
+            id: noPrinterWarningImage
+            source: "../images/connect_your_zaxe.png"
+        }
+
+        Label
+        {
+            anchors.centerIn: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: "white"; font.pointSize: 14; font.bold: true
+            text: "Can not find a Zaxe on the network"
+        }
     }
 
-    ListView {
+    Component
+    {
+        id: nMachineListDelegate
+        NetworkMachine {
+            uid: mID
+            name: mName
+            ip: mIP
+            material: mMaterial
+            nozzle: mNozzle
+            deviceModel: mDeviceModel
+            fwVersion: mFWVersion
+            printingFile: mPrintingFile
+            elapsedTime: mElapsedTime
+            estimatedTime: mEstimatedTime
+            hasPin: mHasPin
+
+            machineStates: mStates
+        }
+    }
+
+    ListView
+    {
         id: nMachineList
+
+        ScrollBar.vertical: ScrollBar {
+            active: true
+            clip: true
+            Component.onCompleted: x = base.width - width - parent.x
+        }
+
         x: 10; anchors.top: page.top; anchors.bottomMargin: 20; anchors.topMargin: 20
-        height: parent.height
+        height: page.height - 20
         model: machineListModel
         delegate: nMachineListDelegate
     }

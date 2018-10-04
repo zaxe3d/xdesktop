@@ -19,8 +19,10 @@ class NetworkMachineManager(QObject):
 
     hasMachine = False
 
-    ##  Signal to notify other components when the list of extruders for a machine definition changes.
-    machineListChanged = pyqtSignal()
+    ##  Signals to notify other components when the list of extruders for a machine definition changes.
+    machineAdded = pyqtSignal(QVariant)
+    machineRemoved = pyqtSignal(str)
+    machineNewMessage = pyqtSignal(QVariant)
 
     ##  Registers listeners and such to listen and command network printers
     def __init__(self, parent = None):
@@ -53,23 +55,16 @@ class NetworkMachineManager(QObject):
         try:
             if eventArgs.message['type'] == "open":
                 self.machineList[str(eventArgs.machine.id)] = eventArgs.machine
-                self.machineListChanged.emit()
-            elif eventArgs.message['type'] == "close":
+                self.machineAdded.emit(eventArgs.machine)
+            elif eventArgs.message['type'] == "close" and eventArgs.machine.id in self.machineList.keys():
                 del self.machineList[eventArgs.machine.id]
-                self.machineListChanged.emit()
+                self.machineRemoved.emit(eventArgs.machine.id)
+            elif eventArgs.message['type'] == "new_message":
+                self.machineNewMessage.emit(eventArgs)
 
             self.hasMachine = len(self.printerList) >= 0.
         except AttributeError:
             pass
-
-    @pyqtProperty("QVariantList", notify = machineListChanged)
-    def printerList(self) -> Dict[QVariant, str]:
-        return self.machineList
-
-    ##  Gets a dict with the extruder stack ids with the extruder number as the key.
-    #@pyqtProperty("QVariantMap", notify = printerListChanged)
-    #def getPrinterList(self) -> Dict:
-    #    return self.printerList
 
     ## Says Hi on intended machine
     @pyqtSlot(str)
@@ -77,6 +72,43 @@ class NetworkMachineManager(QObject):
         machine = self.machineList[str(mID)]
         Logger.log("d", "Saying Hi on [%s]" % machine.ip)
         machine.sayHi()
+
+    ## rename on intended machine
+    @pyqtSlot(str, str)
+    def ChangeName(self, mID, newName) -> None:
+        machine = self.machineList[str(mID)]
+        Logger.log("d", "renaming %s to %s [%s - [%s]]" % (machine.name, newName, machine.name, machine.ip))
+        machine.changeName(newName)
+
+    ## toggle preheat on intended machine
+    @pyqtSlot(str)
+    def TogglePreheat(self, mID) -> None:
+        machine = self.machineList[str(mID)]
+        Logger.log("d", "toggling preheat on [%s - [%s]]" % (machine.name, machine.ip))
+        machine.togglePreheat()
+
+    ## cancel printing on intended machine
+    @pyqtSlot(str)
+    def Cancel(self, mID) -> None:
+        machine = self.machineList[str(mID)]
+        Logger.log("d", "canceling printing [%s - [%s]]" % (machine.name, machine.ip))
+        # TODO implement pin part
+        machine.cancel()
+
+    ## pause printing on intended machine
+    @pyqtSlot(str)
+    def Pause(self, mID, pin = None) -> None:
+        machine = self.machineList[str(mID)]
+        Logger.log("d", "pausing [%s - [%s]]" % (machine.name, machine.ip))
+        # TODO implement pin part
+        machine.pause()
+
+    ## resume printing on intended machine
+    @pyqtSlot(str)
+    def Resume(self, mID) -> None:
+        machine = self.machineList[str(mID)]
+        Logger.log("d", "resuming [%s - [%s]]" % (machine.name, machine.ip))
+        machine.resume()
 
     __instance = None   # type: NetworkMachineManager
 

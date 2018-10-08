@@ -108,7 +108,7 @@ class NetworkMachineListModel(ListModel):
                 float(message['bed_target'])
             )
         elif message['event'] == "calibration_progress":
-            self.calibrationProgress.emit(uuid, message["progress"])
+            self.calibrationProgress.emit(uuid, float(message["progress"]) / 100)
         elif message['event'] == "print_progress":
             self.printProgress.emit(uuid, float(message["progress"]) / 100)
         elif message['event'] == "new_name":
@@ -119,7 +119,7 @@ class NetworkMachineListModel(ListModel):
             self.nozzleChange.emit(uuid, eventArgs.machine.nozzle)
         if message["event"] == "temperature_progress":
             self.temperatureProgressEnabled = True
-            self.tempProgress.emit(uuid, message["progress"])
+            self.tempProgress.emit(uuid, float(message["progress"]) / 100)
         if message['event'] in ["start_print", "hello"]:
             self._onFileChange(uuid, eventArgs.machine)
         if message['event'] in ["states_update", "hello"]:

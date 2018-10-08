@@ -404,7 +404,7 @@ Item {
                         Button {
                             id: btnStop
                             width: 30; height: 30
-                            visible: machineStates.printing && !machineStates.paused
+                            visible: machineStates.heating || (machineStates.printing && !machineStates.paused)
                             background: Rectangle {
                                 color: "#d9534f"
                                 radius: 2

@@ -66,8 +66,16 @@ Rectangle
         return hours+':'+minutes+':'+seconds;
     }
 
-
     Component.onCompleted: {
+       var idx, item, count
+       // draw list items here. If previously added
+       count = Cura.NetworkMachineListModel.rowCount()
+       noPrinterWarning.visible = count == 0
+
+       for(idx = 0; idx < count; idx++) {
+           item = Cura.NetworkMachineListModel.getItem(idx)
+           machineListModel.append(item)
+       }
     }
 
     Connections

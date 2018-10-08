@@ -26,6 +26,8 @@ class NetworkMachineListModel(ListModel):
         self._machine_manager.machineRemoved.connect(self._itemRemoved)
         self._machine_manager.machineNewMessage.connect(self._itemUpdate)
 
+    temperatureProgressEnabled = False
+
     # general events
     itemAdded = pyqtSignal(int)
     itemRemoved = pyqtSignal(int)
@@ -95,6 +97,9 @@ class NetworkMachineListModel(ListModel):
         message = eventArgs.message['message']
 
         if message['event'] == "temperature_change":
+            # new firmware calculates temperature on machine it self
+            if self.temperatureProgressEnabled:
+                return
             self._onTempChange(
                 uuid,
                 float(message['ext_actual']),
@@ -113,6 +118,7 @@ class NetworkMachineListModel(ListModel):
         if message['event'] in ["nozzle_change", "hello"]:
             self.nozzleChange.emit(uuid, eventArgs.machine.nozzle)
         if message["event"] == "temperature_progress":
+            self.temperatureProgressEnabled = True
             self.tempProgress.emit(uuid, message["progress"])
         if message['event'] in ["start_print", "hello"]:
             self._onFileChange(uuid, eventArgs.machine)

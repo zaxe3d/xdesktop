@@ -67,7 +67,7 @@ Item {
 
     states: State {
         name: "anchored"
-        AnchorChanges { target: device; anchors.left: parent.right }
+        AnchorChanges { target: device; anchors.left: parent.left }
     }
 
     transitions: Transition {

@@ -13,7 +13,7 @@ Item {
     id: device
 
     width: base.width - 20
-    height: mainLayout.height + 35
+    height: mainLayout.height + 20
     x : 200 // to animate from right
 
     property string uid
@@ -82,8 +82,7 @@ Item {
     RectangularGlow {
         id: effect
         anchors.fill: device
-        anchors.bottomMargin: 15
-        glowRadius: 4
+        glowRadius: 3
         spread: 0
         color: "#121212"
         cornerRadius: rect.radius
@@ -94,14 +93,15 @@ Item {
             color: "#2D2D2D"
             radius: 2
             MouseArea {
+                propagateComposedEvents: true
                 anchors.fill: parent
                 onClicked: {
+                    mouse.accepted = false
                     if (inputDeviceName.visible) {
                         inputDeviceName.visible = false
                         lblDeviceName.visible = true
                     }
                 }
-                onWheel: nMachineList.flick(0, wheel.angleDelta.y * 5)
             }
         }
 
@@ -347,6 +347,7 @@ Item {
                             background: Rectangle {
                                 implicitWidth: progressBarContainer.width
                                 implicitHeight: 24
+                                height: 24
                                 color: "#121212"
                                 radius: 3
                             }
@@ -360,12 +361,12 @@ Item {
                                     height: parent.height
                                     radius: 2
                                     color: {
-                                        if (machineStates.heating)
+                                        if (machineStates.calibrating)
+                                            return "blue"
+                                        else if (machineStates.heating)
                                             return "#d9534f"
                                         else if (machineStates.uploading)
                                             return "orange"
-                                        else if (machineStates.calibrating)
-                                            return "blue"
                                         else
                                             return "#17a81a" // green
                                     }
@@ -404,7 +405,7 @@ Item {
                         Button {
                             id: btnStop
                             width: 30; height: 30
-                            visible: machineStates.heating || (machineStates.printing && !machineStates.paused)
+                            visible: (!machineStates.calibrating && machineStates.heating) || (machineStates.printing && !machineStates.paused)
                             background: Rectangle {
                                 color: "#d9534f"
                                 radius: 2

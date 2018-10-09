@@ -1,9 +1,10 @@
 // Copyright (c) 2017 Ultimaker B.V.
 // Cura is released under the terms of the LGPLv3 or higher.
 
-import QtQuick 2.10
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.3
+import QtQuick 2.7
+import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.1
+import QtQuick.Layouts 1.2
 
 import UM 1.2 as UM
 import Cura 1.0 as Cura
@@ -12,7 +13,6 @@ Rectangle
 {
     id: base
 
-    color: "black"
     UM.I18nCatalog { id: catalog; name:"cura"}
 
     FontLoader { id: zaxeIconFont; source: "../fonts/zaxe.ttf" }
@@ -122,7 +122,7 @@ Rectangle
         id: "noPrinterWarning"
         width: base.width - 20
         height: 150
-        anchors { horizontalCenter: parent.horizontalCenter; top: parent.top; topMargin: 20 }
+        anchors { horizontalCenter: parent.horizontalCenter; top: slicerBar.bottom; topMargin: 20 }
         color: "#212121"
         Image {
             antialiasing: true
@@ -161,20 +161,38 @@ Rectangle
         }
     }
 
-    ListView
+
+    // SlicerBar is actually the top panel.
+    SlicerBar
     {
-        id: nMachineList
-
-        ScrollBar.vertical: ScrollBar {
-            active: true
-            clip: true
-            Component.onCompleted: x = base.width - width - parent.x
-        }
-
-        x: 10; anchors.top: page.top; anchors.bottomMargin: 20; anchors.topMargin: 20
-        height: page.height - 20
-        model: machineListModel
-        delegate: nMachineListDelegate
+        id: slicerBar
+        implicitWidth: base.width
+        implicitHeight: childrenRect.height
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.topMargin: 10
     }
 
+    ScrollView
+    {
+        id: scroller
+        anchors.top: slicerBar.bottom;
+        anchors.bottom: parent.bottom;
+        anchors.right: parent.right;
+        anchors.left: parent.left;
+        style: UM.Theme.styles.scrollview;
+        __wheelAreaScrollSpeed: 75; // Scroll three lines in one scroll event
+
+
+        ListView
+        {
+            id: nMachineList
+
+            leftMargin: 10; bottomMargin: 15
+            model: machineListModel
+            delegate: nMachineListDelegate
+            cacheBuffer: 1000000;   // Set a large cache to effectively just cache every list item.
+            spacing: 15
+        }
+    }
 }

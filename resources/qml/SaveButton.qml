@@ -38,6 +38,7 @@ Item {
             case 2:
                 return catalog.i18nc("@label:PrintjobStatus", "Slicing...");
             case 3:
+                UM.Controller.setActiveStage("NetworkMachineList")
                 return catalog.i18nc("@label:PrintjobStatus %1 is target operation","Ready to %1").arg(UM.OutputDeviceManager.activeDeviceShortDescription);
             case 4:
                 return catalog.i18nc("@label:PrintjobStatus", "Unable to Slice");

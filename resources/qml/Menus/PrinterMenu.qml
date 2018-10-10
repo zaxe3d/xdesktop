@@ -51,11 +51,4 @@ Menu
 
     ExclusiveGroup { id: group; }
 
-    MenuSeparator
-    {
-        visible: localPrinterMenu.count > 0
-    }
-
-    MenuItem { action: Cura.Actions.addMachine; }
-    MenuItem { action: Cura.Actions.configureMachines; }
 }

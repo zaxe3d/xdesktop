@@ -1,17 +1,22 @@
 {
+    "id": "zaxe_x1",
+    "name": "Zaxe X1",
     "version": 2,
-    "name": "X1",
     "inherits": "zaxe",
     "metadata": {
         "visible": true,
-        "author": "zaxe",
-        "manufacturer": "zaxe",
+        "author": "Zaxe",
+        "manufacturer": "Zaxe",
         "weight": 4,
         "file_formats": "text/x-gcode",
-        "icon": "icon_ultimaker.png",
         "platform": "zaxe_x1_platform.stl",
         "has_materials": true,
         "has_machine_quality": true,
+        "has_variants": true,
+        "variants_name": "Print core",
+        "preferred_variant_name": "0.4mm",
+        "preferred_material": "zaxe_abs",
+        "preferred_quality_type": "normal",
         "machine_extruder_trains":
         {
             "0": "zaxe_x1_extruder_0"
@@ -21,13 +26,13 @@
     "overrides": {
         "machine_name": { "default_value": "X1" },
         "machine_width": {
-            "default_value": 205
+            "default_value": 207
         },
         "machine_height": {
-            "default_value": 200
+            "default_value": 210
         },
         "machine_depth": {
-            "default_value": 205
+            "default_value": 225
         },
         "machine_center_is_zero": {
             "default_value": false

@@ -52,27 +52,14 @@ ToolButton
                 source: UM.Theme.getIcon("arrow_bottom")
             }
 
-            PrinterStatusIcon
-            {
-                id: printerStatusIcon
-                visible: printerConnected || isNetworkPrinter
-                status: printerStatus
-                anchors
-                {
-                    verticalCenter: parent.verticalCenter
-                    left: parent.left
-                    leftMargin: UM.Theme.getSize("sidebar_margin").width
-                }
-            }
-
             Label
             {
                 id: sidebarComboBoxLabel
                 color: UM.Theme.getColor("sidebar_header_text_active")
                 text: control.text;
                 elide: Text.ElideRight;
-                anchors.left: printerStatusIcon.visible ? printerStatusIcon.right : parent.left;
-                anchors.leftMargin: printerStatusIcon.visible ? UM.Theme.getSize("sidebar_lining").width : UM.Theme.getSize("sidebar_margin").width
+                anchors.left:  parent.left;
+                anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width + UM.Theme.getSize("sidebar_item_margin").width
                 anchors.right: downArrow.left;
                 anchors.rightMargin: control.rightMargin;
                 anchors.verticalCenter: parent.verticalCenter;

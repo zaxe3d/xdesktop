@@ -113,7 +113,7 @@ Rectangle
     Rectangle
     {
         id: page
-        color: "#212121"
+        color: UM.Theme.getColor("sidebar")
         anchors.fill: parent
     }
 
@@ -136,7 +136,7 @@ Rectangle
         {
             anchors.centerIn: parent
             anchors.horizontalCenter: parent.horizontalCenter
-            color: "white"; font.pointSize: 14; font.bold: true
+            color: UM.Theme.getColor("text_sidebar"); font.pointSize: 14; font.bold: true
             text: "Can not find a Zaxe on the network"
         }
     }

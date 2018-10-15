@@ -1,6 +1,6 @@
 {
-    "version": 2,
     "name": "Zaxe",
+    "version": 2,
     "inherits": "fdmprinter",
     "metadata": {
         "author": "Zaxe",

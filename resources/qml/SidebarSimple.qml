@@ -5,6 +5,7 @@ import QtQuick 2.7
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
+import QtGraphicalEffects 1.0
 
 import UM 1.2 as UM
 import Cura 1.0 as Cura
@@ -17,12 +18,13 @@ Item
     signal hideTooltip();
 
     property Action configureSettings;
-    property variant minimumPrintTime: PrintInformation.minimumPrintTime;
-    property variant maximumPrintTime: PrintInformation.maximumPrintTime;
+    property int backendState: UM.Backend.state
     property bool settingsEnabled: Cura.ExtruderManager.activeExtruderStackId || extrudersEnabledCount.properties.value == 1
-    Component.onCompleted: PrintInformation.enabled = true
-    Component.onDestruction: PrintInformation.enabled = false
     UM.I18nCatalog { id: catalog; name: "cura" }
+
+    Connections {
+        target: CuraApplication
+    }
 
     ScrollView
     {
@@ -31,12 +33,10 @@ Item
         style: UM.Theme.styles.scrollview
         flickableItem.flickableDirection: Flickable.VerticalFlick
 
-        Rectangle
+        ColumnLayout
         {
-            width: childrenRect.width
-            height: childrenRect.height
-            color: UM.Theme.getColor("sidebar")
-
+            width: parent.parent.width
+            spacing: UM.Theme.getSize("sidebar_spacing").height
             //
             // Quality profile
             //
@@ -44,11 +44,9 @@ Item
             {
                 id: qualityRow
 
-                height: UM.Theme.getSize("sidebar_margin").height
-                anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
-                anchors.left: parent.left
-                anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
-                anchors.right: parent.right
+                Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                Layout.preferredHeight: 75
+                Layout.alignment: Qt.AlignHCenter
 
                 Timer
                 {
@@ -186,865 +184,730 @@ Item
                     }
                 }
 
-                Label
-                {
-                    id: qualityRowTitle
-                    text: catalog.i18nc("@label", "Layer Height")
-                    font: UM.Theme.getFont("default")
-                    color: UM.Theme.getColor("text")
-                }
 
-                // Show titles for the each quality slider ticks
-                Item
-                {
-                    y: -5;
-                    anchors.left: speedSlider.left
-                    Repeater
-                    {
-                        model: qualityModel
+                // Background
+                RectangularGlow {
+                    height: 75
 
+                    anchors.fill: parent
+                    glowRadius: 3
+                    spread: 0
+                    color: UM.Theme.getColor("sidebar_item_glow")
+                    cornerRadius: 2
+
+                    Rectangle {
+                        anchors.fill: parent
+                        color: UM.Theme.getColor("sidebar_item")
+                        radius: 2
+                        width: parent.width
                         Label
                         {
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.top: parent.top
-                            anchors.topMargin: Math.round(UM.Theme.getSize("sidebar_margin").height / 2)
-                            color: (Cura.MachineManager.activeMachine != null && Cura.QualityProfilesDropDownMenuModel.getItem(index).available) ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
-                            text:
-                            {
-                                var result = ""
-                                if(Cura.MachineManager.activeMachine != null)
-                                {
-                                    result = Cura.QualityProfilesDropDownMenuModel.getItem(index).layer_height
+                            id: qualityRowTitle
+                            text: catalog.i18nc("@label", "Layer Height")
+                            font: UM.Theme.getFont("default")
+                            anchors {
+                                top: parent.top; left: parent.left
+                                topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            }
+                            color: UM.Theme.getColor("text_sidebar")
+                        }
 
-                                    if(result == undefined)
+                        // Show titles for the each quality slider ticks
+                        Item
+                        {
+                            y: 3;
+                            anchors.left: speedSlider.left
+                            Repeater
+                            {
+                                model: qualityModel
+
+                                Label
+                                {
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    anchors.top: parent.top
+                                    anchors.topMargin: Math.round(UM.Theme.getSize("sidebar_margin").height / 2)
+                                    color: (Cura.MachineManager.activeMachine != null && Cura.QualityProfilesDropDownMenuModel.getItem(index).available) ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
+                                    text:
                                     {
-                                        result = "";
-                                    }
-                                    else
-                                    {
-                                        result = Number(Math.round(result + "e+2") + "e-2"); //Round to 2 decimals. Javascript makes this difficult...
-                                        if (result == undefined || result != result) //Parse failure.
+                                        var result = ""
+                                        if(Cura.MachineManager.activeMachine != null)
                                         {
-                                            result = "";
+                                            result = Cura.QualityProfilesDropDownMenuModel.getItem(index).layer_height
+
+                                            if(result == undefined)
+                                            {
+                                                result = "";
+                                            }
+                                            else
+                                            {
+                                                result = Number(Math.round(result + "e+2") + "e-2"); //Round to 2 decimals. Javascript makes this difficult...
+                                                if (result == undefined || result != result) //Parse failure.
+                                                {
+                                                    result = "";
+                                                }
+                                            }
+                                        }
+                                        return result
+                                    }
+
+                                    x:
+                                    {
+                                        // Make sure the text aligns correctly with each tick
+                                        if (qualityModel.totalTicks == 0)
+                                        {
+                                            // If there is only one tick, align it centrally
+                                            return Math.round(((base.width * 0.55) - width) / 2)
+                                        }
+                                        else if (index == 0)
+                                        {
+                                            return Math.round(base.width * 0.55 / qualityModel.totalTicks) * index
+                                        }
+                                        else if (index == qualityModel.totalTicks)
+                                        {
+                                            return Math.round(base.width * 0.55 / qualityModel.totalTicks) * index - width
+                                        }
+                                        else
+                                        {
+                                            return Math.round((base.width * 0.55 / qualityModel.totalTicks) * index - (width / 2))
                                         }
                                     }
                                 }
-                                return result
-                            }
-
-                            x:
-                            {
-                                // Make sure the text aligns correctly with each tick
-                                if (qualityModel.totalTicks == 0)
-                                {
-                                    // If there is only one tick, align it centrally
-                                    return Math.round(((base.width * 0.55) - width) / 2)
-                                }
-                                else if (index == 0)
-                                {
-                                    return Math.round(base.width * 0.55 / qualityModel.totalTicks) * index
-                                }
-                                else if (index == qualityModel.totalTicks)
-                                {
-                                    return Math.round(base.width * 0.55 / qualityModel.totalTicks) * index - width
-                                }
-                                else
-                                {
-                                    return Math.round((base.width * 0.55 / qualityModel.totalTicks) * index - (width / 2))
-                                }
-                            }
-                        }
-                    }
-                }
-
-                //Print speed slider
-                Item
-                {
-                    id: speedSlider
-                    width: Math.round(base.width * 0.55)
-                    height: UM.Theme.getSize("sidebar_margin").height
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-                    anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
-
-                    // This Item is used only for tooltip, for slider area which is unavailable
-                    Item
-                    {
-                        function showTooltip (showTooltip)
-                        {
-                            if (showTooltip)
-                            {
-                                var content = catalog.i18nc("@tooltip", "This quality profile is not available for you current material and nozzle configuration. Please change these to enable this quality profile")
-                                base.showTooltip(qualityRow, Qt.point(-UM.Theme.getSize("sidebar_margin").width, customisedSettings.height), content)
-                            }
-                            else
-                            {
-                                base.hideTooltip()
                             }
                         }
 
-                        id: unavailableLineToolTip
-                        height: 20 * screenScaleFactor // hovered area height
-                        z: parent.z + 1 // should be higher, otherwise the area can be hovered
-                        x: 0
-                        anchors.verticalCenter: qualitySlider.verticalCenter
-
-                        Rectangle
+                        //Print speed slider
+                        Item
                         {
-                            id: leftArea
-                            width:
+                            id: speedSlider
+                            width: Math.round(base.width * 0.55)
+                            height: UM.Theme.getSize("sidebar_margin").height
+                            anchors.right: parent.right
+                            anchors.top: parent.top
+                            anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height * 2
+                            anchors.rightMargin: UM.Theme.getSize("sidebar_item_margin").width
+
+                            // This Item is used only for tooltip, for slider area which is unavailable
+                            Item
                             {
-                                if (qualityModel.availableTotalTicks == 0)
+                                function showTooltip (showTooltip)
                                 {
-                                    return qualityModel.qualitySliderStepWidth * qualityModel.totalTicks
-                                }
-                                return qualityModel.qualitySliderStepWidth * qualityModel.qualitySliderAvailableMin - 10
-                            }
-                            height: parent.height
-                            color: "transparent"
-
-                            MouseArea
-                            {
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                enabled: Cura.SimpleModeSettingsManager.isProfileUserCreated == false
-                                onEntered: unavailableLineToolTip.showTooltip(true)
-                                onExited: unavailableLineToolTip.showTooltip(false)
-                            }
-                        }
-
-                        Rectangle
-                        {
-                            id: rightArea
-                            width:
-                            {
-                                if(qualityModel.availableTotalTicks == 0)
-                                    return 0
-
-                                return qualityModel.qualitySliderMarginRight - 10
-                            }
-                            height: parent.height
-                            color: "transparent"
-                            x:
-                            {
-                                if (qualityModel.availableTotalTicks == 0)
-                                {
-                                    return 0
+                                    if (showTooltip)
+                                    {
+                                        var content = catalog.i18nc("@tooltip", "This quality profile is not available for you current material and nozzle configuration. Please change these to enable this quality profile")
+                                        base.showTooltip(qualityRow, Qt.point(-UM.Theme.getSize("sidebar_margin").width, customisedSettings.height), content)
+                                    }
+                                    else
+                                    {
+                                        base.hideTooltip()
+                                    }
                                 }
 
-                                var leftUnavailableArea = qualityModel.qualitySliderStepWidth * qualityModel.qualitySliderAvailableMin
-                                var totalGap = qualityModel.qualitySliderStepWidth * (qualityModel.availableTotalTicks -1) + leftUnavailableArea + 10
+                                id: unavailableLineToolTip
+                                height: 20 * screenScaleFactor // hovered area height
+                                z: parent.z + 1 // should be higher, otherwise the area can be hovered
+                                x: 0
+                                anchors.verticalCenter: qualitySlider.verticalCenter
 
-                                return totalGap
-                            }
-
-                            MouseArea
-                            {
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                enabled: Cura.SimpleModeSettingsManager.isProfileUserCreated == false
-                                onEntered: unavailableLineToolTip.showTooltip(true)
-                                onExited: unavailableLineToolTip.showTooltip(false)
-                            }
-                        }
-                    }
-
-                    // Draw Unavailable line
-                    Rectangle
-                    {
-                        id: groovechildrect
-                        width: Math.round(base.width * 0.55)
-                        height: 2 * screenScaleFactor
-                        color: UM.Theme.getColor("quality_slider_unavailable")
-                        anchors.verticalCenter: qualitySlider.verticalCenter
-                        x: 0
-                    }
-
-                    // Draw ticks
-                    Repeater
-                    {
-                        id: qualityRepeater
-                        model: qualityModel.totalTicks > 0 ? qualityModel : 0
-
-                        Rectangle
-                        {
-                            anchors.verticalCenter: parent.verticalCenter
-                            color: Cura.QualityProfilesDropDownMenuModel.getItem(index).available ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
-                            width: 1 * screenScaleFactor
-                            height: 6 * screenScaleFactor
-                            y: 0
-                            x: Math.round(qualityModel.qualitySliderStepWidth * index)
-                        }
-                    }
-
-                    Slider
-                    {
-                        id: qualitySlider
-                        height: UM.Theme.getSize("sidebar_margin").height
-                        anchors.bottom: speedSlider.bottom
-                        enabled: qualityModel.totalTicks > 0 && !Cura.SimpleModeSettingsManager.isProfileCustomized
-                        visible: qualityModel.availableTotalTicks > 0
-                        updateValueWhileDragging : false
-
-                        minimumValue: qualityModel.qualitySliderAvailableMin >= 0 ? qualityModel.qualitySliderAvailableMin : 0
-                        // maximumValue must be greater than minimumValue to be able to see the handle. While the value is strictly
-                        // speaking not always correct, it seems to have the correct behavior (switching from 0 available to 1 available)
-                        maximumValue: qualityModel.qualitySliderAvailableMax >= 1 ? qualityModel.qualitySliderAvailableMax : 1
-                        stepSize: 1
-
-                        value: qualityModel.qualitySliderActiveIndex
-
-                        width: qualityModel.qualitySliderStepWidth * (qualityModel.availableTotalTicks - 1)
-
-                        anchors.right: parent.right
-                        anchors.rightMargin: qualityModel.qualitySliderMarginRight
-
-                        style: SliderStyle
-                        {
-                            //Draw Available line
-                            groove: Rectangle
-                            {
-                                implicitHeight: 2 * screenScaleFactor
-                                color: UM.Theme.getColor("quality_slider_available")
-                                radius: Math.round(height / 2)
-                            }
-                            handle: Item
-                            {
                                 Rectangle
                                 {
-                                    id: qualityhandleButton
-                                    anchors.centerIn: parent
-                                    color: UM.Theme.getColor("quality_slider_available")
-                                    implicitWidth: 10 * screenScaleFactor
-                                    implicitHeight: implicitWidth
-                                    radius: Math.round(implicitWidth / 2)
-                                    visible: !Cura.SimpleModeSettingsManager.isProfileCustomized && !Cura.SimpleModeSettingsManager.isProfileUserCreated && qualityModel.existingQualityProfile
-                                }
-                            }
-                        }
+                                    id: leftArea
+                                    width:
+                                    {
+                                        if (qualityModel.availableTotalTicks == 0)
+                                        {
+                                            return qualityModel.qualitySliderStepWidth * qualityModel.totalTicks
+                                        }
+                                        return qualityModel.qualitySliderStepWidth * qualityModel.qualitySliderAvailableMin - 10
+                                    }
+                                    height: parent.height
+                                    color: "transparent"
 
-                        onValueChanged:
-                        {
-                            // only change if an active machine is set and the slider is visible at all.
-                            if (Cura.MachineManager.activeMachine != null && visible)
-                            {
-                                // prevent updating during view initializing. Trigger only if the value changed by user
-                                if (qualitySlider.value != qualityModel.qualitySliderActiveIndex && qualityModel.qualitySliderActiveIndex != -1)
+                                    MouseArea
+                                    {
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        enabled: Cura.SimpleModeSettingsManager.isProfileUserCreated == false
+                                        onEntered: unavailableLineToolTip.showTooltip(true)
+                                        onExited: unavailableLineToolTip.showTooltip(false)
+                                    }
+                                }
+
+                                Rectangle
                                 {
-                                    // start updating with short delay
-                                    qualitySliderChangeTimer.start()
+                                    id: rightArea
+                                    width:
+                                    {
+                                        if(qualityModel.availableTotalTicks == 0)
+                                            return 0
+
+                                        return qualityModel.qualitySliderMarginRight - 10
+                                    }
+                                    height: parent.height
+                                    color: "transparent"
+                                    x:
+                                    {
+                                        if (qualityModel.availableTotalTicks == 0)
+                                        {
+                                            return 0
+                                        }
+
+                                        var leftUnavailableArea = qualityModel.qualitySliderStepWidth * qualityModel.qualitySliderAvailableMin
+                                        var totalGap = qualityModel.qualitySliderStepWidth * (qualityModel.availableTotalTicks -1) + leftUnavailableArea + 10
+
+                                        return totalGap
+                                    }
+
+                                    MouseArea
+                                    {
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        enabled: Cura.SimpleModeSettingsManager.isProfileUserCreated == false
+                                        onEntered: unavailableLineToolTip.showTooltip(true)
+                                        onExited: unavailableLineToolTip.showTooltip(false)
+                                    }
+                                }
+                            }
+
+                            // Draw Unavailable line
+                            Rectangle
+                            {
+                                id: groovechildrect
+                                width: Math.round(base.width * 0.55)
+                                height: 2 * screenScaleFactor
+                                color: UM.Theme.getColor("quality_slider_unavailable")
+                                anchors.verticalCenter: qualitySlider.verticalCenter
+                                x: 0
+                            }
+
+                            // Draw ticks
+                            Repeater
+                            {
+                                id: qualityRepeater
+                                model: qualityModel.totalTicks > 0 ? qualityModel : 0
+
+                                Rectangle
+                                {
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    color: Cura.QualityProfilesDropDownMenuModel.getItem(index).available ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
+                                    width: 1 * screenScaleFactor
+                                    height: 6 * screenScaleFactor
+                                    y: 0
+                                    x: Math.round(qualityModel.qualitySliderStepWidth * index)
+                                }
+                            }
+
+                            Slider
+                            {
+                                id: qualitySlider
+                                height: UM.Theme.getSize("sidebar_margin").height
+                                anchors.bottom: speedSlider.bottom
+                                enabled: qualityModel.totalTicks > 0 && !Cura.SimpleModeSettingsManager.isProfileCustomized
+                                visible: qualityModel.availableTotalTicks > 0
+                                updateValueWhileDragging : false
+
+                                minimumValue: qualityModel.qualitySliderAvailableMin >= 0 ? qualityModel.qualitySliderAvailableMin : 0
+                                // maximumValue must be greater than minimumValue to be able to see the handle. While the value is strictly
+                                // speaking not always correct, it seems to have the correct behavior (switching from 0 available to 1 available)
+                                maximumValue: qualityModel.qualitySliderAvailableMax >= 1 ? qualityModel.qualitySliderAvailableMax : 1
+                                stepSize: 1
+
+                                value: qualityModel.qualitySliderActiveIndex
+
+                                width: qualityModel.qualitySliderStepWidth * (qualityModel.availableTotalTicks - 1)
+
+                                anchors.right: parent.right
+                                anchors.rightMargin: qualityModel.qualitySliderMarginRight
+
+                                style: SliderStyle
+                                {
+                                    //Draw Available line
+                                    groove: Rectangle
+                                    {
+                                        implicitHeight: 2 * screenScaleFactor
+                                        color: UM.Theme.getColor("quality_slider_available")
+                                        radius: Math.round(height / 2)
+                                    }
+                                    handle: Item
+                                    {
+                                        Rectangle
+                                        {
+                                            id: qualityhandleButton
+                                            anchors.centerIn: parent
+                                            color: UM.Theme.getColor("quality_slider_available")
+                                            implicitWidth: 10 * screenScaleFactor
+                                            implicitHeight: implicitWidth
+                                            radius: Math.round(implicitWidth / 2)
+                                            visible: !Cura.SimpleModeSettingsManager.isProfileCustomized && !Cura.SimpleModeSettingsManager.isProfileUserCreated && qualityModel.existingQualityProfile
+                                        }
+                                    }
+                                }
+
+                                onValueChanged:
+                                {
+                                    // only change if an active machine is set and the slider is visible at all.
+                                    if (Cura.MachineManager.activeMachine != null && visible)
+                                    {
+                                        // prevent updating during view initializing. Trigger only if the value changed by user
+                                        if (qualitySlider.value != qualityModel.qualitySliderActiveIndex && qualityModel.qualitySliderActiveIndex != -1)
+                                        {
+                                            // start updating with short delay
+                                            qualitySliderChangeTimer.start()
+                                        }
+                                    }
+                                }
+                            }
+
+                            MouseArea
+                            {
+                                id: speedSliderMouseArea
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                enabled: Cura.SimpleModeSettingsManager.isProfileUserCreated
+
+                                onEntered:
+                                {
+                                    var content = catalog.i18nc("@tooltip","A custom profile is currently active. To enable the quality slider, choose a default quality profile in Custom tab")
+                                    base.showTooltip(qualityRow, Qt.point(-UM.Theme.getSize("sidebar_margin").width, customisedSettings.height),  content)
+                                }
+                                onExited:
+                                {
+                                    base.hideTooltip();
                                 }
                             }
                         }
-                    }
 
-                    MouseArea
-                    {
-                        id: speedSliderMouseArea
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        enabled: Cura.SimpleModeSettingsManager.isProfileUserCreated
-
-                        onEntered:
+                        Label
                         {
-                            var content = catalog.i18nc("@tooltip","A custom profile is currently active. To enable the quality slider, choose a default quality profile in Custom tab")
-                            base.showTooltip(qualityRow, Qt.point(-UM.Theme.getSize("sidebar_margin").width, customisedSettings.height),  content)
+                            id: speedLabel
+                            anchors {
+                                top: speedSlider.bottom; left: parent.left
+                                leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            }
+
+                            text: catalog.i18nc("@label", "Print Speed")
+                            font: UM.Theme.getFont("default")
+                            color: UM.Theme.getColor("text_sidebar")
+                            width: Math.round(UM.Theme.getSize("sidebar").width * 0.35)
+                            elide: Text.ElideRight
                         }
-                        onExited:
+
+                        Label
                         {
-                            base.hideTooltip();
+                            anchors.bottom: speedLabel.bottom
+                            anchors.left: speedSlider.left
+
+                            text: catalog.i18nc("@label", "Slower")
+                            font: UM.Theme.getFont("default")
+                            color: (qualityModel.availableTotalTicks > 1) ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
+                            horizontalAlignment: Text.AlignLeft
+                        }
+
+                        Label
+                        {
+                            anchors.bottom: speedLabel.bottom
+                            anchors.right: speedSlider.right
+
+                            text: catalog.i18nc("@label", "Faster")
+                            font: UM.Theme.getFont("default")
+                            color: (qualityModel.availableTotalTicks > 1) ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
+                            horizontalAlignment: Text.AlignRight
+                        }
+
+                        UM.SimpleButton
+                        {
+                            id: customisedSettings
+
+                            visible: Cura.SimpleModeSettingsManager.isProfileCustomized || Cura.SimpleModeSettingsManager.isProfileUserCreated
+                            height: Math.round(speedSlider.height * 0.8)
+                            width: Math.round(speedSlider.height * 0.8)
+
+                            anchors.verticalCenter: speedSlider.verticalCenter
+                            anchors.right: speedSlider.left
+                            anchors.rightMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2)
+
+                            color: hovered ? UM.Theme.getColor("setting_control_button_hover") : UM.Theme.getColor("setting_control_button");
+                            iconSource: UM.Theme.getIcon("reset");
+
+                            onClicked:
+                            {
+                                // if the current profile is user-created, switch to a built-in quality
+                                Cura.MachineManager.resetToUseDefaultQuality()
+                            }
+                            onEntered:
+                            {
+                                var content = catalog.i18nc("@tooltip","You have modified some profile settings. If you want to change these go to custom mode.")
+                                base.showTooltip(qualityRow, Qt.point(-UM.Theme.getSize("sidebar_margin").width, customisedSettings.height),  content)
+                            }
+                            onExited: base.hideTooltip()
                         }
                     }
-                }
-
-                Label
-                {
-                    id: speedLabel
-                    anchors.top: speedSlider.bottom
-
-                    anchors.left: parent.left
-
-                    text: catalog.i18nc("@label", "Print Speed")
-                    font: UM.Theme.getFont("default")
-                    color: UM.Theme.getColor("text")
-                    width: Math.round(UM.Theme.getSize("sidebar").width * 0.35)
-                    elide: Text.ElideRight
-                }
-
-                Label
-                {
-                    anchors.bottom: speedLabel.bottom
-                    anchors.left: speedSlider.left
-
-                    text: catalog.i18nc("@label", "Slower")
-                    font: UM.Theme.getFont("default")
-                    color: (qualityModel.availableTotalTicks > 1) ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
-                    horizontalAlignment: Text.AlignLeft
-                }
-
-                Label
-                {
-                    anchors.bottom: speedLabel.bottom
-                    anchors.right: speedSlider.right
-
-                    text: catalog.i18nc("@label", "Faster")
-                    font: UM.Theme.getFont("default")
-                    color: (qualityModel.availableTotalTicks > 1) ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
-                    horizontalAlignment: Text.AlignRight
-                }
-
-                UM.SimpleButton
-                {
-                    id: customisedSettings
-
-                    visible: Cura.SimpleModeSettingsManager.isProfileCustomized || Cura.SimpleModeSettingsManager.isProfileUserCreated
-                    height: Math.round(speedSlider.height * 0.8)
-                    width: Math.round(speedSlider.height * 0.8)
-
-                    anchors.verticalCenter: speedSlider.verticalCenter
-                    anchors.right: speedSlider.left
-                    anchors.rightMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2)
-
-                    color: hovered ? UM.Theme.getColor("setting_control_button_hover") : UM.Theme.getColor("setting_control_button");
-                    iconSource: UM.Theme.getIcon("reset");
-
-                    onClicked:
-                    {
-                        // if the current profile is user-created, switch to a built-in quality
-                        Cura.MachineManager.resetToUseDefaultQuality()
-                    }
-                    onEntered:
-                    {
-                        var content = catalog.i18nc("@tooltip","You have modified some profile settings. If you want to change these go to custom mode.")
-                        base.showTooltip(qualityRow, Qt.point(-UM.Theme.getSize("sidebar_margin").width, customisedSettings.height),  content)
-                    }
-                    onExited: base.hideTooltip()
                 }
             }
+
+
 
             //
             // Infill
             //
             Item
             {
-                id: infillCellLeft
+                Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                Layout.preferredHeight: 125
+                Layout.alignment: Qt.AlignHCenter
 
-                anchors.top: qualityRow.bottom
-                anchors.topMargin: UM.Theme.getSize("sidebar_margin").height * 2
-                anchors.left: parent.left
+                // Background
+                RectangularGlow {
 
-                width: Math.round(UM.Theme.getSize("sidebar").width * .45) - UM.Theme.getSize("sidebar_margin").width
+                    anchors.fill: parent
+                    glowRadius: 3
+                    spread: 0
+                    color: UM.Theme.getColor("sidebar_item_glow")
+                    cornerRadius: 2
 
-                Label
-                {
-                    id: infillLabel
-                    text: catalog.i18nc("@label", "Infill")
-                    font: UM.Theme.getFont("default")
-                    color: UM.Theme.getColor("text")
-
-                    anchors.top: parent.top
-                    anchors.topMargin: Math.round(UM.Theme.getSize("sidebar_margin").height * 1.7)
-                    anchors.left: parent.left
-                    anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
-                }
-            }
-
-            Item
-            {
-                id: infillCellRight
-
-                height: infillSlider.height + UM.Theme.getSize("sidebar_margin").height + enableGradualInfillCheckBox.visible * (enableGradualInfillCheckBox.height + UM.Theme.getSize("sidebar_margin").height)
-                width: Math.round(UM.Theme.getSize("sidebar").width * .55)
-
-                anchors.left: infillCellLeft.right
-                anchors.top: infillCellLeft.top
-                anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
-
-                Label {
-                    id: selectedInfillRateText
-
-                    //anchors.top: parent.top
-                    anchors.left: infillSlider.left
-                    anchors.leftMargin: Math.round((infillSlider.value / infillSlider.stepSize) * (infillSlider.width / (infillSlider.maximumValue / infillSlider.stepSize)) - 10 * screenScaleFactor)
-                    anchors.right: parent.right
-
-                    text: parseInt(infillDensity.properties.value) + "%"
-                    horizontalAlignment: Text.AlignLeft
-
-                    color: infillSlider.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
-                }
-
-                // We use a binding to make sure that after manually setting infillSlider.value it is still bound to the property provider
-                Binding {
-                    target: infillSlider
-                    property: "value"
-                    value: parseInt(infillDensity.properties.value)
-                }
-
-                Slider
-                {
-                    id: infillSlider
-
-                    anchors.top: selectedInfillRateText.bottom
-                    anchors.left: parent.left
-                    anchors.right: infillIcon.left
-                    anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
-
-                    height: UM.Theme.getSize("sidebar_margin").height
-                    width: parseInt(infillCellRight.width - UM.Theme.getSize("sidebar_margin").width - style.handleWidth)
-
-                    minimumValue: 0
-                    maximumValue: 100
-                    stepSize: 1
-                    tickmarksEnabled: true
-
-                    // disable slider when gradual support is enabled
-                    enabled: parseInt(infillSteps.properties.value) == 0
-
-                    // set initial value from stack
-                    value: parseInt(infillDensity.properties.value)
-
-                    onValueChanged: {
-
-                        // Don't round the value if it's already the same
-                        if (parseInt(infillDensity.properties.value) == infillSlider.value) {
-                            return
-                        }
-
-                        // Round the slider value to the nearest multiple of 10 (simulate step size of 10)
-                        var roundedSliderValue = Math.round(infillSlider.value / 10) * 10
-
-                        // Update the slider value to represent the rounded value
-                        infillSlider.value = roundedSliderValue
-
-                        // Update value only if the Recomended mode is Active,
-                        // Otherwise if I change the value in the Custom mode the Recomended view will try to repeat
-                        // same operation
-                        var active_mode = UM.Preferences.getValue("cura/active_mode")
-
-                        if (active_mode == 0 || active_mode == "simple")
-                        {
-                            Cura.MachineManager.setSettingForAllExtruders("infill_sparse_density", "value", roundedSliderValue)
-                            Cura.MachineManager.resetSettingForAllExtruders("infill_line_distance")
-                        }
-                    }
-
-                    style: SliderStyle
-                    {
-                        groove: Rectangle {
-                            id: groove
-                            implicitWidth: 200 * screenScaleFactor
-                            implicitHeight: 2 * screenScaleFactor
-                            color: control.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
-                            radius: 1
-                        }
-
-                        handle: Item {
-                            Rectangle {
-                                id: handleButton
-                                anchors.centerIn: parent
-                                color: control.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
-                                implicitWidth: 10 * screenScaleFactor
-                                implicitHeight: 10 * screenScaleFactor
-                                radius: 10 * screenScaleFactor
-                            }
-                        }
-
-                        tickmarks: Repeater {
-                            id: repeater
-                            model: control.maximumValue / control.stepSize + 1
-
-                            // check if a tick should be shown based on it's index and wether the infill density is a multiple of 10 (slider step size)
-                            function shouldShowTick (index) {
-                                if (index % 10 == 0) {
-                                    return true
-                                }
-                                return false
-                            }
-
-                            Rectangle {
-                                anchors.verticalCenter: parent.verticalCenter
-                                color: control.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
-                                width: 1 * screenScaleFactor
-                                height: 6 * screenScaleFactor
-                                y: 0
-                                x: Math.round(styleData.handleWidth / 2 + index * ((repeater.width - styleData.handleWidth) / (repeater.count-1)))
-                                visible: shouldShowTick(index)
-                            }
-                        }
-                    }
-                }
-
-                Rectangle
-                {
-                    id: infillIcon
-
-                    width: Math.round((parent.width / 5) - (UM.Theme.getSize("sidebar_margin").width))
-                    height: width
-
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-                    anchors.topMargin: Math.round(UM.Theme.getSize("sidebar_margin").height / 2)
-
-                    // we loop over all density icons and only show the one that has the current density and steps
-                    Repeater
-                    {
-                        id: infillIconList
-                        model: infillModel
+                    Rectangle {
                         anchors.fill: parent
-
-                        function activeIndex () {
-                            for (var i = 0; i < infillModel.count; i++) {
-                                var density = Math.round(infillDensity.properties.value)
-                                var steps = Math.round(infillSteps.properties.value)
-                                var infillModelItem = infillModel.get(i)
-
-                                if (infillModelItem != "undefined"
-                                    && density >= infillModelItem.percentageMin
-                                    && density <= infillModelItem.percentageMax
-                                    && steps >= infillModelItem.stepsMin
-                                    && steps <= infillModelItem.stepsMax
-                                ){
-                                    return i
-                                }
-                            }
-                            return -1
-                        }
-
-                        Rectangle
+                        color: UM.Theme.getColor("sidebar_item")
+                        radius: 2
+                        width: parent.width
+                        Item
                         {
-                            anchors.fill: parent
-                            visible: infillIconList.activeIndex() == index
+                            id: infillCellLeft
 
-                            border.width: UM.Theme.getSize("default_lining").width
-                            border.color: UM.Theme.getColor("quality_slider_unavailable")
+                            anchors.top: parent.top
+                            anchors.left: parent.left
+                            anchors.bottom: parent.bottom
 
-                            UM.RecolorImage {
-                                anchors.fill: parent
-                                anchors.margins: 2 * screenScaleFactor
-                                sourceSize.width: width
-                                sourceSize.height: width
-                                source: UM.Theme.getIcon(model.icon)
-                                color: UM.Theme.getColor("quality_slider_unavailable")
-                            }
-                        }
-                    }
-                }
+                            width: Math.round(base.width * .35)
 
-                //  Gradual Support Infill Checkbox
-                CheckBox {
-                    id: enableGradualInfillCheckBox
-                    property alias _hovered: enableGradualInfillMouseArea.containsMouse
-
-                    anchors.top: infillSlider.bottom
-                    anchors.topMargin: Math.round(UM.Theme.getSize("sidebar_margin").height / 2) // closer to slider since it belongs to the same category
-                    anchors.left: infillCellRight.left
-
-                    style: UM.Theme.styles.checkbox
-                    enabled: base.settingsEnabled
-                    visible: infillSteps.properties.enabled == "True"
-                    checked: parseInt(infillSteps.properties.value) > 0
-
-                    MouseArea {
-                        id: enableGradualInfillMouseArea
-
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        enabled: true
-
-                        property var previousInfillDensity: parseInt(infillDensity.properties.value)
-
-                        onClicked: {
-                            // Set to 90% only when enabling gradual infill
-                            var newInfillDensity;
-                            if (parseInt(infillSteps.properties.value) == 0) {
-                                previousInfillDensity = parseInt(infillDensity.properties.value)
-                                newInfillDensity = 90;
-                            } else {
-                                newInfillDensity = previousInfillDensity;
-                            }
-                            Cura.MachineManager.setSettingForAllExtruders("infill_sparse_density", "value", String(newInfillDensity))
-
-                            var infill_steps_value = 0;
-                            if (parseInt(infillSteps.properties.value) == 0)
-                                infill_steps_value = 5;
-
-                            Cura.MachineManager.setSettingForAllExtruders("gradual_infill_steps", "value", infill_steps_value)
-                        }
-
-                        onEntered: {
-                            base.showTooltip(enableGradualInfillCheckBox, Qt.point(-infillCellRight.x, 0),
-                                catalog.i18nc("@label", "Gradual infill will gradually increase the amount of infill towards the top."))
-                        }
-
-                        onExited: {
-                            base.hideTooltip()
-                        }
-                    }
-
-                    Label {
-                        id: gradualInfillLabel
-                        anchors.left: enableGradualInfillCheckBox.right
-                        anchors.leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2)
-                        text: catalog.i18nc("@label", "Enable gradual")
-                        font: UM.Theme.getFont("default")
-                        color: UM.Theme.getColor("text")
-                    }
-                }
-
-                //  Infill list model for mapping icon
-                ListModel
-                {
-                    id: infillModel
-                    Component.onCompleted:
-                    {
-                        infillModel.append({
-                            percentageMin: -1,
-                            percentageMax: 0,
-                            stepsMin: -1,
-                            stepsMax: 0,
-                            icon: "hollow"
-                        })
-                        infillModel.append({
-                            percentageMin: 0,
-                            percentageMax: 40,
-                            stepsMin: -1,
-                            stepsMax: 0,
-                            icon: "sparse"
-                        })
-                        infillModel.append({
-                            percentageMin: 40,
-                            percentageMax: 89,
-                            stepsMin: -1,
-                            stepsMax: 0,
-                            icon: "dense"
-                        })
-                        infillModel.append({
-                            percentageMin: 90,
-                            percentageMax: 9999999999,
-                            stepsMin: -1,
-                            stepsMax: 0,
-                            icon: "solid"
-                        })
-                        infillModel.append({
-                            percentageMin: 0,
-                            percentageMax: 9999999999,
-                            stepsMin: 1,
-                            stepsMax: 9999999999,
-                            icon: "gradual"
-                        })
-                    }
-                }
-            }
-
-            //
-            //  Enable support
-            //
-            Label
-            {
-                id: enableSupportLabel
-                visible: enableSupportCheckBox.visible
-
-                anchors.top: infillCellRight.bottom
-                anchors.topMargin: Math.round(UM.Theme.getSize("sidebar_margin").height * 1.5)
-                anchors.left: parent.left
-                anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
-                anchors.right: infillCellLeft.right
-                anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
-                anchors.verticalCenter: enableSupportCheckBox.verticalCenter
-
-                text: catalog.i18nc("@label", "Generate Support");
-                font: UM.Theme.getFont("default");
-                color: UM.Theme.getColor("text");
-                elide: Text.ElideRight
-            }
-
-            CheckBox
-            {
-                id: enableSupportCheckBox
-                property alias _hovered: enableSupportMouseArea.containsMouse
-
-                anchors.top: enableSupportLabel.top
-                anchors.left: infillCellRight.left
-
-                style: UM.Theme.styles.checkbox;
-                enabled: base.settingsEnabled
-
-                visible: supportEnabled.properties.enabled == "True"
-                checked: supportEnabled.properties.value == "True";
-
-                MouseArea
-                {
-                    id: enableSupportMouseArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    enabled: true
-                    onClicked:
-                    {
-                        // The value is a string "True" or "False"
-                        supportEnabled.setPropertyValue("value", supportEnabled.properties.value != "True");
-                    }
-                    onEntered:
-                    {
-                        base.showTooltip(enableSupportCheckBox, Qt.point(-enableSupportCheckBox.x, 0),
-                            catalog.i18nc("@label", "Generate structures to support parts of the model which have overhangs. Without these structures, such parts would collapse during printing."));
-                    }
-                    onExited:
-                    {
-                        base.hideTooltip();
-                    }
-                }
-            }
-
-            ComboBox
-            {
-                id: supportExtruderCombobox
-                visible: enableSupportCheckBox.visible && (supportEnabled.properties.value == "True") && (extrudersEnabledCount.properties.value > 1)
-                model: extruderModel
-
-                property string color_override: ""  // for manually setting values
-                property string color:  // is evaluated automatically, but the first time is before extruderModel being filled
-                {
-                    var current_extruder = extruderModel.get(currentIndex);
-                    color_override = "";
-                    if (current_extruder === undefined) return ""
-                    return (current_extruder.color) ? current_extruder.color : "";
-                }
-
-                textRole: "text"  // this solves that the combobox isn't populated in the first time Cura is started
-
-                anchors.top: enableSupportCheckBox.top
-                //anchors.topMargin: ((supportEnabled.properties.value === "True") && (machineExtruderCount.properties.value > 1)) ? UM.Theme.getSize("sidebar_margin").height : 0
-                anchors.left: enableSupportCheckBox.right
-                anchors.leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2)
-
-                width: Math.round(UM.Theme.getSize("sidebar").width * .55) - Math.round(UM.Theme.getSize("sidebar_margin").width / 2) - enableSupportCheckBox.width
-                height: ((supportEnabled.properties.value == "True") && (machineExtruderCount.properties.value > 1)) ? UM.Theme.getSize("setting_control").height : 0
-
-                Behavior on height { NumberAnimation { duration: 100 } }
-
-                style: UM.Theme.styles.combobox_color
-                enabled: base.settingsEnabled
-                property alias _hovered: supportExtruderMouseArea.containsMouse
-
-                currentIndex:
-                {
-                    if (supportExtruderNr.properties == null)
-                    {
-                        return Cura.MachineManager.defaultExtruderPosition;
-                    }
-                    else
-                    {
-                        var extruder = parseInt(supportExtruderNr.properties.value);
-                        if ( extruder === -1)
-                        {
-                            return Cura.MachineManager.defaultExtruderPosition;
-                        }
-                        return extruder;
-                    }
-                }
-
-                onActivated:
-                {
-                    // Send the extruder nr as a string.
-                    supportExtruderNr.setPropertyValue("value", String(index));
-                }
-                MouseArea
-                {
-                    id: supportExtruderMouseArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    enabled: base.settingsEnabled
-                    acceptedButtons: Qt.NoButton
-                    onEntered:
-                    {
-                        base.showTooltip(supportExtruderCombobox, Qt.point(-supportExtruderCombobox.x, 0),
-                            catalog.i18nc("@label", "Select which extruder to use for support. This will build up supporting structures below the model to prevent the model from sagging or printing in mid air."));
-                    }
-                    onExited:
-                    {
-                        base.hideTooltip();
-                    }
-                }
-
-                function updateCurrentColor()
-                {
-                    var current_extruder = extruderModel.get(currentIndex);
-                    if (current_extruder !== undefined) {
-                        supportExtruderCombobox.color_override = current_extruder.color;
-                    }
-                }
-
-            }
-
-            Label
-            {
-                id: adhesionHelperLabel
-                visible: adhesionCheckBox.visible
-
-                text: catalog.i18nc("@label", "Build Plate Adhesion")
-                font: UM.Theme.getFont("default")
-                color: UM.Theme.getColor("text")
-                elide: Text.ElideRight
-
-                anchors {
-                    left: parent.left
-                    leftMargin: UM.Theme.getSize("sidebar_margin").width
-                    right: infillCellLeft.right
-                    rightMargin: UM.Theme.getSize("sidebar_margin").width
-                    verticalCenter: adhesionCheckBox.verticalCenter
-                }
-            }
-
-            CheckBox
-            {
-                id: adhesionCheckBox
-                property alias _hovered: adhesionMouseArea.containsMouse
-
-                anchors.top: enableSupportCheckBox.bottom
-                anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
-                anchors.left: infillCellRight.left
-
-                //: Setting enable printing build-plate adhesion helper checkbox
-                style: UM.Theme.styles.checkbox;
-                enabled: base.settingsEnabled
-
-                visible: platformAdhesionType.properties.enabled == "True"
-                checked: platformAdhesionType.properties.value != "skirt" && platformAdhesionType.properties.value != "none"
-
-                MouseArea
-                {
-                    id: adhesionMouseArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    enabled: base.settingsEnabled
-                    onClicked:
-                    {
-                        var adhesionType = "skirt";
-                        if(!parent.checked)
-                        {
-                            // Remove the "user" setting to see if the rest of the stack prescribes a brim or a raft
-                            platformAdhesionType.removeFromContainer(0);
-                            adhesionType = platformAdhesionType.properties.value;
-                            if(adhesionType == "skirt" || adhesionType == "none")
+                            Label
                             {
-                                // If the rest of the stack doesn't prescribe an adhesion-type, default to a brim
-                                adhesionType = "brim";
+                                id: infillLabel
+                                text: "Fill density" //catalog.i18nc("@label", "Infill")
+                                font: UM.Theme.getFont("default_bold");
+                                color: UM.Theme.getColor("text_sidebar")
+
+                                anchors.top: parent.top
+                                anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                anchors.left: parent.left
+                                anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            }
+                            Rectangle
+                            {
+                                id: infillIcon
+
+                                width: 60
+                                height: width
+
+                                anchors.top: infillLabel.bottom
+                                anchors.topMargin: UM.Theme.getSize("sidebar_item_icon_margin").height
+                                anchors.left: parent.left
+                                anchors.leftMargin: UM.Theme.getSize("sidebar_item_icon_margin").width
+
+                                // we loop over all density icons and only show the one that has the current density and steps
+                                Repeater
+                                {
+                                    id: infillIconList
+                                    model: infillModel
+                                    anchors.fill: parent
+
+                                    function activeIndex () {
+                                        for (var i = 0; i < infillModel.count; i++) {
+                                            var density = Math.round(infillDensity.properties.value)
+                                            var steps = Math.round(infillSteps.properties.value)
+                                            var infillModelItem = infillModel.get(i)
+
+                                            if (infillModelItem != "undefined"
+                                                && density >= infillModelItem.percentageMin
+                                                && density <= infillModelItem.percentageMax
+                                                && steps >= infillModelItem.stepsMin
+                                                && steps <= infillModelItem.stepsMax
+                                            ){
+                                                return i
+                                            }
+                                        }
+                                        return -1
+                                    }
+
+                                    Rectangle
+                                    {
+                                        anchors.fill: parent
+                                        visible: infillIconList.activeIndex() == index
+
+                                        border.width: UM.Theme.getSize("default_lining").width
+                                        border.color: UM.Theme.getColor("quality_slider_unavailable")
+
+                                        UM.RecolorImage {
+                                            anchors.fill: parent
+                                            anchors.margins: 2 * screenScaleFactor
+                                            sourceSize.width: width
+                                            sourceSize.height: width
+                                            source: UM.Theme.getIcon(model.icon)
+                                            color: UM.Theme.getColor("quality_slider_unavailable")
+                                        }
+                                    }
+                                }
+                            }
+                            Label
+                            {
+                                id: selectedInfillRateText
+
+                                anchors.top: infillIcon.bottom
+                                anchors.topMargin: 3
+                                anchors.left: parent.left
+                                anchors.leftMargin: 50
+                                font: UM.Theme.getFont("extra_small")
+
+                                text: parseInt(infillDensity.properties.value) + "%"
+
+                                color: infillSlider.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
                             }
                         }
-                        platformAdhesionType.setPropertyValue("value", adhesionType);
-                    }
-                    onEntered:
-                    {
-                        base.showTooltip(adhesionCheckBox, Qt.point(-adhesionCheckBox.x, 0),
-                            catalog.i18nc("@label", "Enable printing a brim or raft. This will add a flat area around or under your object which is easy to cut off afterwards."));
-                    }
-                    onExited:
-                    {
-                        base.hideTooltip();
+
+                        Item
+                        {
+                            id: infillCellRight
+
+                            width: Math.round(base.width * .55)
+                            height: infillCellLeft.height
+
+                            anchors.left: infillCellLeft.right
+                            anchors.bottom: infillCellLeft.bottom
+                            anchors.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height * 2
+
+                            // We use a binding to make sure that after manually setting infillSlider.value it is still bound to the property provider
+                            Binding {
+                                target: infillSlider
+                                property: "value"
+                                value: parseInt(infillDensity.properties.value)
+                            }
+
+                            Slider
+                            {
+                                id: infillSlider
+
+                                anchors.bottom: parent.bottom
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+
+                                height: UM.Theme.getSize("sidebar_margin").height
+                                width: parseInt(infillCellRight.width - UM.Theme.getSize("sidebar_margin").width - style.handleWidth)
+
+                                minimumValue: 0
+                                maximumValue: 100
+                                stepSize: 1
+                                tickmarksEnabled: false
+
+                                // disable slider when gradual support is enabled
+                                enabled: parseInt(infillSteps.properties.value) == 0
+
+                                // set initial value from stack
+                                value: parseInt(infillDensity.properties.value)
+
+                                onValueChanged: {
+
+                                    // Don't round the value if it's already the same
+                                    if (parseInt(infillDensity.properties.value) == infillSlider.value) {
+                                        return
+                                    }
+
+                                    // Round the slider value to the nearest multiple of 10 (simulate step size of 10)
+                                    var roundedSliderValue = Math.round(infillSlider.value / 10) * 10
+
+                                    // Update the slider value to represent the rounded value
+                                    infillSlider.value = roundedSliderValue
+
+                                    // Update value only if the Recomended mode is Active,
+                                    // Otherwise if I change the value in the Custom mode the Recomended view will try to repeat
+                                    // same operation
+                                    var active_mode = UM.Preferences.getValue("cura/active_mode")
+
+                                    if (active_mode == 0 || active_mode == "simple")
+                                    {
+                                        Cura.MachineManager.setSettingForAllExtruders("infill_sparse_density", "value", roundedSliderValue)
+                                        Cura.MachineManager.resetSettingForAllExtruders("infill_line_distance")
+                                    }
+                                }
+
+                                style: SliderStyle
+                                {
+                                    groove: Rectangle {
+                                        id: groove
+                                        implicitWidth: 200 * screenScaleFactor
+                                        implicitHeight: 10 * screenScaleFactor
+                                        color: control.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
+                                        radius: 4
+                                    }
+
+                                    handle: Item {
+                                        Rectangle {
+                                            id: handleButton
+                                            anchors.centerIn: parent
+                                            color: control.enabled ? UM.Theme.getColor("quality_slider_handle") : UM.Theme.getColor("quality_slider_unavailable")
+                                            implicitWidth: 20 * screenScaleFactor
+                                            implicitHeight: 20 * screenScaleFactor
+                                            radius: 100
+                                        }
+                                    }
+                                }
+                            }
+
+
+                            //  Infill list model for mapping icon
+                            ListModel
+                            {
+                                id: infillModel
+                                Component.onCompleted:
+                                {
+                                    infillModel.append({
+                                        percentageMin: -1,
+                                        percentageMax: 0,
+                                        stepsMin: -1,
+                                        stepsMax: 0,
+                                        icon: "hollow"
+                                    })
+                                    infillModel.append({
+                                        percentageMin: 0,
+                                        percentageMax: 40,
+                                        stepsMin: -1,
+                                        stepsMax: 0,
+                                        icon: "sparse"
+                                    })
+                                    infillModel.append({
+                                        percentageMin: 40,
+                                        percentageMax: 89,
+                                        stepsMin: -1,
+                                        stepsMax: 0,
+                                        icon: "dense"
+                                    })
+                                    infillModel.append({
+                                        percentageMin: 90,
+                                        percentageMax: 9999999999,
+                                        stepsMin: -1,
+                                        stepsMax: 0,
+                                        icon: "solid"
+                                    })
+                                    infillModel.append({
+                                        percentageMin: 0,
+                                        percentageMax: 9999999999,
+                                        stepsMin: 1,
+                                        stepsMax: 9999999999,
+                                        icon: "gradual"
+                                    })
+                                }
+                            }
+                        }
                     }
                 }
             }
+            Item {
+                Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                Layout.preferredHeight: 100
+                Layout.alignment: Qt.AlignHCenter
+
+                Button {
+                    id: sliceButton
+                    anchors.right: parent.right
+                    width: 75; height: 35
+                    onClicked:
+                    {
+                        CuraApplication.backend.forceSlice();
+                        UM.Controller.setActiveStage("NetworkMachineList")
+                        UM.Controller.setActiveView("SimulationView")
+                    }
+                    style: ButtonStyle {
+                        background: Rectangle
+                        {
+                            border.width: UM.Theme.getSize("default_lining").width
+                            border.color:
+                            {
+                                if(!control.enabled)
+                                    return UM.Theme.getColor("sidebar_action_button_disabled_border");
+                                else if(control.pressed)
+                                    return UM.Theme.getColor("sidebar_action_button_active_border");
+                                else if(control.hovered)
+                                    return UM.Theme.getColor("sidebar_action_button_hovered_border");
+                                else
+                                    return UM.Theme.getColor("sidebar_action_button_border");
+                            }
+                            color:
+                            {
+                                if(!control.enabled)
+                                    return UM.Theme.getColor("sidebar_action_button_disabled");
+                                else if(control.pressed)
+                                    return UM.Theme.getColor("sidebar_action_button_active");
+                                else if(control.hovered)
+                                    return UM.Theme.getColor("sidebar_action_button_hovered");
+                                else
+                                    return UM.Theme.getColor("sidebar_action_button");
+                            }
+
+                            Label {
+                                color: "white"
+                                width: 75; height: 35
+                                text: "Slice!"
+                                font { pointSize: 15 }
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
+
+                        }
+                    }
+                }
+                Button {
+                    id: cancelButton
+                    anchors.right: sliceButton.left
+                    anchors.rightMargin: 2
+                    width: 75; height: 35
+                    onClicked:
+                    {
+                        CuraApplication.backend.stopSlicing();
+                        UM.Controller.setActiveStage("NetworkMachineList")
+                    }
+                    style: ButtonStyle {
+                        background: Rectangle
+                        {
+                            radius: 2
+                            border.width: UM.Theme.getSize("default_lining").width
+                            border.color:
+                            {
+                                if(!control.enabled)
+                                    return UM.Theme.getColor("sidebar_action_button_disabled_border");
+                                else if(control.pressed)
+                                    return UM.Theme.getColor("sidebar_action_button_active_border");
+                                else if(control.hovered)
+                                    return UM.Theme.getColor("sidebar_action_button_hovered_border");
+                                else
+                                    return UM.Theme.getColor("sidebar_action_button_border");
+                            }
+                            color:
+                            {
+                                if(!control.enabled)
+                                    return UM.Theme.getColor("sidebar_action_button_disabled");
+                                else if(control.pressed)
+                                    return UM.Theme.getColor("sidebar_action_button_active");
+                                else if(control.hovered)
+                                    return UM.Theme.getColor("sidebar_action_button_hovered");
+                                else
+                                    return UM.Theme.getColor("sidebar_action_button");
+                            }
+
+                            Label {
+                                color: "white"
+                                width: 75; height: 35
+                                text: "Cancel"
+                                font { pointSize: 15 }
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+
 
             ListModel
             {
@@ -1057,32 +920,6 @@ Item
             {
                 id: extruders
                 onModelChanged: populateExtruderModel()
-            }
-
-            Item
-            {
-                id: tipsCell
-                anchors.top: adhesionCheckBox.visible ? adhesionCheckBox.bottom : (enableSupportCheckBox.visible ? supportExtruderCombobox.bottom : infillCellRight.bottom)
-                anchors.topMargin: Math.round(UM.Theme.getSize("sidebar_margin").height * 2)
-                anchors.left: parent.left
-                width: parent.width
-                height: tipsText.contentHeight * tipsText.lineCount
-
-                Label
-                {
-                    id: tipsText
-                    anchors.left: parent.left
-                    anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
-                    anchors.right: parent.right
-                    anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
-                    anchors.top: parent.top
-                    wrapMode: Text.WordWrap
-                    text: catalog.i18nc("@label", "Need help improving your prints?<br>Read the <a href='%1'>Ultimaker Troubleshooting Guides</a>").arg("https://ultimaker.com/en/troubleshooting")
-                    font: UM.Theme.getFont("default");
-                    color: UM.Theme.getColor("text");
-                    linkColor: UM.Theme.getColor("text_link")
-                    onLinkActivated: Qt.openUrlExternally(link)
-                }
             }
 
             UM.SettingPropertyProvider

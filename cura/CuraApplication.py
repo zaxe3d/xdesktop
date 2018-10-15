@@ -68,9 +68,7 @@ from cura.Machines.Models.NozzleModel import NozzleModel
 from cura.Machines.Models.QualityProfilesDropDownMenuModel import QualityProfilesDropDownMenuModel
 from cura.Machines.Models.CustomQualityProfilesDropDownMenuModel import CustomQualityProfilesDropDownMenuModel
 from cura.Machines.Models.MultiBuildPlateModel import MultiBuildPlateModel
-from cura.Machines.Models.FavoriteMaterialsModel import FavoriteMaterialsModel
-from cura.Machines.Models.GenericMaterialsModel import GenericMaterialsModel
-from cura.Machines.Models.MaterialBrandsModel import MaterialBrandsModel
+from cura.Machines.Models.ZaxeMaterialsModel import ZaxeMaterialsModel
 from cura.Machines.Models.QualityManagementModel import QualityManagementModel
 from cura.Machines.Models.QualitySettingsModel import QualitySettingsModel
 from cura.Machines.Models.MachineManagementModel import MachineManagementModel
@@ -163,7 +161,7 @@ class CuraApplication(QtApplication):
                          tray_icon_name = "cura-icon-32.png",
                          **kwargs)
 
-        self.default_theme = "cura-light"
+        self.default_theme = "zaxe-default"
 
         self._boot_loading_time = time.time()
 
@@ -798,8 +796,8 @@ class CuraApplication(QtApplication):
         self.initializeEngine()
 
         # Initialize UI state
-        controller.setActiveStage("NetworkMachineList")
-        #controller.setActiveStage("PrepareStage")
+        #controller.setActiveStage("NetworkMachineList")
+        controller.setActiveStage("PrepareStage")
         controller.setActiveView("SolidView")
         controller.setCameraTool("CameraTool")
         controller.setSelectionTool("SelectionTool")
@@ -939,9 +937,7 @@ class CuraApplication(QtApplication):
         qmlRegisterType(InstanceContainer, "Cura", 1, 0, "InstanceContainer")
         qmlRegisterType(ExtrudersModel, "Cura", 1, 0, "ExtrudersModel")
 
-        qmlRegisterType(FavoriteMaterialsModel, "Cura", 1, 0, "FavoriteMaterialsModel")
-        qmlRegisterType(GenericMaterialsModel, "Cura", 1, 0, "GenericMaterialsModel")
-        qmlRegisterType(MaterialBrandsModel, "Cura", 1, 0, "MaterialBrandsModel")
+        qmlRegisterType(ZaxeMaterialsModel, "Cura", 1, 0, "ZaxeMaterialsModel")
         qmlRegisterType(QualityManagementModel, "Cura", 1, 0, "QualityManagementModel")
         qmlRegisterType(MachineManagementModel, "Cura", 1, 0, "MachineManagementModel")
 

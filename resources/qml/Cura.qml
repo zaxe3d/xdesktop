@@ -16,7 +16,7 @@ UM.MainWindow
 {
     id: base
     //: Cura application window title
-    title: catalog.i18nc("@title:window","Ultimaker Cura");
+    title: "ZaxeDesktop"
     viewportRect: Qt.rect(0, 0, (base.width - sidebar.width) / base.width, 1.0)
     property bool showPrintMonitor: false
 
@@ -339,7 +339,7 @@ UM.MainWindow
                 tooltip: ""
                 anchors
                 {
-                    top: topbar.bottom;
+                    top: parent.top;
                     topMargin: UM.Theme.getSize("default_margin").height;
                     left: parent.left;
                 }

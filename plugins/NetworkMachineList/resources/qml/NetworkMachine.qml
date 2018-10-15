@@ -39,7 +39,6 @@ Item {
         // property updates
         onNameChange: {
             if (uid != arguments[0]) return
-            console.log("changing name to:" + arguments[1])
             inputDeviceName.text = lblDeviceName.text = arguments[1]
         }
         onPrintProgress: {
@@ -84,13 +83,13 @@ Item {
         anchors.fill: device
         glowRadius: 3
         spread: 0
-        color: "#121212"
+        color: UM.Theme.getColor("sidebar_item_glow")
         cornerRadius: rect.radius
 
         Rectangle {
             id: rect
             anchors.fill: parent
-            color: "#2D2D2D"
+            color: UM.Theme.getColor("sidebar_item")
             radius: 2
             MouseArea {
                 propagateComposedEvents: true
@@ -115,7 +114,7 @@ Item {
                 Layout.alignment: Qt.AlignRight
                 Layout.preferredWidth: parent.width - 15
                 Layout.preferredHeight: 55
-                color: "#2D2D2D"
+                color: UM.Theme.getColor("sidebar_item")
 
                 RowLayout {
                     id: row0
@@ -126,25 +125,25 @@ Item {
                         Layout.preferredWidth: 60; Layout.minimumHeight: 50
                         Layout.leftMargin: 20
                         Layout.topMargin: 15
-                        color: "#2D2D2D"
+                        color: UM.Theme.getColor("sidebar_item")
                         //color: "green"
                         RectangularGlow {
                             width: 37; height: 37
                             id: printerIconShadow
                             glowRadius: 5
-                            color: "#121212"
+                            color: UM.Theme.getColor("sidebar_item_glow")
                             cornerRadius: printerIconBackground.radius
                             Rectangle {
                                 id: printerIconBackground
                                 width: 35; height: 35
-                                color: "#2D2D2D"
+                                color: UM.Theme.getColor("sidebar_item")
                                 radius: 100
                                 Text {
                                     id: printerIcon
                                     anchors.centerIn: parent
                                     bottomPadding: 4; rightPadding: 2
                                     font { family: zaxeIconFont.name; pointSize: 18 }
-                                    color: "white"
+                                    color: UM.Theme.getColor("text_sidebar")
                                     text: "j"
                                 }
                             }
@@ -155,7 +154,7 @@ Item {
                     Rectangle {
                         Layout.preferredWidth: 295; Layout.minimumHeight: 37
                         Layout.topMargin: 5
-                        color: "#2D2D2D"
+                        color: UM.Theme.getColor("sidebar_item")
                         // device name input
                         TextField {
                             id: inputDeviceName
@@ -166,7 +165,7 @@ Item {
                             padding: 1
                             width: 200; height: 23
                             background: Rectangle {
-                                color: "#2D2D2D"
+                                color: UM.Theme.getColor("sidebar_item")
                                 border.color: "#3e3e3e"
                                 border.width: 1
                                 radius: 2
@@ -231,7 +230,7 @@ Item {
                     Rectangle {
                         id: containerSayHi
                         Layout.preferredWidth: 37; Layout.minimumHeight: 50
-                        color: "#2D2D2D"
+                        color: UM.Theme.getColor("sidebar_item")
                         visible: !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !machineStates.calibrating && !machineStates.bed_occupied
                         Layout.topMargin: 10
 
@@ -239,7 +238,7 @@ Item {
                             id: sayHiBtnShadow
                             width: 37; height: 37
                             glowRadius: 5
-                            color: "#121212"
+                            color: UM.Theme.getColor("sidebar_item_glow")
                             cornerRadius: 100
                         }
 
@@ -284,7 +283,7 @@ Item {
                             Layout.leftMargin: 20
                             border.width: 1; border.color: "black"
                             radius: 2
-                            color: "#2D2D2D"
+                            color: UM.Theme.getColor("sidebar_item")
                             Text {
                                 width: parent.width
                                 font { pointSize: 12 }
@@ -304,7 +303,7 @@ Item {
                             Layout.leftMargin: 20
                             border.width: 1; border.color: "#a94442"
                             radius: 2
-                            color: "#2D2D2D"
+                            color: UM.Theme.getColor("sidebar_item")
                             Text {
                                 width: parent.width
                                 font { pointSize: 12 }
@@ -337,7 +336,7 @@ Item {
                         Layout.preferredWidth: device.width - 40; Layout.minimumHeight: 25
                         Layout.alignment: Qt.AlignLeft
                         Layout.leftMargin: 20
-                        color: "#2D2D2D"
+                        color: UM.Theme.getColor("sidebar_item")
 
                         ProgressBar {
                             id: progressBar
@@ -348,7 +347,7 @@ Item {
                                 implicitWidth: progressBarContainer.width
                                 implicitHeight: 24
                                 height: 24
-                                color: "#121212"
+                                color: UM.Theme.getColor("sidebar_item_glow")
                                 radius: 3
                             }
 
@@ -389,7 +388,7 @@ Item {
                 Layout.alignment: Qt.AlignRight
                 Layout.preferredWidth: parent.width - 15
                 Layout.preferredHeight: 30
-                color: "#2D2D2D"
+                color: UM.Theme.getColor("sidebar_item")
                 //color: "red"
 
                 RowLayout {
@@ -400,7 +399,7 @@ Item {
                     Rectangle {
                         Layout.preferredWidth: 358; Layout.minimumHeight: 28
                         Layout.leftMargin: 20
-                        color: "#2D2D2D"
+                        color: UM.Theme.getColor("sidebar_item")
 
                         Button {
                             id: btnStop
@@ -540,13 +539,13 @@ Item {
                     // Second column - show extra info button
                     Rectangle {
                         Layout.preferredWidth: 50; Layout.minimumHeight: 30
-                        color: "#2D2D2D"
+                        color: UM.Theme.getColor("sidebar_item")
                         Button {
                             id: btnShowExtraInfo
                             width: 37; height: 30
                             font { pointSize: 30; bold: true }
                             background: Rectangle {
-                                color: "#2D2D2D"
+                                color: UM.Theme.getColor("sidebar_item")
                             }
                             contentItem: Text {
                                 color: "#3e3e3e"

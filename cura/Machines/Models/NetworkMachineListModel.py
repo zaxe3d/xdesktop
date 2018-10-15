@@ -61,7 +61,6 @@ class NetworkMachineListModel(ListModel):
         }
 
 
-        Logger.log("d", "get item  material: %s " % networkMachine.material)
         return item
 
     # machine update start
@@ -130,7 +129,7 @@ class NetworkMachineListModel(ListModel):
             self._compareVersion(uuid, eventArgs.machine)
 
     def _itemAdded(self, networkMachine):
-        Logger.log("d", "adding machine {model_class_name}.".format(model_class_name = self.__class__.__name__))
+        #Logger.log("d", "adding machine {model_class_name}.".format(model_class_name = self.__class__.__name__))
         index = len(self._items)
         self.beginInsertRows(QModelIndex(), index, index)
         self._items.insert(index, self._getItem(networkMachine))
@@ -139,7 +138,7 @@ class NetworkMachineListModel(ListModel):
 
     def _itemRemoved(self, mId):
         index = self.find("mID", mId)
-        Logger.log("d", "removing machine idx: %s" % index)
+        #Logger.log("d", "removing machine idx: %s" % index)
         if index == -1:
             return
         self.beginRemoveRows(QModelIndex(), index, index)

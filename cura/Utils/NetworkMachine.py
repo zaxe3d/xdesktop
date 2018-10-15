@@ -204,7 +204,7 @@ class NetworkMachine(QObject, Thread):
         try:
             self.socket.sendTextMessage(json.dumps(message))
         except Exception as e:
-            Logger.log("w", traceback.format_exc())
+            #Logger.log("w", traceback.format_exc())
             self.close()
 
 

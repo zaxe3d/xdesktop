@@ -16,7 +16,7 @@ Rectangle
     anchors.left: parent.left
     anchors.right: parent.right
     height: UM.Theme.getSize("sidebar_header").height
-    color: UM.Controller.activeStage.stageId == "MonitorStage" ? UM.Theme.getColor("topbar_background_color_monitoring") : UM.Theme.getColor("topbar_background_color")
+    color:  UM.Theme.getColor("topbar_background_color")
 
     property bool printerConnected: Cura.MachineManager.printerConnected
     property bool printerAcceptsCommands: printerConnected && Cura.MachineManager.printerOutputDevices[0].acceptsCommands
@@ -34,8 +34,6 @@ Rectangle
             rightMargin = UM.Theme.getSize("sidebar").width + UM.Theme.getSize("default_margin").width;
         }
         allItemsWidth = (
-            logo.width + UM.Theme.getSize("topbar_logo_right_margin").width +
-            UM.Theme.getSize("topbar_logo_right_margin").width + stagesMenuContainer.width +
             UM.Theme.getSize("default_margin").width + viewModeButton.width +
             rightMargin);
     }
@@ -46,62 +44,13 @@ Rectangle
         name:"cura"
     }
 
-    Image
-    {
-        id: logo
-        anchors.left: parent.left
-        anchors.leftMargin: UM.Theme.getSize("default_margin").width
-        anchors.verticalCenter: parent.verticalCenter
-
-        source: UM.Theme.getImage("logo");
-        width: UM.Theme.getSize("logo").width;
-        height: UM.Theme.getSize("logo").height;
-
-        sourceSize.width: width;
-        sourceSize.height: height;
-    }
-
-    Row
-    {
-        id: stagesMenuContainer
-        anchors.left: logo.right
-        anchors.leftMargin: UM.Theme.getSize("topbar_logo_right_margin").width
-        spacing: UM.Theme.getSize("default_margin").width
-
-        // The topbar is dynamically filled with all available stages
-        Repeater
-        {
-            id: stagesMenu
-
-            model: UM.StageModel{}
-
-            delegate: Button
-            {
-                text: model.name
-                checkable: true
-                checked: model.active
-                exclusiveGroup: topbarMenuGroup
-                style: (model.stage.iconSource != "") ? UM.Theme.styles.topbar_header_tab_no_overlay : UM.Theme.styles.topbar_header_tab
-                height: UM.Theme.getSize("sidebar_header").height
-                onClicked: UM.Controller.setActiveStage(model.id)
-                iconSource: model.stage.iconSource
-
-                property color overlayColor: "transparent"
-                property string overlayIconSource: ""
-            }
-        }
-
-        ExclusiveGroup { id: topbarMenuGroup }
-    }
-
     // View orientation Item
     Row
     {
         id: viewOrientationControl
         height: 30
 
-        spacing: 2
-        visible: UM.Controller.activeStage.stageId != "NetworkMachineList"
+        spacing: 2 
 
         anchors
         {

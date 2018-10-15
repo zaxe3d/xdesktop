@@ -48,10 +48,10 @@ class NetworkMachineManager(QObject):
         machine = self.networkMachineContainer.addMachine(message['ip'], message['port'], message['id'])
 
         if machine is not None:
-            machine.machineEvent.connect(self._onMachineMessage)
+            machine.machineEvent.connect(self._onMessage)
 
-    def _onMachineMessage(self, eventArgs) -> None:
-        Logger.log("d", "_onMachineMessage: %s" % eventArgs.message)
+    def _onMessage(self, eventArgs) -> None:
+        Logger.log("d", "%s - [%s]: %s" % (eventArgs.machine.name, eventArgs.machine.ip, eventArgs.message))
         try:
             if eventArgs.message['type'] == "open":
                 self.machineList[str(eventArgs.machine.id)] = eventArgs.machine

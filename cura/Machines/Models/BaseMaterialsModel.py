@@ -49,13 +49,11 @@ class BaseMaterialsModel(ListModel):
         self.addRoleName(Qt.UserRole + 13, "adhesion_info")
         self.addRoleName(Qt.UserRole + 14, "is_read_only")
         self.addRoleName(Qt.UserRole + 15, "container_node")
-        self.addRoleName(Qt.UserRole + 16, "is_favorite")
 
         self._extruder_position = 0
         self._extruder_stack = None
 
         self._available_materials = None
-        self._favorite_ids = None
 
     def _updateExtruderStack(self):
         global_stack = self._machine_manager.activeMachine
@@ -128,7 +126,6 @@ class BaseMaterialsModel(ListModel):
             "adhesion_info":        metadata["adhesion_info"],
             "is_read_only":         self._container_registry.isReadOnly(metadata["id"]),
             "container_node":       container_node,
-            "is_favorite":          root_material_id in self._favorite_ids
         }
         return item
 

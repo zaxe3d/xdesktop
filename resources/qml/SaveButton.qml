@@ -38,7 +38,6 @@ Item {
             case 2:
                 return catalog.i18nc("@label:PrintjobStatus", "Slicing...");
             case 3:
-                UM.Controller.setActiveStage("NetworkMachineList")
                 return catalog.i18nc("@label:PrintjobStatus %1 is target operation","Ready to %1").arg(UM.OutputDeviceManager.activeDeviceShortDescription);
             case 4:
                 return catalog.i18nc("@label:PrintjobStatus", "Unable to Slice");
@@ -68,7 +67,7 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
 
-        color: UM.Theme.getColor("text")
+        color: UM.Theme.getColor("text_sidebar")
         font: UM.Theme.getFont("default_bold")
         text: statusText;
     }
@@ -82,12 +81,12 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
         radius: UM.Theme.getSize("progressbar_radius").width
-        color: UM.Theme.getColor("progressbar_background")
+        color: UM.Theme.getColor("sidebar_progressbar_background")
 
         Rectangle {
             width: Math.max(parent.width * base.progress)
             height: parent.height
-            color: UM.Theme.getColor("progressbar_control")
+            color: UM.Theme.getColor("sidebar_progressbar_control")
             radius: UM.Theme.getSize("progressbar_radius").width
             visible: (base.backendState != "undefined" && base.backendState == 2) ? true : false
         }

@@ -414,7 +414,7 @@ class CuraApplication(QtApplication):
     def startSplashWindowPhase(self):
         super().startSplashWindowPhase()
 
-        self.setWindowIcon(QIcon(Resources.getPath(Resources.Images, "cura-icon.png")))
+        self.setWindowIcon(QIcon(Resources.getPath(Resources.Images, "zaxe-icon.png")))
 
         self.setRequiredPlugins([
             # Misc.:

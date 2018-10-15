@@ -14,7 +14,7 @@
         "has_machine_quality": true,
         "machine_extruder_trains":
         {
-            "0": "ultimaker_original_extruder_0"
+            "0": "zaxe_x1_extruder_0"
         }
     },
 

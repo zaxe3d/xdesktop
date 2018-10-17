@@ -6,6 +6,7 @@ from UM.FlameProfiler import pyqtSlot
 
 import cura.CuraApplication # To get the global container stack to find the current machine.
 from UM.Logger import Logger
+from UM.PluginRegistry import PluginRegistry #To get the g-code writer.
 
 from cura.Utils.NetworkMachine import NetworkMachine, NetworkMachineContainer
 from typing import Dict
@@ -23,6 +24,7 @@ class NetworkMachineManager(QObject):
     machineAdded = pyqtSignal(QVariant)
     machineRemoved = pyqtSignal(str)
     machineNewMessage = pyqtSignal(QVariant)
+    machineUploadProgress = pyqtSignal(QVariant)
 
     ##  Registers listeners and such to listen and command network printers
     def __init__(self, parent = None):
@@ -49,6 +51,7 @@ class NetworkMachineManager(QObject):
 
         if machine is not None:
             machine.machineEvent.connect(self._onMessage)
+            machine.machineUploadEvent.connect(self._onUpload)
 
     def _onMessage(self, eventArgs) -> None:
         Logger.log("d", "%s - [%s]: %s" % (eventArgs.machine.name, eventArgs.machine.ip, eventArgs.message))
@@ -66,12 +69,31 @@ class NetworkMachineManager(QObject):
         except AttributeError:
             pass
 
+    def _onUpload(self, eventArgs) -> None:
+        try:
+            self.machineUploadProgress.emit(eventArgs)
+        except AttributeError:
+            pass
+
     ## Says Hi on intended machine
     @pyqtSlot(str)
     def SayHi(self, mID) -> None:
         machine = self.machineList[str(mID)]
         Logger.log("d", "Saying Hi on [%s]" % machine.ip)
         machine.sayHi()
+
+    ## starts to print the scene on intended machine
+    @pyqtSlot(str)
+    def upload(self, mID) -> None:
+        machine = self.machineList[str(mID)]
+
+        codeGenerator = PluginRegistry.getInstance().getPluginObject("ZaxeCodeWriter")
+        success = codeGenerator.generate()
+        if not success:
+            Logger.log("w", "Zaxe code generation failed for device [%s - [%s]]" % (machine.name, machine.ip))
+            return False
+        Logger.log("d", "will upload generated code to machine [%s - [%s]]" % (machine.name, machine.ip))
+        machine.upload(codeGenerator.getZaxeFile())
 
     ## rename on intended machine
     @pyqtSlot(str, str)

@@ -53,7 +53,7 @@
                 {
                     "label": "Start G-code",
                     "description": "G-code commands to be executed at the very start - separated by \\n.",
-                    "default_value": "G28 ;Home\nG1 Z15.0 F6000 ;Move the platform down 15mm\n;Prime the extruder\nG92 E0\nG1 F200 E3\nG92 E0",
+                    "default_value": "G28\nG91\nG1 Z5 F500\nM83\nG1 E25 F150\nG1 X20 F10000\nG90\nG1 Z0.4 F500\nG91\nM83\nG1 X40 E15 F500\nG90\nM82\nG92 E0",
                     "type": "str",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false,
@@ -63,7 +63,7 @@
                 {
                     "label": "End G-code",
                     "description": "G-code commands to be executed at the very end - separated by \\n.",
-                    "default_value": "M104 S0\nM140 S0\n;Retract the filament\nG92 E1\nG1 E-1 F300\nG28 X0 Y0\nM84",
+                    "default_value": "M104 S0\nG28 X0 Y0",
                     "type": "str",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false,
@@ -1284,7 +1284,7 @@
                             "label": "Compensate Outer Wall Overlaps",
                             "description": "Compensate the flow for parts of an outer wall being printed where there is already a wall in place.",
                             "type": "bool",
-                            "default_value": true,
+                            "default_value": false,
                             "value": "travel_compensate_overlapping_walls_enabled",
                             "limit_to_extruder": "wall_0_extruder_nr",
                             "settable_per_mesh": true
@@ -1294,7 +1294,7 @@
                             "label": "Compensate Inner Wall Overlaps",
                             "description": "Compensate the flow for parts of an inner wall being printed where there is already a wall in place.",
                             "type": "bool",
-                            "default_value": true,
+                            "default_value": false,
                             "value": "travel_compensate_overlapping_walls_enabled",
                             "limit_to_extruder": "wall_x_extruder_nr",
                             "settable_per_mesh": true

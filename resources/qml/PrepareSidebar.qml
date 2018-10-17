@@ -14,6 +14,13 @@ Rectangle
 {
     id: base
 
+    property var materialNames : {
+        "zaxe_abs": "Zaxe ABS",
+        "zaxe_pla": "Zaxe PLA",
+        "zaxe_tpu": "Zaxe FLEX",
+        "custom": "Custom"
+    }
+
     property int currentModeIndex
     property bool hideSettings: PrintInformation.preSliced
     property bool hideView: Cura.MachineManager.activeMachineName == ""

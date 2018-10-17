@@ -796,8 +796,8 @@ class CuraApplication(QtApplication):
         self.initializeEngine()
 
         # Initialize UI state
-        #controller.setActiveStage("NetworkMachineList")
-        controller.setActiveStage("PrepareStage")
+        controller.setActiveStage("NetworkMachineList")
+        #controller.setActiveStage("PrepareStage")
         controller.setActiveView("SolidView")
         controller.setCameraTool("CameraTool")
         controller.setSelectionTool("SelectionTool")

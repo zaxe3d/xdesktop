@@ -16,6 +16,14 @@ Column
     id: base;
 
     property int currentExtruderIndex: Cura.ExtruderManager.activeExtruderIndex;
+
+    property var materialNames : {
+        "zaxe_abs": "Zaxe ABS",
+        "zaxe_pla": "Zaxe PLA",
+        "zaxe_tpu": "Zaxe FLEX",
+        "custom": "Custom"
+    }
+
     spacing: Math.round(UM.Theme.getSize("sidebar_margin").width * 0.9)
 
     signal showTooltip(Item item, point location, string text)
@@ -104,7 +112,7 @@ Column
 
                     property var activeExtruder: Cura.MachineManager.activeStack
                     property var hasActiveExtruder: activeExtruder != null
-                    property var currentRootMaterialName: hasActiveExtruder ? activeExtruder.material.name : ""
+                    property var currentRootMaterialName: hasActiveExtruder ? materialNames[activeExtruder.material.name] : ""
 
                     text: currentRootMaterialName
                     tooltip: currentRootMaterialName

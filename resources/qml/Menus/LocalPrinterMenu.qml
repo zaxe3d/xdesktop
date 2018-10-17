@@ -8,9 +8,7 @@ import UM 1.2 as UM
 import Cura 1.0 as Cura
 
 Instantiator {
-    model: UM.ContainerStacksModel {
-        filter: {"type": "machine", "um_network_key": null}
-    }
+    model: UM.ContainerStacksModel
     MenuItem {
         text: model.name;
         checkable: true;

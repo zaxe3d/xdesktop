@@ -25,6 +25,16 @@ class NetworkMachineEventArgs():
         self.message = message
         self.machine = machine
 
+class NetworkMachineUploadEventArgs():
+
+    progress = None
+
+    machine = None
+
+    def __init__(self, machine, progress):
+        self.progress = progress
+        self.machine = machine
+
 class NetworkMachine(QObject, Thread):
 
     ip = None
@@ -36,6 +46,7 @@ class NetworkMachine(QObject, Thread):
     name = None
 
     machineEvent = pyqtSignal(NetworkMachineEventArgs)
+    machineUploadEvent = pyqtSignal(NetworkMachineUploadEventArgs)
 
     def __init__(self, ip, port, name, parent = None):
         Thread.__init__(self)
@@ -183,6 +194,9 @@ class NetworkMachine(QObject, Thread):
     def sayHi(self):
         self.write({"request": "say_hi"})
 
+    def startPreheat(self):
+        self.write({"request": "start_preheat"})
+
     def togglePreheat(self):
         self.write({"request": "toggle_preheat"})
 
@@ -194,7 +208,21 @@ class NetworkMachine(QObject, Thread):
 
     def cancel(self, pin=None):
         self.write({"request": "cancel", "pin": pin})
+
+    def upload(self, filename):
+        if self.uploader is not None and self.uploader.isUploading():
+            return
+        self.startPreheat()
+        self.uploader = FTPUploader(filename, self.ip, self.ftpPort)
+        self.uploader.uploadEvent.connect(self.uploadProgressCB)
+        Logger.log("w", "starting to upload")
+        self.uploader.daemon = True
+        self.uploader.start()
+
     # end of commands
+
+    def uploadProgressCB(self, progress):
+        self.machineUploadEvent.emit(NetworkMachineUploadEventArgs(self, progress))
 
     def startTimeout(self):
         self.timer = Timer(20, self.close)
@@ -211,18 +239,19 @@ class NetworkMachine(QObject, Thread):
     def emit(self, eventData):
         self.machineEvent.emit(NetworkMachineEventArgs(self, eventData))
 
-class FTPUploader(Thread):
+class FTPUploader(QObject, Thread):
 
-    def __init__(self, filename, ip, port):
+    uploadEvent = pyqtSignal(int)
+
+    def __init__(self, filename, ip, port, parent = None):
         Thread.__init__(self)
+        QObject.__init__(self)
         self.ftp = ftplib.FTP_TLS()
         self.currentSize = 0
         self.totalSize = 0
         self.filename = filename
         self.ip = ip
         self.port = port
-        self.progressEventId = wx.NewId()
-        self.finishEventId = wx.NewId()
         self.progressHandler = None
         self.finishHandler = None
         self.cancel = False
@@ -252,15 +281,6 @@ class FTPUploader(Thread):
             pass
         self.ftp.close()
         self.finished = True
-        wx.PostEvent(self.finishHandler, FinishEvent(self.finishEventId))
-
-    def bindProgressChange(self, handler, callback):
-        self.progressHandler = handler
-        handler.Connect(-1, -1, self.progressEventId, callback)
-
-    def bindFinish(self, handler, callback):
-        self.finishEventId = handler
-        handler.Connect(-1, -1, self.finishEventId, callback)
 
     def onProgress(self, buf):
         if self.cancel:
@@ -273,7 +293,7 @@ class FTPUploader(Thread):
             self.ftp.close()
             return
         self.currentSize += len(buf)
-        wx.PostEvent(self.progressHandler, UploadProgressEvent(self.progressEventId, 100 * self.currentSize / self.totalSize))
+        self.uploadEvent.emit(100 * self.currentSize / self.totalSize)
 
 class NetworkMachineContainer():
 

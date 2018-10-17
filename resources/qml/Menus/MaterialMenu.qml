@@ -14,6 +14,13 @@ Menu
 
     property int extruderIndex: 0
 
+    property var materialNames : {
+        "zaxe_abs": "Zaxe ABS",
+        "zaxe_pla": "Zaxe PLA",
+        "zaxe_tpu": "Zaxe FLEX",
+        "custom": "Custom"
+    }
+
     Cura.ZaxeMaterialsModel
     {
         id: zaxeMaterialsModel
@@ -25,7 +32,7 @@ Menu
         model: zaxeMaterialsModel
         delegate: MenuItem
         {
-            text: model.name
+            text: menu.materialNames[model.name]
             checkable: true
             checked: model.root_material_id == Cura.MachineManager.currentRootMaterialId[extruderIndex]
             onTriggered: Cura.MachineManager.setMaterial(extruderIndex, model.container_node)

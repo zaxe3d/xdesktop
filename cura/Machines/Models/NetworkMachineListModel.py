@@ -25,6 +25,7 @@ class NetworkMachineListModel(ListModel):
         self._machine_manager.machineAdded.connect(self._itemAdded)
         self._machine_manager.machineRemoved.connect(self._itemRemoved)
         self._machine_manager.machineNewMessage.connect(self._itemUpdate)
+        self._machine_manager.machineUploadProgress.connect(self._itemUploadProgress)
 
     temperatureProgressEnabled = False
 
@@ -37,6 +38,7 @@ class NetworkMachineListModel(ListModel):
     nameChange = pyqtSignal(str, str)
     calibrationProgress = pyqtSignal(str, float)
     printProgress = pyqtSignal(str, float)
+    uploadProgress = pyqtSignal(str, float)
     tempProgress = pyqtSignal(str, float)
     materialChange = pyqtSignal(str, str)
     nozzleChange = pyqtSignal(str, float)
@@ -127,6 +129,9 @@ class NetworkMachineListModel(ListModel):
             self.pinChange.emit(uuid, bool(eventArgs.machine.hasPin))
         if message["event"] == "hello":
             self._compareVersion(uuid, eventArgs.machine)
+
+    def _itemUploadProgress(self, eventArgs):
+        self.uploadProgress.emit(eventArgs.machine.id, float(eventArgs.progress / 100))
 
     def _itemAdded(self, networkMachine):
         #Logger.log("d", "adding machine {model_class_name}.".format(model_class_name = self.__class__.__name__))

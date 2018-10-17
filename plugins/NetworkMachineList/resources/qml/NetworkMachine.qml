@@ -55,10 +55,15 @@ Item {
             if (uid != arguments[0]) return
             progressBar.value = arguments[1]
         }
+        onUploadProgress: {
+            if (uid != arguments[0]) return
+            progressBar.value = arguments[1]
+        }
 
         onStateChange: {
             if (uid != arguments[0]) return
             machineStates = arguments[1]
+            progressBar.value = 0 // new state new bar
 
             containerSayHi.visible = !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !machineStates.calibrating && !machineStates.bed_occupied
         }
@@ -176,7 +181,7 @@ Item {
                                     event.accepted = true;
                                 } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {
                                     console.log("enter pressed");
-                                    lblDeviceName.text = inputDeviceName.text;
+                                    lblDeviceName.text = name = inputDeviceName.text;
                                     Cura.NetworkMachineManager.ChangeName(device.uid, lblDeviceName.text)
                                     inputDeviceName.visible = false;
                                     lblDeviceName.visible = true;
@@ -323,7 +328,7 @@ Item {
                 Layout.alignment: Qt.AlignRight
                 Layout.preferredWidth: parent.width - 15
                 Layout.preferredHeight: 25
-                visible: machineStates.printing || machineStates.heating
+                visible: machineStates.printing || machineStates.heating || machineStates.uploading
                 color: "red"
 
                 RowLayout {
@@ -451,6 +456,7 @@ Item {
                                 horizontalAlignment: Text.AlignLeft
                                 text: " Print now"
                             }
+                            onClicked: Cura.NetworkMachineManager.upload(device.uid)
                         }
 
                         Button {

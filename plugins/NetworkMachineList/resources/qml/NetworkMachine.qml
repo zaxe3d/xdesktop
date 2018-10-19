@@ -12,7 +12,7 @@ import QtGraphicalEffects 1.0
 Item {
     id: device
 
-    width: base.width - 20
+    width: networkMachineList.width - 20
     height: mainLayout.height + 20
     x : 200 // to animate from right
 
@@ -30,7 +30,12 @@ Item {
 
     property bool canceling
 
+    // states
     property var machineStates
+
+    // warnings
+    property bool materialWarning
+    property bool modelWarning
 
     Connections
     {
@@ -90,6 +95,14 @@ Item {
         spread: 0
         color: UM.Theme.getColor("sidebar_item_glow")
         cornerRadius: rect.radius
+
+        // Fixes the scroll glitch: background with radius sometimes disappears
+        // while scrolling and holding down the scroll on it.
+        Rectangle {
+            anchors.fill: parent
+            anchors { topMargin: 5; bottomMargin: 5; leftMargin: 5; rightMargin: 5 }
+            color: UM.Theme.getColor("sidebar_item")
+        }
 
         Rectangle {
             id: rect
@@ -214,19 +227,19 @@ Item {
                             topPadding: 2; leftPadding: 5
                             text: {
                                 if (machineStates.bed_occupied)
-                                    return "Bed is occuppied..."
+                                    return catalog.i18nc("@label", "Bed is occuppied...")
                                 else if (machineStates.paused)
-                                    return "Paused"
+                                    return catalog.i18nc("@label", "Paused")
                                 else if (machineStates.printing)
-                                    return "Printing..."
+                                    return catalog.i18nc("@label", "Printing...")
                                 else if (machineStates.uploading)
-                                    return "Uploading..."
+                                    return catalog.i18nc("@label", "Uploading...")
                                 else if (machineStates.calibrating)
-                                    return "Calibrating..."
+                                    return catalog.i18nc("@label", "Calibrating...")
                                 else if (machineStates.heating)
-                                    return "Heating..."
+                                    return catalog.i18nc("@label", "Heating...")
                                 else
-                                    return "Ready to print!"
+                                    return catalog.i18nc("@label", "Ready to print!")
                             }
                         }
                     }
@@ -296,13 +309,13 @@ Item {
                                 color: "green"
                                 horizontalAlignment: Text.AlignLeft
                                 wrapMode: Text.WordWrap
-                                text: "Please take your print!"
+                                text: catalog.i18nc("@label", "Please take your print!")
                             }
                         }
 
                         // danger message
                         Rectangle {
-                            visible: false
+                            visible: device.materialWarning
                             Layout.preferredWidth: device.width - 40; Layout.minimumHeight: childrenRect.height
                             Layout.alignment: Qt.AlignLeft
                             Layout.leftMargin: 20
@@ -316,7 +329,7 @@ Item {
                                 color: "#a94442"
                                 horizontalAlignment: Text.AlignLeft
                                 wrapMode: Text.WordWrap
-                                text: "The material in the device does not match with the material you choose. Please slice again with the correct material"
+                                text: catalog.i18nc("@label", "The material in the device does not match with the material you choose. Please slice again with the correct material")
                             }
                         }
                     }
@@ -328,7 +341,7 @@ Item {
                 Layout.alignment: Qt.AlignRight
                 Layout.preferredWidth: parent.width - 15
                 Layout.preferredHeight: 25
-                visible: machineStates.printing || machineStates.heating || machineStates.uploading
+                visible: machineStates.calibrating || machineStates.printing || machineStates.heating || machineStates.uploading
                 color: "red"
 
                 RowLayout {
@@ -456,7 +469,17 @@ Item {
                                 horizontalAlignment: Text.AlignLeft
                                 text: " Print now"
                             }
-                            onClicked: Cura.NetworkMachineManager.upload(device.uid)
+                            onClicked: {
+                                if (PrintInformation.materialNames[0] != device.material)
+                                    device.materialWarning = true
+                                else if (Cura.MachineManager.activeMachineName != device.model)
+                                    device.modelWarning = true
+                                else {
+                                    device.materialWarning = false
+                                    device.modelWarning = false
+                                    Cura.NetworkMachineManager.upload(device.uid)
+                                }
+                            }
                         }
 
                         Button {
@@ -600,17 +623,17 @@ Item {
                             property bool stateVisible: false
                             columns: 2
 
-                            Text { text: "File name"; color: "white"; font.bold: true; width: 125; visible: machineStates.printing }
+                            Text { text: catalog.i18nc("@label", "File name"); color: "white"; font.bold: true; width: 125; visible: machineStates.printing }
                             Text { text: device.printingFile; color: "white"; visible: machineStates.printing }
-                            Text { text: "Elapsed time"; color: "white"; font.bold: true; width: 125; visible: machineStates.printing }
+                            Text { text: catalog.i18nc("@label", "Elapsed time"); color: "white"; font.bold: true; width: 125; visible: machineStates.printing }
                             Text { id: txtElapsedTime; text: device.elapsedTime; color: "white"; visible: machineStates.printing }
-                            Text { text: "Est. time"; color: "white"; font.bold: true; width: 125; visible: machineStates.printing }
+                            Text { text: catalog.i18nc("@label", "Est. time"); color: "white"; font.bold: true; width: 125; visible: machineStates.printing }
                             Text { text: device.estimatedTime; color: "white"; visible: machineStates.printing }
-                            Text { text: "Material"; color: "white"; font.bold: true; width: 125 }
-                            Text { text: base.materialNames[device.material]; color: "white" }
-                            Text { text: "Nozzle"; color: "white"; font.bold: true; width: 125 }
+                            Text { text: catalog.i18nc("@label", "Material"); color: "white"; font.bold: true; width: 125 }
+                            Text { text: networkMachineList.materialNames[device.material]; color: "white" }
+                            Text { text: catalog.i18nc("@label", "Nozzle"); color: "white"; font.bold: true; width: 125 }
                             Text { text: device.nozzle + " mm"; color: "white" }
-                            Text { text: "Network IP"; color: "white"; font.bold: true; width: 125 }
+                            Text { text: catalog.i18nc("@label", "Network IP"); color: "white"; font.bold: true; width: 125 }
                             Text { text: device.ip; color: "white" }
 
                             // elapsed time calculation
@@ -620,7 +643,7 @@ Item {
                                 repeat: true
                                 onTriggered: {
                                     device.elapsedTime = parseFloat(device.elapsedTime) + 1
-                                    txtElapsedTime.text = base.toHHMMSS(device.elapsedTime)
+                                    txtElapsedTime.text = networkMachineList.toHHMMSS(device.elapsedTime)
                                 }
                             }
                         }

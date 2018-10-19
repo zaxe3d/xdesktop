@@ -11,7 +11,7 @@ import Cura 1.0 as Cura
 
 Rectangle
 {
-    id: base
+    id: networkMachineList
 
     UM.I18nCatalog { id: catalog; name:"cura"}
 
@@ -39,14 +39,14 @@ Rectangle
 
         onTriggered:
         {
-            base.showTooltip(base, {x: 0, y: item.y}, text);
+            networkMachineList.showTooltip(base, {x: 0, y: item.y}, text);
         }
     }
 
     function showTooltip(item, position, text)
     {
         tooltip.text = text;
-        position = item.mapToItem(base, position.x - UM.Theme.getSize("default_arrow").width, position.y);
+        position = item.mapToItem(networkMachineList, position.x - UM.Theme.getSize("default_arrow").width, position.y);
         tooltip.show(position);
     }
 
@@ -97,15 +97,11 @@ Rectangle
 
         function onAdded(idx)
         {
-            var item = Cura.NetworkMachineListModel.getItem(idx)
-
-            console.log("adding machine" + item.mName)
-            machineListModel.append(item)
+            machineListModel.append(Cura.NetworkMachineListModel.getItem(idx))
         }
 
         function onRemoved(idx)
         {
-            console.log("removing machine" + idx)
             machineListModel.remove(idx)
         }
     }
@@ -120,7 +116,7 @@ Rectangle
     Rectangle
     {
         id: "noPrinterWarning"
-        width: base.width - 20
+        width: networkMachineList.width - 20
         height: 150
         anchors { horizontalCenter: parent.horizontalCenter; top: slicerBar.bottom; topMargin: 20 }
         color: "#212121"
@@ -131,13 +127,12 @@ Rectangle
             id: noPrinterWarningImage
             source: "../images/connect_your_zaxe.png"
         }
-
         Label
         {
             anchors.centerIn: parent
             anchors.horizontalCenter: parent.horizontalCenter
             color: UM.Theme.getColor("text_sidebar"); font.pointSize: 14; font.bold: true
-            text: "Can not find a Zaxe on the network"
+            text: catalog.i18nc("@label", "Can not find a Zaxe on the network")
         }
     }
 
@@ -166,7 +161,7 @@ Rectangle
     SlicerBar
     {
         id: slicerBar
-        implicitWidth: base.width
+        implicitWidth: networkMachineList.width
         implicitHeight: childrenRect.height
         anchors.top: parent.top
         anchors.right: parent.right

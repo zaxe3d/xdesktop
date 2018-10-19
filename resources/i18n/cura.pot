@@ -1002,6 +1002,82 @@ msgctxt "@label"
 msgid "Custom profile"
 msgstr ""
 
+msgctxt "@label"
+msgid "Can not find a Zaxe on the network"
+msgstr ""
+
+msgctxt "@label"
+msgid "Bed is occuppied..."
+msgstr ""
+
+msgctxt "@label"
+msgid "Paused"
+msgstr ""
+
+msgctxt "@label"
+msgid "Printing..."
+msgstr ""
+
+msgctxt "@label"
+msgid "Uploading..."
+msgstr ""
+
+msgctxt "@label"
+msgid "Calibrating..."
+msgstr ""
+
+msgctxt "@label"
+msgid "Heating..."
+msgstr ""
+
+msgctxt "@label"
+msgid "Ready to print!"
+msgstr ""
+
+msgctxt "@label"
+msgid "Please take your print!"
+msgstr ""
+
+msgctxt "@label"
+msgid "The material in the device does not match with the material you choose. Please slice again with the correct material"
+msgstr ""
+
+msgctxt "@label"
+msgid "File name"
+msgstr ""
+
+msgctxt "@label"
+msgid "Elapsed time"
+msgstr ""
+
+msgctxt "@label"
+msgid "Est. time"
+msgstr ""
+
+msgctxt "@label"
+msgid "Material"
+msgstr ""
+
+msgctxt "@label"
+msgid "Nozzle"
+msgstr ""
+
+msgctxt "@label"
+msgid "Network IP"
+msgstr ""
+
+msgctxt "@label"
+msgid "Click to load a 3D model"
+msgstr ""
+
+msgctxt "@label"
+msgid "SLICE \n Prepare Model for print"
+msgstr ""
+
+msgctxt "@label"
+msgid "Esitmated time"
+msgstr ""
+
 #: /home/ruben/Projects/Cura/cura/Settings/CuraContainerRegistry.py:356
 msgctxt "@info:status"
 msgid "Profile is missing a quality type."

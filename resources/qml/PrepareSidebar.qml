@@ -95,16 +95,6 @@ Rectangle
         anchors.left: parent.left
     }
 
-    Rectangle
-    {
-        id: separator
-        visible: configSelection.visible
-        width: visible ? Math.round(UM.Theme.getSize("sidebar_lining_thin").height / 2) : 0
-        height: UM.Theme.getSize("sidebar_header").height
-        color: UM.Theme.getColor("sidebar_lining_thin")
-        anchors.left: machineSelection.right
-    }
-
     SidebarHeader {
         id: header
         width: parent.width
@@ -152,15 +142,6 @@ Rectangle
                 duration: 100
             }
         }
-    }
-
-    Loader
-    {
-        anchors.bottom: base.bottom
-        anchors.top: headerSeparator.bottom
-        anchors.left: base.left
-        anchors.right: base.right
-        source: "SidebarContents.qml"
     }
 
     SidebarTooltip

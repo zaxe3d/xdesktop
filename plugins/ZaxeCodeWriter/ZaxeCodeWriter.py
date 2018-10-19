@@ -54,8 +54,6 @@ class ZaxeCodeWriter(MeshWriter):
         open(gcodeFilePath, 'wb').write(result)
         Logger.log("d", "generated zaxe code file path is: %s" % gcodeFilePath)
 
-        Logger.log("e", "nozzle: %s" % self._machineManager.globalVariantName)
-
         # create info.json
         printInformation = self._application.getPrintInformation()
         info = tool.merge_two_dicts({

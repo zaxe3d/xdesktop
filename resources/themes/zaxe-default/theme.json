@@ -381,6 +381,7 @@
         "sidebar_spacing": [1.5, 1.5],
         "sidebar_item_margin": [1.43, 1.0],
         "sidebar_item_icon_margin": [2.43, 0.7],
+        "sidebar_item_icon_text_margin": [0.43, 0.43],
         "sidebar_margin_thin": [0.71, 0.71],
         "sidebar_header": [0.0, 4.0],
         "sidebar_header_highlight": [0.25, 0.25],

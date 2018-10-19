@@ -596,8 +596,7 @@ Item
                             {
                                 id: infillIcon
 
-                                width: 60
-                                height: width
+                                width: 63; height: width
 
                                 anchors.top: infillLabel.bottom
                                 anchors.topMargin: UM.Theme.getSize("sidebar_item_icon_margin").height
@@ -800,6 +799,138 @@ Item
                     }
                 }
             }
+
+            //
+            // Raft
+            //
+            Item
+            {
+                Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                Layout.preferredHeight: 125
+                Layout.alignment: Qt.AlignHCenter
+
+                // Background
+                RectangularGlow {
+
+                    anchors.fill: parent
+                    glowRadius: 3
+                    spread: 0
+                    color: UM.Theme.getColor("sidebar_item_glow")
+                    cornerRadius: 2
+
+                    Rectangle {
+                        anchors.fill: parent
+                        color: UM.Theme.getColor("sidebar_item")
+                        radius: 2
+                        width: parent.width
+                        Item
+                        {
+                            id: raftCellLeft
+
+                            anchors.top: parent.top
+                            anchors.left: parent.left
+                            anchors.bottom: parent.bottom
+
+                            width: Math.round(base.width * .35)
+
+                            Label
+                            {
+                                id: raftLabel
+                                text: "Raft" //catalog.i18nc("@label", "Infill")
+                                font: UM.Theme.getFont("default_bold");
+                                color: UM.Theme.getColor("text_sidebar")
+
+                                anchors.top: parent.top
+                                anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                anchors.left: parent.left
+                                anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            }
+                            Image {
+                                antialiasing: true
+                                visible: platformAdhesionType.properties.value == "none"
+                                width: 66; height: 68
+                                anchors.top: raftLabel.bottom; anchors.left: parent.left
+                                anchors.topMargin: UM.Theme.getSize("sidebar_item_icon_margin").height
+                                anchors.leftMargin: UM.Theme.getSize("sidebar_item_icon_margin").width
+                                source: "../../plugins/NetworkMachineList/resources/images/raft/off.png"
+                            }
+                            Image {
+                                antialiasing: true
+                                visible: platformAdhesionType.properties.value == "raft"
+                                width: 66; height: 68
+                                anchors.top: raftLabel.bottom; anchors.left: parent.left
+                                anchors.topMargin: UM.Theme.getSize("sidebar_item_icon_margin").height
+                                anchors.leftMargin: UM.Theme.getSize("sidebar_item_icon_margin").width
+                                source: "../../plugins/NetworkMachineList/resources/images/raft/on.png"
+                            }
+                        }
+
+                        Item
+                        {
+                            id: raftCellRight
+
+                            width: Math.round(base.width * .55)
+                            height: raftCellLeft.height
+
+                            anchors.left: raftCellLeft.right
+                            anchors.bottom: raftCellLeft.bottom
+
+                            CheckBox
+                            {
+                                id: adhesionCheckBox
+                                property alias _hovered: adhesionMouseArea.containsMouse
+
+                                anchors.top: parent.top
+                                anchors.left: raftCellRight.left
+                                anchors.verticalCenter: parent.verticalCenter
+
+                                //: Setting enable printing build-plate adhesion helper checkbox
+                                style: UM.Theme.styles.checkbox;
+                                enabled: base.settingsEnabled
+
+                                visible: platformAdhesionType.properties.enabled == "True"
+                                checked: platformAdhesionType.properties.value == "raft"
+
+                                MouseArea
+                                {
+                                    id: adhesionMouseArea
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    enabled: base.settingsEnabled
+                                    onClicked:
+                                    {
+                                        parent.checked = !parent.checked;
+                                        var adhesionType = parent.checked ? "raft" : "none";
+                                        platformAdhesionType.setPropertyValue("value", adhesionType);
+                                    }
+                                    onEntered:
+                                    {
+                                        base.showTooltip(adhesionCheckBox, Qt.point(-adhesionCheckBox.x, 0),
+                                            catalog.i18nc("@label", "Enable printing a brim or raft. This will add a flat area around or under your object which is easy to cut off afterwards."));
+                                    }
+                                    onExited:
+                                    {
+                                        base.hideTooltip();
+                                    }
+                                }
+                            }
+                            Label
+                            {
+                                text: "Raft layers" //catalog.i18nc("@label", "Infill")
+                                font: UM.Theme.getFont("default");
+                                color: UM.Theme.getColor("text_sidebar")
+                                anchors.left: adhesionCheckBox.right
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.leftMargin: UM.Theme.getSize("sidebar_item_icon_text_margin").width
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+
             Item {
                 Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
                 Layout.preferredHeight: 100
@@ -906,22 +1037,6 @@ Item
             }
 
 
-
-
-
-            ListModel
-            {
-                id: extruderModel
-                Component.onCompleted: populateExtruderModel()
-            }
-
-            //: Model used to populate the extrudelModel
-            Cura.ExtrudersModel
-            {
-                id: extruders
-                onModelChanged: populateExtruderModel()
-            }
-
             UM.SettingPropertyProvider
             {
                 id: infillExtruderNumber
@@ -985,18 +1100,5 @@ Item
                 storeIndex: 0
             }
         }
-    }
-
-    function populateExtruderModel()
-    {
-        extruderModel.clear();
-        for(var extruderNumber = 0; extruderNumber < extruders.rowCount() ; extruderNumber++)
-        {
-            extruderModel.append({
-                text: extruders.getItem(extruderNumber).name,
-                color: extruders.getItem(extruderNumber).color
-            })
-        }
-        supportExtruderCombobox.updateCurrentColor();
     }
 }

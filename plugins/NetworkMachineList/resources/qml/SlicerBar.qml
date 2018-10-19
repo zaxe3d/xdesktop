@@ -60,10 +60,10 @@ Item {
                 width: parent.width
                 text: {
                     if (!activity) {
-                        return "Click to load a 3D model"
+                        return catalog.i18nc("@label", "Click to load a 3D model")
                     }
                     else {
-                        return "SLICE \n Prepare Model for print"
+                        return catalog.i18nc("@label", "SLICE \n Prepare Model for print")
                     }
                 }
                 font { pointSize: 15 }
@@ -128,10 +128,10 @@ Item {
                         }
                         color: "white"
                     }
-                    Text { text: "Estimated time"; color: "white"; font.bold: true; width: 135 }
+                    Text { text: catalog.i18nc("@label", "Estimated time"); color: "white"; font.bold: true; width: 135 }
                     Text { text: (!base.printDuration || !base.printDuration.valid) ? catalog.i18nc("@label Hours and minutes", "00h 00min") : base.printDuration.getDisplayString(UM.DurationFormat.Short); color: "white" }
                     Text { text: "Material"; color: "white"; font.bold: true; width: 135 }
-                    Text { text: "Zaxe ABS"; color: "white" }
+                    Text { text: PrintInformation.materialNames[0] ? networkMachineList.materialNames[PrintInformation.materialNames[0]] : ""; color: "white" }
                     Button {
                         id: saveToDisk
                         width: lblSave.width + 10; height: 30

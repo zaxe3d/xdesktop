@@ -22,7 +22,7 @@ def copytree(src, dst, symlinks=False, ignore=None):
         else:
             shutil.copy2(s, d)
 
-includes = ["sip", "ctypes", "UM", "PyQt5.QtNetwork", "PyQt5._QOpenGLFunctions_2_0", "serial", "Arcus", "google", "google.protobuf", "google.protobuf.descriptor", "xml.etree", "xml.etree.ElementTree", "cura", "cura.OneAtATimeIterator"]
+includes = ["sip", "ctypes", "UM", "PyQt5.QtWebSockets", "PyQt5.QtNetwork", "PyQt5._QOpenGLFunctions_2_0", "serial", "Arcus", "google", "google.protobuf", "google.protobuf.descriptor", "xml.etree", "xml.etree.ElementTree", "cura", "cura.OneAtATimeIterator"]
 # Include all the UM modules in the includes. As py2exe fails to properly find all the dependencies due to the plugin architecture.
 for dirpath, dirnames, filenames in os.walk(os.path.dirname(UM.__file__)):
     if "__" in dirpath:

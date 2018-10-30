@@ -100,7 +100,7 @@ Item {
         // while scrolling and holding down the scroll on it.
         Rectangle {
             anchors.fill: parent
-            anchors { topMargin: 5; bottomMargin: 5; leftMargin: 5; rightMargin: 5 }
+            anchors { topMargin: 2; bottomMargin: 2; leftMargin: 2; rightMargin: 2 }
             color: UM.Theme.getColor("sidebar_item")
         }
 

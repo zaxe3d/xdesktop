@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fdmmaterial xmlns="http://www.ultimaker.com/material" version="1.3">
+    <metadata>
+        <name>
+            <brand>Zaxe</brand>
+            <material>zaxe_abs</material>
+            <color>Generic</color>
+        </name>
+        <GUID>11c33c26-a85e-4a85-a3fe-890b45e4dd1f</GUID>
+        <version>1</version>
+        <color_code>#009bdf</color_code>
+        <description>Tough and durable. ABS is good for mechanical parts. It is impact resistant, dimensionally stable and handles temperatures up to 85ºC.</description>
+        <adhesion_info>Use glue, to avoid chipping of the glass.</adhesion_info>
+    </metadata>
+    <properties>
+        <density>1.10</density>
+        <diameter>1.75</diameter>
+    </properties>
+    <settings>
+        <setting key="print temperature">250</setting>
+        <setting key="print temperature_layer_0">250</setting>
+        <setting key="bed temperature">100</setting>
+        <setting key="bed temperature_layer_0">100</setting>
+        <setting key="cool_fan_full_layer">5</setting>
+
+        <machine>
+            <machine_identifier manufacturer="Zaxe" product="X1"/>
+
+            <setting key="print temperature">250</setting>
+            <setting key="heated bed temperature">100</setting>
+
+            <hotend id="0.4">
+                <setting key="machine_nozzle_size">0.4</setting>
+            </hotend>
+            <hotend id="0.6">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="retraction amount">1.0</setting>
+            </hotend>
+            <hotend id="0.8">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="retraction amount">1.0</setting>
+            </hotend>
+        </machine>
+
+    </settings>
+</fdmmaterial>

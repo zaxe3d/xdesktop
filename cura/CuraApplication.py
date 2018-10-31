@@ -158,7 +158,7 @@ class CuraApplication(QtApplication):
                          version = CuraVersion,
                          buildtype = CuraBuildType,
                          is_debug_mode = CuraDebugMode,
-                         tray_icon_name = "cura-icon-32.png",
+                         tray_icon_name = "zaxe-icon.png",
                          **kwargs)
 
         self.default_theme = "zaxe-default"

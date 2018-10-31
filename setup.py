@@ -47,7 +47,7 @@ setup(name="Cura",
         url="http://software.ultimaker.com/",
         license="GNU LESSER GENERAL PUBLIC LICENSE (LGPL)",
         scripts=["cura_app.py"],
-        windows=[{"script": "cura_app.py", "dest_name": "Cura", "icon_resources": [(1, "icons/cura.ico")]}],
+        windows=[{"script": "cura_app.py", "dest_name": "Cura", "icon_resources": [(1, "icons/zaxe.ico")]}],
         #console=[{"script": "cura_app.py"}],
         options={"py2exe": {"skip_archive": False, "includes": includes}})
 

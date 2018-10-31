@@ -1203,7 +1203,7 @@ msgstr ""
 #: /home/ruben/Projects/Cura/cura/CrashHandler.py:93
 msgctxt "@label crash message"
 msgid ""
-"<p><b>Oops, Ultimaker Cura has encountered something that doesn't seem right."
+"<p><b>Oops, XDesktopV2 has encountered something that doesn't seem right."
 "</p></b>\n"
 "                    <p>We encountered an unrecoverable error during start "
 "up. It was possibly caused by some incorrect configuration files. We suggest "
@@ -4345,7 +4345,7 @@ msgstr ""
 
 #: /home/ruben/Projects/Cura/resources/qml/Cura.qml:19
 msgctxt "@title:window"
-msgid "Ultimaker Cura"
+msgid "XDesktopV2"
 msgstr ""
 
 #: /home/ruben/Projects/Cura/resources/qml/Cura.qml:104

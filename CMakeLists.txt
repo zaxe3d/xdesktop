@@ -23,8 +23,8 @@ set(CURA_SDK_VERSION "" CACHE STRING "SDK version of Cura")
 set(CURA_CLOUD_API_ROOT "" CACHE STRING "Alternative Cura cloud API root")
 set(CURA_CLOUD_API_VERSION "" CACHE STRING "Alternative Cura cloud API version")
 
-configure_file(${CMAKE_SOURCE_DIR}/cura.desktop.in ${CMAKE_BINARY_DIR}/cura.desktop @ONLY)
-configure_file(cura/CuraVersion.py.in CuraVersion.py @ONLY)
+configure_file(${CMAKE_SOURCE_DIR}/xdesktop.desktop.in ${CMAKE_BINARY_DIR}/xdesktop.desktop @ONLY)
+configure_file(cura/Version.py.in Version.py @ONLY)
 
 if(NOT ${URANIUM_DIR} STREQUAL "")
     set(CMAKE_MODULE_PATH "${URANIUM_DIR}/cmake")
@@ -45,7 +45,7 @@ install(DIRECTORY resources
 install(DIRECTORY plugins
         DESTINATION lib${LIB_SUFFIX}/cura)
 if(NOT APPLE AND NOT WIN32)
-    install(FILES cura_app.py
+    install(FILES xdesktop_app.py
             DESTINATION ${CMAKE_INSTALL_BINDIR}
             PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
             RENAME cura)
@@ -53,16 +53,16 @@ if(NOT APPLE AND NOT WIN32)
         install(DIRECTORY cura
             DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}/dist-packages
             FILES_MATCHING PATTERN *.py)
-        install(FILES ${CMAKE_BINARY_DIR}/CuraVersion.py
+        install(FILES ${CMAKE_BINARY_DIR}/Version.py
             DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}/dist-packages/cura)
     else()
         install(DIRECTORY cura
             DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages
             FILES_MATCHING PATTERN *.py)
-        install(FILES ${CMAKE_BINARY_DIR}/CuraVersion.py
+        install(FILES ${CMAKE_BINARY_DIR}/Version.py
             DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages/cura)
     endif()
-    install(FILES ${CMAKE_BINARY_DIR}/cura.desktop
+    install(FILES ${CMAKE_BINARY_DIR}/xdesktop.desktop
             DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
     install(FILES ${CMAKE_SOURCE_DIR}/resources/images/zaxe-icon.png
             DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/128x128/apps/)
@@ -72,12 +72,12 @@ if(NOT APPLE AND NOT WIN32)
             DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages/
             RENAME cura.xml )
 else()
-    install(FILES cura_app.py
+    install(FILES xdesktop_app.py
             DESTINATION ${CMAKE_INSTALL_BINDIR}
             PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
     install(DIRECTORY cura
             DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages
             FILES_MATCHING PATTERN *.py)
-    install(FILES ${CMAKE_BINARY_DIR}/CuraVersion.py
+    install(FILES ${CMAKE_BINARY_DIR}/Version.py
             DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages/cura)
 endif()

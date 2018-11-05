@@ -32,7 +32,7 @@ if MYPY:
     CuraDebugMode = False
 else:
     try:
-        from cura.CuraVersion import CuraDebugMode
+        from cura.Version import CuraDebugMode
     except ImportError:
         CuraDebugMode = False  # [CodeStyle: Reflecting imported value]
 

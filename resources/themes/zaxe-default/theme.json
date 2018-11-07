@@ -6,79 +6,69 @@
     "fonts": {
         "extra_large": {
             "size": 1.55,
-            "weight": 50,
-            "family": "OpenSans"
+            "family": "Mark"
         },
         "large": {
             "size": 1.35,
-            "weight": 63,
-            "family": "OpenSans"
+            "bold": true,
+            "family": "Mark"
         },
         "large_nonbold": {
             "size": 1.35,
-            "weight": 50,
-            "family": "OpenSans"
+            "family": "Mark"
         },
         "medium": {
             "size": 1.16,
-            "weight": 50,
-            "family": "OpenSans"
+            "family": "Mark"
         },
         "medium_bold": {
             "size": 1.16,
-            "weight": 63,
-            "family": "OpenSans"
+            "bold": true,
+            "family": "Mark"
         },
         "default": {
             "size": 1.0,
-            "weight": 50,
-            "family": "OpenSans"
+            "family": "Mark"
         },
         "default_bold": {
             "size": 1.0,
-            "weight": 63,
-            "family": "OpenSans"
+            "bold": true,
+            "family": "Mark"
         },
         "default_italic": {
             "size": 1.15,
-            "weight": 50,
             "italic": true,
-            "family": "OpenSans"
+            "family": "Mark"
         },
         "small_bold": {
             "size": 1.0,
-            "weight": 63,
-            "family": "OpenSans"
+            "bold": true,
+            "family": "Mark"
         },
         "small": {
             "size": 1.0,
-            "weight": 50,
-            "family": "OpenSans"
+            "family": "Mark"
         },
         "very_small": {
             "size": 1.0,
-            "weight": 50,
-            "family": "OpenSans"
+            "family": "Mark"
         },
         "extra_small": {
             "size": 0.9,
-            "weight": 50,
-            "family": "OpenSans"
+            "family": "Mark"
         },
         "button_tooltip": {
             "size": 1.0,
-            "weight": 50,
-            "family": "OpenSans"
+            "family": "Mark"
         },
         "setting_category": {
             "size": 1.15,
-            "weight": 63,
-            "family": "OpenSans"
+            "bold": true,
+            "family": "Mark"
         },
         "action_button": {
             "size": 1.15,
-            "weight": 50,
-            "family": "OpenSans"
+            "family": "Mark"
         }
     },
 

@@ -7,73 +7,78 @@
         "extra_large": {
             "size": 1.55,
             "weight": 50,
-            "family": "Noto Sans"
+            "family": "OpenSans"
         },
         "large": {
             "size": 1.35,
             "weight": 63,
-            "family": "Noto Sans"
+            "family": "OpenSans"
         },
         "large_nonbold": {
             "size": 1.35,
             "weight": 50,
-            "family": "Noto Sans"
+            "family": "OpenSans"
         },
         "medium": {
             "size": 1.16,
             "weight": 50,
-            "family": "Noto Sans"
+            "family": "OpenSans"
         },
         "medium_bold": {
             "size": 1.16,
             "weight": 63,
-            "family": "Noto Sans"
+            "family": "OpenSans"
         },
         "default": {
             "size": 1.0,
             "weight": 50,
-            "family": "Noto Sans"
+            "family": "OpenSans"
         },
         "default_bold": {
             "size": 1.0,
             "weight": 63,
-            "family": "Noto Sans"
+            "family": "OpenSans"
         },
         "default_italic": {
             "size": 1.15,
             "weight": 50,
             "italic": true,
-            "family": "Noto Sans"
+            "family": "OpenSans"
+        },
+        "small_bold": {
+            "size": 1.0,
+            "weight": 63,
+            "family": "OpenSans"
         },
         "small": {
             "size": 1.0,
-            "weight": 63,
-            "family": "Noto Sans"
+            "weight": 50,
+            "family": "OpenSans"
         },
         "very_small": {
             "size": 1.0,
             "weight": 50,
-            "family": "Noto Sans"
+            "family": "OpenSans"
         },
         "extra_small": {
             "size": 0.9,
             "weight": 50,
-            "family": "Noto Sans"
+            "family": "OpenSans"
         },
         "button_tooltip": {
             "size": 1.0,
             "weight": 50,
-            "family": "Noto Sans"
+            "family": "OpenSans"
         },
         "setting_category": {
             "size": 1.15,
             "weight": 63,
-            "family": "Noto Sans"
+            "family": "OpenSans"
         },
         "action_button": {
             "size": 1.15,
             "weight": 50,
-            "family": "Noto Sans"
+            "family": "OpenSans"
         }
     },
 

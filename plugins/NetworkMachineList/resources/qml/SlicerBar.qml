@@ -66,7 +66,7 @@ Item {
                         return catalog.i18nc("@label", "SLICE \n Prepare Model for print")
                     }
                 }
-                font { pointSize: 15 }
+                font: UM.Theme.getFont("default");
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
             }
@@ -97,14 +97,14 @@ Item {
                 spacing: 7
                 width: parent.width
                 Layout.leftMargin: 50
-                Text { id: lblPrintDetails; text: "Print details"; color: "white"; font.bold: true; width: 125; font.pointSize: 14 }
+                Text { id: lblPrintDetails; text: catalog.i18nc("@label", "Print details"); color: "white"; font.bold: true; width: 125; font.pointSize: 14 }
                 Grid {
                     id: extraInfoGrid
                     property bool stateVisible: false
                     columns: 2
                     spacing: 4
 
-                    Text { text: "Consumption"; color: "white"; font.bold: true; width: 135 }
+                    Text { text: catalog.i18nc("@label", "Consumption"); color: "white"; font.bold: true; width: 135 }
                     Text { text: {
                         var lengths = [];
                         var weights = [];
@@ -130,7 +130,7 @@ Item {
                     }
                     Text { text: catalog.i18nc("@label", "Estimated time"); color: "white"; font.bold: true; width: 135 }
                     Text { text: (!base.printDuration || !base.printDuration.valid) ? catalog.i18nc("@label Hours and minutes", "00h 00min") : base.printDuration.getDisplayString(UM.DurationFormat.Short); color: "white" }
-                    Text { text: "Material"; color: "white"; font.bold: true; width: 135 }
+                    Text { text: catalog.i18nc("@label", "Material"); color: "white"; font.bold: true; width: 135 }
                     Text { text: PrintInformation.materialNames[0] ? networkMachineList.materialNames[PrintInformation.materialNames[0]] : ""; color: "white" }
                     Button {
                         id: saveToDisk
@@ -145,7 +145,7 @@ Item {
                             leftPadding: 5
                             color: "white"
                             text: ""
-                            font { family: fontAwesomeSolid.name; pointSize: 12 }
+                            font { family: fontAwesomeSolid.name; pointSize: 13 }
                             horizontalAlignment: Text.AlignLeft
                             verticalAlignment: Text.AlignVCenter
                         }
@@ -154,11 +154,11 @@ Item {
                             color: "white"
                             leftPadding: 25
                             topPadding: 2
-                            font { pointSize: 12; bold: true}
+                            font: UM.Theme.getFont("default_bold")
                             anchors.top: parent.contentItem.top
                             anchors.left: parent.left
                             horizontalAlignment: Text.AlignLeft
-                            text: " Save to flash disk"
+                            text: catalog.i18nc("@label", " Save to flash disk")
                         }
                         onClicked: {
                             UM.OutputDeviceManager.requestWriteToDevice(UM.OutputDeviceManager.activeDevice, PrintInformation.jobName,
@@ -178,7 +178,7 @@ Item {
                             leftPadding: 5
                             color: "white"
                             text: ""
-                            font { family: fontAwesomeSolid.name; pointSize: 12 }
+                            font { family: fontAwesomeSolid.name; pointSize: 13 }
                             horizontalAlignment: Text.AlignLeft
                             verticalAlignment: Text.AlignVCenter
                         }
@@ -186,11 +186,11 @@ Item {
                             color: "white"
                             leftPadding: 25
                             topPadding: 2
-                            font { pointSize: 12; bold: true}
+                            font: UM.Theme.getFont("default_bold")
                             anchors.top: parent.contentItem.top
                             anchors.left: parent.left
                             horizontalAlignment: Text.AlignLeft
-                            text: " Cancel"
+                            text: catalog.i18nc("@label", " Cancel")
                         }
                         onClicked: {
                             CuraApplication.backend.stopSlicing();
@@ -214,7 +214,7 @@ Item {
                 spacing: 7
                 width: parent.width
                 Layout.leftMargin: 50
-                Text { text: "Preparing..."; color: "white"; font.bold: true; width: 125; font.pointSize: 14 }
+                Text { text: catalog.i18nc("@label", "Preparing..."); color: "white"; font.bold: true; width: 125; font.pointSize: 14 }
                 ProgressBar {
                     id: progressBar
                     value: base.progress
@@ -238,7 +238,7 @@ Item {
                             color: "#17a81a" // green
                             Text {
                                 color: "white"
-                                font { pointSize: 12 }
+                                font: UM.Theme.getFont("small")
                                 text: parseInt(progressBar.value * 100, 10) + "%"
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 leftPadding: 15
@@ -268,11 +268,11 @@ Item {
                         color: "white"
                         leftPadding: 25
                         topPadding: 2
-                        font { pointSize: 12; bold: true}
+                        font: UM.Theme.getFont("default_bold")
                         anchors.top: parent.contentItem.top
                         anchors.left: parent.left
                         horizontalAlignment: Text.AlignLeft
-                        text: " Cancel"
+                        text: catalog.i18nc("@label", " Cancel")
                     }
                     onClicked: {
                         CuraApplication.backend.stopSlicing();

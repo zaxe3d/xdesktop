@@ -46,7 +46,7 @@ Column
         Label
         {
             id: titleLabel
-            text: "Prepare to print"
+            text: catalog.i18nc("@label", "Prepare to print")
             width: parent.width - UM.Theme.getSize("default_margin").width
             anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
             font: UM.Theme.getFont("extra_large");

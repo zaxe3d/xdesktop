@@ -583,7 +583,7 @@ Item
                             Label
                             {
                                 id: infillLabel
-                                text: "Fill density" //catalog.i18nc("@label", "Infill")
+                                text: catalog.i18nc("@label", "Fill density")
                                 font: UM.Theme.getFont("default_bold");
                                 color: UM.Theme.getColor("text_sidebar")
 
@@ -836,7 +836,7 @@ Item
                             Label
                             {
                                 id: raftLabel
-                                text: "Raft" //catalog.i18nc("@label", "Infill")
+                                text: catalog.i18nc("@label", "Raft")
                                 font: UM.Theme.getFont("default_bold");
                                 color: UM.Theme.getColor("text_sidebar")
 
@@ -916,7 +916,7 @@ Item
                             }
                             Label
                             {
-                                text: "Raft layers" //catalog.i18nc("@label", "Infill")
+                                text: catalog.i18nc("@label", "Raft")
                                 font: UM.Theme.getFont("default");
                                 color: UM.Theme.getColor("text_sidebar")
                                 anchors.left: adhesionCheckBox.right
@@ -976,8 +976,8 @@ Item
                             Label {
                                 color: "white"
                                 width: 75; height: 35
-                                text: "Slice!"
-                                font { pointSize: 15 }
+                                text: catalog.i18nc("@label", "Slice!")
+                                font: UM.Theme.getFont("medium")
                                 horizontalAlignment: Text.AlignHCenter
                                 verticalAlignment: Text.AlignVCenter
                             }
@@ -1026,8 +1026,8 @@ Item
                             Label {
                                 color: "white"
                                 width: 75; height: 35
-                                text: "Cancel"
-                                font { pointSize: 15 }
+                                text: catalog.i18nc("@label", "Cancel")
+                                font: UM.Theme.getFont("medium")
                                 horizontalAlignment: Text.AlignHCenter
                                 verticalAlignment: Text.AlignVCenter
                             }

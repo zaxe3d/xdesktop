@@ -131,7 +131,8 @@ Rectangle
         {
             anchors.centerIn: parent
             anchors.horizontalCenter: parent.horizontalCenter
-            color: UM.Theme.getColor("text_sidebar"); font.pointSize: 14; font.bold: true
+            color: UM.Theme.getColor("text_sidebar")
+            font: UM.Theme.getFont("default")
             text: catalog.i18nc("@label", "Can not find a Zaxe on the network")
         }
     }

@@ -304,7 +304,7 @@ Item {
                             color: UM.Theme.getColor("sidebar_item")
                             Text {
                                 width: parent.width
-                                font { pointSize: 12 }
+                                font: UM.Theme.getFont("small")
                                 padding: 10
                                 color: "green"
                                 horizontalAlignment: Text.AlignLeft
@@ -324,7 +324,7 @@ Item {
                             color: UM.Theme.getColor("sidebar_item")
                             Text {
                                 width: parent.width
-                                font { pointSize: 12 }
+                                font: UM.Theme.getFont("small")
                                 padding: 10
                                 color: "#a94442"
                                 horizontalAlignment: Text.AlignLeft
@@ -389,7 +389,7 @@ Item {
                                     }
                                     Text {
                                         color: "white"
-                                        font { pointSize: 12 }
+                                        font: UM.Theme.getFont("small")
                                         text: parseInt(progressBar.value * 100, 10) + "%"
                                         anchors.horizontalCenter: parent.horizontalCenter
                                         leftPadding: 15
@@ -442,7 +442,7 @@ Item {
 
                         Button {
                             id: btnPrintNow
-                            width: 95; height: 30
+                            width: 100; height: 30
                             visible: !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
                             z: 1
                             background: Rectangle {
@@ -462,12 +462,12 @@ Item {
                             Label {
                                 color: "white"
                                 leftPadding: 25
-                                topPadding: 2
-                                font { pointSize: 12; bold: true}
+                                topPadding: 1
+                                font: UM.Theme.getFont("small_bold")
                                 anchors.top: parent.contentItem.top
                                 anchors.left: parent.left
                                 horizontalAlignment: Text.AlignLeft
-                                text: " Print now"
+                                text: catalog.i18nc("@label", " Print now")
                             }
                             onClicked: {
                                 if (PrintInformation.materialNames[0] != device.material)
@@ -507,7 +507,7 @@ Item {
                         Button {
                             id: btnPause
                             x: 29
-                            width: 70; height: 30
+                            width: 90; height: 30
                             visible: machineStates.printing && !machineStates.paused
                             z: 1
                             background: Rectangle {
@@ -525,12 +525,12 @@ Item {
                             Label {
                                 color: "white"
                                 leftPadding: 22
-                                topPadding: 2
-                                font { pointSize: 12; bold: true}
+                                topPadding: 1
+                                font: UM.Theme.getFont("small_bold")
                                 anchors.top: parent.contentItem.top
                                 anchors.left: parent.left
                                 horizontalAlignment: Text.AlignLeft
-                                text: " Pause"
+                                text: catalog.i18nc("@label", " Pause")
                             }
                             onClicked: Cura.NetworkMachineManager.Pause(device.uid)
                         }
@@ -556,11 +556,11 @@ Item {
                                 color: "white"
                                 leftPadding: 22
                                 topPadding: 2
-                                font { pointSize: 12; bold: true}
+                                font: UM.Theme.getFont("small_bold")
                                 anchors.top: parent.contentItem.top
                                 anchors.left: parent.left
                                 horizontalAlignment: Text.AlignLeft
-                                text: " Resume"
+                                text: catalog.i18nc("@label", " Resume")
                             }
                             onClicked: Cura.NetworkMachineManager.Resume(device.uid)
                         }

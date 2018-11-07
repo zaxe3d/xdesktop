@@ -418,7 +418,6 @@ class CuraApplication(QtApplication):
             # Misc.:
             "ConsoleLogger",
             "CuraEngineBackend",
-            "UserAgreement",
             "FileLogger",
             "XmlMaterialProfile",
             "Toolbox",
@@ -516,7 +515,7 @@ class CuraApplication(QtApplication):
 
     @pyqtProperty(bool)
     def needToShowUserAgreement(self):
-        return self._need_to_show_user_agreement
+        return False
 
     def setNeedToShowUserAgreement(self, set_value = True):
         self._need_to_show_user_agreement = set_value

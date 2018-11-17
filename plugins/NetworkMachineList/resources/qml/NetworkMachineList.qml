@@ -15,8 +15,7 @@ Rectangle
 
     UM.I18nCatalog { id: catalog; name:"cura"}
 
-    FontLoader { id: zaxeIconFont; source: "../fonts/zaxe.ttf" }
-    FontLoader { id: fontAwesomeSolid; source: "../fonts/fa-solid-900.ttf" }
+    //FontLoader { id: fontAwesomeSolid; source: "../fonts/fa-solid-900.ttf" }
 
     MouseArea {
         anchors.fill: parent
@@ -119,7 +118,7 @@ Rectangle
         width: networkMachineList.width - 20
         height: 150
         anchors { horizontalCenter: parent.horizontalCenter; top: slicerBar.bottom; topMargin: 20 }
-        color: "#212121"
+        color: UM.Theme.getColor("sidebar_item_light")
         Image {
             antialiasing: true
             width: 137; height: 49
@@ -162,20 +161,31 @@ Rectangle
     SlicerBar
     {
         id: slicerBar
-        implicitWidth: networkMachineList.width
-        implicitHeight: childrenRect.height
         anchors.top: parent.top
         anchors.right: parent.right
-        anchors.topMargin: 10
+    }
+
+    // Bottom Border
+    Rectangle {
+        id: slicerBarBottomBorder
+         width: parent.width - UM.Theme.getSize("sidebar_item_margin").width
+        height: 2
+        color: UM.Theme.getColor("sidebar_item_dark")
+        anchors {
+            top: slicerBar.bottom
+            horizontalCenter: parent.horizontalCenter
+        }
+        z: 10
     }
 
     ScrollView
     {
         id: scroller
-        anchors.top: slicerBar.bottom;
+        anchors.top: slicerBarBottomBorder.bottom;
         anchors.bottom: parent.bottom;
         anchors.right: parent.right;
         anchors.left: parent.left;
+        anchors.topMargin: -2
         style: UM.Theme.styles.scrollview;
         __wheelAreaScrollSpeed: 75; // Scroll three lines in one scroll event
 
@@ -187,8 +197,8 @@ Rectangle
             leftMargin: 10; bottomMargin: 15
             model: machineListModel
             delegate: nMachineListDelegate
-            cacheBuffer: 1000000;   // Set a large cache to effectively just cache every list item.
-            spacing: 15
+            //cacheBuffer: 1000000;   // Set a large cache to effectively just cache every list item.
+            spacing: -2
         }
     }
 }

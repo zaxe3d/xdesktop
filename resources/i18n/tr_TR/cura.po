@@ -3972,9 +3972,17 @@ msgctxt "@label"
 msgid "Please take your print!"
 msgstr "Lütfen baskınızı tabladan alınız!"
 
-msgctxt "@label"
+msgctxt "@warning"
 msgid "The material in the device does not match with the material you choose. Please slice again with the correct material"
 msgstr "Cihaza takılı materyal ile baskıya hazırladığınız materyal eşleşmiyor. Lütfen doğru materyal ile tekrar baskıya hazırlayınız"
+
+msgctxt "@warning"
+msgid "This print is not compatible with this device model"
+msgstr "Bu baskı, bu cihaz ile uyumlu değildir"
+
+msgctxt "@notification"
+msgid "New version available for your device"
+msgstr "Cihazınız için yeni bir güncelleme mevcut"
 
 msgctxt "@label"
 msgid "File name"
@@ -4065,8 +4073,8 @@ msgid " Resume"
 msgstr " Devam et"
 
 msgctxt "@label"
-msgid " Print now"
-msgstr " Baskı al"
+msgid "Print now!"
+msgstr "Baskı al!"
 
 #~ msgctxt "@action:button"
 #~ msgid "Print with Doodle3D WiFi-Box"

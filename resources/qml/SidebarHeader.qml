@@ -2,7 +2,8 @@
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.7
-import QtQuick.Controls 1.1
+import QtQuick.Controls 1.2
+import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.1
 import QtGraphicalEffects 1.0
 
@@ -16,6 +17,9 @@ Column
     id: base;
 
     property int currentExtruderIndex: Cura.ExtruderManager.activeExtruderIndex;
+    property var activeExtruder: Cura.MachineManager.activeStack
+    property var hasActiveExtruder: activeExtruder != null
+    property var currentRootMaterialName: hasActiveExtruder ? materialNames[activeExtruder.material.name] : ""
 
     property var materialNames : {
         "zaxe_abs": "Zaxe ABS",
@@ -24,113 +28,102 @@ Column
         "custom": "Custom"
     }
 
-    spacing: Math.round(UM.Theme.getSize("sidebar_margin").width * 0.9)
+    spacing: 7
 
     signal showTooltip(Item item, point location, string text)
     signal hideTooltip()
 
-   Rectangle {
-        id: headerSeparator
-        width: parent.width
-        height: UM.Theme.getSize("sidebar_lining").height
-        color: UM.Theme.getColor("sidebar_lining")
+    width: parent.width - UM.Theme.getSize("sidebar_item_margin").width * 2
+    anchors {
+        top: parent.top
+        topMargin: 42
+        horizontalCenter: parent.horizontalCenter
     }
 
-    Rectangle {
-        height: UM.Theme.getSize("setting_control").height
-        width: parent.width - ((UM.Theme.getSize("sidebar_item_margin").width + UM.Theme.getSize("sidebar_margin").width) * 2)
-        color: UM.Theme.getColor("sidebar")
-        anchors.left: parent.left
-        anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width + UM.Theme.getSize("sidebar_item_margin").width
-        anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width + UM.Theme.getSize("sidebar_item_margin").width
+    // Title row
+    Text {
+        id: lblPrintDetails
+        text: catalog.i18nc("@label", "Prepare to print")
+        color: UM.Theme.getColor("text_sidebar_medium")
+        width: parent.width
+        font: UM.Theme.getFont("xx_large")
+        horizontalAlignment: Text.AlignHCenter
+    }
+    // Bottom Border
+    Rectangle { width: parent.width; height: UM.Theme.getSize("default_lining").width; color: UM.Theme.getColor("sidebar_item_extra_dark") }
+
+    Item
+    {
+        id: materialRow
+        width: parent.width
+        height: 100
+        anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+        anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+
         Label
         {
-            id: titleLabel
-            text: catalog.i18nc("@label", "Prepare to print")
+            id: materialLabel
+            text: catalog.i18nc("@label", "Material");
             width: parent.width - UM.Theme.getSize("default_margin").width
-            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
-            font: UM.Theme.getFont("extra_large");
+            height: UM.Theme.getSize("setting_control").height
+            verticalAlignment: Text.AlignVCenter
+            font: UM.Theme.getFont("large");
             color: UM.Theme.getColor("text_sidebar");
         }
-        Rectangle {
-            id: titleSeparator
-            width: parent.width
-            anchors.top: titleLabel.bottom
-            height: UM.Theme.getSize("sidebar_lining_extra_thin").height
-            color: UM.Theme.getColor("sidebar_lining_extra_thin")
-        }
-    }
 
-
-    // Background
-    RectangularGlow {
-        id: effect
-        height: UM.Theme.getSize("sidebar_setup").height
-
-        anchors
+        RowLayout
         {
-            left: parent.left
-            leftMargin: UM.Theme.getSize("sidebar_margin").width
-            right: parent.right
-            rightMargin: UM.Theme.getSize("sidebar_margin").width
-        }
-        glowRadius: 3
-        spread: 0
-        color: UM.Theme.getColor("sidebar_item_glow")
-        cornerRadius: rect.radius
-
-        Rectangle {
-            id: rect
-            anchors.fill: parent
-            color: UM.Theme.getColor("sidebar_item")
-            radius: 2
+            spacing: UM.Theme.getSize("sidebar_item_margin").width / 2
+            height: 50
             width: parent.width
-            // Material Row
-            Item
+            anchors.top: materialLabel.bottom
+            ExclusiveGroup {
+                id: materialGroup
+                onCurrentChanged : {
+                    Cura.MachineManager.setMaterialById(currentExtruderIndex, current.material)
+                }
+            }
+            // ABS
+            RadioButton
             {
-                id: materialRow
-                anchors {
-                    fill: parent
-                    leftMargin: UM.Theme.getSize("sidebar_item_margin").width
-                    topMargin: UM.Theme.getSize("sidebar_item_margin").height
-                }
-
-                Label
-                {
-                    id: materialLabel
-                    text: catalog.i18nc("@label", "Material");
-                    width: parent.width - UM.Theme.getSize("default_margin").width
-                    height: UM.Theme.getSize("setting_control").height
-                    verticalAlignment: Text.AlignVCenter
-                    font: UM.Theme.getFont("default_bold");
-                    color: UM.Theme.getColor("text_sidebar");
-                }
-
-                ToolButton
-                {
-                    id: materialSelection
-
-                    property var activeExtruder: Cura.MachineManager.activeStack
-                    property var hasActiveExtruder: activeExtruder != null
-                    property var currentRootMaterialName: hasActiveExtruder ? materialNames[activeExtruder.material.name] : ""
-
-                    text: currentRootMaterialName
-                    tooltip: currentRootMaterialName
-                    visible: Cura.MachineManager.hasMaterials
-                    enabled: base.currentExtruderIndex > -1
-                    height: UM.Theme.getSize("setting_control").height
-                    width: parent.width - UM.Theme.getSize("sidebar_item_margin").width
-                    anchors.top: materialLabel.bottom
-                    style: UM.Theme.styles.sidebar_header_button
-                    activeFocusOnPress: true;
-                    menu: MaterialMenu
-                    {
-                        extruderIndex: base.currentExtruderIndex
-                    }
-                }
+                // can't get the id of the current item from onCurrentChanged so I created another field
+                exclusiveGroup: materialGroup
+                property string material : "zaxe_abs"
+                checked: Cura.MachineManager.activeStack.material.name == "zaxe_abs"
+                Layout.preferredHeight: 80
+                Layout.preferredWidth: 80
+                Layout.alignment: Qt.AlignHCenter
+                style: UM.Theme.styles.radiobutton
+                text: "Zaxe ABS"
+            }
+            // PLA
+            RadioButton
+            {
+                exclusiveGroup: materialGroup
+                property string material : "zaxe_pla"
+                checked: Cura.MachineManager.activeStack.material.name == "zaxe_pla"
+                Layout.preferredHeight: 80
+                Layout.preferredWidth: 80
+                Layout.alignment: Qt.AlignHCenter
+                style: UM.Theme.styles.radiobutton
+                text: "Zaxe PLA"
+            }
+            // Custom
+            RadioButton
+            {
+                exclusiveGroup: materialGroup
+                property string material : "custom"
+                checked: activeExtruder.material.name == "custom"
+                Layout.preferredHeight: 80
+                Layout.preferredWidth: 120
+                Layout.alignment: Qt.AlignHCenter
+                style: UM.Theme.styles.radiobutton
+                text: catalog.i18nc("@label", "Custom")
             }
         }
     }
+    // Bottom Border
+    Rectangle { width: parent.width; height: UM.Theme.getSize("default_lining").width; color: UM.Theme.getColor("sidebar_item_dark") }
 
     UM.SettingPropertyProvider
     {

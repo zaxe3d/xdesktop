@@ -34,6 +34,7 @@ Rectangle
             rightMargin = UM.Theme.getSize("sidebar").width + UM.Theme.getSize("default_margin").width;
         }
         allItemsWidth = (
+            logo.width + UM.Theme.getSize("topbar_logo_right_margin").width +
             UM.Theme.getSize("default_margin").width + viewModeButton.width +
             rightMargin);
     }
@@ -44,142 +45,71 @@ Rectangle
         name:"cura"
     }
 
-    // View orientation Item
-    Row
+    Image
     {
-        id: viewOrientationControl
-        height: 30
+        id: logo
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.topMargin: 30
+        anchors.leftMargin: Math.round(UM.Theme.getSize("toolbar").width / 2 - UM.Theme.getSize("logo").width / 2)
 
-        spacing: 2 
+        source: UM.Theme.getImage("logo");
+        width: UM.Theme.getSize("logo").width;
+        height: UM.Theme.getSize("logo").height;
 
-        anchors
-        {
-            verticalCenter: base.verticalCenter
-            right: viewModeButton.left
-            rightMargin: UM.Theme.getSize("default_margin").width
+        sourceSize.width: width;
+        sourceSize.height: height;
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+            onEntered: {
+                extensionOpacityAnimator.stop()
+                extensionOpacityAnimator.from = 0
+                extensionOpacityAnimator.to = 1
+                extensionOpacityAnimator.start()
+            }
+            onExited: {
+                extensionOpacityAnimator.stop()
+                extensionOpacityAnimator.from = 1
+                extensionOpacityAnimator.to = 0
+                extensionOpacityAnimator.start()
+            }
         }
-
-        // #1 3d view
-        Button
-        {
-            iconSource: UM.Theme.getIcon("view_3d")
-            style: UM.Theme.styles.small_tool_button
-            anchors.verticalCenter: viewOrientationControl.verticalCenter
-            onClicked:UM.Controller.rotateView("3d", 0)
-            visible: base.width - allItemsWidth - 4 * this.width > 0
-        }
-
-        // #2 Front view
-        Button
-        {
-            iconSource: UM.Theme.getIcon("view_front")
-            style: UM.Theme.styles.small_tool_button
-            anchors.verticalCenter: viewOrientationControl.verticalCenter
-            onClicked: UM.Controller.rotateView("home", 0);
-            visible: base.width - allItemsWidth - 3 * this.width > 0
-        }
-
-        // #3 Top view
-        Button
-        {
-            iconSource: UM.Theme.getIcon("view_top")
-            style: UM.Theme.styles.small_tool_button
-            anchors.verticalCenter: viewOrientationControl.verticalCenter
-            onClicked: UM.Controller.rotateView("y", 90)
-            visible: base.width - allItemsWidth - 2 * this.width > 0
-        }
-
-        // #4 Left view
-        Button
-        {
-            iconSource: UM.Theme.getIcon("view_left")
-            style: UM.Theme.styles.small_tool_button
-            anchors.verticalCenter: viewOrientationControl.verticalCenter
-            onClicked: UM.Controller.rotateView("x", 90)
-            visible: base.width - allItemsWidth - 1 * this.width > 0
-        }
-
-        // #5 Right view
-        Button
-        {
-            iconSource: UM.Theme.getIcon("view_right")
-            style: UM.Theme.styles.small_tool_button
-            anchors.verticalCenter: viewOrientationControl.verticalCenter
-            onClicked: UM.Controller.rotateView("x", -90)
-            visible: base.width - allItemsWidth > 0
+        OpacityAnimator {
+            id: extensionOpacityAnimator
+            target: logoExtension
+            from: 0
+            to: 1
+            duration: 1000
+            running: false
         }
     }
 
-    ComboBox
+    Image
     {
-        id: viewModeButton
+        id: logoExtension
+        opacity: 0
 
         anchors {
-            verticalCenter: parent.verticalCenter
-            right: parent.right
-            rightMargin: rightMargin
+            left: logo.right
+            top: parent.top
+            topMargin: 23
+            leftMargin: 8
         }
 
-        style: UM.Theme.styles.combobox
-        visible: UM.Controller.activeStage.stageId != "MonitorStage"
 
-        model: UM.ViewModel { }
-        textRole: "name"
+        source: UM.Theme.getImage("desktop");
+        width: UM.Theme.getSize("desktop").width;
+        height: UM.Theme.getSize("desktop").height;
 
-        // update the model's active index
-        function updateItemActiveFlags () {
-            currentIndex = getActiveIndex()
-            for (var i = 0; i < model.rowCount(); i++) {
-                model.getItem(i).active = (i == currentIndex)
-            }
-        }
-
-        // get the index of the active model item on start
-        function getActiveIndex () {
-            for (var i = 0; i < model.rowCount(); i++) {
-                if (model.getItem(i).active) {
-                    return i
-                }
-            }
-            return 0
-        }
-
-        // set the active index
-        function setActiveIndex (index) {
-            UM.Controller.setActiveView(index)
-            // the connection to UM.ActiveView will trigger update so there is no reason to call it manually here
-        }
-
-        onCurrentIndexChanged:
-        {
-            if (model.getItem(currentIndex).id != undefined)
-                viewModeButton.setActiveIndex(model.getItem(currentIndex).id)
-        }
-        currentIndex: getActiveIndex()
-
-        // watch the active view proxy for changes made from the menu item
-        Connections
-        {
-            target: UM.ActiveView
-            onActiveViewChanged: viewModeButton.updateItemActiveFlags()
-        }
+        sourceSize.width: width;
+        sourceSize.height: height;
     }
 
-    Loader
-    {
-        id: view_panel
+    // Bottom Border
+    Rectangle { id: logoBorder; anchors { top: logo.bottom; topMargin: 20; left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: 2; color: UM.Theme.getColor("sidebar_item_extra_dark") }
 
-        anchors.top: viewModeButton.bottom
-        anchors.topMargin: UM.Theme.getSize("default_margin").height
-        anchors.right: viewModeButton.right
-
-        property var buttonTarget: Qt.point(viewModeButton.x + Math.round(viewModeButton.width / 2), viewModeButton.y + Math.round(viewModeButton.height / 2))
-
-        height: childrenRect.height
-        width: childrenRect.width
-
-        source: UM.ActiveView.valid ? UM.ActiveView.activeViewPanel : "";
-    }
 
     // Expand or collapse sidebar
     Connections

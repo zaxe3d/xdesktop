@@ -60,7 +60,7 @@ class ZaxeCodeWriter(MeshWriter):
             "filament_used": printInformation.materialLengths[0] * 1000, # 0 for current build plate
             "duration": printInformation.currentPrintTime.getDisplayString(DurationFormat.Format.ISO8601),
             "material": printInformation.materialNames[0], # 0 for current build plate
-            "model": self._machineManager.activeMachineName,
+            "model": self._machineManager.activeMachineName.replace("+", "PLUS"),
             "version": self.ZAXE_FILE_VERSION,
             "checksum": self.getCheckSum(),
             "nozzle_diameter": "0.4" # self._machineManager.globalVariantName # FIXME hardcoded

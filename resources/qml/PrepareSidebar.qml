@@ -86,20 +86,10 @@ Rectangle
         }
     }
 
-    MachineSelection
-    {
-        id: machineSelection
-        width: base.width
-        height: UM.Theme.getSize("sidebar_header").height
-        anchors.top: base.top
-        anchors.left: parent.left
-    }
-
     SidebarHeader {
         id: header
-        width: parent.width
         visible: !hideSettings && (machineExtruderCount.properties.value > 1 || Cura.MachineManager.hasMaterials || Cura.MachineManager.hasVariants)
-        anchors.top: machineSelection.bottom
+        anchors.top: parent.top
 
         onShowTooltip: base.showTooltip(item, location, text)
         onHideTooltip: base.hideTooltip()

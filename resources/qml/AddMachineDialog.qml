@@ -229,6 +229,7 @@ UM.Dialog
         base.visible = false
         var item = machineList.model.getItem(machineList.currentIndex);
         Cura.MachineManager.addMachine(machineName.text, item.id)
+        console.log(item.id)
         base.machineAdded(item.id) // Emit signal that the user added a machine.
     }
 

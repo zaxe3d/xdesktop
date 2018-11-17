@@ -4,78 +4,106 @@
     },
 
     "fonts": {
+        "zaxe_icon_set_small": {
+            "size": 2.5,
+            "family": "Zaxe"
+        },
+        "zaxe_icon_set": {
+            "size": 4,
+            "family": "Zaxe"
+        },
+        "zaxe_icon_set_large": {
+            "size": 5,
+            "family": "Zaxe"
+        },
+        "zaxe_icon_set_printer": {
+            "size": 7,
+            "family": "Zaxe"
+        },
+        "xx_large": {
+            "size": 2,
+            "family": "Mark-Regular"
+        },
+        "extra_large_bold": {
+            "size": 1.75,
+            "family": "Mark-Bold"
+        },
         "extra_large": {
-            "size": 1.55,
-            "family": "Mark"
+            "size": 1.75,
+            "family": "Mark-Regular"
         },
         "large": {
-            "size": 1.35,
+            "size": 1.55,
             "bold": true,
-            "family": "Mark"
+            "family": "Mark-Bold"
         },
         "large_nonbold": {
-            "size": 1.35,
-            "family": "Mark"
+            "size": 1.45,
+            "family": "Mark-Regular"
+        },
+        "large_semi_bold": {
+            "size": 1.45,
+            "family": "Mark-Medium",
+            "bold": true
         },
         "medium": {
             "size": 1.16,
-            "family": "Mark"
+            "family": "Mark-Regular"
         },
         "medium_bold": {
             "size": 1.16,
-            "bold": true,
-            "family": "Mark"
+            "family": "Mark-Bold"
         },
         "default": {
             "size": 1.0,
-            "family": "Mark"
+            "family": "Mark-Regular"
         },
         "default_bold": {
             "size": 1.0,
-            "bold": true,
-            "family": "Mark"
+            "family": "Mark-Bold"
         },
         "default_italic": {
             "size": 1.15,
             "italic": true,
-            "family": "Mark"
+            "family": "Mark-Regular"
         },
         "small_bold": {
             "size": 1.0,
-            "bold": true,
-            "family": "Mark"
+            "family": "Mark-Bold"
         },
         "small": {
             "size": 1.0,
-            "family": "Mark"
+            "family": "Mark-Regular"
         },
         "very_small": {
             "size": 1.0,
-            "family": "Mark"
+            "family": "Mark-Regular"
         },
         "extra_small": {
             "size": 0.9,
-            "family": "Mark"
+            "family": "Mark-Regular"
         },
         "button_tooltip": {
             "size": 1.0,
-            "family": "Mark"
+            "family": "Mark-Regular"
         },
         "setting_category": {
             "size": 1.15,
-            "bold": true,
-            "family": "Mark"
+            "family": "Mark-Bold"
         },
         "action_button": {
             "size": 1.15,
-            "family": "Mark"
+            "family": "Mark-Regular"
         }
     },
 
     "colors": {
 
-        "sidebar": [33, 33, 33, 255],
-        "sidebar_item": [45, 45, 45, 255],
+        "sidebar": [246, 244, 244, 255],
+        "sidebar_item_light": [246, 244, 244, 255],
+        "sidebar_item_medium_dark": [237, 235, 234, 255],
+        "sidebar_item_dark": [209, 211, 212, 255],
+        "sidebar_item_extra_dark": [180, 181, 182, 255],
         "sidebar_item_glow": [18, 18, 18, 255],
         "lining": [192, 193, 194, 255],
         "viewport_overlay": [0, 0, 0, 192],
@@ -94,7 +122,11 @@
         "topbar_button_text_hovered": [0, 0, 0, 255],
 
         "text": [0, 0, 0, 255],
-        "text_sidebar": [255, 255, 255, 255],
+        "text_sidebar": [0, 0, 0, 255],
+        "text_sidebar_light": [255, 255, 255, 255],
+        "text_sidebar_medium": [128, 128, 128, 255],
+        "text_sidebar_dark": [90, 91, 92, 255],
+        "text_sidebar_hover": [0, 155, 223, 255],
         "text_detail": [174, 174, 174, 128],
         "text_link": [12, 169, 227, 255],
         "text_inactive": [174, 174, 174, 255],
@@ -105,6 +137,12 @@
         "text_emphasis": [255, 255, 255, 255],
         "text_scene": [31, 36, 39, 255],
         "text_scene_hover": [70, 84, 113, 255],
+        "text_danger": [255, 0, 0, 255],
+        "text_success": [0, 155, 223, 255],
+        "text_warning": [255, 153, 102, 255],
+        "text_heating": [255, 153, 102, 255],
+        "text_blue": [0, 155, 223, 255],
+        "text_white": [255, 255, 255, 255],
 
         "error": [255, 140, 0, 255],
         "sidebar_header_bar": [31, 36, 39, 255],
@@ -119,16 +157,23 @@
         "sidebar_lining_thin": [127, 127, 127, 255],
         "sidebar_lining_extra_thin": [255, 255, 255, 255],
 
-        "button": [31, 36, 39, 255],
-        "button_hover": [68, 72, 75, 255],
-        "button_active": [68, 72, 75, 255],
-        "button_active_hover": [68, 72, 75, 255],
-        "button_text": [255, 255, 255, 255],
-        "button_text_hover": [255, 255, 255, 255],
-        "button_text_active": [255, 255, 255, 255],
-        "button_text_active_hover": [255, 255, 255, 255],
+        "sidebar_button": [237, 235, 234, 255],
+        "sidebar_button_hover": [237, 235, 234, 255],
+        "sidebar_button_active": [237, 235, 234, 255],
+        "sidebar_button_active_hover": [237, 235, 234, 255],
+
+        "button": [246, 244, 244, 255],
+        "button_hover": [246, 244, 244, 255],
+        "button_active": [246, 244, 244, 255],
+        "button_active_hover": [246, 244, 244, 255],
+        "button_text": [0, 0, 0, 255],
+        "button_text_hover": [0, 155, 223, 255],
+        "button_text_active": [0, 155, 223, 255],
+        "button_text_active_hover": [0, 155, 223, 255],
         "button_disabled": [31, 36, 39, 255],
         "button_disabled_text": [255, 255, 255, 101],
+        "button_blue": [0, 155, 223, 255],
+        "button_gray": [246, 244, 244, 255],
 
         "small_button": [31, 36, 39, 0],
         "small_button_hover": [68, 72, 75, 255],
@@ -183,7 +228,7 @@
         "print_button_ready_pressed_border": [30, 186, 245, 243],
 
         "scrollbar_background": [255, 255, 255, 255],
-        "scrollbar_handle": [31, 36, 39, 255],
+        "scrollbar_handle": [209, 211, 212, 255],
         "scrollbar_handle_hover": [12, 159, 227, 255],
         "scrollbar_handle_down": [12, 159, 227, 255],
 
@@ -230,33 +275,34 @@
 
         "material_compatibility_warning": [0, 0, 0, 255],
 
-        "progressbar_background": [245, 245, 245, 255],
+        "progressbar_background": [210, 208, 207, 255],
         "progressbar_control": [31, 36, 39, 255],
 
-        "sidebar_progressbar_background": [33, 33, 33, 255],
+        "sidebar_progressbar_background": [237, 235, 234, 255],
         "sidebar_progressbar_control": [0, 255, 0, 255],
 
-        "slider_groove": [245, 245, 245, 255],
+        "slider_groove": [209, 211, 212, 255],
         "slider_groove_border": [127, 127, 127, 255],
-        "slider_groove_fill": [127, 127, 127, 255],
-        "slider_handle": [0, 0, 0, 255],
+        "slider_groove_fill": [209, 211, 212, 255],
+        "slider_handle": [0, 155, 223, 255],
         "slider_handle_hover": [77, 182, 226, 255],
         "slider_handle_active": [68, 192, 255, 255],
         "slider_handle_border": [39, 44, 48, 255],
         "slider_text_background": [255, 255, 255, 255],
 
         "quality_slider_unavailable": [179, 179, 179, 255],
-        "quality_slider_available": [255, 255, 255, 255],
-        "quality_slider_handle": [62, 62, 62, 255],
-        "quality_slider_handle_border": [0, 0, 0, 255],
+        "quality_slider_available": [0, 0, 0, 255],
+        "quality_slider_handle": [0, 155, 223, 255],
+        "quality_slider_handle_border": [0, 155, 223, 255],
         "quality_slider_handle_hover": [127, 127, 127, 255],
         "quality_slider_text": [255, 255, 255, 255],
 
-        "checkbox": [255, 255, 255, 255],
-        "checkbox_hover": [255, 255, 255, 255],
-        "checkbox_border": [64, 69, 72, 255],
-        "checkbox_border_hover": [12, 169, 227, 255],
-        "checkbox_mark": [119, 122, 124, 255],
+        "checkbox": [209, 211, 212, 255],
+        "checkbox_hover": [0, 155, 223, 255],
+        "checkbox_border": [209, 211, 212, 255],
+        "checkbox_border_hover": [0, 155, 223, 255],
+        "checkbox_mark": [0, 0, 0, 255],
+        "checkbox_mark_hover": [255, 255, 255, 255],
         "checkbox_text": [27, 27, 27, 255],
 
         "mode_switch": [255, 255, 255, 255],
@@ -286,7 +332,7 @@
         "message_progressbar_background": [200, 200, 200, 255],
         "message_progressbar_control": [77, 182, 226, 255],
 
-        "tool_panel_background": [255, 255, 255, 255],
+        "tool_panel_background": [246, 244, 244, 255],
 
         "status_offline": [0, 0, 0, 255],
         "status_ready": [0, 205, 0, 255],
@@ -301,7 +347,7 @@
         "z_axis": [0, 255, 0, 255],
         "all_axis": [255, 255, 255, 255],
 
-        "viewport_background": [245, 245, 245, 255],
+        "viewport_background": [255, 255, 255, 255],
         "volume_outline": [12, 169, 227, 255],
         "buildplate": [244, 244, 244, 255],
         "buildplate_grid": [129, 131, 134, 255],
@@ -359,9 +405,10 @@
     "sizes": {
         "window_minimum_size": [70, 50],
 
-        "default_lining": [0.08, 0.08],
+        "default_lining": [0.12, 0.12],
         "default_arrow": [0.8, 0.8],
-        "logo": [7.6, 1.6],
+        "logo": [2.0, 2.0],
+        "desktop": [14.0, 3.0],
 
         "default_margin": [1.0, 1.0],
         "wide_margin": [2.0, 2.0],
@@ -371,11 +418,13 @@
         "extruder_button_material_margin": [0.70, 0.9],
         "extruder_button_material": [0.75, 0.75],
 
+        "toolbar": [7.0, 10.0],
+
         "sidebar": [35.0, 10.0],
         "sidebar_margin": [0.9, 1.43],
-        "sidebar_spacing": [1.5, 1.5],
+        "sidebar_spacing": [0.7, 0.7],
         "sidebar_item_margin": [1.43, 1.0],
-        "sidebar_item_icon_margin": [2.43, 0.7],
+        "sidebar_item_icon_margin": [1.43, 0.7],
         "sidebar_item_icon_text_margin": [0.43, 0.43],
         "sidebar_margin_thin": [0.71, 0.71],
         "sidebar_header": [0.0, 4.0],
@@ -408,9 +457,14 @@
         "standard_list_input": [20.0, 25.0],
         "standard_arrow": [0.8, 0.8],
 
-        "button": [4, 4],
-        "button_icon": [2.5, 2.5],
+        "button": [6, 5.4],
+        "button_icon": [2.7, 2.7],
+        "button_icon_rectangle": [3.2, 2],
         "button_lining": [0, 0],
+
+        "sidebar_button": [7, 7],
+        "sidebar_button_icon": [6.18, 10.47],
+        "sidebar_button_lining": [0, 0],
 
         "small_button": [2, 2],
         "small_button_icon": [1.5, 1.5],
@@ -431,7 +485,7 @@
 
         "tool_button_border": [1.0, 0],
 
-        "progressbar": [26.0, 0.4],
+        "progressbar": [26.0, 0.75],
         "progressbar_radius": [0, 0],
         "progressbar_control": [8.0, 0.4],
 

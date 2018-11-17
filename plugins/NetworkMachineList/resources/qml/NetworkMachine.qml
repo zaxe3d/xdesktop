@@ -1,4 +1,4 @@
-// Copyright (c) 2017 Ultimaker B.V.
+// Copyright (c) 2017 Ultimaker B.V..width
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.10
@@ -25,8 +25,10 @@ Item {
     property var  fwVersion
     property string printingFile
     property string elapsedTime
+    property string elapsedTimeTxt
     property string estimatedTime
     property bool hasPin
+    property var progress: 0
 
     property bool canceling
 
@@ -35,7 +37,7 @@ Item {
 
     // warnings
     property bool materialWarning
-    property bool modelWarning
+    property bool modelCompatibilityWarning
 
     Connections
     {
@@ -48,29 +50,27 @@ Item {
         }
         onPrintProgress: {
             if (uid != arguments[0]) return
-            progressBar.value = arguments[1]
+            progress = arguments[1]
         }
         onTempProgress: {
             if (uid != arguments[0]) return
             if (!machineStates.heating) return
             if (machineStates.printing || machineStates.calibrating || machineStates.uploading) return
-            progressBar.value = arguments[1]
+            progress = arguments[1]
         }
         onCalibrationProgress: {
             if (uid != arguments[0]) return
-            progressBar.value = arguments[1]
+            progress = arguments[1]
         }
         onUploadProgress: {
             if (uid != arguments[0]) return
-            progressBar.value = arguments[1]
+            progress = arguments[1]
         }
 
         onStateChange: {
             if (uid != arguments[0]) return
             machineStates = arguments[1]
-            progressBar.value = 0 // new state new bar
-
-            containerSayHi.visible = !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !machineStates.calibrating && !machineStates.bed_occupied
+            progress = 0 // new state new bar
         }
     }
 
@@ -87,37 +87,29 @@ Item {
         device.state = "anchored"
     }
 
+
+    // Top Border
+    Rectangle {
+        width: parent.width
+        height: UM.Theme.getSize("default_lining").width
+        anchors.top: parent.top
+        anchors.left: parent.left
+        color: UM.Theme.getColor("sidebar_item_dark")
+        z: 1
+    }
+
     // Background
-    RectangularGlow {
-        id: effect
+    Rectangle {
         anchors.fill: device
-        glowRadius: 3
-        spread: 0
-        color: UM.Theme.getColor("sidebar_item_glow")
-        cornerRadius: rect.radius
-
-        // Fixes the scroll glitch: background with radius sometimes disappears
-        // while scrolling and holding down the scroll on it.
-        Rectangle {
+        color: UM.Theme.getColor("sidebar_item_light")
+        MouseArea {
+            propagateComposedEvents: true
             anchors.fill: parent
-            anchors { topMargin: 2; bottomMargin: 2; leftMargin: 2; rightMargin: 2 }
-            color: UM.Theme.getColor("sidebar_item")
-        }
-
-        Rectangle {
-            id: rect
-            anchors.fill: parent
-            color: UM.Theme.getColor("sidebar_item")
-            radius: 2
-            MouseArea {
-                propagateComposedEvents: true
-                anchors.fill: parent
-                onClicked: {
-                    mouse.accepted = false
-                    if (inputDeviceName.visible) {
-                        inputDeviceName.visible = false
-                        lblDeviceName.visible = true
-                    }
+            onClicked: {
+                mouse.accepted = false
+                if (inputDeviceName.visible) {
+                    inputDeviceName.visible = false
+                    lblDeviceName.visible = true
                 }
             }
         }
@@ -127,530 +119,670 @@ Item {
             id: mainLayout
             spacing: 10
 
-            // First row
+            // First row - main
             Rectangle {
-                Layout.alignment: Qt.AlignRight
-                Layout.preferredWidth: parent.width - 15
-                Layout.preferredHeight: 55
-                color: UM.Theme.getColor("sidebar_item")
+                Layout.preferredWidth: device.width - UM.Theme.getSize("sidebar_item_margin").width
+                color: UM.Theme.getColor("sidebar_item_light")
+                Layout.preferredHeight: 90
 
+                // First row columns
                 RowLayout {
-                    id: row0
-                    // First column
+                    id: leftPane
+                    Layout.preferredHeight: 90
 
-                    // Printer icon
+                    // First column (left pane)
+                    // Printer model name / snapshot
                     Rectangle {
-                        Layout.preferredWidth: 60; Layout.minimumHeight: 50
-                        Layout.leftMargin: 20
-                        Layout.topMargin: 15
-                        color: UM.Theme.getColor("sidebar_item")
-                        //color: "green"
-                        RectangularGlow {
-                            width: 37; height: 37
-                            id: printerIconShadow
-                            glowRadius: 5
-                            color: UM.Theme.getColor("sidebar_item_glow")
-                            cornerRadius: printerIconBackground.radius
-                            Rectangle {
-                                id: printerIconBackground
-                                width: 35; height: 35
-                                color: UM.Theme.getColor("sidebar_item")
-                                radius: 100
-                                Text {
-                                    id: printerIcon
-                                    anchors.centerIn: parent
-                                    bottomPadding: 4; rightPadding: 2
-                                    font { family: zaxeIconFont.name; pointSize: 18 }
-                                    color: UM.Theme.getColor("text_sidebar")
-                                    text: "j"
-                                }
-                            }
-                        }
-                    }
-
-                    // Second column
-                    Rectangle {
-                        Layout.preferredWidth: 295; Layout.minimumHeight: 37
-                        Layout.topMargin: 5
-                        color: UM.Theme.getColor("sidebar_item")
-                        // device name input
-                        TextField {
-                            id: inputDeviceName
-                            visible: false
-                            selectByMouse: true
-                            color: "white"; font.pointSize: 14; font.bold: true
-                            text: lblDeviceName.text
-                            padding: 1
-                            width: 200; height: 23
-                            background: Rectangle {
-                                color: UM.Theme.getColor("sidebar_item")
-                                border.color: "#3e3e3e"
-                                border.width: 1
-                                radius: 2
-                            }
-                            Keys.onPressed: {
-                                if (event.key == Qt.Key_Escape) {
-                                    inputDeviceName.text = "";
-                                    event.accepted = true;
-                                } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {
-                                    console.log("enter pressed");
-                                    lblDeviceName.text = name = inputDeviceName.text;
-                                    Cura.NetworkMachineManager.ChangeName(device.uid, lblDeviceName.text)
-                                    inputDeviceName.visible = false;
-                                    lblDeviceName.visible = true;
-                                    event.accepted = true;
-                                }
-                            }
-                        }
-                        // device name label
-                        Label {
-                            id: lblDeviceName
-                            color: "white"; font.pointSize: 14; font.bold: true
-                            text: device.name
-                            topPadding: 3; leftPadding: 5
-                            MouseArea {
-                                anchors.fill: parent
-                                cursorShape: Qt.PointingHandCursor
-                                onClicked: {
-                                    inputDeviceName.text = name
-                                    lblDeviceName.visible = false;
-                                    inputDeviceName.visible = true;
-                                }
-                            }
-                        }
-                        // device status label
-                        Label {
-                            id: lblDeviceStatus
-                            color: "gray"; font.pointSize: 11
-                            anchors.top: lblDeviceName.bottom
-                            anchors.left: lblDeviceName.left
-                            topPadding: 2; leftPadding: 5
-                            text: {
-                                if (machineStates.bed_occupied)
-                                    return catalog.i18nc("@label", "Bed is occuppied...")
-                                else if (machineStates.paused)
-                                    return catalog.i18nc("@label", "Paused")
-                                else if (machineStates.printing)
-                                    return catalog.i18nc("@label", "Printing...")
-                                else if (machineStates.uploading)
-                                    return catalog.i18nc("@label", "Uploading...")
-                                else if (machineStates.calibrating)
-                                    return catalog.i18nc("@label", "Calibrating...")
-                                else if (machineStates.heating)
-                                    return catalog.i18nc("@label", "Heating...")
-                                else
-                                    return catalog.i18nc("@label", "Ready to print!")
-                            }
-                        }
-                    }
-                    // Third column
-                    // say hi
-                    Rectangle {
-                        id: containerSayHi
-                        Layout.preferredWidth: 37; Layout.minimumHeight: 50
-                        color: UM.Theme.getColor("sidebar_item")
-                        visible: !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !machineStates.calibrating && !machineStates.bed_occupied
+                        color: UM.Theme.getColor("sidebar_item_light")
+                        Layout.preferredWidth: 90; Layout.preferredHeight: 90
                         Layout.topMargin: 10
 
-                        RectangularGlow {
-                            id: sayHiBtnShadow
-                            width: 37; height: 37
-                            glowRadius: 5
-                            color: UM.Theme.getColor("sidebar_item_glow")
-                            cornerRadius: 100
-                        }
-
-                        RoundButton {
-                            id: btnSayHi
-                            contentItem: Label {
+                        Rectangle {
+                            width: 75; height: 75
+                            Layout.leftMargin: 20
+                            color: UM.Theme.getColor("sidebar_item_dark")
+                            anchors.centerIn: parent
+                            radius: 10
+                            Text {
+                                id: printerIcon
                                 anchors.centerIn: parent
-                                text: "m"
-                                font { family: zaxeIconFont.name; pointSize: 18; }
-                                color: btnSayHi.down ? "gray" : "white"
-                            }
-                            background: Rectangle {
-                                color: "#202020"
-                                radius: btnSayHi.radius
-                            }
-                            onClicked: Cura.NetworkMachineManager.SayHi(device.uid)
-                        }
-                    }
-                }
-            }
-
-            // Second row - message rows
-            Rectangle {
-                Layout.alignment: Qt.AlignRight
-                Layout.preferredWidth: parent.width - 15
-                Layout.preferredHeight: messageBarLayout.height
-                color: "red"
-
-                RowLayout {
-                    id: row1
-                    // First column
-
-                    ColumnLayout {
-                        id: messageBarLayout
-                        spacing: 5
-
-                        // Message bar row 1
-                        Rectangle {
-                            visible: machineStates.bed_occupied
-                            Layout.preferredWidth: device.width - 40; Layout.minimumHeight: childrenRect.height
-                            Layout.alignment: Qt.AlignLeft
-                            Layout.leftMargin: 20
-                            border.width: 1; border.color: "black"
-                            radius: 2
-                            color: UM.Theme.getColor("sidebar_item")
-                            Text {
-                                width: parent.width
-                                font: UM.Theme.getFont("small")
-                                padding: 10
-                                color: "green"
-                                horizontalAlignment: Text.AlignLeft
-                                wrapMode: Text.WordWrap
-                                text: catalog.i18nc("@label", "Please take your print!")
-                            }
-                        }
-
-                        // danger message
-                        Rectangle {
-                            visible: device.materialWarning
-                            Layout.preferredWidth: device.width - 40; Layout.minimumHeight: childrenRect.height
-                            Layout.alignment: Qt.AlignLeft
-                            Layout.leftMargin: 20
-                            border.width: 1; border.color: "#a94442"
-                            radius: 2
-                            color: UM.Theme.getColor("sidebar_item")
-                            Text {
-                                width: parent.width
-                                font: UM.Theme.getFont("small")
-                                padding: 10
-                                color: "#a94442"
-                                horizontalAlignment: Text.AlignLeft
-                                wrapMode: Text.WordWrap
-                                text: catalog.i18nc("@label", "The material in the device does not match with the material you choose. Please slice again with the correct material")
+                                bottomPadding: 4; rightPadding: 2
+                                font: UM.Theme.getFont("extra_large")
+                                color: UM.Theme.getColor("text_sidebar_light")
+                                text: device.deviceModel.replace("plus", "+").toUpperCase()
                             }
                         }
                     }
-                }
-            }
 
-            // Third row
-            Rectangle {
-                Layout.alignment: Qt.AlignRight
-                Layout.preferredWidth: parent.width - 15
-                Layout.preferredHeight: 25
-                visible: machineStates.calibrating || machineStates.printing || machineStates.heating || machineStates.uploading
-                color: "red"
-
-                RowLayout {
-                    id: row2
-                    // First column
-
-                    // Progress bar
+                    // Second column (right pane)
                     Rectangle {
-                        id: progressBarContainer
-                        Layout.preferredWidth: device.width - 40; Layout.minimumHeight: 25
-                        Layout.alignment: Qt.AlignLeft
-                        Layout.leftMargin: 20
-                        color: UM.Theme.getColor("sidebar_item")
+                        id: rightPane
+                        color: UM.Theme.getColor("sidebar_item_light")
+                        Layout.preferredWidth: device.width - 90
+                        Layout.preferredHeight: 90
 
-                        ProgressBar {
-                            id: progressBar
-                            value: 0
-                            padding: 2
+                        // Right pane rows (Printer name, status and progress bar
+                        ColumnLayout {
+                            spacing: 5
 
-                            background: Rectangle {
-                                implicitWidth: progressBarContainer.width
-                                implicitHeight: 24
-                                height: 24
-                                color: UM.Theme.getColor("sidebar_item_glow")
-                                radius: 3
+                            // First row (right pane)
+                            Rectangle {
+                                Layout.preferredWidth: device.width - 90 - UM.Theme.getSize("sidebar_item_margin").width
+                                Layout.preferredHeight: 37
+                                color: UM.Theme.getColor("sidebar_item_light")
+                                // device name input
+                                TextField {
+                                    id: inputDeviceName
+                                    visible: false
+                                    selectByMouse: true
+                                    font: UM.Theme.getFont("large")
+                                    color: UM.Theme.getColor("text_sidebar")
+                                    text: lblDeviceName.text
+                                    padding: 0
+                                    width: 200; height: 30
+                                    anchors {
+                                        top: parent.top
+                                        left: parent.left
+                                        topMargin: 12
+                                        leftMargin: -4
+                                    }
+
+                                    background: Rectangle {
+                                        color: UM.Theme.getColor("sidebar_item_light")
+                                        border.color: "#3e3e3e"
+                                        border.width: 1
+                                        radius: 2
+                                    }
+                                    Keys.onPressed: {
+                                        if (event.key == Qt.Key_Escape) {
+                                            inputDeviceName.text = "";
+                                            event.accepted = true;
+                                        } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {
+                                            lblDeviceName.text = name = inputDeviceName.text;
+                                            Cura.NetworkMachineManager.ChangeName(device.uid, lblDeviceName.text)
+                                            inputDeviceName.visible = false;
+                                            lblDeviceName.visible = true;
+                                            event.accepted = true;
+                                        }
+                                    }
+                                }
+                                // device name label
+                                Label {
+                                    id: lblDeviceName
+                                    font: UM.Theme.getFont("large")
+                                    color: UM.Theme.getColor("text_sidebar")
+                                    text: device.name
+                                    anchors.bottom : parent.bottom
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+                                        onClicked: {
+                                            inputDeviceName.text = name
+                                            lblDeviceName.visible = false;
+                                            inputDeviceName.visible = true;
+                                        }
+                                    }
+                                }
+                                // Button pane
+                                RowLayout {
+                                    Layout.preferredWidth: 120; Layout.preferredHeight: 40
+                                    anchors.right: parent.right; anchors.top: parent.top
+
+                                    // Preheat button
+                                    Button {
+                                        id: btnPreheat
+                                        visible: !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
+                                        implicitWidth: 30; implicitHeight: 40
+                                        anchors.top: parent.top
+                                        anchors.topMargin: 7
+
+                                        background: Rectangle {
+                                            color: UM.Theme.getColor("sidebar_item_light")
+                                        }
+                                        contentItem: Text {
+                                            font: UM.Theme.getFont("zaxe_icon_set")
+                                            color: machineStates.preheat ? UM.Theme.getColor("text_heating") : UM.Theme.getColor("text_sidebar")
+                                            text: "I"
+                                            anchors.top: parent.top
+                                            horizontalAlignment: Text.AlignHCenter
+                                            verticalAlignment: Text.AlignVCenter
+                                        }
+                                        onClicked: Cura.NetworkMachineManager.TogglePreheat(device.uid)
+                                        // this hover state makes it silly
+                                        onHoveredChanged: {
+                                            btnPreheat.contentItem.color = hovered
+                                                ? UM.Theme.getColor("text_heating")
+                                                : machineStates.preheat ? UM.Theme.getColor("text_heating") : UM.Theme.getColor("text_sidebar")
+                                        }
+                                    }
+
+                                    // Pause button
+                                    Button {
+                                        id: btnPause
+                                        visible: machineStates.printing && !machineStates.paused
+                                        implicitWidth: 30; implicitHeight: 40
+                                        anchors.top: parent.top
+                                        padding: 0
+                                        anchors.topMargin: 3
+
+                                        background: Rectangle {
+                                            color: UM.Theme.getColor("sidebar_item_light")
+                                        }
+                                        contentItem: Text {
+                                            font: UM.Theme.getFont("zaxe_icon_set")
+                                            color: UM.Theme.getColor("text_sidebar")
+                                            text: "K"
+                                            anchors.top: parent.top
+                                            horizontalAlignment: Text.AlignHCenter
+                                            verticalAlignment: Text.AlignVCenter
+                                        }
+                                        onClicked: Cura.NetworkMachineManager.Pause(device.uid)
+                                        onHoveredChanged: {
+                                            btnPause.contentItem.color = hovered
+                                                ? UM.Theme.getColor("text_sidebar_hover")
+                                                : UM.Theme.getColor("text_sidebar")
+                                        }
+                                    }
+
+                                    // Resume button
+                                    Button {
+                                        id: btnResume
+                                        visible: machineStates.paused
+                                        implicitWidth: 65; implicitHeight: 40
+                                        anchors.top: parent.top
+                                        anchors.topMargin: 1
+                                        padding: 0
+
+                                        background: Rectangle {
+                                            color: UM.Theme.getColor("sidebar_item_light")
+                                        }
+                                        contentItem: Text {
+                                            font: UM.Theme.getFont("zaxe_icon_set")
+                                            color: UM.Theme.getColor("text_sidebar")
+                                            text: "e"
+                                            anchors.top: parent.top
+                                            horizontalAlignment: Text.AlignHCenter
+                                            verticalAlignment: Text.AlignVCenter
+                                        }
+                                        onClicked: Cura.NetworkMachineManager.Resume(device.uid)
+                                        onHoveredChanged: {
+                                            btnResume.contentItem.color = hovered
+                                                ? UM.Theme.getColor("text_sidebar_hover")
+                                                : UM.Theme.getColor("text_sidebar")
+                                        }
+                                    }
+
+                                    // Left Border
+                                    Rectangle {
+                                        visible: !machineStates.bed_occupied && !machineStates.uploading && !machineStates.calibrating && !machineStates.paused
+                                        width: UM.Theme.getSize("default_lining").width
+                                        height: 37
+                                        anchors.top: parent.top
+                                        anchors.topMargin: -3
+                                        anchors.rightMargin: 5
+                                        color: UM.Theme.getColor("sidebar_item_dark")
+                                        z: 1
+                                    }
+
+                                    // Stop button
+                                    Button {
+                                        id: btnStop
+                                        visible: (!machineStates.calibrating && machineStates.heating) || (machineStates.printing && !machineStates.paused)
+                                        implicitWidth: 30; implicitHeight: 40
+                                        anchors.top: parent.top
+                                        padding: 0
+                                        anchors.topMargin: 3
+
+                                        background: Rectangle {
+                                            color: UM.Theme.getColor("sidebar_item_light")
+                                        }
+                                        contentItem: Text {
+                                            font: UM.Theme.getFont("zaxe_icon_set")
+                                            color: UM.Theme.getColor("text_danger")
+                                            text: "L"
+                                            anchors.top: parent.top
+                                            horizontalAlignment: Text.AlignHCenter
+                                            verticalAlignment: Text.AlignVCenter
+                                        }
+                                        onClicked: {
+                                            // FIXME no confirmation
+                                            Cura.NetworkMachineManager.Cancel(device.uid)
+                                        }
+                                        onHoveredChanged: {
+                                            btnStop.contentItem.color = hovered
+                                                ? UM.Theme.getColor("text_sidebar_hover")
+                                                : UM.Theme.getColor("text_danger")
+                                        }
+                                    }
+
+                                    // SayHi button
+                                    Button {
+                                        id: btnSayHi
+                                        visible: !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !machineStates.calibrating && !machineStates.bed_occupied
+                                        implicitWidth: 30; implicitHeight: 37
+                                        anchors.top: parent.top
+                                        padding: 0
+                                        anchors.topMargin: 3
+
+                                        background: Rectangle {
+                                            color: UM.Theme.getColor("sidebar_item_light")
+                                        }
+                                        contentItem: Text {
+                                            font: UM.Theme.getFont("zaxe_icon_set")
+                                            color: UM.Theme.getColor("text_sidebar")
+                                            text: "J"
+                                            anchors.top: parent.top
+                                            horizontalAlignment: Text.AlignHCenter
+                                            verticalAlignment: Text.AlignVCenter
+                                        }
+                                        onClicked: Cura.NetworkMachineManager.SayHi(device.uid)
+                                        onHoveredChanged: {
+                                            btnSayHi.contentItem.color = hovered
+                                                ? UM.Theme.getColor("text_sidebar_hover")
+                                                : UM.Theme.getColor("text_sidebar")
+                                        }
+                                    }
+                                    // Right Border
+                                    Rectangle {
+                                        width: UM.Theme.getSize("default_lining").width
+                                        height: 37
+                                        anchors.top: parent.top
+                                        anchors.topMargin: -3
+                                        anchors.rightMargin: 5
+                                        color: UM.Theme.getColor("sidebar_item_dark")
+                                        z: 1
+                                    }
+                                    //Label {
+                                    //    font: UM.Theme.getFont("zaxe_icon_set")
+                                    //    color: "red"
+                                    //    text: "L"
+                                    //}
+                                    Button {
+                                        id: btnShowExtraInfo
+                                        implicitWidth: 30; implicitHeight: 40
+
+                                        padding: 0
+                                        anchors.top: parent.top
+                                        anchors.topMargin: 3
+
+                                        background: Rectangle {
+                                            color: UM.Theme.getColor("sidebar_item_light")
+                                        }
+                                        contentItem: Text {
+                                            color: UM.Theme.getColor("text_sidebar")
+                                            font: UM.Theme.getFont("zaxe_icon_set")
+                                            text: "M"
+                                            horizontalAlignment: Text.AlignHCenter
+                                            verticalAlignment: Text.AlignVCenter
+                                        }
+                                        onClicked: {
+                                            if (containerExtraInfo.visible) {
+                                                containerExtraInfo.visible = false
+                                                btnShowExtraInfo.contentItem.text = "M"
+                                            } else {
+                                                containerExtraInfo.visible = true
+                                                btnShowExtraInfo.contentItem.text = "a"
+                                            }
+                                        }
+                                        onHoveredChanged: {
+                                            btnShowExtraInfo.contentItem.color = hovered
+                                                ? UM.Theme.getColor("text_sidebar_hover")
+                                                : UM.Theme.getColor("text_sidebar")
+                                        }
+                                    }
+                                }
                             }
 
-                            contentItem: Item {
-                                implicitWidth: device.width - 44
-                                implicitHeight: 16
+                            // Second row (right pane)
+                            Rectangle {
+                                Layout.preferredWidth: device.width - 90 - UM.Theme.getSize("sidebar_item_margin").width
+                                Layout.preferredHeight: 30
+
+                                color: UM.Theme.getColor("sidebar_item_light")
+                                // Print Now button
+                                Button {
+                                    id: btnPrintNow
+                                    visible: !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
+                                    width: 150; height: 35
+                                    anchors.top: parent.top
+                                    anchors.topMargin: 10
+                                    padding: 0
+                                    SequentialAnimation {
+                                        id: shakeAnim
+                                        running: false
+                                        NumberAnimation { target: btnPrintNow; property: "x"; to: -10; duration: 50 }
+                                        NumberAnimation { target: btnPrintNow; property: "x"; to: 10; duration: 50 }
+                                        NumberAnimation { target: btnPrintNow; property: "x"; to: -10; duration: 50 }
+                                        NumberAnimation { target: btnPrintNow; property: "x"; to: 10; duration: 50 }
+                                        NumberAnimation { target: btnPrintNow; property: "x"; to: 0; duration: 50 }
+                                    }
+
+                                    background: Rectangle {
+                                        color: UM.Theme.getColor("sidebar_item_light")
+                                        border.color: UM.Theme.getColor("text_blue")
+                                        border.width: UM.Theme.getSize("default_lining").width
+                                        radius: 10
+                                    }
+                                    contentItem: Text {
+                                        font: UM.Theme.getFont("large")
+                                        color: UM.Theme.getColor("text_blue")
+                                        text: catalog.i18nc("@label", "Print now!")
+                                        anchors.top: parent.top
+                                        horizontalAlignment: Text.AlignHCenter
+                                        verticalAlignment: Text.AlignVCenter
+                                    }
+                                    onClicked: {
+                                        if (PrintInformation.materialNames[0] != device.material)
+                                            device.materialWarning = true
+                                        else if (Cura.MachineManager.activeMachineName.replace("+", "PLUS") != device.deviceModel.toUpperCase()) {
+                                            device.modelCompatibilityWarning = true
+                                            shakeAnim.start()
+                                        } else {
+                                            device.materialWarning = false
+                                            device.modelCompatibilityWarning = false
+                                            Cura.NetworkMachineManager.upload(device.uid)
+                                        }
+                                    }
+                                    onHoveredChanged: {
+                                        btnPrintNow.contentItem.color = hovered
+                                            ? UM.Theme.getColor("text_sidebar_hover")
+                                            : UM.Theme.getColor("text_blue")
+                                    }
+                                }
+
+                                // device status label
+                                Label {
+                                    id: lblDeviceStatus
+                                    font: UM.Theme.getFont("large_semi_bold")
+                                    color: UM.Theme.getColor("text_sidebar")
+                                    anchors.bottom: parent.bottom
+                                    anchors.left: parent.left
+                                    text: {
+                                        if (machineStates.bed_occupied)
+                                            return catalog.i18nc("@label", "Bed is occuppied...")
+                                        else if (machineStates.paused)
+                                            return catalog.i18nc("@label", "Paused")
+                                        else if (machineStates.printing)
+                                            return catalog.i18nc("@label", "Printing...")
+                                        else if (machineStates.uploading)
+                                            return catalog.i18nc("@label", "Uploading...")
+                                        else if (machineStates.calibrating)
+                                            return catalog.i18nc("@label", "Calibrating...")
+                                        else if (machineStates.heating)
+                                            return catalog.i18nc("@label", "Heating...")
+                                        else
+                                            return ""
+                                    }
+                                }
+
+                                Label {
+                                    visible: machineStates.calibrating || machineStates.printing || machineStates.heating || machineStates.uploading
+                                    font: UM.Theme.getFont("large")
+                                    color: UM.Theme.getColor("text_sidebar")
+                                    anchors.bottom: parent.bottom
+                                    anchors.right: parent.right
+                                    text: parseInt(device.progress * 100, 10) + "%"
+                                }
+                            }
+
+                            // Third row (right pane) - progress bar and messages
+
+                            // Bed occuppied message
+                            Rectangle {
+                                visible: machineStates.bed_occupied
+                                Layout.preferredWidth: device.width - 90 - UM.Theme.getSize("sidebar_item_margin").width
+                                Layout.minimumHeight: childrenRect.height
+                                Layout.alignment: Qt.AlignLeft
+                                color: UM.Theme.getColor("sidebar_item_light")
+
+                                Text {
+                                    width: parent.width
+                                    font: UM.Theme.getFont("medium")
+                                    color: UM.Theme.getColor("text_success")
+                                    horizontalAlignment: Text.AlignLeft
+                                    wrapMode: Text.WordWrap
+                                    text: catalog.i18nc("@label", "Please take your print!")
+                                }
+                            }
+
+                            Rectangle {
+                                Layout.preferredWidth: device.width - 90 - UM.Theme.getSize("sidebar_item_margin").width
+                                Layout.preferredHeight: UM.Theme.getSize("progressbar").height
+                                visible: machineStates.calibrating || machineStates.printing || machineStates.heating || machineStates.uploading
 
                                 Rectangle {
-                                    width: progressBar.visualPosition * parent.width
-                                    height: parent.height
-                                    radius: 2
-                                    color: {
-                                        if (machineStates.calibrating)
-                                            return "blue"
-                                        else if (machineStates.heating)
-                                            return "#d9534f"
-                                        else if (machineStates.uploading)
-                                            return "orange"
-                                        else
-                                            return "#17a81a" // green
-                                    }
-                                    Text {
-                                        color: "white"
-                                        font: UM.Theme.getFont("small")
-                                        text: parseInt(progressBar.value * 100, 10) + "%"
-                                        anchors.horizontalCenter: parent.horizontalCenter
-                                        leftPadding: 15
-                                        topPadding: 2
+                                    id: progressBar
+                                    width: parent.width
+                                    height: UM.Theme.getSize("progressbar").height
+                                    radius: UM.Theme.getSize("progressbar_radius").width
+                                    color: UM.Theme.getColor("progressbar_background")
+
+                                    Rectangle {
+                                        width: Math.max(parent.width * device.progress)
+                                        height: parent.height
+                                        radius: UM.Theme.getSize("progressbar_radius").width
+                                        color: {
+                                            if (machineStates.calibrating)
+                                                return "orange"
+                                            else if (machineStates.heating)
+                                                return "red"
+                                            else if (machineStates.uploading)
+                                                return "#17a81a"
+                                            else
+                                                return "#009bdf"
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                }
-            }
-            // Fourth row
+                    } // End of Second column (right pane)
+                } // End of First row columns
+            } // End of First row - main
+
+            // Second row - main (fullrow messages)
+            // Material warning message
             Rectangle {
-                Layout.alignment: Qt.AlignRight
-                Layout.preferredWidth: parent.width - 15
-                Layout.preferredHeight: 30
-                color: UM.Theme.getColor("sidebar_item")
-                //color: "red"
+                visible: device.materialWarning
+                Layout.preferredWidth: Math.round(device.width - (UM.Theme.getSize("sidebar_item_margin").width * 2))
+                Layout.minimumHeight: childrenRect.height
+                Layout.alignment: Qt.AlignHCenter
+                Layout.topMargin: 10
+                color: UM.Theme.getColor("sidebar_item_light")
 
-                RowLayout {
-                    id: row3
-                    // First column
-
-                    // Buttons (play - pause - print - etc...)
-                    Rectangle {
-                        Layout.preferredWidth: 358; Layout.minimumHeight: 28
-                        Layout.leftMargin: 20
-                        color: UM.Theme.getColor("sidebar_item")
-
-                        Button {
-                            id: btnStop
-                            width: 30; height: 30
-                            visible: (!machineStates.calibrating && machineStates.heating) || (machineStates.printing && !machineStates.paused)
-                            background: Rectangle {
-                                color: "#d9534f"
-                                radius: 2
-                            }
-                            contentItem: Text {
-                                color: "white"
-                                text: ""
-                                font { family: fontAwesomeSolid.name; pointSize: 12 }
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                            }
-                            onClicked: {
-                                // FIXME no confirmation
-                                Cura.NetworkMachineManager.Cancel(device.uid)
-                            }
-                        }
-
-                        Button {
-                            id: btnPrintNow
-                            width: 100; height: 30
-                            visible: !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
-                            z: 1
-                            background: Rectangle {
-                                border.color: "black"
-                                border.width: 1
-                                color: "#191717"
-                                radius: 2
-                            }
-                            contentItem: Text {
-                                leftPadding: 5
-                                color: "white"
-                                text: "o"
-                                font { family: zaxeIconFont.name; pointSize: 12 }
-                                horizontalAlignment: Text.AlignLeft
-                                verticalAlignment: Text.AlignVCenter
-                            }
-                            Label {
-                                color: "white"
-                                leftPadding: 25
-                                topPadding: 1
-                                font: UM.Theme.getFont("small_bold")
-                                anchors.top: parent.contentItem.top
-                                anchors.left: parent.left
-                                horizontalAlignment: Text.AlignLeft
-                                text: catalog.i18nc("@label", " Print now")
-                            }
-                            onClicked: {
-                                if (PrintInformation.materialNames[0] != device.material)
-                                    device.materialWarning = true
-                                else if (Cura.MachineManager.activeMachineName != device.model)
-                                    device.modelWarning = true
-                                else {
-                                    device.materialWarning = false
-                                    device.modelWarning = false
-                                    Cura.NetworkMachineManager.upload(device.uid)
-                                }
-                            }
-                        }
-
-                        Button {
-                            id: btnPreheat
-                            width: 40; height: 30
-                            x: 95
-                            visible: !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
-
-                            background: Rectangle {
-                                color: machineStates.preheat ? "#d9534f" : "#191717"
-                                radius: 2
-                                border.color: "black"
-                                border.width: 1
-                            }
-                            contentItem: Text {
-                                color: "white"
-                                text: "e"
-                                font { family: zaxeIconFont.name; pointSize: 12 }
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                            }
-                            onClicked: Cura.NetworkMachineManager.TogglePreheat(device.uid)
-                        }
-
-                        Button {
-                            id: btnPause
-                            x: 29
-                            width: 90; height: 30
-                            visible: machineStates.printing && !machineStates.paused
-                            z: 1
-                            background: Rectangle {
-                                color: "#191717"
-                                radius: 2
-                            }
-                            contentItem: Text {
-                                leftPadding: 3
-                                color: "white"
-                                text: ""
-                                font { family: fontAwesomeSolid.name; pointSize: 12 }
-                                horizontalAlignment: Text.AlignLeft
-                                verticalAlignment: Text.AlignVCenter
-                            }
-                            Label {
-                                color: "white"
-                                leftPadding: 22
-                                topPadding: 1
-                                font: UM.Theme.getFont("small_bold")
-                                anchors.top: parent.contentItem.top
-                                anchors.left: parent.left
-                                horizontalAlignment: Text.AlignLeft
-                                text: catalog.i18nc("@label", " Pause")
-                            }
-                            onClicked: Cura.NetworkMachineManager.Pause(device.uid)
-                        }
-
-                        Button {
-                            id: btnResume
-                            width: 82; height: 30
-                            visible: machineStates.paused
-                            z: 1
-                            background: Rectangle {
-                                color: "#17a81a"
-                                radius: 2
-                            }
-                            contentItem: Text {
-                                leftPadding: 3
-                                color: "white"
-                                text: ""
-                                font { family: fontAwesomeSolid.name; pointSize: 12 }
-                                horizontalAlignment: Text.AlignLeft
-                                verticalAlignment: Text.AlignVCenter
-                            }
-                            Label {
-                                color: "white"
-                                leftPadding: 22
-                                topPadding: 2
-                                font: UM.Theme.getFont("small_bold")
-                                anchors.top: parent.contentItem.top
-                                anchors.left: parent.left
-                                horizontalAlignment: Text.AlignLeft
-                                text: catalog.i18nc("@label", " Resume")
-                            }
-                            onClicked: Cura.NetworkMachineManager.Resume(device.uid)
-                        }
+                Text {
+                    id: materialWarningIcon
+                    font: UM.Theme.getFont("zaxe_icon_set")
+                    color: UM.Theme.getColor("text_danger")
+                    horizontalAlignment: Text.AlignLeft
+                    anchors {
+                        top: parent.top
+                        left: parent.left
                     }
-                    // Second column - show extra info button
-                    Rectangle {
-                        Layout.preferredWidth: 50; Layout.minimumHeight: 30
-                        color: UM.Theme.getColor("sidebar_item")
-                        Button {
-                            id: btnShowExtraInfo
-                            width: 37; height: 30
-                            font { pointSize: 30; bold: true }
-                            background: Rectangle {
-                                color: UM.Theme.getColor("sidebar_item")
-                            }
-                            contentItem: Text {
-                                color: "#3e3e3e"
-                                text: "..."
-                                font: btnShowExtraInfo.font
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                            }
-                            onClicked: {
-                                if (containerExtraInfo.visible) {
-                                    containerExtraInfo.visible = false
-                                    btnShowExtraInfo.contentItem.text = "..."
-                                } else {
-                                    containerExtraInfo.visible = true
-                                    btnShowExtraInfo.contentItem.text = " x"
-                                }
-                            }
-                            onHoveredChanged: {
-                                btnShowExtraInfo.contentItem.color = hovered ? "gray" : "#3e3e3e"
-                            }
-                        }
+                    text: "d"
+                }
+                Text {
+                    width: parent.width
+                    font: UM.Theme.getFont("medium")
+                    color: UM.Theme.getColor("text_danger")
+                    horizontalAlignment: Text.AlignLeft
+                    wrapMode: Text.WordWrap
+                    anchors {
+                        top: parent.top
+                        left: materialWarningIcon.right
                     }
+                    text: catalog.i18nc("@label", "The material in the device does not match with the material you choose. Please slice again with the correct material")
                 }
             }
-            // Fifth row
+
+            // Model warning message
+            Rectangle {
+                visible: device.modelCompatibilityWarning
+                Layout.preferredWidth: Math.round(device.width - (UM.Theme.getSize("sidebar_item_margin").width * 2))
+                Layout.minimumHeight: 15
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+                Layout.topMargin: 10
+                color: UM.Theme.getColor("sidebar_item_light")
+
+                Text {
+                    id: modelCompatibilityWarningIcon
+                    font: UM.Theme.getFont("zaxe_icon_set")
+                    color: UM.Theme.getColor("text_danger")
+                    anchors {
+                        top: parent.top
+                        topMargin: -22 // silly because of the font alignment
+                    }
+                    text: "d"
+                }
+                Text {
+                    font: UM.Theme.getFont("medium")
+                    color: UM.Theme.getColor("text_danger")
+                    wrapMode: Text.WordWrap
+                    anchors {
+                        left: modelCompatibilityWarningIcon.right
+                        top: parent.top
+                    }
+                    text: catalog.i18nc("@warning", "This print is not compatible with this device model")
+                }
+            }
+
+            // Third row - main
             Rectangle {
                 id: containerExtraInfo
-                Layout.alignment: Qt.AlignRight
-                Layout.preferredWidth: parent.width - 15
-                Layout.preferredHeight: extraInfoGrid.height
-                color: "#2D2D2D"
+                Layout.alignment: Qt.AlignLeft
+                Layout.preferredWidth: parent.width - 63
+                Layout.preferredHeight: extraInfoColumn.height
+                Layout.leftMargin: 60
+                color: UM.Theme.getColor("sidebar_item_light")
                 visible: false
 
-                RowLayout {
-                    id: row4
-                    // First column
+                // Extra info column
+                Rectangle {
+                    width: parent.width; height: extraInfoColumn.height
+                    Layout.topMargin: 5
+                    color: UM.Theme.getColor("sidebar_item_light")
 
-                    // Extra info grid
-                    Rectangle {
-                        Layout.preferredWidth: 358; Layout.minimumHeight: extraInfoGrid.height
-                        Layout.topMargin: 5; Layout.leftMargin: 20
-                        color: "#2D2D2D"
+                    ColumnLayout {
+                        id: extraInfoColumn
+                        width: parent.width
 
-                        Grid {
-                            id: extraInfoGrid
-                            property bool stateVisible: false
-                            columns: 2
+                        // Filename row
+                        RowLayout {
+                            visible: machineStates.printing
+                            Layout.preferredHeight: 38
+                            Label {
+                                text: "T"
+                                color: UM.Theme.getColor("text_sidebar_dark")
+                                font: UM.Theme.getFont("zaxe_icon_set")
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                            }
+                            Label {
+                                text: device.printingFile
+                                color: UM.Theme.getColor("text_sidebar_dark")
+                                font: UM.Theme.getFont("large_semi_bold")
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                                Layout.bottomMargin: 7
+                            }
+                        }
+                        // Bottom Border 
+                        Rectangle { visible: machineStates.printing; Layout.leftMargin: 8; Layout.preferredWidth: parent.width; Layout.preferredHeight: UM.Theme.getSize("default_lining").width; color: UM.Theme.getColor("sidebar_item_dark") }
 
-                            Text { text: catalog.i18nc("@label", "File name"); color: "white"; font.bold: true; width: 125; visible: machineStates.printing }
-                            Text { text: device.printingFile; color: "white"; visible: machineStates.printing }
-                            Text { text: catalog.i18nc("@label", "Elapsed time"); color: "white"; font.bold: true; width: 125; visible: machineStates.printing }
-                            Text { id: txtElapsedTime; text: device.elapsedTime; color: "white"; visible: machineStates.printing }
-                            Text { text: catalog.i18nc("@label", "Est. time"); color: "white"; font.bold: true; width: 125; visible: machineStates.printing }
-                            Text { text: device.estimatedTime; color: "white"; visible: machineStates.printing }
-                            Text { text: catalog.i18nc("@label", "Material"); color: "white"; font.bold: true; width: 125 }
-                            Text { text: networkMachineList.materialNames[device.material]; color: "white" }
-                            Text { text: catalog.i18nc("@label", "Nozzle"); color: "white"; font.bold: true; width: 125 }
-                            Text { text: device.nozzle + " mm"; color: "white" }
-                            Text { text: catalog.i18nc("@label", "Network IP"); color: "white"; font.bold: true; width: 125 }
-                            Text { text: device.ip; color: "white" }
+                        // Duration row
+                        RowLayout {
+                            visible: machineStates.printing
+                            Layout.preferredHeight: 38
+                            Label {
+                                text: "V"
+                                color: UM.Theme.getColor("text_sidebar_dark")
+                                font: UM.Theme.getFont("zaxe_icon_set")
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                            }
+                            Label {
+                                text: device.elapsedTimeTxt + " / " + device.estimatedTime
+                                color: UM.Theme.getColor("text_sidebar_dark")
+                                font: UM.Theme.getFont("large_semi_bold")
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                                Layout.bottomMargin: 7
+                            }
+                        }
+                        // Bottom Border
+                        Rectangle { visible: machineStates.printing; Layout.leftMargin: 8; Layout.preferredWidth: parent.width; Layout.preferredHeight: UM.Theme.getSize("default_lining").width; color: UM.Theme.getColor("sidebar_item_dark") }
 
-                            // elapsed time calculation
-                            Timer {
-                                interval: 1000
-                                running: machineStates.printing
-                                repeat: true
-                                onTriggered: {
-                                    device.elapsedTime = parseFloat(device.elapsedTime) + 1
-                                    txtElapsedTime.text = networkMachineList.toHHMMSS(device.elapsedTime)
-                                }
+                        // Material and nozzle row
+                        RowLayout {
+                            Layout.preferredHeight: 38
+                            Label {
+                                text: "X"
+                                color: UM.Theme.getColor("text_sidebar_dark")
+                                font: UM.Theme.getFont("zaxe_icon_set")
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                            }
+                            Label {
+                                text: networkMachineList.materialNames[device.material]
+                                color: UM.Theme.getColor("text_sidebar_dark")
+                                font: UM.Theme.getFont("large_semi_bold")
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                                Layout.bottomMargin: 7
+                            }
+                            Label {
+                                text: "b"
+                                color: UM.Theme.getColor("text_sidebar_dark")
+                                font: UM.Theme.getFont("zaxe_icon_set")
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                            }
+                            Label {
+                                text: device.nozzle + " mm"
+                                color: UM.Theme.getColor("text_sidebar_dark")
+                                font: UM.Theme.getFont("large_semi_bold")
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                                Layout.bottomMargin: 7
+                            }
+                        }
+                        // Bottom Border 
+                        Rectangle { Layout.leftMargin: 8; Layout.preferredWidth: parent.width; Layout.preferredHeight: UM.Theme.getSize("default_lining").width; color: UM.Theme.getColor("sidebar_item_dark") }
+
+                        // IP row
+                        RowLayout {
+                            Layout.preferredHeight: 38
+                            Label {
+                                text: "c"
+                                color: UM.Theme.getColor("text_sidebar_dark")
+                                font: UM.Theme.getFont("zaxe_icon_set")
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                            }
+                            Label {
+                                text: device.ip
+                                color: UM.Theme.getColor("text_sidebar_dark")
+                                font: UM.Theme.getFont("large_semi_bold")
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                                Layout.bottomMargin: 7
+                            }
+                        }
+                        // Bottom Border
+                        Rectangle { Layout.leftMargin: 8; Layout.preferredWidth: parent.width; Layout.preferredHeight: UM.Theme.getSize("default_lining").width; color: UM.Theme.getColor("sidebar_item_dark") }
+
+                        // elapsed time calculation
+                        Timer {
+                            interval: 1000
+                            running: machineStates.printing
+                            repeat: true
+                            onTriggered: {
+                                device.elapsedTime = parseFloat(device.elapsedTime) + 1
+                                elapsedTimeTxt = networkMachineList.toHHMMSS(device.elapsedTime)
                             }
                         }
                     }
                 }
-            }
-        }
+            } // End of Second row - main
+        } // End of Main layout
+    }
+    // Bottom Border
+    Rectangle {
+        width: parent.width
+        height: UM.Theme.getSize("default_lining").width
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        color: UM.Theme.getColor("sidebar_item_dark")
+        z: 1
     }
 }
 

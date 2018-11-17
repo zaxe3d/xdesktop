@@ -1,0 +1,52 @@
+{
+    "id": "zaxe_x1plus",
+    "name": "X1+",
+    "version": 2,
+    "inherits": "zaxe",
+    "metadata": {
+        "visible": true,
+        "author": "Zaxe",
+        "manufacturer": "Zaxe",
+        "weight": 4,
+        "file_formats": "text/x-gcode",
+        "has_materials": true,
+        "has_machine_quality": true,
+        "has_variants": true,
+        "variants_name": "Nozzle",
+        "preferred_variant_name": "0.4",
+        "preferred_material": "zaxe_abs",
+        "preferred_quality_type": "normal",
+        "machine_extruder_trains":
+        {
+            "0": "zaxe_x1plus_extruder_0"
+        }
+    },
+
+    "overrides": {
+        "machine_name": { "default_value": "X1+" },
+        "machine_width": { "default_value": 306 },
+        "machine_height": { "default_value": 300 },
+        "machine_depth": { "default_value": 306 },
+        "machine_acceleration": { "default_value": 500 },
+        "machine_heated_bed": { "default_value": true },
+        "acceleration_infill": { "default_value": 500 },
+        "acceleration_wall_0": { "default_value": 500 },
+        "acceleration_wall_x":{ "default_value": 500 },
+        "acceleration_roofing":{ "default_value": 500 },
+        "acceleration_topbottom": { "default_value": 500 },
+        "acceleration_support_infill": { "default_value": 500 },
+        "acceleration_support_roof": { "default_value": 500 },
+        "acceleration_support_bottom": { "default_value": 500 },
+        "acceleration_travel": { "default_value": 500 },
+        "acceleration_print_layer_0": { "default_value": 500 },
+        "acceleration_travel_layer_0": { "default_value": 500 },
+        "acceleration_prime_tower": { "default_value": 500 },
+        "acceleration_skirt_brim": { "default_value": 500 },
+        "raft_surface_acceleration": { "default_value": 500 },
+        "raft_interface_acceleration": { "default_value": 500 },
+        "raft_base_acceleration": { "default_value": 500 },
+        "acceleration_enabled": { "default_value": true },
+        "raft_surface_layers": { "default_value": 2 },
+        "adhesion_type": { "default_value": "raft" }
+    }
+}

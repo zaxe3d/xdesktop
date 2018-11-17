@@ -35,7 +35,10 @@ Menu
             text: menu.materialNames[model.name]
             checkable: true
             checked: model.root_material_id == Cura.MachineManager.currentRootMaterialId[extruderIndex]
-            onTriggered: Cura.MachineManager.setMaterial(extruderIndex, model.container_node)
+            onTriggered: {
+                console.log(model.container_node)
+                Cura.MachineManager.setMaterial(extruderIndex, model.container_node)
+            }
         }
         onObjectAdded: menu.insertItem(index, object)
         onObjectRemoved: menu.removeItem(object) // TODO: This ain't gonna work, removeItem() takes an index, not object

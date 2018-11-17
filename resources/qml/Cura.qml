@@ -293,40 +293,41 @@ UM.MainWindow
                 anchors.fill: parent;
                 onDropped:
                 {
-                    if (drop.urls.length > 0)
-                    {
+                    //if (drop.urls.length > 0)
+                    //{
 
-                        var nonPackages = [];
-                        for (var i = 0; i < drop.urls.length; i++)
-                        {
-                            var filename = drop.urls[i];
-                            if (filename.endsWith(".curapackage"))
-                            {
-                                // Try to install plugin & close.
-                                CuraApplication.getPackageManager().installPackageViaDragAndDrop(filename);
-                                packageInstallDialog.text = catalog.i18nc("@label", "This package will be installed after restarting.");
-                                packageInstallDialog.icon = StandardIcon.Information;
-                                packageInstallDialog.open();
-                            }
-                            else
-                            {
-                                nonPackages.push(filename);
-                            }
-                        }
-                        openDialog.handleOpenFileUrls(nonPackages);
-                    }
+                    //    var nonPackages = [];
+                    //    for (var i = 0; i < drop.urls.length; i++)
+                    //    {
+                    //        var filename = drop.urls[i];
+                    //        if (filename.endsWith(".curapackage"))
+                    //        {
+                    //            // Try to install plugin & close.
+                    //            CuraApplication.getPackageManager().installPackageViaDragAndDrop(filename);
+                    //            packageInstallDialog.text = catalog.i18nc("@label", "This package will be installed after restarting.");
+                    //            packageInstallDialog.icon = StandardIcon.Information;
+                    //            packageInstallDialog.open();
+                    //        }
+                    //        else
+                    //        {
+                    //            nonPackages.push(filename);
+                    //        }
+                    //    }
+                    //    openDialog.handleOpenFileUrls(nonPackages);
+                    //}
                 }
             }
 
-            JobSpecs
-            {
-                id: jobSpecs
+            // Toolbar background
+            Rectangle {
+                id: toolbarBackground
+                color: UM.Theme.getColor("sidebar_item_light")
+                width: UM.Theme.getSize("toolbar").width
                 anchors
                 {
+                    top: parent.top;
                     bottom: parent.bottom;
-                    right: sidebar.left;
-                    bottomMargin: UM.Theme.getSize("default_margin").height;
-                    rightMargin: UM.Theme.getSize("default_margin").width;
+                    left: parent.left;
                 }
             }
 
@@ -336,15 +337,20 @@ UM.MainWindow
                 text: catalog.i18nc("@action:button","Open File");
                 iconSource: UM.Theme.getIcon("load")
                 style: UM.Theme.styles.tool_button
+                property var rectangleButton : true
                 tooltip: ""
                 anchors
                 {
-                    top: parent.top;
-                    topMargin: UM.Theme.getSize("default_margin").height;
+                    top: topbar.bottom;
+                    topMargin: 25
                     left: parent.left;
+                    leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2)
                 }
                 action: Cura.Actions.open;
             }
+
+            // Bottom Border
+            Rectangle { id: openFileButtonBottomBorder; anchors { top: openFileButton.bottom; left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: 2; color: UM.Theme.getColor("sidebar_item_dark") }
 
             Toolbar
             {
@@ -354,8 +360,7 @@ UM.MainWindow
                 property int mouseY: base.mouseY
 
                 anchors {
-                    top: openFileButton.bottom;
-                    topMargin: UM.Theme.getSize("window_margin").height;
+                    top: openFileButtonBottomBorder.bottom;
                     left: parent.left;
                 }
             }
@@ -401,6 +406,23 @@ UM.MainWindow
                 }
 
                 source: UM.Controller.activeStage.mainComponent
+            }
+
+            Loader
+            {
+                id: view_panel
+
+                anchors.top: sidebar.top
+                anchors.topMargin: UM.Theme.getSize("default_margin").height
+                anchors.right: sidebar.left
+                anchors.rightMargin: UM.Theme.getSize("default_margin").width
+
+                //property var buttonTarget: Qt.point(viewModeButton.x + Math.round(viewModeButton.width / 2), viewModeButton.y + Math.round(viewModeButton.height / 2))
+
+                height: childrenRect.height
+                width: childrenRect.width
+
+                source: UM.ActiveView.valid ? UM.ActiveView.activeViewPanel : "";
             }
 
             Loader
@@ -1015,14 +1037,11 @@ UM.MainWindow
                 base.visible = true;
             }
 
-            // check later if the user agreement dialog has been closed
-            if (CuraApplication.needToShowUserAgreement)
+            if(Cura.MachineManager.activeMachine == null)
             {
-                restart();
-            }
-            else if(Cura.MachineManager.activeMachine == null)
-            {
-                addMachineDialog.open();
+                // Add all the machines here
+                Cura.MachineManager.addMachine("X1", "zaxe_x1")
+                Cura.MachineManager.addMachine("X1+", "zaxe_x1plus")
             }
         }
     }

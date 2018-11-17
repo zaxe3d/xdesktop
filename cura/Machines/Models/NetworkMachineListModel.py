@@ -87,6 +87,9 @@ class NetworkMachineListModel(ListModel):
             networkMachine.elapsedTime,
             networkMachine.estimatedTime
         )
+        self._itemUpdated(uuid, "mPrintingFile", networkMachine.printingFile)
+        self._itemUpdated(uuid, "mElapsedTime", networkMachine.elapsedTime)
+        self._itemUpdated(uuid, "mEstimatedTime", networkMachine.estimatedTime)
 
     def _compareVersion(self, idx, networkMachine):
         Logger.log("d", "comparing version")
@@ -114,19 +117,25 @@ class NetworkMachineListModel(ListModel):
             self.printProgress.emit(uuid, float(message["progress"]) / 100)
         elif message['event'] == "new_name":
             self.nameChange.emit(uuid, message["name"])
+            self._itemUpdated(uuid, "mName", message["name"])
         if message['event'] in ["material_change", "hello"]:
             self.materialChange.emit(uuid, eventArgs.machine.material)
+            self._itemUpdated(uuid, "mMaterial", eventArgs.machine.material)
         if message['event'] in ["nozzle_change", "hello"]:
             self.nozzleChange.emit(uuid, eventArgs.machine.nozzle)
+            self._itemUpdated(uuid, "mNozzle", eventArgs.machine.nozzle)
         if message["event"] == "temperature_progress":
             self.temperatureProgressEnabled = True
             self.tempProgress.emit(uuid, float(message["progress"]) / 100)
         if message['event'] in ["start_print", "hello"]:
             self._onFileChange(uuid, eventArgs.machine)
         if message['event'] in ["states_update", "hello"]:
-            self.stateChange.emit(uuid, eventArgs.machine.getStates())
+            states = eventArgs.machine.getStates()
+            self.stateChange.emit(uuid, states)
+            self._itemUpdated(uuid, "mStates", states)
         if message["event"] in ["pin_change", "hello"]:
             self.pinChange.emit(uuid, bool(eventArgs.machine.hasPin))
+            self._itemUpdated(uuid, "mHasPin", eventArgs.machine.hasPin)
         if message["event"] == "hello":
             self._compareVersion(uuid, eventArgs.machine)
 
@@ -150,3 +159,19 @@ class NetworkMachineListModel(ListModel):
         del self._items[index]
         self.endRemoveRows()
         self.itemRemoved.emit(index)
+
+    ## Updates model item's property
+    #  Use this to update model item's less updated properties like
+    #  states, name or nozzle. Because we directly update the
+    #  network machine it self via listening signals. But if we send the
+    #  network list to the background, we rerender items from the model
+    #  so it doesn't get updated properly if we don't update it from here.
+    #   \param mId machine id
+    #   \property property name
+    #   \value valuea of the intended property
+    def _itemUpdated(self, mId, property, value):
+        index = self.find("mID", mId)
+        if index == -1:
+            return
+        self.setProperty(index, property, value)
+

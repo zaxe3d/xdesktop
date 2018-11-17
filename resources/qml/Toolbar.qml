@@ -32,41 +32,47 @@ Item
             model: UM.ToolModel { }
             width: childrenRect.width
             height: childrenRect.height
-            Button
+            Column
             {
-                text: model.name + (model.shortcut ? (" (" + model.shortcut + ")") : "")
-                iconSource: (UM.Theme.getIcon(model.icon) != "") ? UM.Theme.getIcon(model.icon) : "file:///" + model.location + "/" + model.icon
-                checkable: true
-                checked: model.active
-                enabled: model.enabled && UM.Selection.hasSelection && UM.Controller.toolsEnabled
-                style: UM.Theme.styles.tool_button
-
-                onCheckedChanged:
+                Button
                 {
-                    if (checked)
-                    {
-                        base.activeY = y;
-                    }
-                }
+                    text: model.name + (model.shortcut ? (" (" + model.shortcut + ")") : "")
+                    anchors { left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) }
+                    iconSource: (UM.Theme.getIcon(model.icon) != "") ? UM.Theme.getIcon(model.icon) : "file:///" + model.location + "/" + model.icon
+                    checkable: true
+                    checked: model.active
+                    enabled: model.enabled && UM.Selection.hasSelection && UM.Controller.toolsEnabled
+                    style: UM.Theme.styles.tool_button
 
-                //Workaround since using ToolButton's onClicked would break the binding of the checked property, instead
-                //just catch the click so we do not trigger that behaviour.
-                MouseArea
-                {
-                    anchors.fill: parent;
-                    onClicked:
+                    onCheckedChanged:
                     {
-                        forceActiveFocus() //First grab focus, so all the text fields are updated
-                        if(parent.checked)
+                        if (checked)
                         {
-                            UM.Controller.setActiveTool(null);
-                        }
-                        else
-                        {
-                            UM.Controller.setActiveTool(model.id);
+                            base.activeY = y;
                         }
                     }
+
+                    //Workaround since using ToolButton's onClicked would break the binding of the checked property, instead
+                    //just catch the click so we do not trigger that behaviour.
+                    MouseArea
+                    {
+                        anchors.fill: parent;
+                        onClicked:
+                        {
+                            forceActiveFocus() //First grab focus, so all the text fields are updated
+                            if(parent.checked)
+                            {
+                                UM.Controller.setActiveTool(null);
+                            }
+                            else
+                            {
+                                UM.Controller.setActiveTool(model.id);
+                            }
+                        }
+                    }
                 }
+                // Bottom Border
+                Rectangle { anchors { left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: 2; color: UM.Theme.getColor("sidebar_item_dark") }
             }
         }
 
@@ -94,7 +100,7 @@ Item
         z: buttons.z -1
 
         target: Qt.point(parent.right, base.activeY +  Math.round(UM.Theme.getSize("button").height/2))
-        arrowSize: UM.Theme.getSize("default_arrow").width
+        arrowSize: 0
 
         width:
         {

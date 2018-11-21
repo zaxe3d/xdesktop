@@ -267,7 +267,7 @@ Item
 
                             enabled: qualityModel.totalTicks > 0
                             visible: qualityModel.availableTotalTicks > 0
-                            updateValueWhileDragging : false
+                            updateValueWhileDragging : true
 
                             minimumValue: qualityModel.qualitySliderAvailableMin >= 0 ? qualityModel.qualitySliderAvailableMin : 0
                             // maximumValue must be greater than minimumValue to be able to see the handle. While the value is strictly
@@ -440,7 +440,7 @@ Item
 
                             font: UM.Theme.getFont("large_semi_bold")
 
-                            text: parseInt(supportAngle.properties.value) + "°"
+                            text: supportAngle.properties.value > 0 ? parseInt(supportAngle.properties.value) + "°" : catalog.i18nc("@label", "Support off")
 
                             color: supportAngleSlider.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
                         }
@@ -474,10 +474,6 @@ Item
 
                             onValueChanged: {
 
-                                // Don't round the value if it's already the same
-                                if (parseInt(supportAngle.properties.value) == supportAngleSlider.value) {
-                                    return
-                                }
 
                                 // Round the slider value to the nearest multiple of 10 (simulate step size of 10)
                                 var roundedSliderValue = Math.round(supportAngleSlider.value / 10) * 10
@@ -485,8 +481,12 @@ Item
                                 // Update the slider value to represent the rounded value
                                 supportAngleSlider.value = roundedSliderValue
 
-                                supportAngle.setPropertyValue("value", roundedSliderValue)
                                 supportEnabled.setPropertyValue("value", (roundedSliderValue > 0))
+
+                                // only set if different
+                                if (parseInt(supportAngle.properties.value) != supportAngleSlider.value) {
+                                    supportAngle.setPropertyValue("value", roundedSliderValue)
+                                }
                             }
 
                             style: SliderStyle
@@ -784,7 +784,6 @@ Item
                                 infillSlider.value = roundedSliderValue
 
                                 Cura.MachineManager.setSettingForAllExtruders("infill_sparse_density", "value", roundedSliderValue)
-                                Cura.MachineManager.resetSettingForAllExtruders("infill_line_distance")
                             }
 
                             style: SliderStyle

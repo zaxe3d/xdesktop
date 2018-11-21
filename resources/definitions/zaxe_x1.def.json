@@ -27,27 +27,6 @@
         "machine_name": { "default_value": "X1" },
         "machine_width": { "default_value": 207 },
         "machine_height": { "default_value": 210 },
-        "machine_depth": { "default_value": 225 },
-        "machine_acceleration": { "default_value": 500 },
-        "machine_heated_bed": { "default_value": true },
-        "acceleration_infill": { "default_value": 500 },
-        "acceleration_wall_0": { "default_value": 500 },
-        "acceleration_wall_x":{ "default_value": 500 },
-        "acceleration_roofing":{ "default_value": 500 },
-        "acceleration_topbottom": { "default_value": 500 },
-        "acceleration_support_infill": { "default_value": 500 },
-        "acceleration_support_roof": { "default_value": 500 },
-        "acceleration_support_bottom": { "default_value": 500 },
-        "acceleration_travel": { "default_value": 500 },
-        "acceleration_print_layer_0": { "default_value": 500 },
-        "acceleration_travel_layer_0": { "default_value": 500 },
-        "acceleration_prime_tower": { "default_value": 500 },
-        "acceleration_skirt_brim": { "default_value": 500 },
-        "raft_surface_acceleration": { "default_value": 500 },
-        "raft_interface_acceleration": { "default_value": 500 },
-        "raft_base_acceleration": { "default_value": 500 },
-        "acceleration_enabled": { "default_value": true },
-        "raft_surface_layers": { "default_value": 2 },
-        "adhesion_type": { "default_value": "raft" }
+        "machine_depth": { "default_value": 225 }
     }
 }

@@ -77,20 +77,6 @@
                     "type": "str",
                     "enabled": false
                 },
-                "material_diameter":
-                {
-                    "label": "Diameter",
-                    "description": "Adjusts the diameter of the filament used. Match this value with the diameter of the used filament.",
-                    "unit": "mm",
-                    "type": "float",
-                    "default_value": 2.85,
-                    "minimum_value": "0.0001",
-                    "minimum_value_warning": "0.4",
-                    "maximum_value_warning": "3.5",
-                    "enabled": "machine_gcode_flavor != \"UltiGCode\"",
-                    "settable_per_mesh": false,
-                    "settable_per_extruder": true
-                },
                 "material_bed_temp_wait":
                 {
                     "label": "Wait for Build Plate Heatup",
@@ -767,7 +753,7 @@
                     "description": "The height of the initial layer in mm. A thicker initial layer makes adhesion to the build plate easier.",
                     "unit": "mm",
                     "type": "float",
-                    "default_value": 0.4,
+                    "default_value": 0.3,
                     "resolve": "min(extruderValues('layer_height_0'))",
                     "minimum_value": "0.001",
                     "minimum_value_warning": "0.1",
@@ -1047,7 +1033,7 @@
                             "minimum_value_warning": "1",
                             "maximum_value_warning": "10",
                             "type": "int",
-                            "value": "1 if magic_spiralize else max(1, round((wall_thickness - wall_line_width_0) / wall_line_width_x) + 1) if wall_thickness != 0 else 0",
+                            "value": "3 if wall_thickness != 0 else 0",
                             "limit_to_extruder": "wall_x_extruder_nr",
                             "settable_per_mesh": true
                         }
@@ -1059,7 +1045,7 @@
                     "description": "Distance of a travel move inserted after the outer wall, to hide the Z seam better.",
                     "unit": "mm",
                     "type": "float",
-                    "default_value": 0.0,
+                    "default_value": 0.2,
                     "value": "machine_nozzle_size / 2",
                     "minimum_value": "0",
                     "maximum_value_warning": "machine_nozzle_size * 2",
@@ -1431,7 +1417,7 @@
                         "z_seam_corner_outer": "Expose Seam",
                         "z_seam_corner_any":   "Hide or Expose Seam"
                     },
-                    "default_value": "z_seam_corner_inner",
+                    "default_value": "z_seam_corner_any",
                     "enabled": "z_seam_type != 'random'",
                     "limit_to_extruder": "wall_0_extruder_nr",
                     "settable_per_mesh": true
@@ -1629,7 +1615,7 @@
                             "default_value": 2,
                             "minimum_value": "0",
                             "minimum_value_warning": "infill_line_width",
-                            "value": "0 if infill_sparse_density == 0 else (infill_line_width * 100) / infill_sparse_density * (2 if infill_pattern == 'grid' else (3 if infill_pattern == 'triangles' or infill_pattern == 'trihexagon' or infill_pattern == 'cubic' or infill_pattern == 'cubicsubdiv' else (2 if infill_pattern == 'tetrahedral' or infill_pattern == 'quarter_cubic' else (1 if infill_pattern == 'cross' or infill_pattern == 'cross_3d' else 1))))",
+                            "value": "0 if infill_sparse_density == 0 else (infill_line_width * 100) / infill_sparse_density * (1 if infill_pattern == 'grid' else (3 if infill_pattern == 'triangles' or infill_pattern == 'trihexagon' or infill_pattern == 'cubic' or infill_pattern == 'cubicsubdiv' else (2 if infill_pattern == 'tetrahedral' or infill_pattern == 'quarter_cubic' else (1 if infill_pattern == 'cross' or infill_pattern == 'cross_3d' else 1))))",
                             "limit_to_extruder": "infill_extruder_nr",
                             "settable_per_mesh": true
                         }
@@ -1657,7 +1643,7 @@
                     },
                     "default_value": "zigzag",
                     "enabled": "infill_sparse_density > 0",
-                    "value": "'lines' if infill_sparse_density > 25 else 'zigzag'",
+                    "value": "'lines' if infill_sparse_density > 25 else 'grid'",
                     "limit_to_extruder": "infill_extruder_nr",
                     "settable_per_mesh": true
                 },
@@ -1666,7 +1652,7 @@
                     "label": "Connect Infill Lines",
                     "description": "Connect the ends where the infill pattern meets the inner wall using a line which follows the shape of the inner wall. Enabling this setting can make the infill adhere to the walls better and reduce the effects of infill on the quality of vertical surfaces. Disabling this setting reduces the amount of material used.",
                     "type": "bool",
-                    "default_value": true,
+                    "default_value": false,
                     "value": "infill_pattern == 'cross' or infill_pattern == 'cross_3d'",
                     "enabled": "infill_pattern == 'lines' or infill_pattern == 'grid' or infill_pattern == 'triangles' or infill_pattern == 'trihexagon' or infill_pattern == 'cubic' or infill_pattern == 'tetrahedral' or infill_pattern == 'quarter_cubic' or infill_pattern == 'cross' or infill_pattern == 'cross_3d'",
                     "limit_to_extruder": "infill_extruder_nr",
@@ -1730,7 +1716,7 @@
                 "infill_wall_line_count":
                 {
                     "label": "Extra Infill Wall Count",
-                    "description": "Add extra walls around the infill area. Such walls can make top/bottom skin lines sag down less which means you need less top/bottom skin layers for the same quality at the cost of some extra material.\nThis feature can combine with the Connect Infill Polygons to connect all the infill into a single extrusion path without the need for travels or retractions if configured right.",
+                    "description": "Add extra wals around the infill area. Such walls can make top/bottom skin lines sag down less which means you need less top/bottom skin layers for the same quality at the cost of some extra material.\nThis feature can combine with the Connect Infill Polygons to connect all the infill into a single extrusion path without the need for travels or retractions if configured right.",
                     "default_value": 0,
                     "type": "int",
                     "minimum_value": "0",
@@ -1872,7 +1858,7 @@
                     "label": "Infill Before Walls",
                     "description": "Print the infill before printing the walls. Printing the walls first may lead to more accurate walls, but overhangs print worse. Printing the infill first leads to sturdier walls, but the infill pattern might sometimes show through the surface.",
                     "type": "bool",
-                    "default_value": true,
+                    "default_value": false,
                     "enabled": "infill_sparse_density > 0 and wall_x_extruder_nr == infill_extruder_nr",
                     "settable_per_mesh": true
                 },
@@ -2223,7 +2209,7 @@
                     "label": "Initial Layer Flow",
                     "description": "Flow compensation for the first layer: the amount of material extruded on the initial layer is multiplied by this value.",
                     "unit": "%",
-                    "default_value": 100,
+                    "default_value": 95,
                     "value": "material_flow",
                     "type": "float",
                     "minimum_value": "0.0001",
@@ -3816,8 +3802,7 @@
                     "value": "1 if (support_pattern == 'grid' or support_pattern == 'triangles' or support_pattern == 'concentric') else 0",
                     "enabled": "support_enable",
                     "limit_to_extruder": "support_infill_extruder_nr",
-                    "settable_per_mesh": false,
-                    "settable_per_extruder": true
+                    "settable_per_mesh": true
                 },
                 "zig_zaggify_support":
                 {
@@ -3866,7 +3851,7 @@
                             "type": "float",
                             "minimum_value": "0",
                             "minimum_value_warning": "support_line_width",
-                            "default_value": 4,
+                            "default_value": 2.66,
                             "enabled": "support_enable or support_tree_enable",
                             "value": "0 if support_infill_rate == 0 else (support_line_width * 100) / support_infill_rate * (2 if support_pattern == 'grid' else (3 if support_pattern == 'triangles' else 1))",
                             "limit_to_extruder": "support_infill_extruder_nr",
@@ -4087,7 +4072,7 @@
                     "label": "Enable Support Interface",
                     "description": "Generate a dense interface between the model and the support. This will create a skin at the top of the support on which the model is printed and at the bottom of the support, where it rests on the model.",
                     "type": "bool",
-                    "default_value": false,
+                    "default_value": true,
                     "limit_to_extruder": "support_interface_extruder_nr",
                     "enabled": "support_enable or support_tree_enable",
                     "settable_per_mesh": true,

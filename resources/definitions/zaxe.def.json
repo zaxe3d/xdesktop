@@ -10,32 +10,31 @@
         "exclude_materials": [ ]
     },
     "overrides": {
-        "machine_max_feedrate_e": {
-            "default_value": 45
-        },
-        "material_print_temperature": {
-            "minimum_value": "0"
-        },
-        "material_bed_temperature": {
-            "minimum_value": "0"
-        },
-        "material_standby_temperature": {
-            "minimum_value": "0"
-        },
-        "extruder_prime_pos_y":
-        {
-            "minimum_value": "0",
-            "maximum_value": "machine_depth"
-        },
-        "extruder_prime_pos_x":
-        {
-            "minimum_value": "0",
-            "maximum_value": "machine_width"
-        },
-        "relative_extrusion":
-        {
-            "value": false,
-            "enabled": false
-        }
+        "machine_acceleration": { "value": 500 },
+        "machine_heated_bed": { "value": true },
+        "acceleration_infill": { "value": 500 },
+        "acceleration_wall_0": { "value": 500 },
+        "acceleration_wall_x":{ "value": 500 },
+        "acceleration_roofing":{ "value": 500 },
+        "acceleration_topbottom": { "value": 500 },
+        "acceleration_support_infill": { "value": 500 },
+        "acceleration_support_roof": { "value": 500 },
+        "acceleration_support_interface": { "value": 500 },
+        "acceleration_support_bottom": { "value": 500 },
+        "acceleration_travel": { "default_value": 500 },
+        "acceleration_print_layer_0": { "value": 500 },
+        "acceleration_travel_layer_0": { "value": 500 },
+        "acceleration_skirt_brim": { "value": 500 },
+        "acceleration_support": { "value": 500 },
+        "raft_acceleration": { "value": 500 },
+        "acceleration_print": { "value": 500 },
+        "acceleration_print_layer_0": { "value": 500 },
+        "acceleration_wall": { "value": 500 },
+        "raft_surface_acceleration": { "value": 500 },
+        "raft_interface_acceleration": { "value": 500 },
+        "raft_base_acceleration": { "value": 500 },
+        "acceleration_enabled": { "value": true },
+        "raft_surface_layers": { "value": 2 },
+        "adhesion_type": { "default_value": "raft" }
     }
 }

@@ -69,8 +69,7 @@ Rectangle
        var idx, item, count
        // draw list items here. If previously added
        count = Cura.NetworkMachineListModel.rowCount()
-       noPrinterWarning.visible = count == 0
-
+       noPrinterWarningTimer.start()
        for(idx = 0; idx < count; idx++) {
            item = Cura.NetworkMachineListModel.getItem(idx)
            machineListModel.append(item)
@@ -114,24 +113,31 @@ Rectangle
 
     Rectangle
     {
-        id: "noPrinterWarning"
-        width: networkMachineList.width - 20
-        height: 150
+        Timer {
+            id: noPrinterWarningTimer
+            interval: 2000; running: false; repeat: false
+            onTriggered: {
+                noPrinterWarning.visible = Cura.NetworkMachineListModel.rowCount() == 0
+            }
+        }
+        id: noPrinterWarning
+        width: networkMachineList.width
+        visible: false
+        height: 25
         anchors { horizontalCenter: parent.horizontalCenter; top: slicerBar.bottom; topMargin: 20 }
         color: UM.Theme.getColor("sidebar_item_light")
         Image {
             antialiasing: true
-            width: 137; height: 49
-            anchors.horizontalCenter: parent.horizontalCenter
-            id: noPrinterWarningImage
-            source: "../images/connect_your_zaxe.png"
+            width: 25; height: 25
+            source: "../images/no_connection.png"
+            anchors.right: noPrinterWarningLabel.left; anchors.rightMargin: 5
         }
         Label
         {
-            anchors.centerIn: parent
-            anchors.horizontalCenter: parent.horizontalCenter
+            id: noPrinterWarningLabel
+            anchors { centerIn: parent }
             color: UM.Theme.getColor("text_sidebar")
-            font: UM.Theme.getFont("default")
+            font: UM.Theme.getFont("large_nonbold")
             text: catalog.i18nc("@label", "Can not find a Zaxe on the network")
         }
     }
@@ -197,7 +203,7 @@ Rectangle
             leftMargin: 10; bottomMargin: 15
             model: machineListModel
             delegate: nMachineListDelegate
-            //cacheBuffer: 1000000;   // Set a large cache to effectively just cache every list item.
+            cacheBuffer: 1000000;   // Set a large cache to effectively just cache every list item.
             spacing: -2
         }
     }

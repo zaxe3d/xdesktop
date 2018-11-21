@@ -215,7 +215,7 @@ class NetworkMachine(QObject, Thread):
         self.startPreheat()
         self.uploader = FTPUploader(filename, self.ip, self.ftpPort)
         self.uploader.uploadEvent.connect(self.uploadProgressCB)
-        Logger.log("w", "starting to upload")
+        Logger.log("d", "starting to upload")
         self.uploader.daemon = True
         self.uploader.start()
 

@@ -22,10 +22,17 @@ Item {
     property variant printMaterialCosts: PrintInformation.materialCosts
     property variant printMaterialNames: PrintInformation.materialNames
 
-    property string fileBaseName
+    property string fileBaseName: PrintInformation.baseName
     property string mWeight
     property string mLength
     width: parent.width
+
+    onActivityChanged: {
+        if (activity == false) {
+            //When there is no mesh in the buildplate; the printJobTextField is set to an empty string so it doesn't set an     empty string as a jobName (which is later used for saving the file)
+             PrintInformation.baseName = ''
+    }
+    }
 
     height: {
         // FIXME
@@ -73,8 +80,8 @@ Item {
 
                 MachineCarousel { modelName: "X1"; modelId: "zaxe_x1"; Layout.preferredWidth: 85; Layout.preferredHeight: 80 }
                 MachineCarousel { modelName: "X1+"; modelId: "zaxe_x1+"; Layout.preferredWidth: 85; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "Z1"; modelId: "zaxe_z1"; Layout.preferredWidth: 85; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "Z1+"; modelId: "zaxe_z1+"; Layout.preferredWidth: 85; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "Z1"; modelId: "zaxe_z1"; enabled: false; Layout.preferredWidth: 85; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "Z1+"; modelId: "zaxe_z1+"; enabled: false; Layout.preferredWidth: 85; Layout.preferredHeight: 80 }
             }
 
             Button {
@@ -155,7 +162,7 @@ Item {
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     }
                     Text {
-                        text: PrintInformation.jobName + ".zaxe"
+                        text: base.fileBaseName + ".zaxe"
                         color: UM.Theme.getColor("text_sidebar")
                         font: UM.Theme.getFont("large")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter

@@ -84,7 +84,7 @@ class NetworkMachineManager(QObject):
 
     ## starts to print the scene on intended machine
     @pyqtSlot(str)
-    def upload(self, mID) -> None:
+    def upload(self, mID) -> bool:
         machine = self.machineList[str(mID)]
 
         codeGenerator = PluginRegistry.getInstance().getPluginObject("ZaxeCodeWriter")
@@ -94,6 +94,7 @@ class NetworkMachineManager(QObject):
             return False
         Logger.log("d", "will upload generated code to machine [%s - [%s]]" % (machine.name, machine.ip))
         machine.upload(codeGenerator.getZaxeFile())
+        return True
 
     ## rename on intended machine
     @pyqtSlot(str, str)

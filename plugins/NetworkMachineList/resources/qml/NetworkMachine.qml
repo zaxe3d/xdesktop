@@ -472,15 +472,21 @@ Item {
                                         verticalAlignment: Text.AlignVCenter
                                     }
                                     onClicked: {
-                                        if (PrintInformation.materialNames[0] != device.material)
+                                        if (PrintInformation.materialNames[0] != device.material) {
                                             device.materialWarning = true
-                                        else if (Cura.MachineManager.activeMachineName.replace("+", "PLUS") != device.deviceModel.toUpperCase()) {
+                                            shakeAnim.start()
+                                        } else if (Cura.MachineManager.activeMachineName.replace("+", "PLUS") != device.deviceModel.toUpperCase()) {
                                             device.modelCompatibilityWarning = true
+                                            shakeAnim.start()
+                                        // check if the slice is ready or if there is a model
+                                        } else if (UM.Backend.state != "undefined" && UM.Backend.state == 1 || !CuraApplication.platformActivity) {
+                                            device.materialWarning = false
+                                            device.modelCompatibilityWarning = false
                                             shakeAnim.start()
                                         } else {
                                             device.materialWarning = false
                                             device.modelCompatibilityWarning = false
-                                            Cura.NetworkMachineManager.upload(device.uid)
+                                            Cura.NetworkMachineManager.upload(device.uid) == false
                                         }
                                     }
                                     onHoveredChanged: {
@@ -583,10 +589,11 @@ Item {
             // Material warning message
             Rectangle {
                 visible: device.materialWarning
-                Layout.preferredWidth: Math.round(device.width - (UM.Theme.getSize("sidebar_item_margin").width * 2))
+                Layout.preferredWidth: Math.round(device.width - 65 - (UM.Theme.getSize("sidebar_item_margin").width * 2))
                 Layout.minimumHeight: childrenRect.height
-                Layout.alignment: Qt.AlignHCenter
-                Layout.topMargin: 10
+                Layout.alignment: Qt.AlignRight
+                Layout.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                Layout.rightMargin: UM.Theme.getSize("sidebar_item_margin").width
                 color: UM.Theme.getColor("sidebar_item_light")
 
                 Text {
@@ -609,6 +616,7 @@ Item {
                     anchors {
                         top: parent.top
                         left: materialWarningIcon.right
+                        leftMargin: 5
                     }
                     text: catalog.i18nc("@label", "The material in the device does not match with the material you choose. Please slice again with the correct material")
                 }
@@ -617,10 +625,11 @@ Item {
             // Model warning message
             Rectangle {
                 visible: device.modelCompatibilityWarning
-                Layout.preferredWidth: Math.round(device.width - (UM.Theme.getSize("sidebar_item_margin").width * 2))
-                Layout.minimumHeight: 15
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
-                Layout.topMargin: 10
+                Layout.preferredWidth: Math.round(device.width - 65 - (UM.Theme.getSize("sidebar_item_margin").width * 2))
+                Layout.minimumHeight: 20
+                Layout.alignment: Qt.AlignRight
+                Layout.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                Layout.rightMargin: UM.Theme.getSize("sidebar_item_margin").width
                 color: UM.Theme.getColor("sidebar_item_light")
 
                 Text {
@@ -628,18 +637,21 @@ Item {
                     font: UM.Theme.getFont("zaxe_icon_set")
                     color: UM.Theme.getColor("text_danger")
                     anchors {
-                        top: parent.top
-                        topMargin: -22 // silly because of the font alignment
+                        verticalCenter: parent.verticalCenter
+                        left: parent.left
                     }
                     text: "d"
                 }
                 Text {
+                    width: parent.width
                     font: UM.Theme.getFont("medium")
                     color: UM.Theme.getColor("text_danger")
                     wrapMode: Text.WordWrap
+                    horizontalAlignment: Text.AlignLeft
                     anchors {
                         left: modelCompatibilityWarningIcon.right
-                        top: parent.top
+                        leftMargin: 5
+                        verticalCenter: parent.verticalCenter
                     }
                     text: catalog.i18nc("@warning", "This print is not compatible with this device model")
                 }

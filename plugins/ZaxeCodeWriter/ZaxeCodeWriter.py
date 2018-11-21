@@ -88,14 +88,18 @@ class ZaxeCodeWriter(MeshWriter):
         #    bed_layer_0 = self.get_non_custom_config()["material_bed_temperature_layer_0"]
         #    print_temp = print_layer_0 if print_layer_0 is not None else self.get_non_custom_config()["material_print_temperature"]
         #    bed_temp = bed_layer_0 if bed_layer_0 is not None else self.get_non_custom_config()["material_bed_temperature"]
+
+        #global_stack = self._application.getGlobalContainerStack() # not needed but can come in handy
+
+        extruder_stack = self._application.getExtruderManager().getInstance().getExtruderStack(0)
         return {
-            "extruder_temperature": 250,#float(print_temp),
-            "bed_temperature": 100#float(bed_temp)
+            "extruder_temperature": extruder_stack.getProperty("material_print_temperature", "value"),
+            "bed_temperature": extruder_stack.getProperty("material_bed_temperature", "value")
         }
 
     def getCheckSum(self):
-        if self._checkSum is None:
-            self._checkSum = self.md5()
+        #if self._checkSum is None:
+        self._checkSum = self.md5()
         return self._checkSum
 
     def md5(self):
@@ -106,7 +110,7 @@ class ZaxeCodeWriter(MeshWriter):
         return hash_md5.hexdigest()
 
     def getFileBaseName(self):
-        return tool.clearChars(self._application.getPrintInformation().jobName)
+        return tool.clearChars(self._application.getPrintInformation().baseName)
 
     def getZaxeFile(self):
         return os.path.join(TMP_FOLDER, self.getFileBaseName() + ".zaxe")

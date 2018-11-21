@@ -19,27 +19,24 @@
     </properties>
     <settings>
         <setting key="print temperature">250</setting>
-        <setting key="print temperature_layer_0">250</setting>
-        <setting key="bed temperature">100</setting>
-        <setting key="bed temperature_layer_0">100</setting>
-        <setting key="cool_fan_full_layer">5</setting>
+        <setting key="print temperature layer 0">250</setting>
+        <setting key="heated bed temperature">100</setting>
+        <setting key="heated bed temperature layer 0">100</setting>
 
         <machine>
-            <machine_identifier manufacturer="Zaxe" product="X1"/>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe X1"/>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe X1+"/>
 
-            <setting key="print temperature">250</setting>
-            <setting key="heated bed temperature">100</setting>
+            <setting key="cool fan full layer">5</setting>
 
             <hotend id="0.4">
-                <setting key="machine_nozzle_size">0.4</setting>
+                <setting key="hardware compatible">yes</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="retraction amount">1.0</setting>
             </hotend>
             <hotend id="0.8">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="retraction amount">1.0</setting>
             </hotend>
         </machine>
 

@@ -48,6 +48,21 @@ Item {
             if (uid != arguments[0]) return
             inputDeviceName.text = lblDeviceName.text = arguments[1]
         }
+        onFileChange: {
+            if (uid != arguments[0]) return
+            printingFile = arguments[1]
+            elapsedTime = arguments[2] // reset the timer as well
+            estimatedTime = arguments[3]
+        }
+        onNozzleChange: {
+            if (uid != arguments[0]) return
+            nozzle = arguments[1]
+        }
+        onMaterialChange: {
+            if (uid != arguments[0]) return
+            material = arguments[1]
+        }
+        // progress updates
         onPrintProgress: {
             if (uid != arguments[0]) return
             progress = arguments[1]
@@ -66,7 +81,6 @@ Item {
             if (uid != arguments[0]) return
             progress = arguments[1]
         }
-
         onStateChange: {
             if (uid != arguments[0]) return
             machineStates = arguments[1]
@@ -87,6 +101,9 @@ Item {
         device.state = "anchored"
     }
 
+    function showConfirmation() {
+        confirmationPane.visible = true
+    }
 
     // Top Border
     Rectangle {
@@ -114,6 +131,66 @@ Item {
             }
         }
 
+        // Confirmation pane
+        Rectangle {
+            id: confirmationPane
+            color: UM.Theme.getColor("sidebar_item_light")
+            width: 295; height: 45
+            x: parent.width - 295 - 50
+            z: 5
+            visible: false
+            RowLayout {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.rightMargin: 10
+                Label {
+                    font: UM.Theme.getFont("large_semi_bold")
+                    color: UM.Theme.getColor("text_sidebar")
+                    text: catalog.i18nc("@label", "Are you sure?")
+                }
+                Button {
+                    Layout.preferredHeight: 30
+                    background: Rectangle {
+                        color: UM.Theme.getColor("button_danger")
+                        border.color: UM.Theme.getColor("button_danger")
+                        border.width: UM.Theme.getSize("default_lining").width
+                        radius: 10
+                    }
+                    contentItem: Text {
+                        color: UM.Theme.getColor("text_white")
+                        width: parent.width
+                        text: catalog.i18nc("@label", "YES")
+                        font: UM.Theme.getFont("medium_bold")
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    onClicked: {
+                        Cura.NetworkMachineManager.Cancel(device.uid)
+                        confirmationPane.visible = false
+                    }
+                }
+                Button {
+                    Layout.preferredHeight: 30
+                    background: Rectangle {
+                        color: UM.Theme.getColor("button_white")
+                        border.color: UM.Theme.getColor("button_blue")
+                        border.width: UM.Theme.getSize("default_lining").width
+                        radius: 10
+                    }
+                    contentItem: Text {
+                        color: UM.Theme.getColor("button_blue")
+                        width: parent.width
+                        text: catalog.i18nc("@label", "NO")
+                        font: UM.Theme.getFont("medium_bold")
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    onClicked: {
+                        confirmationPane.visible = false
+                    }
+                }
+            }
+        }
         // Main layout
         ColumnLayout {
             id: mainLayout
@@ -213,6 +290,8 @@ Item {
                                     color: UM.Theme.getColor("text_sidebar")
                                     text: device.name
                                     anchors.bottom : parent.bottom
+                                    width: 205
+                                    clip: true
                                     MouseArea {
                                         anchors.fill: parent
                                         cursorShape: Qt.PointingHandCursor
@@ -225,6 +304,7 @@ Item {
                                 }
                                 // Button pane
                                 RowLayout {
+                                    id: buttonPane
                                     Layout.preferredWidth: 120; Layout.preferredHeight: 40
                                     anchors.right: parent.right; anchors.top: parent.top
 
@@ -345,8 +425,7 @@ Item {
                                             verticalAlignment: Text.AlignVCenter
                                         }
                                         onClicked: {
-                                            // FIXME no confirmation
-                                            Cura.NetworkMachineManager.Cancel(device.uid)
+                                            showConfirmation()
                                         }
                                         onHoveredChanged: {
                                             btnStop.contentItem.color = hovered

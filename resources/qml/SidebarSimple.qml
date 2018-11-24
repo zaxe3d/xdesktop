@@ -17,13 +17,20 @@ Item
     signal showTooltip(Item item, point location, string text);
     signal hideTooltip();
 
-    property Action configureSettings;
     property int backendState: UM.Backend.state
     property bool settingsEnabled: Cura.ExtruderManager.activeExtruderStackId || extrudersEnabledCount.properties.value == 1
+    property int  supportAngle: UM.Preferences.getValue("slicing/support_angle")
+    property bool supportEnabled: UM.Preferences.getValue("slicing/support_angle") > 0
+
     UM.I18nCatalog { id: catalog; name: "cura" }
 
     Connections {
-        target: CuraApplication
+        target: UM.Preferences
+        onPreferenceChanged:
+        {
+            base.supportAngle = UM.Preferences.getValue("slicing/support_angle")
+            base.supportEnabled = UM.Preferences.getValue("slicing/support_angle") > 0
+        }
     }
 
     ScrollView
@@ -188,7 +195,6 @@ Item
                 Rectangle {
                     anchors.fill: parent
                     color: UM.Theme.getColor("sidebar_item_light")
-                    radius: 2
                     width: parent.width
                     Item
                     {
@@ -223,6 +229,21 @@ Item
                             anchors.topMargin: UM.Theme.getSize("sidebar_item_icon_margin").height
                             anchors.left: parent.left
                             anchors.leftMargin: UM.Theme.getSize("sidebar_item_icon_margin").width
+
+                            Rectangle
+                            {
+                                anchors.fill: parent
+                                radius: 5
+                                color: UM.Theme.getColor("slider_groove")
+
+                                Image {
+                                    antialiasing: true
+                                    anchors.fill: parent
+                                    source: "../../plugins/NetworkMachineList/resources/images/layer_height/" + parseInt(qualitySlider.value) + ".png"
+                                    sourceSize.width: width
+                                    sourceSize.height: width
+                                }
+                            }
                         }
                     }
 
@@ -335,7 +356,6 @@ Item
                 Rectangle {
                     anchors.fill: parent
                     color: UM.Theme.getColor("sidebar_item_light")
-                    radius: 2
                     width: parent.width
                     Item
                     {
@@ -371,48 +391,19 @@ Item
                             anchors.left: parent.left
                             anchors.leftMargin: UM.Theme.getSize("sidebar_item_icon_margin").width
 
-                            // we loop over all density icons and only show the one that has the current density and steps
-                            Repeater
+                            Rectangle
                             {
-                                id: supportAngleIconList
-                                //model: supportAngleModel
                                 anchors.fill: parent
 
-                                function activeIndex () {
-                                    for (var i = 0; i < supportAngleModel.count; i++) {
-                                        var density = Math.round(supportAngle.properties.value)
-                                        var steps = Math.round(supportAngleSteps.properties.value)
-                                        var supportAngleModelItem = supportAngleModel.get(i)
+                                color: UM.Theme.getColor("slider_groove")
+                                radius: 5
 
-                                        if (supportAngleModelItem != "undefined"
-                                            && density >= supportAngleModelItem.percentageMin
-                                            && density <= supportAngleModelItem.percentageMax
-                                            && steps >= supportAngleModelItem.stepsMin
-                                            && steps <= supportAngleModelItem.stepsMax
-                                        ){
-                                            return i
-                                        }
-                                    }
-                                    return -1
-                                }
-
-                                Rectangle
-                                {
+                                Image {
+                                    antialiasing: true
                                     anchors.fill: parent
-                                    visible: supportAngleIconList.activeIndex() == index
-
-                                    border.width: UM.Theme.getSize("default_lining").width
-                                    border.color: UM.Theme.getColor("quality_slider_unavailable")
-                                    radius: 5
-
-                                    UM.RecolorImage {
-                                        anchors.fill: parent
-                                        anchors.margins: 2 * screenScaleFactor
-                                        sourceSize.width: width
-                                        sourceSize.height: width
-                                        source: UM.Theme.getIcon(model.icon)
-                                        color: UM.Theme.getColor("quality_slider_unavailable")
-                                    }
+                                    source: "../../plugins/NetworkMachineList/resources/images/support_angle/" + base.supportAngle + ".png"
+                                    sourceSize.width: width
+                                    sourceSize.height: width
                                 }
                             }
                         }
@@ -440,7 +431,7 @@ Item
 
                             font: UM.Theme.getFont("large_semi_bold")
 
-                            text: supportAngle.properties.value > 0 ? parseInt(supportAngle.properties.value) + "°" : catalog.i18nc("@label", "Support off")
+                            text: base.supportEnabled ? base.supportAngle + "°" : catalog.i18nc("@label", "Support off")
 
                             color: supportAngleSlider.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
                         }
@@ -449,7 +440,7 @@ Item
                         Binding {
                             target: supportAngleSlider
                             property: "value"
-                            value: parseInt(supportAngle.properties.value)
+                            value: UM.Preferences.getValue("slicing/support_angle")
                         }
 
                         Slider
@@ -465,28 +456,34 @@ Item
                             width: parseInt(supportAngleCellRight.width - UM.Theme.getSize("sidebar_margin").width - style.handleWidth)
 
                             minimumValue: 0
-                            maximumValue: 100
-                            stepSize: 1
+                            maximumValue: 50
+                            stepSize: 10
                             tickmarksEnabled: false
 
-                            // set initial value from stack
-                            value: parseInt(supportAngle.properties.value)
+                            // set initial value
+                            value: UM.Preferences.getValue("slicing/support_angle")
 
                             onValueChanged: {
 
 
-                                // Round the slider value to the nearest multiple of 10 (simulate step size of 10)
-                                var roundedSliderValue = Math.round(supportAngleSlider.value / 10) * 10
+                                var angle = parseInt(supportAngleSlider.value)
+                                var prefAngle = parseInt(UM.Preferences.getValue("slicing/support_angle"))
 
-                                // Update the slider value to represent the rounded value
-                                supportAngleSlider.value = roundedSliderValue
+                                if (angle > 0) {
+                                    supportEnabled.setPropertyValue("value", true)
+                                    supportSkipSomeZags.setPropertyValue("value", false)
+                                } else {
+                                    supportEnabled.setPropertyValue("value", false)
+                                }
 
-                                supportEnabled.setPropertyValue("value", (roundedSliderValue > 0))
 
                                 // only set if different
-                                if (parseInt(supportAngle.properties.value) != supportAngleSlider.value) {
-                                    supportAngle.setPropertyValue("value", roundedSliderValue)
+                                if (prefAngle != angle) {
+                                    UM.Preferences.setValue("slicing/support_angle", angle)
                                 }
+
+
+                                supportAngle.setPropertyValue("value", (90 - Math.min(90, angle)))
                             }
 
                             style: SliderStyle
@@ -522,42 +519,47 @@ Item
             {
                 Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
                 Layout.preferredHeight: 75
-                Layout.topMargin: 5
-                Layout.bottomMargin: 5
+                Layout.bottomMargin: 15
                 Layout.alignment: Qt.AlignLeft
 
                 Rectangle {
                     anchors.fill: parent
                     color: UM.Theme.getColor("sidebar_item_light")
-                    radius: 2
                     width: parent.width
-                    Item
+                    Rectangle
                     {
                         id: raftCellLeft
 
-                        anchors.top: parent.top
-                        anchors.left: parent.left
-                        anchors.bottom: parent.bottom
-
+                        color: UM.Theme.getColor("sidebar_item_light")
                         width: Math.round(base.width * .27)
+                        height: 90
 
-                        Image {
-                            antialiasing: true
-                            visible: platformAdhesionType.properties.value == "none"
-                            width: 75; height: 75
-                            anchors.top: parent.top; anchors.left: parent.left
+                        radius: 5
+
+                        anchors.left: parent.left
+
+                        Rectangle
+                        {
+                            id: raftIcon
+
+                            width: 75; height: width
+                            radius: 5
+
+                            anchors.top: parent.top
                             anchors.topMargin: UM.Theme.getSize("sidebar_item_icon_margin").height
+                            anchors.left: parent.left
                             anchors.leftMargin: UM.Theme.getSize("sidebar_item_icon_margin").width
-                            source: "../../plugins/NetworkMachineList/resources/images/raft/off.png"
-                        }
-                        Image {
-                            antialiasing: true
-                            visible: platformAdhesionType.properties.value == "raft"
-                            width: 75; height: 75
-                            anchors.top: raftLabel.bottom; anchors.left: parent.left
-                            anchors.topMargin: UM.Theme.getSize("sidebar_item_icon_margin").height
-                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_icon_margin").width
-                            source: "../../plugins/NetworkMachineList/resources/images/raft/on.png"
+
+                            color: UM.Theme.getColor("slider_groove")
+
+                            Image {
+                                antialiasing: true
+                                anchors.fill: parent
+                                source: "../../plugins/NetworkMachineList/resources/images/raft/" +
+                                    (platformAdhesionType.properties.value == "none" ? "off" : "on") + ".png"
+                                sourceSize.width: width
+                                sourceSize.height: width
+                            }
                         }
                     }
 
@@ -600,6 +602,7 @@ Item
                                     parent.checked = !parent.checked;
                                     var adhesionType = parent.checked ? "raft" : "none";
                                     platformAdhesionType.setPropertyValue("value", adhesionType);
+                                    initialLayerLineWidthFactor.setPropertyValue("value", adhesionType == "raft" ? "100" : "150");
                                 }
                                 onEntered:
                                 {
@@ -618,6 +621,7 @@ Item
 
             // Bottom Border
             Rectangle { Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_item_margin").width * 2); Layout.alignment: Qt.AlignHCenter; height: UM.Theme.getSize("default_lining").width; color: UM.Theme.getColor("sidebar_item_dark") }
+
             //
             // Infill
             //
@@ -630,7 +634,6 @@ Item
                 Rectangle {
                     anchors.fill: parent
                     color: UM.Theme.getColor("sidebar_item_light")
-                    radius: 2
                     width: parent.width
                     Item
                     {
@@ -666,48 +669,20 @@ Item
                             anchors.left: parent.left
                             anchors.leftMargin: UM.Theme.getSize("sidebar_item_icon_margin").width
 
-                            // we loop over all density icons and only show the one that has the current density and steps
-                            Repeater
+                            Rectangle
                             {
-                                id: infillIconList
-                                model: infillModel
                                 anchors.fill: parent
 
-                                function activeIndex () {
-                                    for (var i = 0; i < infillModel.count; i++) {
-                                        var density = Math.round(infillDensity.properties.value)
-                                        var steps = Math.round(infillSteps.properties.value)
-                                        var infillModelItem = infillModel.get(i)
+                                border.width: UM.Theme.getSize("default_lining").width
+                                border.color: UM.Theme.getColor("text_blue")
+                                radius: 5
 
-                                        if (infillModelItem != "undefined"
-                                            && density >= infillModelItem.percentageMin
-                                            && density <= infillModelItem.percentageMax
-                                            && steps >= infillModelItem.stepsMin
-                                            && steps <= infillModelItem.stepsMax
-                                        ){
-                                            return i
-                                        }
-                                    }
-                                    return -1
-                                }
-
-                                Rectangle
-                                {
+                                Image {
+                                    antialiasing: true
                                     anchors.fill: parent
-                                    visible: infillIconList.activeIndex() == index
-
-                                    border.width: UM.Theme.getSize("default_lining").width
-                                    border.color: UM.Theme.getColor("text_blue")
-                                    radius: 5
-
-                                    UM.RecolorImage {
-                                        anchors.fill: parent
-                                        anchors.margins: 2 * screenScaleFactor
-                                        sourceSize.width: width
-                                        sourceSize.height: width
-                                        source: UM.Theme.getIcon(model.icon)
-                                        color: UM.Theme.getColor("text_blue")
-                                    }
+                                    source: "../../plugins/NetworkMachineList/resources/images/infill/" + parseInt(infillDensity.properties.value) + ".png"
+                                    sourceSize.width: width
+                                    sourceSize.height: width
                                 }
                             }
                         }
@@ -808,52 +783,181 @@ Item
                                 }
                             }
                         }
+                    }
+                }
+            }
+            // Bottom Border
+            Rectangle { Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_item_margin").width * 2); Layout.alignment: Qt.AlignHCenter; height: UM.Theme.getSize("default_lining").width; color: UM.Theme.getColor("sidebar_item_dark") }
 
+            //
+            // Advanced settings
+            //
+            Item
+            {
+                id: advancedSettingsPane
+                Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                Layout.preferredHeight: childrenRect.height
+                Layout.alignment: Qt.AlignLeft
+                visible: false
+                ColumnLayout
+                {
+                    width: parent.parent.width
+                    spacing: UM.Theme.getSize("sidebar_spacing").height
 
-                        //  Infill list model for mapping icon
-                        ListModel
-                        {
-                            id: infillModel
-                            Component.onCompleted:
+                    Item
+                    {
+                        id: fanSpeedRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 51
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
                             {
-                                infillModel.append({
-                                    percentageMin: -1,
-                                    percentageMax: 0,
-                                    stepsMin: -1,
-                                    stepsMax: 0,
-                                    icon: "hollow"
-                                })
-                                infillModel.append({
-                                    percentageMin: 0,
-                                    percentageMax: 40,
-                                    stepsMin: -1,
-                                    stepsMax: 0,
-                                    icon: "sparse"
-                                })
-                                infillModel.append({
-                                    percentageMin: 40,
-                                    percentageMax: 89,
-                                    stepsMin: -1,
-                                    stepsMax: 0,
-                                    icon: "dense"
-                                })
-                                infillModel.append({
-                                    percentageMin: 90,
-                                    percentageMax: 9999999999,
-                                    stepsMin: -1,
-                                    stepsMax: 0,
-                                    icon: "solid"
-                                })
-                                infillModel.append({
-                                    percentageMin: 0,
-                                    percentageMax: 9999999999,
-                                    stepsMin: 1,
-                                    stepsMax: 9999999999,
-                                    icon: "gradual"
-                                })
+                                id: fanSpeedCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: fanSpeedLabel
+                                    text: catalog.i18nc("@label", "Fan speed")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors.top: parent.top
+                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    anchors.left: parent.left
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                            }
+
+                            Item
+                            {
+                                id: fanSpeedCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: fanSpeedCellLeft.height
+
+                                anchors.left: fanSpeedCellLeft.right
+                                anchors.bottom: fanSpeedCellLeft.bottom
+
+                                Label
+                                {
+                                    id: selectedfanSpeedText
+
+                                    anchors.bottom: parent.bottom
+                                    anchors.left: fanSpeedSlider.left
+                                    anchors.leftMargin: Math.round((fanSpeedSlider.value / fanSpeedSlider.stepSize) * (fanSpeedSlider.width / (fanSpeedSlider.maximumValue / fanSpeedSlider.stepSize)) - 10 * screenScaleFactor)
+                                    anchors.right: parent.right
+
+                                    font: UM.Theme.getFont("medium")
+
+                                    text: "%" + parseInt(coolFanSpeedMax.properties.value)
+
+                                    color: fanSpeedSlider.enabled ? UM.Theme.getColor("fanSpeed_slider_available") : UM.Theme.getColor("fanSpeed_slider_unavailable")
+                                }
+
+                                Slider
+                                {
+                                    id: fanSpeedSlider
+
+                                    anchors.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height / 2
+                                    anchors.bottom: selectedfanSpeedText.top
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+
+                                    height: UM.Theme.getSize("sidebar_margin").height
+
+                                    updateValueWhileDragging : true
+
+
+                                    width: parseInt(fanSpeedCellRight.width - UM.Theme.getSize("sidebar_margin").width - style.handleWidth)
+
+                                    minimumValue: 0
+                                    maximumValue: 100
+                                    stepSize: 1
+
+                                    value: parseInt(coolFanSpeedMax.properties.value)
+
+                                    onValueChanged: {
+
+                                        // Don't round the value if it's already the same
+                                        if (parseInt(coolFanSpeedMax.properties.value) == fanSpeedSlider.value) {
+                                            return
+                                        }
+
+                                        // Round the slider value to the nearest multiple of 10 (simulate step size of 10)
+                                        var roundedSliderValue = Math.round(fanSpeedSlider.value / 10) * 10
+
+                                        // Update the slider value to represent the rounded value
+                                        fanSpeedSlider.value = roundedSliderValue
+
+                                        Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_min", "value", roundedSliderValue)
+                                        Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_max", "value", roundedSliderValue)
+                                    }
+
+
+                                    style: SliderStyle
+                                    {
+                                        groove: Rectangle {
+                                            id: groove
+                                            implicitWidth: 100 * screenScaleFactor
+                                            implicitHeight: 10 * screenScaleFactor
+                                            color: control.enabled ? UM.Theme.getColor("slider_groove") : UM.Theme.getColor("quality_slider_unavailable")
+                                            radius: 5
+                                        }
+
+                                        handle: Item {
+                                            Rectangle {
+                                                id: handleButton
+                                                anchors.centerIn: parent
+                                                color: control.enabled ? UM.Theme.getColor("slider_handle") : UM.Theme.getColor("quality_slider_unavailable")
+                                                implicitWidth: 15 * screenScaleFactor
+                                                implicitHeight: 15 * screenScaleFactor
+                                                radius: 100
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
+                }
+            }
+
+            //
+            // Advanced settings button
+            //
+            Item
+            {
+                Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                Layout.preferredHeight: childrenRect.height
+                Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                Button {
+                    id: advancedSettingsButton
+                    style: UM.Theme.styles.sidebar_simple_button
+                    text: catalog.i18nc("@label", "Advanced settings")
+                    onClicked: {
+                        if (advancedSettingsPane.visible) {
+                            advancedSettingsPane.visible = false
+                            advancedSettingsButton.text = catalog.i18nc("@label", "Advanced settings")
+                        } else {
+                            advancedSettingsPane.visible = true
+                            advancedSettingsButton.text = catalog.i18nc("@label", "Hide advanced settings")
+                        }
+                    }
+                    anchors.right: parent.right
+                    anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width * 2
                 }
             }
             // Bottom Border
@@ -889,12 +993,29 @@ Item
                 }
             }
 
-
             UM.SettingPropertyProvider
             {
                 id: infillExtruderNumber
                 containerStackId: Cura.MachineManager.activeStackId
                 key: "infill_extruder_nr"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: coolFanSpeedMin
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "cool_fan_speed_min"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: coolFanSpeedMax
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "cool_fan_speed_max"
                 watchedProperties: [ "value" ]
                 storeIndex: 0
             }
@@ -941,6 +1062,24 @@ Item
                 containerStack: Cura.MachineManager.activeMachine
                 key: "support_angle"
                 watchedProperties: [ "value", "enabled", "description" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: supportSkipSomeZags
+                containerStack: Cura.MachineManager.activeMachine
+                key: "support_skip_some_zags"
+                watchedProperties: [ "value", "enabled" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: initialLayerLineWidthFactor
+                containerStack: Cura.MachineManager.activeMachine
+                key: "initial_layer_line_width_factor"
+                watchedProperties: [ "value", "enabled" ]
                 storeIndex: 0
             }
 

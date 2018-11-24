@@ -744,14 +744,6 @@ UM.PreferencesPage
                 }
             }
 
-            Connections
-            {
-                target: UM.Preferences
-                onPreferenceChanged:
-                {
-                    sendDataCheckbox.checked = boolCheck(UM.Preferences.getValue("info/send_slice_info"))
-                }
-            }
         }
     }
 }

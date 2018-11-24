@@ -298,7 +298,7 @@ Item {
                         background: Rectangle {
                             color: UM.Theme.getColor("button_gray")
                             border.color: UM.Theme.getColor("text_danger")
-                            border.width: 2
+                            border.width: UM.Theme.getSize("default_lining").width
                             radius: 10
                         }
                         contentItem: Text {

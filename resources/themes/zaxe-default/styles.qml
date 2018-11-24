@@ -1178,6 +1178,30 @@ QtObject {
         }
     }
 
+    property Component sidebar_simple_button: Component {
+        ButtonStyle
+        {
+            background: Rectangle
+            {
+                border.width: 0
+                color: UM.Theme.getColor("sidebar_item_light")
+
+                implicitWidth: actualLabel.contentWidth + UM.Theme.getSize("sidebar_margin").width
+                implicitHeight: actualLabel.contentHeight + UM.Theme.getSize("sidebar_margin").height
+
+                Label
+                {
+                    id: actualLabel
+                    anchors.verticalCenter: parent.verticalCenter
+                    horizontalAlignment: Text.AlignRight
+                    color: UM.Theme.getColor("text_sidebar_medium")
+                    font: UM.Theme.getFont("large_semi_bold")
+                    text: control.text
+                }
+            }
+            label: Item { }
+        }
+    }
     property Component sidebar_action_button: Component {
         ButtonStyle
         {

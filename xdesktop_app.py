@@ -10,7 +10,7 @@ import sys
 
 from UM.Platform import Platform
 
-parser = argparse.ArgumentParser(prog = "cura",
+parser = argparse.ArgumentParser(prog = "xdesktop",
                                  add_help = False)
 parser.add_argument("--debug",
                     action="store_true",
@@ -26,16 +26,16 @@ parser.add_argument("--trigger-early-crash",
 known_args = vars(parser.parse_known_args()[0])
 
 if not known_args["debug"]:
-    def get_cura_dir_path():
+    def get_xdesktop_dir_path():
         if Platform.isWindows():
-            return os.path.expanduser("~/AppData/Roaming/cura")
+            return os.path.expanduser("~/AppData/Roaming/xdesktop")
         elif Platform.isLinux():
-            return os.path.expanduser("~/.local/share/cura")
+            return os.path.expanduser("~/.local/share/xdesktop")
         elif Platform.isOSX():
-            return os.path.expanduser("~/Library/Logs/cura")
+            return os.path.expanduser("~/Library/Logs/xdesktop")
 
     if hasattr(sys, "frozen"):
-        dirpath = get_cura_dir_path()
+        dirpath = get_xdesktop_dir_path()
         os.makedirs(dirpath, exist_ok = True)
         sys.stdout = open(os.path.join(dirpath, "stdout.log"), "w", encoding = "utf-8")
         sys.stderr = open(os.path.join(dirpath, "stderr.log"), "w", encoding = "utf-8")

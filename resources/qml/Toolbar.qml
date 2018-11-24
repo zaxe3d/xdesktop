@@ -48,7 +48,7 @@ Item
                     {
                         if (checked)
                         {
-                            base.activeY = y;
+                            base.activeY = parent.y;
                         }
                     }
 

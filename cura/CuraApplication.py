@@ -154,7 +154,7 @@ class CuraApplication(QtApplication):
     Q_ENUMS(ResourceTypes)
 
     def __init__(self, *args, **kwargs):
-        super().__init__(name = "cura",
+        super().__init__(name = "xdesktop",
                          version = CuraVersion,
                          buildtype = CuraBuildType,
                          is_debug_mode = CuraDebugMode,
@@ -490,6 +490,9 @@ class CuraApplication(QtApplication):
         preferences.addPreference("cura/favorite_materials", "")
         preferences.addPreference("cura/expanded_brands", "")
         preferences.addPreference("cura/expanded_types", "")
+
+        # slicing
+        preferences.addPreference("slicing/support_angle", 20)
 
         self._need_to_show_user_agreement = not preferences.getValue("general/accepted_user_agreement")
 

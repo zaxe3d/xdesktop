@@ -1188,8 +1188,7 @@ class XmlMaterialProfile(InstanceContainer):
         "adhesion tendency": "material_adhesion_tendency",
         "surface energy": "material_surface_energy",
         "shrinkage percentage": "material_shrinkage_percentage",
-        "cool fan full layer": "cool_fan_full_layer",
-        "heated bed temperature layer 0": "heated_bed_temperature layer_0"
+        "cool fan full layer": "cool_fan_full_layer"
     }
     __unmapped_settings = [
         "hardware compatible",

@@ -81,6 +81,13 @@ Column
                 id: materialGroup
                 onCurrentChanged : {
                     Cura.MachineManager.setMaterialById(currentExtruderIndex, current.material)
+
+                    var fanSpeed = 100
+                    if (current.material == "zaxe_abs")
+                        fanSpeed = 30
+
+                    Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_min", "value", fanSpeed)
+                    Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_max", "value", fanSpeed)
                 }
             }
             // ABS

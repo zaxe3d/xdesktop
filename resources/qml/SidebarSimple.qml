@@ -673,8 +673,6 @@ Item
                             {
                                 anchors.fill: parent
 
-                                border.width: UM.Theme.getSize("default_lining").width
-                                border.color: UM.Theme.getColor("text_blue")
                                 radius: 5
 
                                 Image {
@@ -798,11 +796,262 @@ Item
                 Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
                 Layout.preferredHeight: childrenRect.height
                 Layout.alignment: Qt.AlignLeft
+                Layout.topMargin: UM.Theme.getSize("sidebar_margin").height
                 visible: false
+
                 ColumnLayout
                 {
                     width: parent.parent.width
                     spacing: UM.Theme.getSize("sidebar_spacing").height
+
+                    Item
+                    {
+                        id: perimeterCountRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: perimeterCountCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: perimeterCountLabel
+                                    text: catalog.i18nc("@label", "Perimeter count")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors.top: parent.top
+                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    anchors.left: parent.left
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                            }
+
+                            Item
+                            {
+                                id: perimeterCountCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: perimeterCountCellLeft.height
+
+                                anchors.left: perimeterCountCellLeft.right
+                                anchors.bottom: perimeterCountCellLeft.bottom
+
+                                ComboBox
+                                {
+                                    id: perimeterCountCB
+                                    anchors.right: parent.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    width: 100
+
+                                    model: ListModel {
+                                        id: cbItems
+                                        ListElement { text: "1"; value: 1 }
+                                        ListElement { text: "2"; value: 2 }
+                                        ListElement { text: "3"; value: 3 }
+                                    }
+
+                                    currentIndex:
+                                    {
+                                        var pC = perimeterCount.properties.value
+                                        for(var i = 0; i < cbItems.count; ++i)
+                                        {
+                                            if(model.get(i).value == pC)
+                                            {
+                                                return i
+                                            }
+                                        }
+                                    }
+
+                                    onActivated: perimeterCount.setPropertyValue("value", model.get(index).value)
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: topSolidLayerCountRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: topSolidLayerCountCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: topSolidLayerCountLabel
+                                    text: catalog.i18nc("@label", "Top solid layer count")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors.top: parent.top
+                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    anchors.left: parent.left
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                            }
+
+                            Item
+                            {
+                                id: topSolidLayerCountCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: topSolidLayerCountCellLeft.height
+
+                                anchors.left: topSolidLayerCountCellLeft.right
+                                anchors.bottom: topSolidLayerCountCellLeft.bottom
+
+                                ComboBox
+                                {
+                                    id: topSolidLayerCountCB
+                                    anchors.right: parent.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    width: 100
+
+                                    model: ListModel {
+                                        id: cbTSLCItems
+                                        ListElement { text: "0"; value: 0 }
+                                        ListElement { text: "1"; value: 1 }
+                                        ListElement { text: "2"; value: 2 }
+                                        ListElement { text: "3"; value: 3 }
+                                        ListElement { text: "4"; value: 4 }
+                                        ListElement { text: "5"; value: 5 }
+                                        ListElement { text: "6"; value: 6 }
+                                        ListElement { text: "7"; value: 7 }
+                                        ListElement { text: "8"; value: 8 }
+                                    }
+
+                                    currentIndex:
+                                    {
+                                        var tSLC = topSolidLayerCount.properties.value
+                                        for(var i = 0; i < cbTSLCItems.count; ++i)
+                                        {
+                                            if(model.get(i).value == tSLC)
+                                            {
+                                                return i
+                                            }
+                                        }
+                                    }
+
+                                    onActivated: topSolidLayerCount.setPropertyValue("value", model.get(index).value)
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: bottomSolidLayerCountRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: bottomSolidLayerCountCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: bottomSolidLayerCountLabel
+                                    text: catalog.i18nc("@label", "Bottom solid layer count")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors.top: parent.top
+                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    anchors.left: parent.left
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                            }
+
+                            Item
+                            {
+                                id: bottomSolidLayerCountCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: bottomSolidLayerCountCellLeft.height
+
+                                anchors.left: bottomSolidLayerCountCellLeft.right
+                                anchors.bottom: bottomSolidLayerCountCellLeft.bottom
+
+                                ComboBox
+                                {
+                                    id: bottomSolidLayerCountCB
+                                    anchors.right: parent.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    width: 100
+
+                                    model: ListModel {
+                                        id: cbBSLCItems
+                                        ListElement { text: "0"; value: 0 }
+                                        ListElement { text: "1"; value: 1 }
+                                        ListElement { text: "2"; value: 2 }
+                                        ListElement { text: "3"; value: 3 }
+                                        ListElement { text: "4"; value: 4 }
+                                        ListElement { text: "5"; value: 5 }
+                                        ListElement { text: "6"; value: 6 }
+                                        ListElement { text: "7"; value: 7 }
+                                        ListElement { text: "8"; value: 8 }
+                                    }
+
+                                    currentIndex:
+                                    {
+                                        var bSLC = bottomSolidLayerCount.properties.value
+                                        for(var i = 0; i < cbBSLCItems.count; ++i)
+                                        {
+                                            if(model.get(i).value == bSLC)
+                                            {
+                                                return i
+                                            }
+                                        }
+                                    }
+
+                                    onActivated: bottomSolidLayerCount.setPropertyValue("value", model.get(index).value)
+                                }
+                            }
+                        }
+                    }
 
                     Item
                     {
@@ -1080,6 +1329,33 @@ Item
                 containerStack: Cura.MachineManager.activeMachine
                 key: "initial_layer_line_width_factor"
                 watchedProperties: [ "value", "enabled" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: perimeterCount
+                containerStack: Cura.MachineManager.activeMachine
+                key: "wall_line_count"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: topSolidLayerCount
+                containerStack: Cura.MachineManager.activeMachine
+                key: "top_layers"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: bottomSolidLayerCount
+                containerStack: Cura.MachineManager.activeMachine
+                key: "bottom_layers"
+                watchedProperties: [ "value" ]
                 storeIndex: 0
             }
 

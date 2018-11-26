@@ -27,7 +27,7 @@ LC_MESSAGES
 *.qm
 .directory
 .idea
-cura.desktop
+xdesktop.desktop
 
 # Eclipse+PyDev
 .project

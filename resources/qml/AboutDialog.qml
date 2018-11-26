@@ -12,7 +12,7 @@ UM.Dialog
     id: base
 
     //: About dialog title
-    title: catalog.i18nc("@title:window","About Cura")
+    title: catalog.i18nc("@title:window","About XDesktop")
 
     minimumWidth: 500 * screenScaleFactor
     minimumHeight: 650 * screenScaleFactor
@@ -22,7 +22,7 @@ UM.Dialog
     Image
     {
         id: logo
-        width: (base.minimumWidth * 0.85) | 0
+        width: (base.minimumWidth * 0.20) | 0
         height: (width * (1/4.25)) | 0
 
         source: UM.Theme.getImage("logo")
@@ -30,7 +30,7 @@ UM.Dialog
         sourceSize.width: width
         sourceSize.height: height
         anchors.top: parent.top
-        anchors.topMargin: ((base.minimumWidth - width) / 2) | 0
+        anchors.topMargin: 50
         anchors.horizontalCenter: parent.horizontalCenter
 
         UM.I18nCatalog{id: catalog; name:"cura"}
@@ -42,7 +42,7 @@ UM.Dialog
 
         text: catalog.i18nc("@label","version: %1").arg(UM.Application.version)
         font: UM.Theme.getFont("large")
-        anchors.right : logo.right
+        anchors.horizontalCenter : logo.horizontalCenter
         anchors.top: logo.bottom
         anchors.topMargin: (UM.Theme.getSize("default_margin").height / 2) | 0
     }
@@ -53,7 +53,7 @@ UM.Dialog
         width: parent.width
 
         //: About dialog application description
-        text: catalog.i18nc("@label","End-to-end solution for fused filament 3D printing.")
+        text: catalog.i18nc("@label","Several fantastic pieces of free and open-source software have really helped get Zaxe to where it is today.")
         font: UM.Theme.getFont("system")
         wrapMode: Text.WordWrap
         anchors.top: version.bottom
@@ -66,7 +66,7 @@ UM.Dialog
         width: parent.width
 
         //: About dialog application author note
-        text: catalog.i18nc("@info:credit","Cura is developed by Ultimaker B.V. in cooperation with the community.\nCura proudly uses the following open source projects:")
+        text: catalog.i18nc("@info:credit","A few require that we include their license agreements within our product.\nPlease contact support@zaxe.com for the source code and other requests about the licensing informations'")
         font: UM.Theme.getFont("system")
         wrapMode: Text.WordWrap
         anchors.top: description.bottom

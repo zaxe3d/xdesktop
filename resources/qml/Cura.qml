@@ -102,11 +102,6 @@ UM.MainWindow
             {
                 id: fileMenu
                 title: catalog.i18nc("@title:menu menubar:toplevel","&File");
-                MenuItem
-                {
-                    id: newProjectMenu
-                    action: Cura.Actions.newProject;
-                }
 
                 MenuItem
                 {
@@ -115,25 +110,6 @@ UM.MainWindow
                 }
 
                 RecentFilesMenu { }
-
-                MenuItem
-                {
-                    id: saveWorkspaceMenu
-                    text: catalog.i18nc("@title:menu menubar:file","&Save...")
-                    onTriggered:
-                    {
-                        var args = { "filter_by_machine": false, "file_type": "workspace", "preferred_mimetypes": "application/vnd.ms-package.3dmanufacturing-3dmodel+xml" };
-                        if(UM.Preferences.getValue("cura/dialog_on_project_save"))
-                        {
-                            saveWorkspaceDialog.args = args;
-                            saveWorkspaceDialog.open()
-                        }
-                        else
-                        {
-                            UM.OutputDeviceManager.requestWriteToDevice("local_file", PrintInformation.jobName, args)
-                        }
-                    }
-                }
 
                 MenuSeparator { }
 
@@ -189,70 +165,42 @@ UM.MainWindow
                 MenuItem { action: Cura.Actions.unGroupObjects;}
             }
 
-            ViewMenu { title: catalog.i18nc("@title:menu", "&View") }
-
             Menu
             {
                 id: settingsMenu
-                title: catalog.i18nc("@title:menu", "&Settings")
+                title: catalog.i18nc("@title:menu menubar:toplevel", "&Settings")
 
-                PrinterMenu { title: catalog.i18nc("@title:menu menubar:settings", "&Printer") }
-
-                Instantiator
+                Menu
                 {
-                    model: Cura.ExtrudersModel { simpleNames: true }
-                    Menu {
-                        title: model.name
+                    title: catalog.i18nc("@title:menu menubar:settings","&Language")
+                    id: languageMenu
+                    Instantiator
+                    {
+                        onObjectRemoved: languageMenu.removeItem(object)
+                        onObjectAdded: languageMenu.insertItem(index, object)
 
-                        NozzleMenu { title: Cura.MachineManager.activeDefinitionVariantsName; visible: Cura.MachineManager.hasVariants; extruderIndex: index }
-                        MaterialMenu { title: catalog.i18nc("@title:menu", "&Material"); visible: Cura.MachineManager.hasMaterials; extruderIndex: index }
-
-                        MenuSeparator
+                        model: ListModel
                         {
-                            visible: Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials
-                        }
+                            id: languageList
 
+                            Component.onCompleted: {
+                                append({ text: "English", code: "en_US" })
+                                append({ text: "Türkçe", code: "tr_TR" })
+                            }
+                        }
                         MenuItem
                         {
-                            text: catalog.i18nc("@action:inmenu", "Set as Active Extruder")
-                            onTriggered: Cura.MachineManager.setExtruderIndex(model.index)
+                            text: languageList.get(index).text
+                            checkable: true;
+                            checked: UM.Preferences.getValue("general/language") == languageList.get(index).code
+                            onTriggered:
+                            {
+                                UM.Preferences.setValue("general/language", languageList.get(index).code)
+                                CuraApplication.checkAndExitApplication();
+                            }
                         }
-
-                        MenuItem
-                        {
-                            text: catalog.i18nc("@action:inmenu", "Enable Extruder")
-                            onTriggered: Cura.MachineManager.setExtruderEnabled(model.index, true)
-                            visible: !Cura.MachineManager.getExtruder(model.index).isEnabled
-                        }
-
-                        MenuItem
-                        {
-                            text: catalog.i18nc("@action:inmenu", "Disable Extruder")
-                            onTriggered: Cura.MachineManager.setExtruderEnabled(model.index, false)
-                            visible: Cura.MachineManager.getExtruder(model.index).isEnabled
-                            enabled: Cura.MachineManager.numberExtrudersEnabled > 1
-                        }
-
                     }
-                    onObjectAdded: settingsMenu.insertItem(index, object)
-                    onObjectRemoved: settingsMenu.removeItem(object)
                 }
-
-                // TODO Only show in dev mode. Remove check when feature ready
-                BuildplateMenu { title: catalog.i18nc("@title:menu", "&Build plate"); visible: CuraSDKVersion == "dev" ? Cura.MachineManager.hasVariantBuildplates : false }
-                ProfileMenu { title: catalog.i18nc("@title:settings", "&Profile"); }
-
-                MenuSeparator { }
-
-                MenuItem { action: Cura.Actions.configureSettingVisibility }
-            }
-
-            Menu
-            {
-                id: preferencesMenu
-                title: catalog.i18nc("@title:menu menubar:toplevel","P&references");
-
-                MenuItem { action: Cura.Actions.preferences; }
             }
 
             Menu
@@ -260,10 +208,6 @@ UM.MainWindow
                 id: helpMenu
                 title: catalog.i18nc("@title:menu menubar:toplevel","&Help");
 
-                MenuItem { action: Cura.Actions.showProfileFolder; }
-                MenuItem { action: Cura.Actions.documentation; }
-                MenuItem { action: Cura.Actions.reportBug; }
-                MenuSeparator { }
                 MenuItem { action: Cura.Actions.about; }
             }
         }
@@ -363,18 +307,6 @@ UM.MainWindow
                     top: openFileButtonBottomBorder.bottom;
                     left: parent.left;
                 }
-            }
-
-            ObjectsList
-            {
-                id: objectsList;
-                visible: UM.Preferences.getValue("cura/use_multi_build_plate");
-                anchors
-                {
-                    bottom: parent.bottom;
-                    left: parent.left;
-                }
-
             }
 
             Topbar
@@ -548,13 +480,6 @@ UM.MainWindow
         }
     }
 
-    WorkspaceSummaryDialog
-    {
-        id: saveWorkspaceDialog
-        property var args
-        onYes: UM.OutputDeviceManager.requestWriteToDevice("local_file", PrintInformation.jobName, args)
-    }
-
     Connections
     {
         target: Cura.Actions.preferences
@@ -567,32 +492,6 @@ UM.MainWindow
         onShowPreferencesWindow: preferences.visible = true
     }
 
-    MessageDialog
-    {
-        id: newProjectDialog
-        modality: Qt.ApplicationModal
-        title: catalog.i18nc("@title:window", "New project")
-        text: catalog.i18nc("@info:question", "Are you sure you want to start a new project? This will clear the build plate and any unsaved settings.")
-        standardButtons: StandardButton.Yes | StandardButton.No
-        icon: StandardIcon.Question
-        onYes:
-        {
-            CuraApplication.deleteAll();
-            Cura.Actions.resetProfile.trigger();
-        }
-    }
-
-    Connections
-    {
-        target: Cura.Actions.newProject
-        onTriggered:
-        {
-            if(Printer.platformActivity || Cura.MachineManager.hasUserSettings)
-            {
-                newProjectDialog.visible = true
-            }
-        }
-    }
 
     Connections
     {
@@ -700,8 +599,8 @@ UM.MainWindow
     MessageDialog
     {
         id: exitConfirmationDialog
-        title: catalog.i18nc("@title:window", "Closing Cura")
-        text: catalog.i18nc("@label", "Are you sure you want to exit Cura?")
+        title: catalog.i18nc("@title:window", "Closing XDesktop")
+        text: catalog.i18nc("@label", "Are you sure you want to exit XDesktop?")
         icon: StandardIcon.Question
         modality: Qt.ApplicationModal
         standardButtons: StandardButton.Yes | StandardButton.No
@@ -713,7 +612,7 @@ UM.MainWindow
             if (!visible)
             {
                 // reset the text to default because other modules may change the message text.
-                text = catalog.i18nc("@label", "Are you sure you want to exit Cura?");
+                text = catalog.i18nc("@label", "Are you sure you want to exit XDesktop?");
             }
         }
     }
@@ -880,21 +779,6 @@ UM.MainWindow
         id: openFilesIncludingProjectsDialog
     }
 
-    AskOpenAsProjectOrModelsDialog
-    {
-        id: askOpenAsProjectOrModelsDialog
-    }
-
-    Connections
-    {
-        target: CuraApplication
-        onOpenProjectFile:
-        {
-            askOpenAsProjectOrModelsDialog.fileUrl = project_file;
-            askOpenAsProjectOrModelsDialog.show();
-        }
-    }
-
     EngineLog
     {
         id: engineLog;
@@ -913,16 +797,6 @@ UM.MainWindow
             if(Qt.platform.os == "linux") {
                 Qt.openUrlExternally(UM.Resources.getPath(UM.Resources.Resources, ""));
             }
-        }
-    }
-
-    AddMachineDialog
-    {
-        id: addMachineDialog
-        onMachineAdded:
-        {
-            machineActionsWizard.firstRun = addMachineDialog.firstRun
-            machineActionsWizard.start(id)
         }
     }
 
@@ -981,26 +855,6 @@ UM.MainWindow
             messageDialog.icon = icon
             messageDialog.visible = true
         }
-    }
-
-    DiscardOrKeepProfileChangesDialog
-    {
-        id: discardOrKeepProfileChangesDialog
-    }
-
-    Connections
-    {
-        target: CuraApplication
-        onShowDiscardOrKeepProfileChanges:
-        {
-            discardOrKeepProfileChangesDialog.show()
-        }
-    }
-
-    Connections
-    {
-        target: Cura.Actions.addMachine
-        onTriggered: addMachineDialog.visible = true;
     }
 
     AboutDialog

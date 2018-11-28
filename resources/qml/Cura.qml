@@ -296,6 +296,44 @@ UM.MainWindow
             // Bottom Border
             Rectangle { id: openFileButtonBottomBorder; anchors { top: openFileButton.bottom; left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: 2; color: UM.Theme.getColor("sidebar_item_dark") }
 
+            Button
+            {
+                id: centerModelButton;
+                text: catalog.i18ncp("@action:inmenu menubar:edit", "Center Selected Model", "Center Selected Models", UM.Selection.selectionCount)
+                iconSource: UM.Theme.getIcon("center")
+                style: UM.Theme.styles.tool_button
+                tooltip: ""
+                anchors
+                {
+                    top: openFileButtonBottomBorder.bottom;
+                    left: parent.left;
+                    leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2)
+                }
+                action: Cura.Actions.centerSelection;
+            }
+
+            // Bottom Border
+            Rectangle { id: centerModelButtonBottomBorder; anchors { top: centerModelButton.bottom; left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: 2; color: UM.Theme.getColor("sidebar_item_dark") }
+
+            Button
+            {
+                id: multiplyModelButton;
+                text: catalog.i18ncp("@title:window", "Multiply Selected Model", "Multiply Selected Models", UM.Selection.selectionCount)
+                iconSource: UM.Theme.getIcon("multiply")
+                style: UM.Theme.styles.tool_button
+                tooltip: ""
+                anchors
+                {
+                    top: centerModelButtonBottomBorder.bottom;
+                    left: parent.left;
+                    leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2)
+                }
+                action: Cura.Actions.multiplySelection;
+            }
+
+            // Bottom Border
+            Rectangle { id: multiplyModelButtonBottomBorder; anchors { top: multiplyModelButton.bottom; left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: 2; color: UM.Theme.getColor("sidebar_item_dark") }
+
             Toolbar
             {
                 id: toolbar;
@@ -304,7 +342,7 @@ UM.MainWindow
                 property int mouseY: base.mouseY
 
                 anchors {
-                    top: openFileButtonBottomBorder.bottom;
+                    top: multiplyModelButtonBottomBorder.bottom;
                     left: parent.left;
                 }
             }

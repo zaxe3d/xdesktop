@@ -237,23 +237,6 @@
             }
         }
     },
-    "PerObjectSettingsTool": {
-        "package_info": {
-            "package_id": "PerObjectSettingsTool",
-            "package_type": "plugin",
-            "display_name": "Per-Object Settings Tool",
-            "description": "Provides the per-model settings.",
-            "package_version": "1.0.0",
-            "sdk_version": 5,
-            "website": "https://ultimaker.com",
-            "author": {
-                "author_id": "Ultimaker",
-                "display_name": "Ultimaker B.V.",
-                "email": "plugins@ultimaker.com",
-                "website": "https://ultimaker.com"
-            }
-        }
-    },
     "PrepareStage": {
         "package_info": {
             "package_id": "PrepareStage",

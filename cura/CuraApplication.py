@@ -434,9 +434,8 @@ class CuraApplication(QtApplication):
             "SolidView",
 
             # Readers & Writers:
-            "GCodeWriter",
+            #"ZaxeCodeWriter",
             "STLReader",
-            "3MFWriter",
 
             # Tools:
             "CameraTool",

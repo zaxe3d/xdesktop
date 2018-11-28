@@ -87,12 +87,13 @@ class NetworkMachineManager(QObject):
     def upload(self, mID) -> bool:
         machine = self.machineList[str(mID)]
 
-        codeGenerator = PluginRegistry.getInstance().getPluginObject("ZaxeCodeWriter")
+        codeGenerator = self._application.getZaxeCodeWriter()
         success = codeGenerator.generate()
+
         if not success:
             Logger.log("w", "Zaxe code generation failed for device [%s - [%s]]" % (machine.name, machine.ip))
             return False
-        Logger.log("d", "will upload generated code to machine [%s - [%s]]" % (machine.name, machine.ip))
+        Logger.log("i", "will upload generated code to machine [%s - [%s]]" % (machine.name, machine.ip))
         machine.upload(codeGenerator.getZaxeFile())
         return True
 

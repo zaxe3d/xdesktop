@@ -1,8 +1,0 @@
-{
-    "name": "Zaxe code Writer",
-    "author": "Zaxe",
-    "version": "1.0.0",
-    "description": "Generates Zaxe print ready file.",
-    "api": 5,
-    "i18n-catalog": "cura"
-}

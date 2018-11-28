@@ -218,6 +218,11 @@ class NetworkMachine(QObject, Thread):
         Logger.log("d", "starting to upload")
         self.uploader.daemon = True
         self.uploader.start()
+        # X1+ hack start
+        # X1+ doesn't inform back about preheat so just emit an state update
+        eventMessage = {"type": "new_message", "message": {"event": "states_update"}}
+        self.emit(eventMessage)
+        # X1+ hack end
 
     # end of commands
 

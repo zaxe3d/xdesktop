@@ -4,6 +4,8 @@
 from io import StringIO, BufferedIOBase #To write the g-code to a temporary buffer, and for typing.
 from typing import cast, List
 
+import cura.CuraApplication # To get the global container stack to find the current machine.
+
 from UM.Logger import Logger
 from UM.Mesh.MeshWriter import MeshWriter #The class we're extending/implementing.
 from UM.PluginRegistry import PluginRegistry
@@ -12,7 +14,6 @@ from UM.Scene.SceneNode import SceneNode #For typing.
 from UM.i18n import i18nCatalog
 from UM.Qt.Duration import DurationFormat
 from cura.Utils import tool
-from cura.CuraApplication import CuraApplication
 import hashlib
 import gzip
 import zipfile
@@ -32,7 +33,7 @@ class ZaxeCodeWriter(MeshWriter):
     def __init__(self) -> None:
         super().__init__(add_to_recent_files = False)
         self._checkSum = None
-        self._application = CuraApplication.getInstance()
+        self._application = cura.CuraApplication.CuraApplication.getInstance()
 
     def generate(self) -> bool:
 

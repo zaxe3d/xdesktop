@@ -31,7 +31,7 @@ Item {
         if (activity == false) {
             //When there is no mesh in the buildplate; the printJobTextField is set to an empty string so it doesn't set an     empty string as a jobName (which is later used for saving the file)
              PrintInformation.baseName = ''
-    }
+        }
     }
 
     height: {
@@ -345,73 +345,55 @@ Item {
         // Show slicing progress here
         id: itemSlicing
         visible: base.backendState != "undefined" && base.backendState == 2
-        height: childrenRect.height + 15
+        height: childrenRect.height + 50
         width: base.width - 10
         anchors.top: parent.top; anchors.left: parent.left
         anchors.topMargin: 10; anchors.leftMargin: 15
         Column {
-            spacing: 7
+            spacing: UM.Theme.getSize("sidebar_item_margin").height
             width: parent.width
             Layout.leftMargin: 50
-            Text { text: catalog.i18nc("@label", "Preparing..."); color: "white"; font.bold: true; width: 125; font.pointSize: 14 }
-            ProgressBar {
+            Text {
+                text: catalog.i18nc("@label", "Preparing...")
+                color: UM.Theme.getColor("text_sidebar")
+                font: UM.Theme.getFont("large")
+            }
+            Label {
+                width: parent.width - UM.Theme.getSize("sidebar_item_margin").width
+                font: UM.Theme.getFont("large")
+                color: UM.Theme.getColor("text_sidebar")
+                horizontalAlignment: Text.AlignRight
+                text: parseInt(base.progress * 100, 10) + "%"
+            }
+            Rectangle {
                 id: progressBar
-                value: base.progress
-                padding: 2
+                width: parent.width - UM.Theme.getSize("sidebar_item_margin").width
+                height: UM.Theme.getSize("progressbar").height
+                radius: UM.Theme.getSize("progressbar_radius").width
+                color: UM.Theme.getColor("progressbar_background")
 
-                background: Rectangle {
-                    implicitWidth: parent.width
-                    implicitHeight: 24
-                    color: UM.Theme.getColor("sidebar_item_glow")
-                    radius: 3
-                }
-
-                contentItem: Item {
-                    implicitWidth: base.width - 44
-                    implicitHeight: 16
-
-                    Rectangle {
-                        width: progressBar.visualPosition * parent.width
-                        height: parent.height
-                        radius: 2
-                        color: "#17a81a" // green
-                        Text {
-                            color: "white"
-                            font: UM.Theme.getFont("small")
-                            text: parseInt(progressBar.value * 100, 10) + "%"
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            leftPadding: 15
-                            topPadding: 2
-                        }
-                    }
+                Rectangle {
+                    width: Math.max(parent.width * base.progress)
+                    height: parent.height
+                    radius: UM.Theme.getSize("progressbar_radius").width
+                    color: UM.Theme.getColor("text_blue")
                 }
             }
             Button {
                 id: cancelProgress
-                width: 80; height: 30
                 background: Rectangle {
-                    border.color: "black"
-                    border.width: 1
-                    color: "#d9534f"
-                    radius: 2
+                    color: UM.Theme.getColor("button_gray")
+                    border.color: UM.Theme.getColor("text_danger")
+                    border.width: UM.Theme.getSize("default_lining").width
+                    radius: 10
                 }
                 contentItem: Text {
-                    leftPadding: 5
-                    color: "white"
-                    text: ""
-                    font { family: fontAwesomeSolid.name; pointSize: 12 }
-                    horizontalAlignment: Text.AlignLeft
+                    color: UM.Theme.getColor("text_danger")
+                    text: catalog.i18nc("@label", "Cancel")
+                    font: UM.Theme.getFont("large_nonbold")
+                    horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                }
-                Label {
-                    color: "white"
-                    leftPadding: 25
-                    topPadding: 2
-                    font: UM.Theme.getFont("default_bold")
-                    anchors.top: parent.contentItem.top
-                    anchors.left: parent.left
-                    horizontalAlignment: Text.AlignLeft
-                    text: catalog.i18nc("@label", " Cancel")
+                    padding: 5
                 }
                 onClicked: {
                     CuraApplication.backend.stopSlicing();

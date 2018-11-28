@@ -106,6 +106,7 @@ from cura.Settings.MaterialSettingsVisibilityHandler import MaterialSettingsVisi
 from cura.Settings.ContainerManager import ContainerManager
 from cura.Settings.SidebarCustomMenuItemsModel import SidebarCustomMenuItemsModel
 from cura.NetworkMachineManager import NetworkMachineManager
+from cura.ZaxeCodeWriter import ZaxeCodeWriter
 import cura.Settings.cura_empty_instance_containers
 
 from cura.ObjectsModel import ObjectsModel
@@ -169,7 +170,7 @@ class CuraApplication(QtApplication):
 
         # Variables set from CLI
         self._files_to_open = []
-        self._use_single_instance = False
+        self._use_single_instance = True
         self._trigger_early_crash = False  # For debug only
 
         self._single_instance = None
@@ -191,6 +192,7 @@ class CuraApplication(QtApplication):
         self._machine_manager = None
         self._extruder_manager = None
         self._network_machine_manager = None
+        self._zaxe_code_writer = None
         self._container_manager = None
 
         self._object_manager = None
@@ -828,6 +830,11 @@ class CuraApplication(QtApplication):
         if self._network_machine_manager is None:
             self._network_machine_manager = NetworkMachineManager()
         return self._network_machine_manager
+
+    def getZaxeCodeWriter(self, *args) -> ZaxeCodeWriter:
+        if self._zaxe_code_writer is None:
+            self._zaxe_code_writer = ZaxeCodeWriter()
+        return self._zaxe_code_writer
 
     def getVariantManager(self, *args) -> VariantManager:
         return self._variant_manager

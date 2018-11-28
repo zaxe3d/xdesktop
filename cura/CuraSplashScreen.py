@@ -56,11 +56,13 @@ class CuraSplashScreen(QSplashScreen):
         if buildtype:
             version[0] += " (%s)" % buildtype
 
+        version[0] = "V" + version[0]
+
         # draw version text
         font = QFont()  # Using system-default font here
-        font.setPixelSize(37)
+        font.setPixelSize(30)
         painter.setFont(font)
-        painter.drawText(20, 10, 330 * self._scale, 230 * self._scale, Qt.AlignLeft | Qt.AlignTop, version[0])
+        painter.drawText(275, 105, 330 * self._scale, 230 * self._scale, Qt.AlignLeft | Qt.AlignTop, version[0])
         if len(version) > 1:
             font.setPixelSize(16)
             painter.setFont(font)

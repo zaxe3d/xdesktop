@@ -266,9 +266,10 @@ Item {
 
                                     background: Rectangle {
                                         color: UM.Theme.getColor("sidebar_item_light")
-                                        border.color: "#3e3e3e"
-                                        border.width: 1
+                                        border.width: 0
                                         radius: 2
+                                        // Bottom border only
+                                        Rectangle { width: parent.width; height: UM.Theme.getSize("default_lining").height; anchors.bottom: parent.bottom; anchors.bottomMargin: UM.Theme.getSize("default_lining").height; color: UM.Theme.getColor("sidebar_item_dark") }
                                     }
                                     Keys.onPressed: {
                                         if (event.key == Qt.Key_Escape) {
@@ -329,11 +330,11 @@ Item {
                                         }
                                         onClicked: Cura.NetworkMachineManager.TogglePreheat(device.uid)
                                         // this hover state makes it silly
-                                        onHoveredChanged: {
-                                            btnPreheat.contentItem.color = hovered
-                                                ? UM.Theme.getColor("text_heating")
-                                                : machineStates.preheat ? UM.Theme.getColor("text_heating") : UM.Theme.getColor("text_sidebar")
-                                        }
+                                        //onHoveredChanged: {
+                                        //    btnPreheat.contentItem.color = hovered
+                                        //        ? UM.Theme.getColor("text_heating")
+                                        //        : machineStates.preheat ? UM.Theme.getColor("text_heating") : UM.Theme.getColor("text_sidebar")
+                                        //}
                                     }
 
                                     // Pause button

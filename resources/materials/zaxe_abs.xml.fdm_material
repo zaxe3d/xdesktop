@@ -26,8 +26,6 @@
 
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe X1"/>
-            <machine_identifier manufacturer="Zaxe" product="Zaxe X1+"/>
-            <machine_identifier manufacturer="Zaxe" product="Zaxe Z1+"/>
 
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
@@ -48,6 +46,7 @@
             </hotend>
 
         </machine>
+
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe Z1+"/>
 

@@ -552,16 +552,16 @@ Item {
                                         verticalAlignment: Text.AlignVCenter
                                     }
                                     onClicked: {
-                                        if (PrintInformation.materialNames[0] != device.material) {
-                                            device.materialWarning = true
+                                        // check if the slice is ready or if there is a model
+                                        if (UM.Backend.state != "undefined" && UM.Backend.state == 1 || !CuraApplication.platformActivity) {
+                                            device.materialWarning = false
+                                            device.modelCompatibilityWarning = false
                                             shakeAnim.start()
                                         } else if (Cura.MachineManager.activeMachineName.replace("+", "PLUS") != device.deviceModel.toUpperCase()) {
                                             device.modelCompatibilityWarning = true
                                             shakeAnim.start()
-                                        // check if the slice is ready or if there is a model
-                                        } else if (UM.Backend.state != "undefined" && UM.Backend.state == 1 || !CuraApplication.platformActivity) {
-                                            device.materialWarning = false
-                                            device.modelCompatibilityWarning = false
+                                        } else if (PrintInformation.materialNames[0] != device.material) {
+                                            device.materialWarning = true
                                             shakeAnim.start()
                                         } else {
                                             device.materialWarning = false

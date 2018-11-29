@@ -932,8 +932,9 @@ UM.MainWindow
             if(Cura.MachineManager.activeMachine == null)
             {
                 // Add all the machines here
-                Cura.MachineManager.addMachine("X1", "zaxe_x1")
+                Cura.MachineManager.addMachine("Z1+", "zaxe_z1plus")
                 Cura.MachineManager.addMachine("X1+", "zaxe_x1plus")
+                Cura.MachineManager.addMachine("X1", "zaxe_x1")
             }
         }
     }

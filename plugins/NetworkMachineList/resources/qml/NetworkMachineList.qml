@@ -2,9 +2,9 @@
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.7
-import QtQuick.Controls 1.2
-import QtQuick.Controls.Styles 1.1
-import QtQuick.Layouts 1.2
+import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Layouts 1.3
 
 import UM 1.2 as UM
 import Cura 1.0 as Cura
@@ -14,13 +14,6 @@ Rectangle
     id: networkMachineList
 
     UM.I18nCatalog { id: catalog; name:"cura"}
-
-    //FontLoader { id: fontAwesomeSolid; source: "../fonts/fa-solid-900.ttf" }
-
-    MouseArea {
-        anchors.fill: parent
-        onWheel: nMachineList.flick(0, wheel.angleDelta.y * 5)
-    }
 
     property var materialNames : {
         "zaxe_abs": "Zaxe ABS",
@@ -115,7 +108,7 @@ Rectangle
     {
         Timer {
             id: noPrinterWarningTimer
-            interval: 2000; running: false; repeat: false
+            interval: 3000; running: false; repeat: false
             onTriggered: {
                 noPrinterWarning.visible = Cura.NetworkMachineListModel.rowCount() == 0
             }
@@ -193,8 +186,7 @@ Rectangle
         anchors.left: parent.left;
         anchors.topMargin: -2
         style: UM.Theme.styles.scrollview;
-        __wheelAreaScrollSpeed: 75; // Scroll three lines in one scroll event
-
+        flickableItem.flickableDirection: Flickable.VerticalFlick
 
         ListView
         {

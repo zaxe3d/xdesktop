@@ -14,6 +14,8 @@ from UM.Scene.SceneNode import SceneNode #For typing.
 from UM.i18n import i18nCatalog
 from UM.Qt.Duration import DurationFormat
 from cura.Utils import tool
+from cura.Snapshot import Snapshot
+
 import hashlib
 import gzip
 import zipfile
@@ -64,19 +66,28 @@ class ZaxeCodeWriter(MeshWriter):
             "model": self._machineManager.activeMachineName.replace("+", "PLUS"),
             "version": self.ZAXE_FILE_VERSION,
             "checksum": self.getCheckSum(),
-            "nozzle_diameter": "0.4" # self._machineManager.globalVariantName # FIXME hardcoded
+            "nozzle_diameter": 0.4 # self._machineManager.globalVariantName # FIXME hardcoded
             }, self.get_export_params())
         infoFilePath = os.path.join(TMP_FOLDER, "info.json")
+        snapshotFilePath = os.path.join(TMP_FOLDER, "snapshot.png")
 
         # actually write to info.json
         with open(infoFilePath, "w") as infoFp:
             json.dump(info, infoFp)
 
+        # write the png to the file
+        snapshot = Snapshot.snapshot(width = 130, height = 130)
+        snapshot.save(snapshotFilePath, "PNG", 100)
+
         # generate .zaxe file with contents
         zipFile = zipfile.ZipFile(self.getZaxeFile(), 'w', zipfile.ZIP_DEFLATED)
         zipFile.write(infoFilePath, os.path.basename(infoFilePath))
         zipFile.write(gcodeFilePath, "data.zaxe_code")
+        zipFile.write(snapshotFilePath, "snapshot.png")
         zipFile.close()
+        os.remove(gcodeFilePath)
+        os.remove(snapshotFilePath)
+        os.remove(infoFilePath)
 
         return True
 

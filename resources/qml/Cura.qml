@@ -22,17 +22,13 @@ UM.MainWindow
 
     backgroundColor: UM.Theme.getColor("viewport_background")
 
-    // This connection is here to support legacy printer output devices that use the showPrintMonitor signal on Application to switch to the monitor stage
-    // It should be phased out in newer plugin versions.
     Connections
     {
         target: CuraApplication
-        onShowPrintMonitor: {
-            if (show) {
-                UM.Controller.setActiveStage("NetworkMachineList")
-            } else {
-                UM.Controller.setActiveStage("PrepareStage")
-            }
+        onActivityChanged: {
+            // SolidView if not sliced - 1 = Ready to slice - 4 = Unable to slice
+            if (UM.Backend.state == 1 || UM.Backend.state == 4)
+                UM.Controller.setActiveView("SolidView")
         }
     }
 

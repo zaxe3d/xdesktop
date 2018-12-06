@@ -50,9 +50,9 @@ Item {
     }
 
     Rectangle {
-        // 1 = ready to slice
+        // 1 = ready to slice 4 = unable to slice
         id: itemLoadOrSlice
-        visible: base.backendState != "undefined" && base.backendState == 1 || !activity
+        visible: base.backendState != "undefined" && (base.backendState == 1 || base.backendState == 4) || !activity
         height: childrenRect.height + 45 + 25
         color: UM.Theme.getColor("sidebar_item_medium_dark")
         width: parent.width

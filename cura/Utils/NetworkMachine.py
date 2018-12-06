@@ -1,7 +1,6 @@
-from PyQt5.QtCore import QUrl, QCoreApplication, QTimer, QObject, pyqtSignal
+from PyQt5.QtCore import QUrl, QCoreApplication, QTimer, QObject, pyqtSignal, QThread
 from PyQt5 import QtCore, QtWebSockets, QtNetwork
 
-from threading import *
 import ssl
 import json
 import os
@@ -35,7 +34,7 @@ class NetworkMachineUploadEventArgs():
         self.progress = progress
         self.machine = machine
 
-class NetworkMachine(QObject, Thread):
+class NetworkMachine(QThread, QObject):
 
     ip = None
 
@@ -45,33 +44,38 @@ class NetworkMachine(QObject, Thread):
 
     name = None
 
+    timeout = 5000 # timeout and close after xMilliSeconds
+
     machineEvent = pyqtSignal(NetworkMachineEventArgs)
     machineUploadEvent = pyqtSignal(NetworkMachineUploadEventArgs)
 
     def __init__(self, ip, port, name, parent = None):
-        Thread.__init__(self)
         QObject.__init__(self)
         self.ip = ip
         self.port = port
         self.setName(name)
         self.id = uuid.uuid4().hex
-        self.eventHandlers = []
         self.currentLen = 0
         self.networkId = None
         self.fileName = None
         self.currentSize = 0
         self.totalSize = 0
-        self.timer = None
-        self.uploader = None
         self.nozzle = 0.4
         self.printingFile = ""
         self.estimatedTime = ""
-        self.__states = {}
         self.material = ""
         self.deviceModel = "x1"
         self.hasPin = False
         self.elapsedTime = 0
         self.fwVersion = [999, 0, 0]
+        self.__states = {}
+
+        # class specific
+        self.timer = None
+        self.uploader = None
+
+    def start(self):
+
         # create socket
         self.socket =  QtWebSockets.QWebSocket("", QtWebSockets.QWebSocketProtocol.Version13, None)
         # assign events
@@ -87,7 +91,7 @@ class NetworkMachine(QObject, Thread):
     # Connection related
     def onConnected(self):
         if self.timer is not None:
-            self.timer.cancel()
+            self.timer.stop()
         Logger.log("d", "connected: %s" % self.ip)
 
     def onDisconnected(self):
@@ -97,10 +101,10 @@ class NetworkMachine(QObject, Thread):
 
     def onMessage(self, message):
         if self.timer is not None:
-            self.timer.cancel()
+            self.timer.stop()
         self.startTimeout()
-        message = json.loads(message)
 
+        message = json.loads(message)
 
         if message['event'] == "hello":
             try:
@@ -230,8 +234,10 @@ class NetworkMachine(QObject, Thread):
         self.machineUploadEvent.emit(NetworkMachineUploadEventArgs(self, progress))
 
     def startTimeout(self):
-        self.timer = Timer(20, self.close)
-        self.timer.start()
+        if self.timer is None:
+            self.timer = QtCore.QTimer()
+            self.timer.timeout.connect(self.close)
+        self.timer.start(self.timeout)
 
     def write(self, message):
         try:
@@ -244,12 +250,11 @@ class NetworkMachine(QObject, Thread):
     def emit(self, eventData):
         self.machineEvent.emit(NetworkMachineEventArgs(self, eventData))
 
-class FTPUploader(QObject, Thread):
+class FTPUploader(QThread, QObject):
 
     uploadEvent = pyqtSignal(int)
 
     def __init__(self, filename, ip, port, parent = None):
-        Thread.__init__(self)
         QObject.__init__(self)
         self.ftp = ftplib.FTP_TLS()
         self.currentSize = 0

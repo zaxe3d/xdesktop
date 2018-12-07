@@ -10,18 +10,13 @@ def getMetaData():
     return {
         "mesh_reader": [
             {
-                "extension": "gcode",
-                "description": i18n_catalog.i18nc("@item:inlistbox", "G-code File")
-            },
-            {
-                "extension": "g",
-                "description": i18n_catalog.i18nc("@item:inlistbox", "G File")
+                "extension": "zaxe",
+                "description": i18n_catalog.i18nc("@item:inlistbox", "Zaxe File")
             }
         ]
     }
 
 
 def register(app):
-    app.addNonSliceableExtension(".gcode")
-    app.addNonSliceableExtension(".g")
+    app.addNonSliceableExtension(".zaxe")
     return {"mesh_reader": GCodeReader.GCodeReader()}

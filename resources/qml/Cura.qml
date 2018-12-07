@@ -233,28 +233,17 @@ UM.MainWindow
                 anchors.fill: parent;
                 onDropped:
                 {
-                    //if (drop.urls.length > 0)
-                    //{
+                    if (drop.urls.length > 0)
+                    {
 
-                    //    var nonPackages = [];
-                    //    for (var i = 0; i < drop.urls.length; i++)
-                    //    {
-                    //        var filename = drop.urls[i];
-                    //        if (filename.endsWith(".curapackage"))
-                    //        {
-                    //            // Try to install plugin & close.
-                    //            CuraApplication.getPackageManager().installPackageViaDragAndDrop(filename);
-                    //            packageInstallDialog.text = catalog.i18nc("@label", "This package will be installed after restarting.");
-                    //            packageInstallDialog.icon = StandardIcon.Information;
-                    //            packageInstallDialog.open();
-                    //        }
-                    //        else
-                    //        {
-                    //            nonPackages.push(filename);
-                    //        }
-                    //    }
-                    //    openDialog.handleOpenFileUrls(nonPackages);
-                    //}
+                        var nonPackages = [];
+                        for (var i = 0; i < drop.urls.length; i++)
+                        {
+                            var filename = drop.urls[i];
+                                nonPackages.push(filename);
+                        }
+                        openDialog.handleOpenFileUrls(nonPackages);
+                    }
                 }
             }
 
@@ -701,87 +690,37 @@ UM.MainWindow
         // and view here may require more effort but make things more difficult to understand.
         function handleOpenFileUrls(fileUrlList)
         {
-            // look for valid project files
-            var projectFileUrlList = [];
             var hasGcode = false;
             var nonGcodeFileList = [];
             for (var i in fileUrlList)
             {
-                var endsWithG = /\.g$/;
-                var endsWithGcode = /\.gcode$/;
-                if (endsWithG.test(fileUrlList[i]) || endsWithGcode.test(fileUrlList[i]))
+                var endsWithGcode = /\.zaxe$/;
+                if (endsWithGcode.test(fileUrlList[i]))
                 {
                     continue;
-                }
-                else if (CuraApplication.checkIsValidProjectFile(fileUrlList[i]))
-                {
-                    projectFileUrlList.push(fileUrlList[i]);
                 }
                 nonGcodeFileList.push(fileUrlList[i]);
             }
             hasGcode = nonGcodeFileList.length < fileUrlList.length;
 
             // show a warning if selected multiple files together with Gcode
-            var hasProjectFile = projectFileUrlList.length > 0;
             var selectedMultipleFiles = fileUrlList.length > 1;
             if (selectedMultipleFiles && hasGcode)
             {
                 infoMultipleFilesWithGcodeDialog.selectedMultipleFiles = selectedMultipleFiles;
-                infoMultipleFilesWithGcodeDialog.hasProjectFile = hasProjectFile;
                 infoMultipleFilesWithGcodeDialog.fileUrls = nonGcodeFileList.slice();
-                infoMultipleFilesWithGcodeDialog.projectFileUrlList = projectFileUrlList.slice();
                 infoMultipleFilesWithGcodeDialog.open();
             }
             else
             {
-                handleOpenFiles(selectedMultipleFiles, hasProjectFile, fileUrlList, projectFileUrlList);
+                handleOpenFiles(selectedMultipleFiles, fileUrlList)
             }
         }
 
-        function handleOpenFiles(selectedMultipleFiles, hasProjectFile, fileUrlList, projectFileUrlList)
+        function handleOpenFiles(selectedMultipleFiles, fileUrlList)
         {
-            // we only allow opening one project file
-            if (selectedMultipleFiles && hasProjectFile)
-            {
-                openFilesIncludingProjectsDialog.fileUrls = fileUrlList.slice();
-                openFilesIncludingProjectsDialog.show();
-                return;
-            }
-
-            if (hasProjectFile)
-            {
-                var projectFile = projectFileUrlList[0];
-
-                // check preference
-                var choice = UM.Preferences.getValue("cura/choice_on_open_project");
-                if (choice == "open_as_project")
-                {
-                    openFilesIncludingProjectsDialog.loadProjectFile(projectFile);
-                }
-                else if (choice == "open_as_model")
-                {
-                    openFilesIncludingProjectsDialog.loadModelFiles([projectFile].slice());
-                }
-                else    // always ask
-                {
-                    // ask whether to open as project or as models
-                    askOpenAsProjectOrModelsDialog.fileUrl = projectFile;
-                    askOpenAsProjectOrModelsDialog.show();
-                }
-            }
-            else
-            {
-                openFilesIncludingProjectsDialog.loadModelFiles(fileUrlList.slice());
-            }
+            openFilesDialog.loadModelFiles(fileUrlList.slice());
         }
-    }
-
-    MessageDialog
-    {
-        id: packageInstallDialog
-        title: catalog.i18nc("@window:title", "Install Package");
-        standardButtons: StandardButton.Ok
-        modality: Qt.ApplicationModal
     }
 
     MessageDialog {
@@ -792,13 +731,11 @@ UM.MainWindow
         text: catalog.i18nc("@text:window", "We have found one or more G-Code files within the files you have selected. You can only open one G-Code file at a time. If you want to open a G-Code file, please just select only one.")
 
         property var selectedMultipleFiles
-        property var hasProjectFile
         property var fileUrls
-        property var projectFileUrlList
 
         onAccepted:
         {
-            openDialog.handleOpenFiles(selectedMultipleFiles, hasProjectFile, fileUrls, projectFileUrlList);
+            openDialog.handleOpenFiles(selectedMultipleFiles, fileUrls);
         }
     }
 
@@ -808,30 +745,14 @@ UM.MainWindow
         onTriggered: openDialog.open()
     }
 
-    OpenFilesIncludingProjectsDialog
+    OpenFilesDialog
     {
-        id: openFilesIncludingProjectsDialog
+        id: openFilesDialog
     }
 
     EngineLog
     {
         id: engineLog;
-    }
-
-    Connections
-    {
-        target: Cura.Actions.showProfileFolder
-        onTriggered:
-        {
-            var path = UM.Resources.getPath(UM.Resources.Preferences, "");
-            if(Qt.platform.os == "windows") {
-                path = path.replace(/\\/g,"/");
-            }
-            Qt.openUrlExternally(path);
-            if(Qt.platform.os == "linux") {
-                Qt.openUrlExternally(UM.Resources.getPath(UM.Resources.Resources, ""));
-            }
-        }
     }
 
     // Dialog to handle first run machine actions

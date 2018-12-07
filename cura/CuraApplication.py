@@ -170,7 +170,6 @@ class CuraApplication(QtApplication):
 
         # Variables set from CLI
         self._files_to_open = []
-        self._use_single_instance = True
         self._trigger_early_crash = False  # For debug only
 
         self._single_instance = None
@@ -296,17 +295,16 @@ class CuraApplication(QtApplication):
         self._machine_action_manager = MachineActionManager.MachineActionManager(self)
         self._machine_action_manager.initialize()
 
-        self.change_log_url = "https://ultimaker.com/ultimaker-cura-latest-features"
+        self.change_log_url = "http://www.zaxe.com/xdesktop-latest-features"
 
     def __sendCommandToSingleInstance(self):
         self._single_instance = SingleInstance(self, self._files_to_open)
 
         # If we use single instance, try to connect to the single instance server, send commands, and then exit.
         # If we cannot find an existing single instance server, this is the only instance, so just keep going.
-        if self._use_single_instance:
-            if self._single_instance.startClient():
-                Logger.log("i", "Single instance commands were sent, exiting")
-                sys.exit(0)
+        if self._single_instance.startClient():
+            Logger.log("i", "Single instance commands were sent, exiting")
+            sys.exit(0)
 
     # Adds expected directory names and search paths for Resources.
     def __addExpectedResourceDirsAndSearchPaths(self):
@@ -434,7 +432,6 @@ class CuraApplication(QtApplication):
             "SolidView",
 
             # Readers & Writers:
-            #"ZaxeCodeWriter",
             "STLReader",
 
             # Tools:
@@ -696,8 +693,7 @@ class CuraApplication(QtApplication):
 
         # Check if we should run as single instance or not. If so, set up a local socket server which listener which
         # coordinates multiple Cura instances and accepts commands.
-        if self._use_single_instance:
-            self.__setUpSingleInstanceServer()
+        self.__setUpSingleInstanceServer()
 
         # Setup scene and build volume
         root = self.getController().getScene().getRoot()
@@ -721,7 +717,7 @@ class CuraApplication(QtApplication):
 
         self.started = True
         self.initializationFinished.emit()
-        Logger.log("d", "Booting Cura took %s seconds", time.time() - self._boot_loading_time)
+        Logger.log("d", "Booting XDesktop took %s seconds", time.time() - self._boot_loading_time)
 
         # For now use a timer to postpone some things that need to be done after the application and GUI are
         # initialized, for example opening files because they may show dialogs which can be closed due to incomplete
@@ -738,8 +734,7 @@ class CuraApplication(QtApplication):
         self.exec_()
 
     def __setUpSingleInstanceServer(self):
-        if self._use_single_instance:
-            self._single_instance.startServer()
+        self._single_instance.startServer()
 
     def _onPostStart(self):
         for file_name in self._files_to_open:
@@ -1731,14 +1726,6 @@ class CuraApplication(QtApplication):
                     parent = node.getParent()
 
                 Selection.add(node)
-
-    @pyqtSlot()
-    def showMoreInformationDialogForAnonymousDataCollection(self):
-        try:
-            slice_info = self._plugin_registry.getPluginObject("SliceInfoPlugin")
-            slice_info.showMoreInfoDialog()
-        except PluginNotFoundError:
-            Logger.log("w", "Plugin SliceInfo was not found, so not able to show the info dialog.")
 
     def addSidebarCustomMenuItem(self, menu_item: dict) -> None:
         self._sidebar_custom_menu_items.append(menu_item)

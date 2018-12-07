@@ -30,14 +30,6 @@ UM.Dialog
     property var fileUrls: []
     property int spacerHeight: 10 * screenScaleFactor
 
-    function loadProjectFile(projectFile)
-    {
-        UM.WorkspaceFileHandler.readLocalFile(projectFile);
-
-        var meshName = backgroundItem.getMeshName(projectFile.toString());
-        backgroundItem.hasMesh(decodeURIComponent(meshName));
-    }
-
     function loadModelFiles(fileUrls)
     {
         for (var i in fileUrls)

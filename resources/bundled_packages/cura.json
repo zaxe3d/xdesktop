@@ -101,23 +101,6 @@
             }
         }
     },
-    "GCodeGzReader": {
-        "package_info": {
-            "package_id": "GCodeGzReader",
-            "package_type": "plugin",
-            "display_name": "Compressed G-code Reader",
-            "description": "Reads g-code from a compressed archive.",
-            "package_version": "1.0.0",
-            "sdk_version": 5,
-            "website": "https://ultimaker.com",
-            "author": {
-                "author_id": "Ultimaker",
-                "display_name": "Ultimaker B.V.",
-                "email": "plugins@ultimaker.com",
-                "website": "https://ultimaker.com"
-            }
-        }
-    },
     "GCodeGzWriter": {
         "package_info": {
             "package_id": "GCodeGzWriter",
@@ -147,23 +130,6 @@
             "author": {
                 "author_id": "Ultimaker",
                 "display_name": "Ultimaker B.V.",
-                "email": "plugins@ultimaker.com",
-                "website": "https://ultimaker.com"
-            }
-        }
-    },
-    "GCodeReader": {
-        "package_info": {
-            "package_id": "GCodeReader",
-            "package_type": "plugin",
-            "display_name": "G-Code Reader",
-            "description": "Allows loading and displaying G-code files.",
-            "package_version": "1.0.0",
-            "sdk_version": 5,
-            "website": "https://ultimaker.com",
-            "author": {
-                "author_id": "VictorLarchenko",
-                "display_name": "Victor Larchenko",
                 "email": "plugins@ultimaker.com",
                 "website": "https://ultimaker.com"
             }

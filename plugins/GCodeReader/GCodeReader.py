@@ -13,9 +13,9 @@ from . import MarlinFlavorParser, RepRapFlavorParser
 
 MimeTypeDatabase.addMimeType(
     MimeType(
-        name = "application/x-cura-gcode-file",
-        comment = "Cura GCode File",
-        suffixes = ["gcode", "gcode.gz"]
+        name = "application/x-xdesktop-zaxe_code-file",
+        comment = "Zaxe GCode File",
+        suffixes = ["zaxe_code"]
     )
 )
 
@@ -29,7 +29,7 @@ class GCodeReader(MeshReader):
 
     def __init__(self) -> None:
         super().__init__()
-        self._supported_extensions = [".gcode", ".g"]
+        self._supported_extensions = ["zaxe_code"]
         self._flavor_reader = None
 
         Application.getInstance().getPreferences().addPreference("gcodereader/show_caution", True)

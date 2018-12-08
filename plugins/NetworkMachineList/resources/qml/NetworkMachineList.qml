@@ -16,6 +16,8 @@ Rectangle
     UM.I18nCatalog { id: catalog; name:"cura"}
 
     property var materialNames : {
+        "abs": "Zaxe ABS", // Backward compatibility?
+        "pla": "Zaxe PLA", // Backward compatibility?
         "zaxe_abs": "Zaxe ABS",
         "zaxe_pla": "Zaxe PLA",
         "zaxe_tpu": "Zaxe FLEX",
@@ -149,7 +151,9 @@ Rectangle
             printingFile: mPrintingFile
             elapsedTime: mElapsedTime
             estimatedTime: mEstimatedTime
+            snapshot: mSnapshot
             hasPin: mHasPin
+            hasSnapshot: mHasSnapshot
 
             machineStates: mStates
         }

@@ -185,7 +185,7 @@ Item {
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     }
                     Text {
-                        text: (!base.printDuration || !base.printDuration.valid) ? catalog.i18nc("@label Hours and minutes", "00h 00min") : base.printDuration.getDisplayString(UM.DurationFormat.Short)
+                        text: (!base.printDuration || !base.printDuration.valid) ? catalog.i18nc("@label Hours and minutes", "00h 00min") : base.printDuration.getDisplayString(UM.DurationFormat.ISO8601)
                         color: UM.Theme.getColor("text_sidebar")
                         font: UM.Theme.getFont("large_nonbold")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter

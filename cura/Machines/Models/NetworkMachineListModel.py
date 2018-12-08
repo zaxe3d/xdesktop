@@ -59,6 +59,8 @@ class NetworkMachineListModel(ListModel):
             "mElapsedTime": networkMachine.elapsedTime,
             "mEstimatedTime": networkMachine.estimatedTime,
             "mHasPin": networkMachine.hasPin,
+            "mHasSnapshot": networkMachine.hasSnapshot,
+            "mSnapshot": networkMachine.snapshot,
             "mStates": networkMachine.getStates()
         }
 
@@ -143,7 +145,6 @@ class NetworkMachineListModel(ListModel):
         self.uploadProgress.emit(eventArgs.machine.id, float(eventArgs.progress / 100))
 
     def _itemAdded(self, networkMachine):
-        #Logger.log("d", "adding machine {model_class_name}.".format(model_class_name = self.__class__.__name__))
         index = len(self._items)
         self.beginInsertRows(QModelIndex(), index, index)
         self._items.insert(index, self._getItem(networkMachine))
@@ -152,7 +153,6 @@ class NetworkMachineListModel(ListModel):
 
     def _itemRemoved(self, mId):
         index = self.find("mID", mId)
-        #Logger.log("d", "removing machine idx: %s" % index)
         if index == -1:
             return
         self.beginRemoveRows(QModelIndex(), index, index)

@@ -66,6 +66,9 @@ class NetworkMachine(QThread, QObject):
         self.material = ""
         self.deviceModel = "x1"
         self.hasPin = False
+        self.hasSnapshot = False
+        # anonymous ftp address (only for to serve the snapshot for now)
+        self.snapshot = "ftp://" + self.ip + ":9494/snapshot.png"
         self.elapsedTime = 0
         self.fwVersion = [999, 0, 0]
         self.__states = {}
@@ -124,6 +127,10 @@ class NetworkMachine(QThread, QObject):
                 self.deviceModel = message['device_model'].lower()
             except:
                 self.deviceModel = "x1"
+
+            # only z-series have snapshot available
+            self.hasSnapshot = self.deviceModel.find("z") >= 0
+
             try:
                 self.printingFile = message["filename"]
                 self.elapsedTime = message["elapsed_time"]

@@ -27,6 +27,8 @@ Item {
     property string elapsedTime
     property string elapsedTimeTxt
     property string estimatedTime
+    property string snapshot
+    property bool hasSnapshot
     property bool hasPin
     property var progress: 0
 
@@ -53,6 +55,7 @@ Item {
             printingFile = arguments[1]
             elapsedTime = arguments[2] // reset the timer as well
             estimatedTime = arguments[3]
+            imgSnapshot.sourceChanged()
         }
         onNozzleChange: {
             if (uid != arguments[0]) return
@@ -220,10 +223,20 @@ Item {
                             color: UM.Theme.getColor("sidebar_item_dark")
                             anchors.centerIn: parent
                             radius: 10
+
+                            Image {
+                                id: imgSnapshot
+                                anchors.centerIn: parent
+                                visible: machineStates.printing && device.hasSnapshot
+                                source: visible ? device.snapshot : ""
+                                width: 70
+                                height: width
+                            }
+
                             Text {
                                 id: printerIcon
                                 anchors.centerIn: parent
-                                bottomPadding: 4; rightPadding: 2
+                                visible: !imgSnapshot.visible
                                 font: UM.Theme.getFont("extra_large")
                                 color: UM.Theme.getColor("text_sidebar_light")
                                 text: device.deviceModel.replace("plus", "+").toUpperCase()

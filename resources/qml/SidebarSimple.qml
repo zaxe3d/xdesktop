@@ -1236,6 +1236,7 @@ Item
                     onClicked: {
                         CuraApplication.backend.forceSlice();
                         UM.Controller.setActiveStage("NetworkMachineList")
+                        Cura.Actions.takeSnapshot.trigger()
                         UM.Controller.setActiveView("SimulationView")
                     }
                     Layout.alignment: Qt.AlignLeft

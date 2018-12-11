@@ -22,10 +22,10 @@ Item
     property real handleLabelWidth: width
 
     // track properties
-    property real trackThickness: 4 // width of the slider track
-    property real trackRadius: trackThickness / 2
+    property real trackThickness: 10 // width of the slider track
+    property real trackRadius: 0
     property color trackColor: "white"
-    property real trackBorderWidth: 1 // width of the slider track border
+    property real trackBorderWidth: 0 // width of the slider track border
     property color trackBorderColor: "black"
 
     // value properties

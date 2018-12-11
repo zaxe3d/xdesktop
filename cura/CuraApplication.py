@@ -4,6 +4,7 @@
 import os
 import sys
 import time
+import tempfile
 from typing import cast, TYPE_CHECKING
 
 import numpy
@@ -110,6 +111,8 @@ from cura.ZaxeCodeWriter import ZaxeCodeWriter
 import cura.Settings.cura_empty_instance_containers
 
 from cura.ObjectsModel import ObjectsModel
+
+from cura.Snapshot import Snapshot
 
 from UM.FlameProfiler import pyqtSlot
 
@@ -1306,6 +1309,13 @@ class CuraApplication(QtApplication):
             else:
                 Logger.log("w", "Unable to reload data because we don't have a filename.")
 
+    @pyqtSlot()
+    def takeSnapshot(self) -> None:
+        # write the png to the file
+        TMP_FOLDER = tempfile.gettempdir()
+        snapshotFilePath = os.path.join(TMP_FOLDER, "snapshot.png")
+        snapshot = Snapshot.snapshot(width = 130, height = 130)
+        snapshot.save(snapshotFilePath, "PNG", 100)
 
     ##  Get logging data of the backend engine
     #   \returns \type{string} Logging data

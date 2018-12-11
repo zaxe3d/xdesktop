@@ -44,7 +44,7 @@ class NetworkMachine(QThread, QObject):
 
     name = None
 
-    timeout = 5000 # timeout and close after xMilliSeconds
+    timeout = 15000 # timeout and close after xMilliSeconds
 
     machineEvent = pyqtSignal(NetworkMachineEventArgs)
     machineUploadEvent = pyqtSignal(NetworkMachineUploadEventArgs)

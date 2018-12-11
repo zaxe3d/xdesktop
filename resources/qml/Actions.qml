@@ -24,6 +24,7 @@ Item
     property alias viewRightSideCamera: viewRightSideCameraAction;
 
     property alias expandSidebar: expandSidebarAction;
+    property alias takeSnapshot: takeSnapshotAction;
 
     property alias deleteSelection: deleteSelectionAction;
     property alias centerSelection: centerSelectionAction;
@@ -429,5 +430,13 @@ Item
         id: expandSidebarAction;
         text: catalog.i18nc("@action:inmenu menubar:view","Expand/Collapse Sidebar");
         shortcut: "Ctrl+E";
+    }
+
+    Action
+    {
+        id: takeSnapshotAction;
+        text: "snapshot"
+        shortcut: "Ctrl+T";
+        onTriggered: CuraApplication.takeSnapshot();
     }
 }

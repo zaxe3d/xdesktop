@@ -351,9 +351,9 @@
 
         "viewport_background": [255, 255, 255, 255],
         "volume_outline": [12, 169, 227, 255],
-        "buildplate": [244, 244, 244, 255],
-        "buildplate_grid": [129, 131, 134, 255],
-        "buildplate_grid_minor": [230, 230, 231, 255],
+        "buildplate": [255, 255, 255, 255],
+        "buildplate_grid": [200, 200, 200, 255],
+        "buildplate_grid_minor": [255, 255, 255, 255],
 
         "convex_hull": [35, 35, 35, 127],
         "disallowed_area": [0, 0, 0, 40],
@@ -495,8 +495,8 @@
 
         "quality_slider_bar": [1, 0.2],
 
-        "slider_groove": [0.3, 0.3],
-        "slider_handle": [1.0, 1.0],
+        "slider_groove": [0.7, 0.7],
+        "slider_handle": [1.5, 1.5],
         "slider_layerview_size": [1.0, 22.0],
         "slider_layerview_background": [4.0, 0.0],
         "slider_layerview_margin": [1.0, 1.5],

@@ -291,8 +291,8 @@ msgid "&Export..."
 msgstr "&Dışa aktar..."
 
 msgctxt "@title:menu menubar:file"
-msgid "&Export selection..."
-msgstr "Seç&imi dışa aktar..."
+msgid "Export selection..."
+msgstr "Seçimi dışa aktar..."
 
 msgctxt "@item:inlistbox"
 msgid "Zaxe File"

@@ -313,3 +313,7 @@ msgstr "Zaxe Kod Detayları"
 msgctxt "@info:zaxecode"
 msgid "This Zaxe file belongs to an older version. Please slice your original mesh file again."
 msgstr "Bu Zaxe Dosyası eski bir versiyona ait. Lütfen orjinal STL dosyasından tekrar dilimleme yapınız."
+
+msgctxt "@info:zaxecode"
+msgid "This Zaxe file is sliced for Zaxe {0}. Please switch to Zaxe {0} before importing this file again."
+msgstr "Bu Zaxe Dosyası Zaxe {0} için dilimlenmiş. Lütfen dosyayı tekrar açmadan önce Zaxe {0} modelini seçiniz."

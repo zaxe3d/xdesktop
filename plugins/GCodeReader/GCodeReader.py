@@ -7,6 +7,7 @@ from UM.i18n import i18nCatalog
 from UM.Application import Application
 from UM.MimeTypeDatabase import MimeTypeDatabase, MimeType
 from UM.Logger import Logger
+from UM.Message import Message
 
 from cura.CuraApplication import CuraApplication
 
@@ -57,6 +58,18 @@ class GCodeReader(MeshReader):
 
     def readFromStream(self, stream, info):
         CuraApplication.getInstance().getPrintInformation().setInfo(info)
+
+        # do some checks here.
+        machineModel = CuraApplication.getInstance().getMachineManager().activeMachineName
+        if info["model"] != machineModel.replace("+", "PLUS"):
+            infoMessage = Message(catalog.i18nc(
+                "@info:zaxecode",
+                "This Zaxe file is sliced for Zaxe {0}. Please switch to Zaxe {0} before importing this file again.", info["model"].replace("PLUS", "+")),
+                lifetime=10,
+                title = catalog.i18nc("@info:title", "Zaxe Code Details"))
+            infoMessage.show()
+            return False
+
         return self._flavor_reader.processGCodeStream(stream)
 
     def _read(self, file_name):

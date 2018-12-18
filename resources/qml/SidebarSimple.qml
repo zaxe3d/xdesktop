@@ -337,6 +337,14 @@ Item
                                     }
                                 }
                             }
+
+                            Component.onCompleted: {
+                                for (var i = 0; i < qualitySlider.children.length; ++i) {
+                                    if (qualitySlider.children[i].hasOwnProperty("onVerticalWheelMoved") && qualitySlider.children[i].hasOwnProperty("onHorizontalWheelMoved")) {
+                                        qualitySlider.children[i].destroy()
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -504,6 +512,13 @@ Item
                                         implicitWidth: 23 * screenScaleFactor
                                         implicitHeight: 23 * screenScaleFactor
                                         radius: 100
+                                    }
+                                }
+                            }
+                            Component.onCompleted: {
+                                for (var i = 0; i < supportAngleSlider.children.length; ++i) {
+                                    if (supportAngleSlider.children[i].hasOwnProperty("onVerticalWheelMoved") && supportAngleSlider.children[i].hasOwnProperty("onHorizontalWheelMoved")) {
+                                        supportAngleSlider.children[i].destroy()
                                     }
                                 }
                             }
@@ -777,6 +792,14 @@ Item
                                         implicitWidth: 23 * screenScaleFactor
                                         implicitHeight: 23 * screenScaleFactor
                                         radius: 100
+                                    }
+                                }
+                            }
+                            Component.onCompleted: {
+                                // Disable mouse wheel on old sliders.
+                                for (var i = 0; i < infillSlider.children.length; ++i) {
+                                    if (infillSlider.children[i].hasOwnProperty("onVerticalWheelMoved") && infillSlider.children[i].hasOwnProperty("onHorizontalWheelMoved")) {
+                                        infillSlider.children[i].destroy()
                                     }
                                 }
                             }

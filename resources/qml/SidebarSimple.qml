@@ -1234,9 +1234,8 @@ Item
                     style: UM.Theme.styles.sidebar_button
                     text: catalog.i18nc("@label", "Slice!")
                     onClicked: {
-                        CuraApplication.backend.forceSlice();
                         UM.Controller.setActiveStage("NetworkMachineList")
-                        Cura.Actions.takeSnapshot.trigger()
+                        CuraApplication.backend.forceSlice();
                         UM.Controller.setActiveView("SimulationView")
                     }
                     Layout.alignment: Qt.AlignLeft

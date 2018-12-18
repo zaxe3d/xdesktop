@@ -67,18 +67,19 @@ Item
         anchors
         {
             bottom: parent.bottom
-            topMargin: UM.Theme.getSize("slider_layerview_margin").height
-            left: parent.left
+            verticalCenter: parent.verticalCenter
+            horizontalCenter: parent.horizontalCenter
+            bottomMargin: UM.Theme.getSize("slider_layerview_margin").height
         }
 
         PathSlider
         {
             id: pathSlider
 
+            width: UM.Theme.getSize("layerview_menu_size").width
             height: UM.Theme.getSize("slider_handle").width
-            anchors.left: playButton.right
-            anchors.leftMargin: UM.Theme.getSize("default_margin").width
-            anchors.right: parent.right
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
             visible: !UM.SimulationView.compatibilityMode
 
             // custom properties
@@ -124,10 +125,10 @@ Item
 
             anchors
             {
-                top: !UM.SimulationView.compatibilityMode ? pathSlider.bottom : parent.top
                 topMargin: !UM.SimulationView.compatibilityMode ? UM.Theme.getSize("default_margin").height : 0
+                verticalCenter: parent.verticalCenter
                 right: parent.right
-                rightMargin: UM.Theme.getSize("slider_layerview_margin").width
+                rightMargin: UM.Theme.getSize("default_margin").width
             }
 
             // custom properties
@@ -178,6 +179,8 @@ Item
             visible: !UM.SimulationView.compatibilityMode
             anchors
             {
+                right: pathSlider.left
+                rightMargin: UM.Theme.getSize("default_margin").width
                 verticalCenter: pathSlider.verticalCenter
             }
 

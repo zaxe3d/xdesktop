@@ -27,8 +27,14 @@ UM.MainWindow
         target: CuraApplication
         onActivityChanged: {
             // SolidView if not sliced - 1 = Ready to slice - 4 = Unable to slice
-            if (UM.Backend.state == 1 || UM.Backend.state == 4)
+            // Take snapshot if ready to slice - 1 = Ready to slice
+            // 5 = Slicing unavailable
+            if (UM.Backend.state == 1) {
+                Cura.Actions.takeSnapshot.trigger()
                 UM.Controller.setActiveView("SolidView")
+            } else if (UM.Backend.state == 4) {
+                UM.Controller.setActiveView("SolidView")
+            }
         }
     }
 
@@ -369,7 +375,9 @@ UM.MainWindow
 
                 anchors.top: sidebar.top
                 anchors.topMargin: UM.Theme.getSize("default_margin").height
+                anchors.left: toolbarBackground.right
                 anchors.right: sidebar.left
+                anchors.bottom: sidebar.bottom
                 anchors.rightMargin: UM.Theme.getSize("default_margin").width
 
                 //property var buttonTarget: Qt.point(viewModeButton.x + Math.round(viewModeButton.width / 2), viewModeButton.y + Math.round(viewModeButton.height / 2))

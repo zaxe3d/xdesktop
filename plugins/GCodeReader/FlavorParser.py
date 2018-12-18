@@ -45,8 +45,6 @@ class FlavorParser:
         self._current_layer_thickness = 0.2  # default
         self._filament_diameter = 2.85       # default
 
-        CuraApplication.getInstance().getPreferences().addPreference("gcodereader/show_caution", True)
-
     def _clearValues(self) -> None:
         self._extruder_number = 0
         self._extrusion_length_offset = [0] # type: List[float]
@@ -314,9 +312,9 @@ class FlavorParser:
 
         self._clearValues()
 
-        self._message = Message(catalog.i18nc("@info:status", "Parsing G-code"),
+        self._message = Message(catalog.i18nc("@info:status", "Parsing Zaxe Code"),
                                 lifetime=0,
-                                title = catalog.i18nc("@info:title", "G-code Details"))
+                                title = catalog.i18nc("@info:title", "Zaxe Code Details"))
 
         assert(self._message is not None) # use for typing purposes
         self._message.setProgress(0)
@@ -457,14 +455,6 @@ class FlavorParser:
             scene_node.setPosition(Vector(-machine_width / 2, 0, machine_depth / 2))
 
         Logger.log("d", "GCode loading finished")
-
-        if CuraApplication.getInstance().getPreferences().getValue("gcodereader/show_caution"):
-            caution_message = Message(catalog.i18nc(
-                "@info:generic",
-                "Make sure the g-code is suitable for your printer and printer configuration before sending the file to it. The g-code representation may not be accurate."),
-                lifetime=0,
-                title = catalog.i18nc("@info:title", "G-code Details"))
-            caution_message.show()
 
         # The "save/print" button's state is bound to the backend state.
         backend = CuraApplication.getInstance().getBackend()

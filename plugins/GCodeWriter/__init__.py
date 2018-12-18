@@ -15,7 +15,8 @@ def getMetaData():
                 "extension": "gcode",
                 "description": catalog.i18nc("@item:inlistbox", "G-code File"),
                 "mime_type": "text/x-gcode",
-                "mode": GCodeWriter.GCodeWriter.OutputMode.TextMode
+                "mode": GCodeWriter.GCodeWriter.OutputMode.TextMode,
+                "hide_in_file_dialog": True
             }]
         }
     }

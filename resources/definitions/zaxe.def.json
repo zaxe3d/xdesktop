@@ -7,6 +7,11 @@
         "manufacturer": "Zaxe",
         "category": "Zaxe",
         "visible": false,
+        "weight": 4,
+        "file_formats": "application/zaxe",
+        "has_materials": true,
+        "has_machine_quality": true,
+        "has_variants": true,
         "exclude_materials": [ ]
     },
     "overrides": {

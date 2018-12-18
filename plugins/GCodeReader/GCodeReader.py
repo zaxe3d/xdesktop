@@ -6,6 +6,9 @@ from UM.Mesh.MeshReader import MeshReader
 from UM.i18n import i18nCatalog
 from UM.Application import Application
 from UM.MimeTypeDatabase import MimeTypeDatabase, MimeType
+from UM.Logger import Logger
+
+from cura.CuraApplication import CuraApplication
 
 catalog = i18nCatalog("cura")
 from . import MarlinFlavorParser, RepRapFlavorParser
@@ -14,7 +17,7 @@ from . import MarlinFlavorParser, RepRapFlavorParser
 MimeTypeDatabase.addMimeType(
     MimeType(
         name = "application/x-xdesktop-zaxe_code-file",
-        comment = "Zaxe GCode File",
+        comment = "Zaxe Code File",
         suffixes = ["zaxe_code"]
     )
 )
@@ -31,8 +34,6 @@ class GCodeReader(MeshReader):
         super().__init__()
         self._supported_extensions = ["zaxe_code"]
         self._flavor_reader = None
-
-        Application.getInstance().getPreferences().addPreference("gcodereader/show_caution", True)
 
     def preReadFromStream(self, stream, *args, **kwargs):
         for line in stream.split("\n"):
@@ -54,7 +55,8 @@ class GCodeReader(MeshReader):
             file_data = file.read()
         return self.preReadFromStream(file_data, args, kwargs)
 
-    def readFromStream(self, stream):
+    def readFromStream(self, stream, info):
+        CuraApplication.getInstance().getPrintInformation().setInfo(info)
         return self._flavor_reader.processGCodeStream(stream)
 
     def _read(self, file_name):

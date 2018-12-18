@@ -96,7 +96,7 @@ class SimulationView(View):
         Application.getInstance().getPreferences().addPreference("view/only_show_top_layers", False)
         Application.getInstance().getPreferences().addPreference("view/force_layer_view_compatibility_mode", False)
 
-        Application.getInstance().getPreferences().addPreference("layerview/layer_view_type", 0)
+        Application.getInstance().getPreferences().addPreference("layerview/layer_view_type", 1)
         Application.getInstance().getPreferences().addPreference("layerview/extruder_opacities", "")
 
         Application.getInstance().getPreferences().addPreference("layerview/show_travel_moves", False)
@@ -111,7 +111,7 @@ class SimulationView(View):
         self._only_show_top_layers = bool(Application.getInstance().getPreferences().getValue("view/only_show_top_layers"))
         self._compatibility_mode = self._evaluateCompatibilityMode()
 
-        self._wireprint_warning_message = Message(catalog.i18nc("@info:status", "Cura does not accurately display layers when Wire Printing is enabled"),
+        self._wireprint_warning_message = Message(catalog.i18nc("@info:status", "XDesktop does not accurately display layers when Wire Printing is enabled"),
                                                   title = catalog.i18nc("@info:title", "Simulation View"))
 
     def _evaluateCompatibilityMode(self) -> bool:

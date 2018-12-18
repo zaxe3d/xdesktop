@@ -4,9 +4,8 @@
 from PyQt5.QtCore import pyqtSignal, pyqtProperty, QObject, QVariant  # For communicating data and events to Qt.
 from UM.FlameProfiler import pyqtSlot
 
-import cura.CuraApplication # To get the global container stack to find the current machine.
 from UM.Logger import Logger
-from UM.PluginRegistry import PluginRegistry #To get the g-code writer.
+from UM.PluginRegistry import PluginRegistry # To get the Zaxe Code writer.
 
 from cura.Utils.NetworkMachine import NetworkMachine, NetworkMachineContainer
 from typing import Dict
@@ -34,7 +33,6 @@ class NetworkMachineManager(QObject):
 
         super().__init__(parent)
 
-        self._application = cura.CuraApplication.CuraApplication.getInstance()
         self._initBroadcastReceiver()
 
     def _initBroadcastReceiver(self) -> None:
@@ -46,7 +44,6 @@ class NetworkMachineManager(QObject):
             message['port']
         except:
             message['port'] = 9294
-        #Logger.log("d", "ip: %s" % message['ip'])
         machine = self.networkMachineContainer.addMachine(message['ip'], message['port'], message['id'])
 
         if machine is not None:
@@ -87,7 +84,7 @@ class NetworkMachineManager(QObject):
     def upload(self, mID) -> bool:
         machine = self.machineList[str(mID)]
 
-        codeGenerator = self._application.getZaxeCodeWriter()
+        codeGenerator = PluginRegistry.getInstance().getPluginObject("ZaxeCodeWriter")
         success = codeGenerator.generate()
 
         if not success:

@@ -152,7 +152,7 @@ Item {
                     text: catalog.i18nc("@label", "Are you sure?")
                 }
                 Button {
-                    Layout.preferredHeight: 30
+                    Layout.preferredHeight: 27
                     background: Rectangle {
                         color: UM.Theme.getColor("button_danger")
                         border.color: UM.Theme.getColor("button_danger")
@@ -173,7 +173,7 @@ Item {
                     }
                 }
                 Button {
-                    Layout.preferredHeight: 30
+                    Layout.preferredHeight: 27
                     background: Rectangle {
                         color: UM.Theme.getColor("button_white")
                         border.color: UM.Theme.getColor("button_blue")
@@ -216,6 +216,7 @@ Item {
                         color: UM.Theme.getColor("sidebar_item_light")
                         Layout.preferredWidth: 90; Layout.preferredHeight: 90
                         Layout.topMargin: 10
+                        z: 6
 
                         Rectangle {
                             width: 75; height: 75
@@ -227,7 +228,7 @@ Item {
                             Image {
                                 id: imgSnapshot
                                 anchors.centerIn: parent
-                                visible: machineStates.printing && device.hasSnapshot
+                                visible: (machineStates.bed_occupied || machineStates.printing || machineStates.heating) && device.hasSnapshot
                                 source: visible ? device.snapshot : ""
                                 width: 70
                                 height: width
@@ -566,20 +567,39 @@ Item {
                                     }
                                     onClicked: {
                                         // check if the slice is ready or if there is a model
-                                        if (UM.Backend.state != "undefined" && UM.Backend.state == 1 || !CuraApplication.platformActivity) {
-                                            device.materialWarning = false
-                                            device.modelCompatibilityWarning = false
-                                            shakeAnim.start()
-                                        } else if (Cura.MachineManager.activeMachineName.replace("+", "PLUS") != device.deviceModel.toUpperCase()) {
-                                            device.modelCompatibilityWarning = true
-                                            shakeAnim.start()
-                                        } else if (PrintInformation.materialNames[0] != device.material) {
-                                            device.materialWarning = true
-                                            shakeAnim.start()
+                                        if (PrintInformation.preSliced) {
+                                            var info = PrintInformation.preSlicedInfo
+                                            if (!CuraApplication.platformActivity) {
+                                                device.materialWarning = false
+                                                device.modelCompatibilityWarning = false
+                                                shakeAnim.start()
+                                            } else if (info.model != device.deviceModel.toUpperCase()) {
+                                                device.modelCompatibilityWarning = true
+                                                shakeAnim.start()
+                                            } else if (info.material != device.material) {
+                                                device.materialWarning = true
+                                                shakeAnim.start()
+                                            } else {
+                                                device.materialWarning = false
+                                                device.modelCompatibilityWarning = false
+                                                Cura.NetworkMachineManager.upload(device.uid) == false
+                                            }
                                         } else {
-                                            device.materialWarning = false
-                                            device.modelCompatibilityWarning = false
-                                            Cura.NetworkMachineManager.upload(device.uid) == false
+                                            if (UM.Backend.state != "undefined" && UM.Backend.state == 1 || !CuraApplication.platformActivity) {
+                                                device.materialWarning = false
+                                                device.modelCompatibilityWarning = false
+                                                shakeAnim.start()
+                                            } else if (Cura.MachineManager.activeMachineName.replace("+", "PLUS") != device.deviceModel.toUpperCase()) {
+                                                device.modelCompatibilityWarning = true
+                                                shakeAnim.start()
+                                            } else if (PrintInformation.materialNames[0] != device.material) {
+                                                device.materialWarning = true
+                                                shakeAnim.start()
+                                            } else {
+                                                device.materialWarning = false
+                                                device.modelCompatibilityWarning = false
+                                                Cura.NetworkMachineManager.upload(device.uid) == false
+                                            }
                                         }
                                     }
                                     onHoveredChanged: {

@@ -21,11 +21,32 @@ Item {
     property variant printMaterialWeights: PrintInformation.materialWeights
     property variant printMaterialCosts: PrintInformation.materialCosts
     property variant printMaterialNames: PrintInformation.materialNames
-
-    property string fileBaseName: PrintInformation.baseName
+ 
     property string mWeight
     property string mLength
     width: parent.width
+
+    Connections {
+        target: PrintInformation
+
+        onPreSlicedChanged: {
+            if (PrintInformation.preSliced) {
+                var info = PrintInformation.preSlicedInfo
+                lblFileName.text = PrintInformation.baseName + ".zaxe"
+                lblDuration.text = info.duration
+                lblLength.text = (info.filament_used / 1000) + "m."
+                lblMaterial.text = networkMachineList.materialNames[info.material]
+
+                if (info.material == "zaxe_abs" || info.material == "zaxe_pla") {
+                    lblWeight.text = (info.filament_used / 10 *
+                                     (info.material == "zaxe_abs" ? 1.10 : 1.21) *
+                                     Math.PI * Math.pow(0.175 / 2, 2) ).toFixed(2) + "gr."
+                } else {
+                    lblWeight.text = "-"
+                }
+            }
+        }
+    }
 
     onActivityChanged: {
         if (activity == false) {
@@ -162,7 +183,8 @@ Item {
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     }
                     Text {
-                        text: base.fileBaseName + ".zaxe"
+                        id: lblFileName
+                        text: PrintInformation.baseName + ".zaxe"
                         color: UM.Theme.getColor("text_sidebar")
                         font: UM.Theme.getFont("large")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
@@ -185,6 +207,7 @@ Item {
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     }
                     Text {
+                        id: lblDuration
                         text: (!base.printDuration || !base.printDuration.valid) ? catalog.i18nc("@label Hours and minutes", "00h 00min") : base.printDuration.getDisplayString(UM.DurationFormat.ISO8601)
                         color: UM.Theme.getColor("text_sidebar")
                         font: UM.Theme.getFont("large_nonbold")
@@ -208,6 +231,7 @@ Item {
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     }
                     Label {
+                        id: lblWeight
                         text: {
                             var lengths = [];
                             var weights = [];
@@ -243,6 +267,7 @@ Item {
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     }
                     Text {
+                        id: lblLength
                         text: base.mLength
                         color: UM.Theme.getColor("text_sidebar")
                         font: UM.Theme.getFont("large_nonbold")
@@ -256,6 +281,7 @@ Item {
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     }
                     Text {
+                        id: lblMaterial
                         text: PrintInformation.materialNames[0] ? networkMachineList.materialNames[PrintInformation.materialNames[0]] : ""
                         color: UM.Theme.getColor("text_sidebar")
                         font: UM.Theme.getFont("large_nonbold")
@@ -290,7 +316,7 @@ Item {
                         }
                         onClicked: {
                             UM.OutputDeviceManager.requestWriteToDevice(UM.OutputDeviceManager.activeDevice, PrintInformation.jobName,
-                                { "filter_by_machine": true, "preferred_mimetypes": Cura.MachineManager.activeMachine.preferred_output_file_formats });
+                                { "filter_by_machine": true, "preferred_mimetypes": "application/zaxe" });
                         }
                     }
                     Button {
@@ -310,7 +336,11 @@ Item {
                             padding: 5
                         }
                         onClicked: {
-                            CuraApplication.backend.stopSlicing();
+                            if (base.backendState == 5) { // slicing unavailable
+                                CuraApplication.deleteAll()
+                            } else {
+                                CuraApplication.backend.stopSlicing();
+                            }
                             UM.Controller.setActiveView("SolidView")
                         }
                     }

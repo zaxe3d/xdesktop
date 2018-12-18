@@ -60,6 +60,7 @@ class PrintInformation(QObject):
         self._material_names = {}
 
         self._pre_sliced = False
+        self._pre_sliced_info = {}
 
         self._backend = self._application.getBackend()
         if self._backend:
@@ -133,6 +134,15 @@ class PrintInformation(QObject):
     currentPrintTimeChanged = pyqtSignal()
 
     preSlicedChanged = pyqtSignal()
+    preSlicedInfoChanged = pyqtSignal()
+
+    def setInfo(self, info):
+        self._pre_sliced_info = info
+        self.preSlicedInfoChanged.emit()
+
+    @pyqtProperty("QVariant", notify=preSlicedInfoChanged)
+    def preSlicedInfo(self):
+        return self._pre_sliced_info
 
     @pyqtProperty(bool, notify=preSlicedChanged)
     def preSliced(self):

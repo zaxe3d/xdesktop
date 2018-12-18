@@ -51,9 +51,9 @@
 
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">210</setting>
+                <setting key="print temperature">200</setting>
                 <setting key="heated bed temperature">60</setting>
-                <setting key="standby temperature">210</setting>
+                <setting key="standby temperature">200</setting>
                 <setting key="cool fan full layer">1</setting>
                 <setting key="retraction amount">0.6</setting>
             </hotend>

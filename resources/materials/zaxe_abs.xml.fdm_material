@@ -52,12 +52,11 @@
 
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">255</setting>
-                <setting key="print temperature layer 0">255</setting>
+                <setting key="print temperature">250</setting>
+                <setting key="print temperature layer 0">250</setting>
                 <setting key="heated bed temperature">100</setting>
                 <setting key="bed temperature layer 0">100</setting>
                 <setting key="retraction amount">0.6</setting>
-                <setting key="start gcode">M572 D0 S0.055\nG28\nG91\nG1 Z5 F500\nM83\nG1 E25 F150\nG1 X20 F10000\nG90\nG1 Z0.4 F500\nG91\nM83\nG1 X40 E15 F500\nG90\nM82\nG92 E0</setting>
             </hotend>
         </machine>
     </settings>

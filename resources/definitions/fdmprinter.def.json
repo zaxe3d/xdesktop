@@ -343,7 +343,7 @@
                         "MACH3": "Mach3",
                         "Repetier": "Repetier"
                     },
-                    "default_value": "RepRap (Marlin/Sprinter)",
+                    "default_value": "RepRap (RepRap)",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false,
                     "settable_per_meshgroup": false

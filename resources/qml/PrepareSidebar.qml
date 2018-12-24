@@ -10,7 +10,7 @@ import Cura 1.0 as Cura
 
 Rectangle
 {
-    id: base
+    id: prepareSidebar
 
     property var materialNames : {
         "zaxe_abs": "Zaxe ABS",
@@ -20,8 +20,6 @@ Rectangle
     }
 
     property int currentModeIndex
-    property bool hideSettings: PrintInformation.preSliced
-    property bool hideView: Cura.MachineManager.activeMachineName == ""
 
     property variant printDuration: PrintInformation.currentPrintTime
     property variant printMaterialLengths: PrintInformation.materialLengths
@@ -31,47 +29,6 @@ Rectangle
 
     color: UM.Theme.getColor("sidebar")
     UM.I18nCatalog { id: catalog; name:"cura"}
-
-    Timer {
-        id: tooltipDelayTimer
-        interval: 500
-        repeat: false
-        property var item
-        property string text
-
-        onTriggered:
-        {
-            base.showTooltip(base, {x: 0, y: item.y}, text);
-        }
-    }
-
-    function showTooltip(item, position, text)
-    {
-        tooltip.text = text;
-        position = item.mapToItem(base, position.x - UM.Theme.getSize("default_arrow").width, position.y);
-        tooltip.show(position);
-    }
-
-    function hideTooltip()
-    {
-        tooltip.hide();
-    }
-
-    function strPadLeft(string, pad, length) {
-        return (new Array(length + 1).join(pad) + string).slice(-length);
-    }
-
-    function getPrettyTime(time)
-    {
-        var hours = Math.floor(time / 3600)
-        time -= hours * 3600
-        var minutes = Math.floor(time / 60);
-        time -= minutes * 60
-        var seconds = Math.floor(time);
-
-        var finalTime = strPadLeft(hours, "0", 2) + ':' + strPadLeft(minutes,'0',2)+ ':' + strPadLeft(seconds,'0',2);
-        return finalTime;
-    }
 
     MouseArea
     {
@@ -84,57 +41,48 @@ Rectangle
         }
     }
 
-    SidebarHeader {
-        id: header
-        visible: !hideSettings && (machineExtruderCount.properties.value > 1 || Cura.MachineManager.hasMaterials || Cura.MachineManager.hasVariants)
-        anchors.top: parent.top
-
-        onShowTooltip: base.showTooltip(item, location, text)
-        onHideTooltip: base.hideTooltip()
+    function switchView(index) {
+        try {
+            sidebarContents.replace(modesListModel.get(index).item)
+            currentModeIndex = index
+        } catch (error) {}
     }
 
-    onCurrentModeIndexChanged:
-    {
-        UM.Preferences.setValue("cura/active_mode", currentModeIndex);
-        if(modesListModel.count > base.currentModeIndex)
-        {
-            sidebarContents.replace(modesListModel.get(base.currentModeIndex).item, { "replace": true })
-        }
+    SidebarHeader {
+        id: header
+        visible: machineExtruderCount.properties.value > 1 || Cura.MachineManager.hasMaterials || Cura.MachineManager.hasVariants
+        anchors.top: parent.top
     }
 
     StackView
     {
         id: sidebarContents
 
-        anchors.bottom: base.bottom
+        anchors.bottom: prepareSidebar.bottom
         anchors.top: header.bottom
-        anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
-        anchors.left: base.left
-        anchors.right: base.right
-        visible: !hideSettings
-
+        anchors.left: prepareSidebar.left
+        anchors.right: prepareSidebar.right
         replaceEnter: Transition {
             PropertyAnimation {
-                property: "opacity"
-                from: 0
-                to:1
-                duration: 100
+                property: "x"
+                from: 500
+                to: 0
+                duration: 200
+                easing.type: Easing.InOutBounce
+                easing.overshoot: 2
             }
         }
 
         replaceExit: Transition {
             PropertyAnimation {
-                property: "opacity"
-                from: 1
-                to:0
-                duration: 100
+                property: "x"
+                from: 0
+                to: 500
+                duration: 200
+                easing.type: Easing.InOutBounce
+                easing.overshoot: 2
             }
         }
-    }
-
-    SidebarTooltip
-    {
-        id: tooltip
     }
 
     // Setting mode: Recommended or Custom
@@ -143,29 +91,30 @@ Rectangle
         id: modesListModel
     }
 
-    SidebarSimple
+    SidebarDefault
     {
-        id: sidebarSimple
+        id: sidebarDefault
         visible: false
+    }
 
-        onShowTooltip: base.showTooltip(item, location, text)
-        onHideTooltip: base.hideTooltip()
+    SidebarCustomMaterialSettings
+    {
+        id: sidebarCustomMaterialSettings
+        visible: false
     }
 
     Component.onCompleted:
     {
         modesListModel.append({
-            text: catalog.i18nc("@title:tab", "Recommended"),
-            tooltipText: catalog.i18nc("@tooltip", "<b>Recommended Print Setup</b><br/><br/>Print with the recommended settings for the selected printer, material and quality."),
-            item: sidebarSimple
+            item: sidebarDefault
         })
-        sidebarContents.replace(modesListModel.get(base.currentModeIndex).item, { "immediate": true })
+        modesListModel.append({
+            item: sidebarCustomMaterialSettings
+        })
 
-        var index = Math.round(UM.Preferences.getValue("cura/active_mode"))
-        if(index)
-        {
-            currentModeIndex = index;
-        }
+        sidebarContents.replace(modesListModel.get(prepareSidebar.currentModeIndex).item, { "immediate": true })
+
+        currentModeIndex = 0
     }
 
     UM.SettingPropertyProvider

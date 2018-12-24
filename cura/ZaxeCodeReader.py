@@ -52,7 +52,7 @@ class ZaxeCodeReader(MeshReader):
                 title = catalog.i18nc("@info:title", "Zaxe Code Details"))
             infoMessage.show()
             return None
-        elif info["model"] != deviceModel.replace("+", "PLUS"):
+        elif info["model"].upper() != deviceModel.replace("+", "PLUS"):
             infoMessage = Message(catalog.i18nc(
                 "@info:zaxecode",
                 "This Zaxe file is sliced for Zaxe {0}. Please switch to Zaxe {0} before importing this file again.", info["model"].replace("PLUS", "+")),

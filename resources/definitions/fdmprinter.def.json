@@ -1956,7 +1956,7 @@
                             "unit": "mm",
                             "type": "float",
                             "default_value": 0.0,
-                            "value": "expand_skins_expand_distance",
+                            "value": "2.8",
                             "minimum_value": "-top_skin_preshrink",
                             "limit_to_extruder": "top_bottom_extruder_nr",
                             "settable_per_mesh": true
@@ -1968,7 +1968,7 @@
                             "unit": "mm",
                             "type": "float",
                             "default_value": 0.0,
-                            "value": "expand_skins_expand_distance",
+                            "value": "2.8",
                             "minimum_value": "-bottom_skin_preshrink",
                             "limit_to_extruder": "top_bottom_extruder_nr",
                             "settable_per_mesh": true
@@ -3853,7 +3853,7 @@
                             "minimum_value_warning": "support_line_width",
                             "default_value": 2.66,
                             "enabled": "support_enable or support_tree_enable",
-                            "value": "0 if support_infill_rate == 0 else (support_line_width * 100) / support_infill_rate * (2 if support_pattern == 'grid' else (3 if support_pattern == 'triangles' else 1))",
+                            "value": "0 if support_infill_rate == 0 else (support_line_width * 100) / support_infill_rate",
                             "limit_to_extruder": "support_infill_extruder_nr",
                             "settable_per_mesh": false,
                             "settable_per_extruder": true
@@ -4127,7 +4127,7 @@
                             "minimum_value": "0",
                             "minimum_value_warning": "0.2 + layer_height",
                             "maximum_value_warning": "10",
-                            "value": "extruderValue(support_roof_extruder_nr, 'support_interface_height')",
+                            "value": "round(4 * layer_height, 1)",
                             "limit_to_extruder": "support_roof_extruder_nr",
                             "enabled": "support_roof_enable and (support_enable or support_tree_enable)",
                             "settable_per_mesh": true

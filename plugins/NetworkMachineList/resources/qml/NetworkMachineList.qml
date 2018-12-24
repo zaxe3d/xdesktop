@@ -24,31 +24,6 @@ Rectangle
         "custom": "Custom"
     }
 
-    Timer {
-        id: tooltipDelayTimer
-        interval: 500
-        repeat: false
-        property var item
-        property string text
-
-        onTriggered:
-        {
-            networkMachineList.showTooltip(base, {x: 0, y: item.y}, text);
-        }
-    }
-
-    function showTooltip(item, position, text)
-    {
-        tooltip.text = text;
-        position = item.mapToItem(networkMachineList, position.x - UM.Theme.getSize("default_arrow").width, position.y);
-        tooltip.show(position);
-    }
-
-    function hideTooltip()
-    {
-        tooltip.hide();
-    }
-
     function toHHMMSS(str) {
         var sec_num = parseInt(str, 10); // don't forget the second param
         var hours   = Math.floor(sec_num / 3600);

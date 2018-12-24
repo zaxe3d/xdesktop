@@ -1366,10 +1366,6 @@ class MachineManager(QObject):
                 self._global_container_stack.variant = self._empty_variant_container
             self._updateQualityWithMaterial()
 
-        # See if we need to show the Discard or Keep changes screen
-        if self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
-            self._application.discardOrKeepProfileChanges()
-
     ##  Find all container stacks that has the pair 'key = value' in its metadata and replaces the value with 'new_value'
     def replaceContainersMetadata(self, key: str, value: str, new_value: str) -> None:
         machines = CuraContainerRegistry.getInstance().findContainerStacks(type = "machine")
@@ -1433,10 +1429,6 @@ class MachineManager(QObject):
             self._setMaterial(position, container_node)
             self._updateQualityWithMaterial()
 
-        # See if we need to show the Discard or Keep changes screen
-        if self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
-            self._application.discardOrKeepProfileChanges()
-
     @pyqtSlot(str, str)
     def setVariantByName(self, position: str, variant_name: str) -> None:
         if self._global_container_stack is None:
@@ -1453,10 +1445,6 @@ class MachineManager(QObject):
             self._setVariantNode(position, container_node)
             self.updateMaterialWithVariant(position)
             self._updateQualityWithMaterial()
-
-        # See if we need to show the Discard or Keep changes screen
-        if self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
-            self._application.discardOrKeepProfileChanges()
 
     @pyqtSlot(str)
     def setQualityGroupByQualityType(self, quality_type: str) -> None:
@@ -1492,10 +1480,6 @@ class MachineManager(QObject):
         with postponeSignals(*self._getContainerChangedSignals(), compress = CompressTechnique.CompressPerParameterValue):
             self._setQualityGroup(quality_group)
 
-        # See if we need to show the Discard or Keep changes screen
-        if not no_dialog and self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
-            self._application.discardOrKeepProfileChanges()
-
     @pyqtProperty(QObject, fset = setQualityGroup, notify = activeQualityGroupChanged)
     def activeQualityGroup(self) -> Optional["QualityGroup"]:
         return self._current_quality_group
@@ -1505,10 +1489,6 @@ class MachineManager(QObject):
         self.blurSettings.emit()
         with postponeSignals(*self._getContainerChangedSignals(), compress = CompressTechnique.CompressPerParameterValue):
             self._setQualityChangesGroup(quality_changes_group)
-
-        # See if we need to show the Discard or Keep changes screen
-        if not no_dialog and self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
-            self._application.discardOrKeepProfileChanges()
 
     @pyqtSlot()
     def resetToUseDefaultQuality(self) -> None:

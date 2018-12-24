@@ -22,10 +22,10 @@ UM.Dialog
     Image
     {
         id: logo
-        width: (base.minimumWidth * 0.20) | 0
-        height: (width * (1/4.25)) | 0
+        width: 226
+        height: 43
 
-        source: UM.Theme.getImage("logo")
+        source: UM.Theme.getImage("xdesktop_logo")
 
         sourceSize.width: width
         sourceSize.height: height

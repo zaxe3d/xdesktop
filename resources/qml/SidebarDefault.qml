@@ -14,15 +14,15 @@ Item
 {
     id: base
 
-    signal showTooltip(Item item, point location, string text);
-    signal hideTooltip();
-
     property int backendState: UM.Backend.state
-    property bool settingsEnabled: Cura.ExtruderManager.activeExtruderStackId || extrudersEnabledCount.properties.value == 1
     property int  supportAngle: UM.Preferences.getValue("slicing/support_angle")
     property bool supportEnabled: UM.Preferences.getValue("slicing/support_angle") > 0
 
     UM.I18nCatalog { id: catalog; name: "cura" }
+
+    function booleanToString(bool) {
+        return bool ? "True" : "False";
+    }
 
     Connections {
         target: UM.Preferences
@@ -43,6 +43,8 @@ Item
         ColumnLayout
         {
             width: parent.parent.width
+            anchors.top: parent.top
+            anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
             spacing: UM.Theme.getSize("sidebar_spacing").height
 
             //
@@ -600,7 +602,6 @@ Item
 
                             //: Setting enable printing build-plate adhesion helper checkbox
                             style: UM.Theme.styles.checkbox;
-                            enabled: base.settingsEnabled
 
                             visible: platformAdhesionType.properties.enabled == "True"
                             checked: platformAdhesionType.properties.value == "raft"
@@ -611,22 +612,11 @@ Item
                                 id: adhesionMouseArea
                                 anchors.fill: parent
                                 hoverEnabled: true
-                                enabled: base.settingsEnabled
                                 onClicked:
                                 {
                                     parent.checked = !parent.checked;
                                     var adhesionType = parent.checked ? "raft" : "none";
                                     platformAdhesionType.setPropertyValue("value", adhesionType);
-                                    initialLayerLineWidthFactor.setPropertyValue("value", adhesionType == "raft" ? "100" : "150");
-                                }
-                                onEntered:
-                                {
-                                    base.showTooltip(adhesionCheckBox, Qt.point(-adhesionCheckBox.x, 0),
-                                        catalog.i18nc("@label", "Enable printing a brim or raft. This will add a flat area around or under your object which is easy to cut off afterwards."));
-                                }
-                                onExited:
-                                {
-                                    base.hideTooltip();
                                 }
                             }
                         }
@@ -901,6 +891,22 @@ Item
                                     }
 
                                     onActivated: perimeterCount.setPropertyValue("value", model.get(index).value)
+
+                                    // Disable mouse wheel for combobox
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onWheel: {
+                                            // do nothing
+                                        }
+                                        onPressed: {
+                                            // propogate to ComboBox
+                                            mouse.accepted = false;
+                                        }
+                                        onReleased: {
+                                            // propogate to ComboBox
+                                            mouse.accepted = false;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -986,6 +992,22 @@ Item
                                     }
 
                                     onActivated: topSolidLayerCount.setPropertyValue("value", model.get(index).value)
+
+                                    // Disable mouse wheel for combobox
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onWheel: {
+                                            // do nothing
+                                        }
+                                        onPressed: {
+                                            // propogate to ComboBox
+                                            mouse.accepted = false;
+                                        }
+                                        onReleased: {
+                                            // propogate to ComboBox
+                                            mouse.accepted = false;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1071,6 +1093,22 @@ Item
                                     }
 
                                     onActivated: bottomSolidLayerCount.setPropertyValue("value", model.get(index).value)
+
+                                    // Disable mouse wheel for combobox
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onWheel: {
+                                            // do nothing
+                                        }
+                                        onPressed: {
+                                            // propogate to ComboBox
+                                            mouse.accepted = false;
+                                        }
+                                        onReleased: {
+                                            // propogate to ComboBox
+                                            mouse.accepted = false;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1129,12 +1167,11 @@ Item
 
                                     anchors.bottom: parent.bottom
                                     anchors.left: fanSpeedSlider.left
-                                    anchors.leftMargin: Math.round((fanSpeedSlider.value / fanSpeedSlider.stepSize) * (fanSpeedSlider.width / (fanSpeedSlider.maximumValue / fanSpeedSlider.stepSize)) - 10 * screenScaleFactor)
                                     anchors.right: parent.right
 
                                     font: UM.Theme.getFont("medium")
 
-                                    text: "%" + parseInt(coolFanSpeedMax.properties.value)
+                                    text: parseInt(coolFanSpeedMax.properties.value) == 0 ? catalog.i18nc("@label", "Fan off") : "%" + coolFanSpeedMax.properties.value
 
                                     color: fanSpeedSlider.enabled ? UM.Theme.getColor("fanSpeed_slider_available") : UM.Theme.getColor("fanSpeed_slider_unavailable")
                                 }
@@ -1200,6 +1237,302 @@ Item
                                             }
                                         }
                                     }
+
+                                    Component.onCompleted: {
+                                        // Disable mouse wheel on old sliders.
+                                        for (var i = 0; i < fanSpeedSlider.children.length; ++i) {
+                                            if (fanSpeedSlider.children[i].hasOwnProperty("onVerticalWheelMoved") && fanSpeedSlider.children[i].hasOwnProperty("onHorizontalWheelMoved")) {
+                                                fanSpeedSlider.children[i].destroy()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: xyToleranceRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 51
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: xyToleranceCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: xyToleranceLabel
+                                    text: catalog.i18nc("@label", "XY tolerance")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors.top: parent.top
+                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    anchors.left: parent.left
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                            }
+
+                            Item
+                            {
+                                id: xyToleranceCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: xyToleranceCellLeft.height
+
+                                anchors.left: xyToleranceCellLeft.right
+                                anchors.bottom: xyToleranceCellLeft.bottom
+
+                                Label
+                                {
+                                    id: selectedxyToleranceText
+
+                                    anchors.bottom: parent.bottom
+                                    anchors.left: xyToleranceSlider.left
+                                    anchors.right: parent.right
+
+                                    font: UM.Theme.getFont("medium")
+
+                                    text: parseFloat(xyTolerance.properties.value) + " mm"
+
+                                    color: xyToleranceSlider.enabled ? UM.Theme.getColor("xyTolerance_slider_available") : UM.Theme.getColor("xyTolerance_slider_unavailable")
+                                }
+
+                                Slider
+                                {
+                                    id: xyToleranceSlider
+
+                                    anchors.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height / 2
+                                    anchors.bottom: selectedxyToleranceText.top
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+
+                                    height: UM.Theme.getSize("sidebar_margin").height
+
+                                    updateValueWhileDragging : true
+
+
+                                    width: parseInt(xyToleranceCellRight.width - UM.Theme.getSize("sidebar_margin").width - style.handleWidth)
+
+                                    minimumValue: -1
+                                    maximumValue: 1
+                                    stepSize: 0.01
+
+                                    value: parseFloat(xyTolerance.properties.value)
+
+                                    onValueChanged: {
+                                        xyTolerance.setPropertyValue("value", xyToleranceSlider.value);
+                                        xyToleranceLayer0.setPropertyValue("value", xyToleranceSlider.value);
+                                    }
+
+
+                                    style: SliderStyle
+                                    {
+                                        groove: Rectangle {
+                                            id: groove
+                                            implicitWidth: 100 * screenScaleFactor
+                                            implicitHeight: 10 * screenScaleFactor
+                                            color: control.enabled ? UM.Theme.getColor("slider_groove") : UM.Theme.getColor("quality_slider_unavailable")
+                                            radius: 5
+                                        }
+
+                                        handle: Item {
+                                            Rectangle {
+                                                id: handleButton
+                                                anchors.centerIn: parent
+                                                color: control.enabled ? UM.Theme.getColor("slider_handle") : UM.Theme.getColor("quality_slider_unavailable")
+                                                implicitWidth: 15 * screenScaleFactor
+                                                implicitHeight: 15 * screenScaleFactor
+                                                radius: 100
+                                            }
+                                        }
+                                    }
+
+                                    Component.onCompleted: {
+                                        // Disable mouse wheel on old sliders.
+                                        for (var i = 0; i < xyToleranceSlider.children.length; ++i) {
+                                            if (xyToleranceSlider.children[i].hasOwnProperty("onVerticalWheelMoved") && xyToleranceSlider.children[i].hasOwnProperty("onHorizontalWheelMoved")) {
+                                                xyToleranceSlider.children[i].destroy()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: zHopWhenRetractedRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: zHopWhenRetractedCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .70)
+
+                                CheckBox
+                                {
+                                    id: zHopWhenRetractedCheckBox
+                                    property alias _hovered: zHopWhenRetractedMouseArea.containsMouse
+                                    property bool checkBoxSmall: true
+
+                                    anchors.top: parent.top
+                                    anchors.left: parent.left
+
+                                    //: Setting enable printing build-plate adhesion helper checkbox
+                                    style: UM.Theme.styles.checkbox;
+
+                                    checked: zHopWhenRetracted.properties.value == "True"
+                                    text: catalog.i18nc("@label", "Z hop when retracted")
+
+                                    MouseArea
+                                    {
+                                        id: zHopWhenRetractedMouseArea
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onClicked:
+                                        {
+                                            parent.checked = !parent.checked;
+                                            zHopWhenRetracted.setPropertyValue("value", booleanToString(parent.checked));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: spiralVaseModeRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: spiralVaseModeCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .70)
+
+                                CheckBox
+                                {
+                                    id: spiralVaseModeCheckBox
+                                    property alias _hovered: spiralVaseModeMouseArea.containsMouse
+                                    property bool checkBoxSmall: true
+
+                                    anchors.top: parent.top
+                                    anchors.left: parent.left
+
+                                    //: Setting enable printing build-plate adhesion helper checkbox
+                                    style: UM.Theme.styles.checkbox;
+
+                                    checked: spiralVaseMode.properties.value == "True"
+                                    text: catalog.i18nc("@label", "Spiral vase mode")
+
+                                    MouseArea
+                                    {
+                                        id: spiralVaseModeMouseArea
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onClicked:
+                                        {
+                                            parent.checked = !parent.checked;
+                                            spiralVaseMode.setPropertyValue("value", booleanToString(parent.checked));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: avoidSupportsRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: avoidSupportsCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .70)
+
+                                CheckBox
+                                {
+                                    id: avoidSupportsCheckBox
+                                    property alias _hovered: avoidSupportsMouseArea.containsMouse
+                                    property bool checkBoxSmall: true
+
+                                    anchors.top: parent.top
+                                    anchors.left: parent.left
+
+                                    //: Setting enable printing build-plate adhesion helper checkbox
+                                    style: UM.Theme.styles.checkbox;
+
+                                    checked: avoidSupports.properties.value == "True"
+                                    text: catalog.i18nc("@label", "Avoid supports")
+
+                                    MouseArea
+                                    {
+                                        id: avoidSupportsMouseArea
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onClicked:
+                                        {
+                                            parent.checked = !parent.checked;
+                                            avoidSupports.setPropertyValue("value", booleanToString(parent.checked));
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1257,9 +1590,7 @@ Item
                     style: UM.Theme.styles.sidebar_button
                     text: catalog.i18nc("@label", "Slice!")
                     onClicked: {
-                        UM.Controller.setActiveStage("NetworkMachineList")
                         CuraApplication.backend.forceSlice();
-                        UM.Controller.setActiveView("SimulationView")
                     }
                     Layout.alignment: Qt.AlignLeft
                 }
@@ -1288,6 +1619,51 @@ Item
                 id: coolFanSpeedMax
                 containerStackId: Cura.MachineManager.activeStackId
                 key: "cool_fan_speed_max"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: xyTolerance
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "xy_offset"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: xyToleranceLayer0
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "xy_offset_layer_0"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: zHopWhenRetracted
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "retraction_hop_enabled"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: spiralVaseMode
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "magic_spiralize"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: avoidSupports
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "conical_overhang_enabled"
                 watchedProperties: [ "value" ]
                 storeIndex: 0
             }
@@ -1351,6 +1727,24 @@ Item
                 id: initialLayerLineWidthFactor
                 containerStack: Cura.MachineManager.activeMachine
                 key: "initial_layer_line_width_factor"
+                watchedProperties: [ "value", "enabled" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: speedPrintLayer0
+                containerStack: Cura.MachineManager.activeMachine
+                key: "speed_print_layer_0"
+                watchedProperties: [ "value", "enabled" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: speedWall0
+                containerStack: Cura.MachineManager.activeMachine
+                key: "speed_wall_0"
                 watchedProperties: [ "value", "enabled" ]
                 storeIndex: 0
             }

@@ -26,7 +26,7 @@
         "acceleration_support_roof": { "value": 500 },
         "acceleration_support_interface": { "value": 500 },
         "acceleration_support_bottom": { "value": 500 },
-        "acceleration_travel": { "default_value": 500 },
+        "acceleration_travel": { "value": 500 },
         "acceleration_print_layer_0": { "value": 500 },
         "acceleration_travel_layer_0": { "value": 500 },
         "raft_surface_acceleration": { "value": 500 },
@@ -34,6 +34,19 @@
         "raft_base_acceleration": { "value": 500 },
         "acceleration_enabled": { "value": true },
         "raft_surface_layers": { "value": 2 },
-        "adhesion_type": { "default_value": "raft" }
+        "adhesion_type": { "default_value": "raft" },
+        "raft_surface_speed": { "value": 40 },
+        "raft_interface_speed": { "value": 40 },
+        "raft_base_speed": { "value": 15 },
+        "speed_travel_layer_0": { "value": 60 },
+        "speed_travel": { "value": 120 },
+        "speed_infill":{ "value": 60},
+        "speed_wall_0": { "value": 25 },
+        "speed_wall_x": { "value": 60 },
+        "speed_roofing": { "value": 40 },
+        "speed_topbottom": { "value": 30 },
+        "speed_support_infill": { "value": 60 },
+        "speed_support_roof": { "value": 40 },
+        "speed_print_layer_0": { "value": 20 }
     }
 }

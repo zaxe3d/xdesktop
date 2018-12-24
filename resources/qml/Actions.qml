@@ -439,4 +439,5 @@ Item
         shortcut: "Ctrl+T";
         onTriggered: CuraApplication.takeSnapshot();
     }
+
 }

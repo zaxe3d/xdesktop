@@ -465,8 +465,6 @@ class CuraApplication(QtApplication):
         preferences.addPreference("metadata/setting_version", 0)
         preferences.setValue("metadata/setting_version", self.SettingVersion) #Don't make it equal to the default so that the setting version always gets written to the file.
 
-        preferences.addPreference("cura/active_mode", "simple")
-
         preferences.addPreference("cura/categories_expanded", "")
         preferences.addPreference("cura/jobname_prefix", True)
         preferences.addPreference("cura/select_models_on_load", False)
@@ -479,7 +477,7 @@ class CuraApplication(QtApplication):
         preferences.addPreference("cura/choice_on_open_project", "always_ask")
         preferences.addPreference("cura/use_multi_build_plate", False)
 
-        preferences.addPreference("cura/currency", "€")
+        preferences.addPreference("cura/currency", "TL")
         preferences.addPreference("cura/material_settings", "{}")
 
         preferences.addPreference("view/invert_zoom", False)
@@ -487,13 +485,18 @@ class CuraApplication(QtApplication):
         preferences.addPreference("cura/sidebar_collapsed", False)
 
         preferences.addPreference("cura/favorite_materials", "")
-        preferences.addPreference("cura/expanded_brands", "")
-        preferences.addPreference("cura/expanded_types", "")
 
         # slicing
         preferences.addPreference("slicing/support_angle", 20)
 
-        self._need_to_show_user_agreement = not preferences.getValue("general/accepted_user_agreement")
+        # custom material
+        preferences.addPreference("custom_material/extruder_temperature",       250)
+        preferences.addPreference("custom_material/bed_temperature",            80)
+        preferences.addPreference("custom_material/print_speed_multiplier",     1)
+        preferences.addPreference("custom_material/material_flow_multiplier",   1)
+        preferences.addPreference("custom_material/retraction_speed",           20)
+        preferences.addPreference("custom_material/retraction_length",          2)
+
 
         for key in [
             "dialog_load_path",  # dialog_save_path is in LocalFileOutputDevicePlugin

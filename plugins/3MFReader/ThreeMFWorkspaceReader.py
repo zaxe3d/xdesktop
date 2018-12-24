@@ -453,9 +453,6 @@ class ThreeMFWorkspaceReader(WorkspaceReader):
             has_visible_settings_string = visible_settings_string is not None
             if visible_settings_string is not None:
                 num_visible_settings = len(visible_settings_string.split(";"))
-            active_mode = temp_preferences.getValue("cura/active_mode")
-            if not active_mode:
-                active_mode = Application.getInstance().getPreferences().getValue("cura/active_mode")
         except KeyError:
             # If there is no preferences file, it's not a workspace, so notify user of failure.
             Logger.log("w", "File %s is not a valid workspace.", file_name)
@@ -515,7 +512,6 @@ class ThreeMFWorkspaceReader(WorkspaceReader):
         self._dialog.setQualityType(quality_type)
         self._dialog.setNumSettingsOverridenByQualityChanges(num_settings_overriden_by_quality_changes)
         self._dialog.setNumUserSettings(num_user_settings)
-        self._dialog.setActiveMode(active_mode)
         self._dialog.setMachineName(machine_name)
         self._dialog.setMaterialLabels(material_labels)
         self._dialog.setMachineType(machine_type)

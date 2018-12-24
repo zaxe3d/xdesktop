@@ -22,16 +22,36 @@ UM.MainWindow
 
     backgroundColor: UM.Theme.getColor("viewport_background")
 
+    property int currentBackendState: 0
+
     Connections
     {
         target: CuraApplication
         onActivityChanged: {
+            if (!CuraApplication.platformActivity && UM.Controller.activeStage.stageId == "PrepareStage")
+                UM.Controller.setActiveStage("NetworkMachineList")
+        }
+    }
+
+    Connections
+    {
+        target: UM.Backend
+        onBackendStateChange: {
             // SolidView if not sliced - 1 = Ready to slice - 4 = Unable to slice
             // Take snapshot if ready to slice - 1 = Ready to slice
             // 5 = Slicing unavailable
-            if (UM.Backend.state == 1) {
+            if (base.currentBackendState == UM.Backend.state)
+                return
+
+            base.currentBackendState = UM.Backend.state
+
+            if (base.currentBackendState == 1) {
                 Cura.Actions.takeSnapshot.trigger()
                 UM.Controller.setActiveView("SolidView")
+            }
+            if (base.currentBackendState == 2) {
+                UM.Controller.setActiveView("SimulationView")
+                UM.Controller.setActiveStage("NetworkMachineList")
             } else if (UM.Backend.state == 4) {
                 UM.Controller.setActiveView("SolidView")
             }
@@ -508,109 +528,6 @@ UM.MainWindow
             // When the dialog closes, switch to the General page.
             // This prevents us from having a heavy page like Setting Visiblity active in the background.
             setPage(0);
-        }
-    }
-
-    Connections
-    {
-        target: Cura.Actions.preferences
-        onTriggered: preferences.visible = true
-    }
-
-    Connections
-    {
-        target: CuraApplication
-        onShowPreferencesWindow: preferences.visible = true
-    }
-
-
-    Connections
-    {
-        target: Cura.Actions.addProfile
-        onTriggered:
-        {
-
-            preferences.show();
-            preferences.setPage(4);
-            // Create a new profile after a very short delay so the preference page has time to initiate
-            createProfileTimer.start();
-        }
-    }
-
-    Connections
-    {
-        target: Cura.Actions.configureMachines
-        onTriggered:
-        {
-            preferences.visible = true;
-            preferences.setPage(2);
-        }
-    }
-
-    Connections
-    {
-        target: Cura.Actions.manageProfiles
-        onTriggered:
-        {
-            preferences.visible = true;
-            preferences.setPage(4);
-        }
-    }
-
-    Connections
-    {
-        target: Cura.Actions.manageMaterials
-        onTriggered:
-        {
-            preferences.visible = true;
-            preferences.setPage(3)
-        }
-    }
-
-    Connections
-    {
-        target: Cura.Actions.configureSettingVisibility
-        onTriggered:
-        {
-            preferences.visible = true;
-            preferences.setPage(1);
-            if(source && source.key)
-            {
-                preferences.getCurrentItem().scrollToSection(source.key);
-            }
-        }
-    }
-
-    UM.ExtensionModel {
-        id: curaExtensions
-    }
-
-    // show the plugin browser dialog
-    Connections
-    {
-        target: Cura.Actions.browsePackages
-        onTriggered: {
-            curaExtensions.callExtensionMethod("Toolbox", "browsePackages")
-        }
-    }
-
-    Timer
-    {
-        id: createProfileTimer
-        repeat: false
-        interval: 1
-
-        onTriggered: preferences.getCurrentItem().createProfile()
-    }
-
-    // BlurSettings is a way to force the focus away from any of the setting items.
-    // We need to do this in order to keep the bindings intact.
-    Connections
-    {
-        target: Cura.MachineManager
-        onBlurSettings:
-        {
-            contentItem.forceActiveFocus()
         }
     }
 

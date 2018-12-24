@@ -16,6 +16,8 @@ Column
 {
     id: base;
 
+    UM.I18nCatalog { id: catalog; name:"cura" }
+
     property int currentExtruderIndex: Cura.ExtruderManager.activeExtruderIndex;
     property var activeExtruder: Cura.MachineManager.activeStack
     property var hasActiveExtruder: activeExtruder != null
@@ -29,9 +31,6 @@ Column
     }
 
     spacing: 7
-
-    signal showTooltip(Item item, point location, string text)
-    signal hideTooltip()
 
     width: parent.width - UM.Theme.getSize("sidebar_item_margin").width * 2
     anchors {
@@ -65,7 +64,7 @@ Column
             id: materialLabel
             text: catalog.i18nc("@label", "Material");
             width: parent.width - UM.Theme.getSize("default_margin").width
-            height: UM.Theme.getSize("setting_control").height
+            height: 20
             verticalAlignment: Text.AlignVCenter
             font: UM.Theme.getFont("large");
             color: UM.Theme.getColor("text_sidebar");
@@ -73,6 +72,7 @@ Column
 
         RowLayout
         {
+            id: materialSelectionRow
             spacing: UM.Theme.getSize("sidebar_item_margin").width / 2
             height: 50
             width: parent.width
@@ -82,12 +82,24 @@ Column
                 onCurrentChanged : {
                     Cura.MachineManager.setMaterialById(currentExtruderIndex, current.material)
 
+                    // material specific settings
                     var fanSpeed = 100
-                    if (current.material == "zaxe_abs")
+                    var coolFanFullLayer = 2
+                    var materialPrintTempLayer0 = 220
+
+                    if (current.material == "zaxe_abs") {
                         fanSpeed = 30
+                        coolFanFullLayer = 5
+                        materialPrintTempLayer0 = 250
+                    }
+
+                    if (current.material != "custom")
+                        prepareSidebar.switchView(0) // Default view
 
                     Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_min", "value", fanSpeed)
                     Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_max", "value", fanSpeed)
+                    Cura.MachineManager.setSettingForAllExtruders("cool_fan_full_layer", "value", coolFanFullLayer)
+                    Cura.MachineManager.setSettingForAllExtruders("material_print_temperature_layer_0", "value", materialPrintTempLayer0)
                 }
             }
             // ABS
@@ -120,7 +132,7 @@ Column
             {
                 exclusiveGroup: materialGroup
                 property string material : "custom"
-                checked: activeExtruder.material.name == "custom"
+                checked: Cura.MachineManager.activeStack.material.name == "custom"
                 Layout.preferredHeight: 80
                 Layout.preferredWidth: 120
                 Layout.alignment: Qt.AlignHCenter
@@ -128,19 +140,24 @@ Column
                 text: catalog.i18nc("@label", "Custom")
             }
         }
+
+        Button {
+            id: customMaterialSettingsButton
+            style: UM.Theme.styles.sidebar_simple_button
+            text: catalog.i18nc("@label", "Custom material settings")
+            visible: prepareSidebar.currentModeIndex == 0 && Cura.MachineManager.activeStack.material.name == "custom"
+            anchors {
+                top: materialSelectionRow.bottom
+                right: parent.right
+                topMargin: 3
+                rightMargin: UM.Theme.getSize("sidebar_margin").width
+            }
+            onClicked: {
+                prepareSidebar.switchView(1) // Custom material settings view
+            }
+        }
     }
     // Bottom Border
-    Rectangle { width: parent.width; height: UM.Theme.getSize("default_lining").width; color: UM.Theme.getColor("sidebar_item_dark") }
+    Rectangle { width: parent.width; height: UM.Theme.getSize("default_lining").height; color: UM.Theme.getColor("sidebar_item_dark") }
 
-    UM.SettingPropertyProvider
-    {
-        id: machineExtruderCount
-
-        containerStack: Cura.MachineManager.activeMachine
-        key: "machine_extruder_count"
-        watchedProperties: [ "value" ]
-        storeIndex: 0
-    }
-
-    UM.I18nCatalog { id: catalog; name:"cura" }
 }

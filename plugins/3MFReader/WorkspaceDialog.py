@@ -39,7 +39,6 @@ class WorkspaceDialog(QObject):
         self._has_visible_settings_field = False
         self._num_visible_settings = 0
         self._num_user_settings = 0
-        self._active_mode = ""
         self._quality_name = ""
         self._num_settings_overriden_by_quality_changes = 0
         self._quality_type = ""
@@ -165,17 +164,6 @@ class WorkspaceDialog(QObject):
         if self._quality_name != quality_name:
             self._quality_name = quality_name
             self.qualityNameChanged.emit()
-
-    @pyqtProperty(str, notify=activeModeChanged)
-    def activeMode(self):
-        return self._active_mode
-
-    def setActiveMode(self, active_mode):
-        if active_mode == 0:
-            self._active_mode = i18n_catalog.i18nc("@title:tab", "Recommended")
-        else:
-            self._active_mode = i18n_catalog.i18nc("@title:tab", "Custom")
-        self.activeModeChanged.emit()
 
     @pyqtProperty(int, notify = hasVisibleSettingsFieldChanged)
     def hasVisibleSettingsField(self):

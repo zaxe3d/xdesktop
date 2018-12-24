@@ -65,6 +65,14 @@ msgid "New version available for your device"
 msgstr "Cihazınız için yeni bir güncelleme mevcut"
 
 msgctxt "@label"
+msgid "Custom material settings"
+msgstr "Özel materyal ayarları"
+
+msgctxt "@label"
+msgid "Hide custom material settings"
+msgstr "Özel materyal ayarlarını gizle"
+
+msgctxt "@label"
 msgid "Material"
 msgstr "Materyal"
 
@@ -119,6 +127,22 @@ msgstr "Alt kapalı katman sayısı"
 msgctxt "@label"
 msgid "Fan speed"
 msgstr "Fan hızı"
+
+msgctxt "@label"
+msgid "Fan off"
+msgstr "Fan kapalı"
+
+msgctxt "@label"
+msgid "Z hop when retracted"
+msgstr "Geri çekildiğinde Z sıçraması"
+
+msgctxt "@label"
+msgid "Spiral vase mode"
+msgstr "Spiral vazo modu"
+
+msgctxt "@label"
+msgid "Avoid supports"
+msgstr "Desteklerden kaçın"
 
 msgctxt "@label"
 msgid "XY tolerance"

@@ -1012,8 +1012,8 @@ QtObject {
         CheckBoxStyle {
             background: Item { }
             indicator: Rectangle {
-                implicitWidth:  Theme.getSize("checkbox").width;
-                implicitHeight: Theme.getSize("checkbox").height;
+                implicitWidth: control.checkBoxSmall ? Theme.getSize("checkbox_small").width :  Theme.getSize("checkbox").width;
+                implicitHeight: control.checkBoxSmall ? Theme.getSize("checkbox_small").height :  Theme.getSize("checkbox").height;
 
                 color: (control.hovered || control._hovered || control.checked) ? Theme.getColor("checkbox_hover") : Theme.getColor("checkbox");
                 Behavior on color { ColorAnimation { duration: 50; } }
@@ -1039,7 +1039,7 @@ QtObject {
             label: Label {
                 text: control.text
                 color: control.checkBoxSidebar ? Theme.getColor("text_sidebar") : Theme.getColor("checkbox_text")
-                font: control.checkBoxSidebar ? Theme.getFont("large_semi_bold") : Theme.getFont("default")
+                font: control.checkBoxSidebar ? Theme.getFont("large_semi_bold") : Theme.getFont("medium")
                 elide: Text.ElideRight
             }
         }

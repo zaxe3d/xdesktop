@@ -585,7 +585,8 @@ Item {
                                                 Cura.NetworkMachineManager.upload(device.uid) == false
                                             }
                                         } else {
-                                            if (UM.Backend.state != "undefined" && UM.Backend.state == 1 || !CuraApplication.platformActivity) {
+                                            // 3 is Done
+                                            if (UM.Backend.state != "undefined" && UM.Backend.state != 3 || !CuraApplication.platformActivity) {
                                                 device.materialWarning = false
                                                 device.modelCompatibilityWarning = false
                                                 shakeAnim.start()

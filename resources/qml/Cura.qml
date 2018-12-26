@@ -28,6 +28,11 @@ UM.MainWindow
     {
         target: CuraApplication
         onActivityChanged: {
+
+            if (CuraApplication.platformActivity && UM.Backend.state == 1)
+                // Take snapshot if ready to slice - 1 = Ready to slice
+                Cura.Actions.takeSnapshot.trigger()
+
             if (!CuraApplication.platformActivity && UM.Controller.activeStage.stageId == "PrepareStage")
                 UM.Controller.setActiveStage("NetworkMachineList")
         }
@@ -38,7 +43,6 @@ UM.MainWindow
         target: UM.Backend
         onBackendStateChange: {
             // SolidView if not sliced - 1 = Ready to slice - 4 = Unable to slice
-            // Take snapshot if ready to slice - 1 = Ready to slice
             // 5 = Slicing unavailable
             if (base.currentBackendState == UM.Backend.state)
                 return
@@ -46,7 +50,6 @@ UM.MainWindow
             base.currentBackendState = UM.Backend.state
 
             if (base.currentBackendState == 1) {
-                Cura.Actions.takeSnapshot.trigger()
                 UM.Controller.setActiveView("SolidView")
             }
             if (base.currentBackendState == 2) {

@@ -41,6 +41,8 @@ Item {
     property bool materialWarning
     property bool modelCompatibilityWarning
 
+    property string nextState
+
     Connections
     {
         target: Cura.NetworkMachineListModel
@@ -107,6 +109,26 @@ Item {
     function showConfirmation() {
         confirmationPane.visible = true
     }
+    function showPinCodeEntry(state) {
+        inputPinCode.text = ""
+        device.nextState = state
+        pinCodeEntryPane.visible = true
+    }
+
+    function enterPinCode(pin) {
+        pinCodeEntryPane.visible = false
+
+        switch(device.nextState) {
+            case "cancel":
+                Cura.NetworkMachineManager.Cancel(device.uid, pin)
+                break;
+            case "pause":
+                Cura.NetworkMachineManager.Pause(device.uid, pin)
+                break;
+        }
+
+        device.nextState = ""
+    }
 
     // Top Border
     Rectangle {
@@ -134,6 +156,74 @@ Item {
             }
         }
 
+        // Pin code entry
+        Rectangle {
+            id: pinCodeEntryPane
+            color: UM.Theme.getColor("sidebar_item_light")
+            width: 295; height: 45
+            x: parent.width - 295 - 50
+            z: 5
+            visible: false
+            RowLayout {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.rightMargin: 10
+                TextField {
+                    id: inputPinCode
+                    echoMode: TextInput.Password
+                    placeholderText: catalog.i18nc("@label", "Enter pin code...")
+                    selectByMouse: true
+                    font: UM.Theme.getFont("medium")
+                    color: UM.Theme.getColor("text_sidebar")
+                    padding: 0
+                    Layout.preferredWidth: 235; Layout.preferredHeight: 30
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        topMargin: 0
+                    }
+
+                    background: Rectangle {
+                        color: UM.Theme.getColor("sidebar_item_light")
+                        border.width: 0
+                        radius: 2
+                        // Bottom border only
+                        Rectangle { width: parent.width; height: UM.Theme.getSize("default_lining").height; anchors.bottom: parent.bottom; anchors.bottomMargin: UM.Theme.getSize("default_lining").height; color: UM.Theme.getColor("sidebar_item_dark") }
+                    }
+                    Keys.onPressed: {
+                        if (event.key == Qt.Key_Escape) {
+                            inputPinCode.text = "";
+                            event.accepted = true;
+                        } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {
+                            enterPinCode(inputPinCode.text)
+                            inputDeviceName.visible = false;
+                            lblDeviceName.visible = true;
+                            event.accepted = true;
+                        }
+                    }
+                }
+                Button {
+                    Layout.preferredHeight: 27
+                    background: Rectangle {
+                        color: UM.Theme.getColor("button_blue")
+                        border.color: UM.Theme.getColor("button_blue")
+                        border.width: UM.Theme.getSize("default_lining").width
+                        radius: 10
+                    }
+                    contentItem: Text {
+                        color: UM.Theme.getColor("text_white")
+                        width: parent.width
+                        text: catalog.i18nc("@label", "OK")
+                        font: UM.Theme.getFont("medium_bold")
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    onClicked: {
+                        enterPinCode(inputPinCode.text)
+                    }
+                }
+            }
+        }
         // Confirmation pane
         Rectangle {
             id: confirmationPane
@@ -371,7 +461,13 @@ Item {
                                             horizontalAlignment: Text.AlignHCenter
                                             verticalAlignment: Text.AlignVCenter
                                         }
-                                        onClicked: Cura.NetworkMachineManager.Pause(device.uid)
+                                        onClicked: {
+                                            if (device.hasPin) {
+                                                showPinCodeEntry("pause")
+                                            } else {
+                                                Cura.NetworkMachineManager.Pause(device.uid)
+                                            }
+                                        }
                                         onHoveredChanged: {
                                             btnPause.contentItem.color = hovered
                                                 ? UM.Theme.getColor("text_sidebar_hover")
@@ -419,9 +515,9 @@ Item {
                                         z: 1
                                     }
 
-                                    // Stop button
+                                    // Cancel button
                                     Button {
-                                        id: btnStop
+                                        id: btnCancel
                                         visible: (!machineStates.calibrating && machineStates.heating) || (machineStates.printing && !machineStates.paused)
                                         implicitWidth: 30; implicitHeight: 40
                                         anchors.top: parent.top
@@ -440,10 +536,14 @@ Item {
                                             verticalAlignment: Text.AlignVCenter
                                         }
                                         onClicked: {
-                                            showConfirmation()
+                                            if (device.hasPin) {
+                                                showPinCodeEntry("cancel")
+                                            } else {
+                                                showConfirmation()
+                                            }
                                         }
                                         onHoveredChanged: {
-                                            btnStop.contentItem.color = hovered
+                                            btnCancel.contentItem.color = hovered
                                                 ? UM.Theme.getColor("text_sidebar_hover")
                                                 : UM.Theme.getColor("text_danger")
                                         }

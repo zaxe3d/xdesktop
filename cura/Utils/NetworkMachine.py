@@ -135,12 +135,12 @@ class NetworkMachine(QThread, QObject):
                 self.printingFile = message["filename"]
                 self.elapsedTime = message["elapsed_time"]
                 self.estimatedTime = message["estimated_time"]
-                self.hasPin = message["has_pin"].lower()
+                self.hasPin = message["has_pin"].lower() == "true"
             except:
                 self.printingFile = ""
                 self.elapsedTime = 0
                 self.estimatedTime = ""
-                self.hasPin = "false"
+                self.hasPin = False
 
         if message['event'] in ["hello", "states_update"]:
             old_states = self.__states
@@ -171,7 +171,7 @@ class NetworkMachine(QThread, QObject):
             self.estimatedTime = message["estimated_time"]
             self.elapsedTime = 0
         if message['event'] == "pin_change":
-            self.hasPin = message["has_pin"].lower()
+            self.hasPin = message["has_pin"].lower() == "true"
         if message['event'] == "new_name":
             self.setName(message['name'])
 

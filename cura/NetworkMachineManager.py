@@ -109,20 +109,18 @@ class NetworkMachineManager(QObject):
         machine.togglePreheat()
 
     ## cancel printing on intended machine
-    @pyqtSlot(str)
-    def Cancel(self, mID) -> None:
+    @pyqtSlot(str, str)
+    def Cancel(self, mID, pin = "") -> None:
         machine = self.machineList[str(mID)]
         Logger.log("d", "canceling printing [%s - [%s]]" % (machine.name, machine.ip))
-        # TODO implement pin part
-        machine.cancel()
+        machine.cancel(pin)
 
     ## pause printing on intended machine
-    @pyqtSlot(str)
-    def Pause(self, mID, pin = None) -> None:
+    @pyqtSlot(str, str)
+    def Pause(self, mID, pin = "") -> None:
         machine = self.machineList[str(mID)]
         Logger.log("d", "pausing [%s - [%s]]" % (machine.name, machine.ip))
-        # TODO implement pin part
-        machine.pause()
+        machine.pause(pin)
 
     ## resume printing on intended machine
     @pyqtSlot(str)

@@ -815,7 +815,7 @@ Item {
                 Text {
                     id: fwUpdateMessageIcon
                     font: UM.Theme.getFont("zaxe_icon_set")
-                    color: UM.Theme.getColor("text_blue")
+                    color: UM.Theme.getColor("text_danger")
                     horizontalAlignment: Text.AlignLeft
                     anchors {
                         top: parent.top
@@ -835,7 +835,7 @@ Item {
                         left: fwUpdateMessageIcon.right
                         leftMargin: 1
                     }
-                    text: catalog.i18nc("@label", "New version available for your device...")
+                    text: catalog.i18nc("@info", "Firmware update available for your device")
                 }
             }
             // Material warning message
@@ -870,7 +870,7 @@ Item {
                         left: materialWarningIcon.right
                         leftMargin: 1
                     }
-                    text: catalog.i18nc("@label", "The material in the device does not match with the material you choose. Please slice again with the correct material")
+                    text: catalog.i18nc("@warning", "The material in the device does not match with the material you choose. Please slice again with the correct material")
                 }
             }
 

@@ -16,6 +16,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgctxt "@info:progress"
+msgid "Loading interface..."
+msgstr "Arayüz yükleniyor..."
+
+msgctxt "@info:progress"
+msgid "Setting up scene..."
+msgstr "Görünüm ayarlanıyor..."
+
+msgctxt "@info:progress"
+msgid "Loading machines..."
+msgstr "Makineler yükleniyor..."
+
 msgctxt "@label"
 msgid "Can not find a Zaxe on the network"
 msgstr "Ağa bağlı bir Zaxe bulunamadı"
@@ -60,9 +72,9 @@ msgctxt "@warning"
 msgid "This print is not compatible with this device model"
 msgstr "Bu baskı, bu cihaz ile uyumlu değildir"
 
-msgctxt "@notification"
-msgid "New version available for your device"
-msgstr "Cihazınız için yeni bir güncelleme mevcut"
+msgctxt "@info"
+msgid "Firmware update available for your device"
+msgstr "Cihanız için yazılım güncellemesi mevcut"
 
 msgctxt "@label"
 msgid "Custom material settings"
@@ -139,10 +151,6 @@ msgstr "Geri çekildiğinde Z sıçraması"
 msgctxt "@label"
 msgid "Spiral vase mode"
 msgstr "Spiral vazo modu"
-
-msgctxt "@label"
-msgid "Avoid supports"
-msgstr "Desteklerden kaçın"
 
 msgctxt "@label"
 msgid "XY tolerance"

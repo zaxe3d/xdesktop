@@ -22,7 +22,7 @@ UM.MainWindow
 
     backgroundColor: UM.Theme.getColor("viewport_background")
 
-    property int currentBackendState: 0
+    property int currentBackendState: 1 // Solidview
 
     Connections
     {

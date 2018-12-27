@@ -128,6 +128,7 @@ Rectangle
             estimatedTime: mEstimatedTime
             snapshot: mSnapshot
             hasPin: mHasPin
+            hasFWUpdate: mHasFWUpdate
             hasSnapshot: mHasSnapshot
 
             machineStates: mStates

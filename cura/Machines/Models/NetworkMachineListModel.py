@@ -11,6 +11,7 @@ from cura.NetworkMachineManager import NetworkMachineManager
 
 import json
 
+
 #
 # QML Model for network machines
 #
@@ -60,12 +61,14 @@ class NetworkMachineListModel(ListModel):
             "mEstimatedTime": networkMachine.estimatedTime,
             "mHasPin": networkMachine.hasPin,
             "mHasSnapshot": networkMachine.hasSnapshot,
+            "mHasFWUpdate": self._compareVersion(networkMachine),
             "mSnapshot": networkMachine.snapshot,
             "mStates": networkMachine.getStates()
         }
 
 
         return item
+
 
     # machine update start
 
@@ -93,8 +96,13 @@ class NetworkMachineListModel(ListModel):
         self._itemUpdated(uuid, "mElapsedTime", networkMachine.elapsedTime)
         self._itemUpdated(uuid, "mEstimatedTime", networkMachine.estimatedTime)
 
-    def _compareVersion(self, idx, networkMachine):
-        Logger.log("d", "comparing version")
+    def _compareVersion(self, networkMachine):
+        version = self._machine_manager.DEVICE_VERSIONS[networkMachine.deviceModel]["version"]
+        if version > networkMachine.fwVersion:
+            Logger.log("d", "[%s] has FW update available" % networkMachine.name)
+            return True
+        return False
+
 
     # machine update end
 
@@ -138,8 +146,6 @@ class NetworkMachineListModel(ListModel):
         if message["event"] in ["pin_change", "hello"]:
             self.pinChange.emit(uuid, bool(eventArgs.machine.hasPin))
             self._itemUpdated(uuid, "mHasPin", eventArgs.machine.hasPin)
-        if message["event"] == "hello":
-            self._compareVersion(uuid, eventArgs.machine)
 
     def _itemUploadProgress(self, eventArgs):
         self.uploadProgress.emit(eventArgs.machine.id, float(eventArgs.progress / 100))

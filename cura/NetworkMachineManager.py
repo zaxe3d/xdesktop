@@ -11,6 +11,9 @@ from cura.Utils.NetworkMachine import NetworkMachine, NetworkMachineContainer
 from typing import Dict
 from cura.Utils import BroadcastReceiver
 
+from cura.Utils.ZaxeVersion import ZaxeVersion
+
+
 ##  Manages zaxe network printers
 class NetworkMachineManager(QObject):
 
@@ -25,6 +28,13 @@ class NetworkMachineManager(QObject):
     machineNewMessage = pyqtSignal(QVariant)
     machineUploadProgress = pyqtSignal(QVariant)
 
+
+    DEVICE_VERSIONS = {
+        "x1": {"version": [0, 0, 0], "path": "/firmware.json"},
+        "x1plus": {"version": [0, 0, 0], "path": "/x1plus/firmware.json"},
+        "z1plus": {"version": [0, 0, 0], "path": "/z/firmware.json"}
+    }
+
     ##  Registers listeners and such to listen and command network printers
     def __init__(self, parent = None):
         if NetworkMachineManager.__instance is not None:
@@ -34,6 +44,27 @@ class NetworkMachineManager(QObject):
         super().__init__(parent)
 
         self._initBroadcastReceiver()
+
+        # Gather firmware version data.
+        self._checkDeviceVersions()
+
+
+    # Firmware version start
+    def _checkDeviceVersions(self):
+        Logger.log("d", "Generating firmware version info table")
+        for k, v in self.DEVICE_VERSIONS.items():
+            t = ZaxeVersion(v["path"], k)
+            t.versionEvent.connect(self._onReceiveVersion)
+            t.run()
+
+    fwDataReceivedCount = 0
+    fwVersionDataReady = False
+    def _onReceiveVersion(self, event):
+        self.DEVICE_VERSIONS[event.deviceModel]["version"] = event.version
+        self.fwDataReceivedCount += 1
+        if self.fwDataReceivedCount >= len(self.DEVICE_VERSIONS):
+            self.fwVersionDataReady = True
+    # Firmware version end
 
     def _initBroadcastReceiver(self) -> None:
         self.broadcastReceiver = BroadcastReceiver.BroadcastReceiver()

@@ -30,6 +30,7 @@ Item {
     property string snapshot
     property bool hasSnapshot
     property bool hasPin
+    property bool hasFWUpdate
     property var progress: 0
 
     property bool canceling
@@ -800,6 +801,43 @@ Item {
             } // End of First row - main
 
             // Second row - main (fullrow messages)
+            // FW update available message
+            Rectangle {
+                visible: device.hasFWUpdate
+                Layout.preferredWidth: Math.round(device.width - 65 - (UM.Theme.getSize("sidebar_item_margin").width * 2))
+                Layout.preferredHeight: fwUpdateMessage.height
+                Layout.alignment: Qt.AlignRight
+                //Layout.topMargin: Math.round(UM.Theme.getSize("sidebar_margin").height / 2)
+                Layout.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height
+                Layout.rightMargin: UM.Theme.getSize("sidebar_item_margin").width
+                color: UM.Theme.getColor("sidebar_item_light")
+
+                Text {
+                    id: fwUpdateMessageIcon
+                    font: UM.Theme.getFont("zaxe_icon_set")
+                    color: UM.Theme.getColor("text_blue")
+                    horizontalAlignment: Text.AlignLeft
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                    }
+                    text: "d"
+                }
+                Text {
+                    id: fwUpdateMessage
+                    width: parent.width
+                    font: UM.Theme.getFont("medium")
+                    color: UM.Theme.getColor("text_blue")
+                    horizontalAlignment: Text.AlignLeft
+                    wrapMode: Text.WordWrap
+                    anchors {
+                        verticalCenter: fwUpdateMessageIcon.verticalCenter
+                        left: fwUpdateMessageIcon.right
+                        leftMargin: 1
+                    }
+                    text: catalog.i18nc("@label", "New version available for your device...")
+                }
+            }
             // Material warning message
             Rectangle {
                 visible: device.materialWarning
@@ -828,9 +866,9 @@ Item {
                     horizontalAlignment: Text.AlignLeft
                     wrapMode: Text.WordWrap
                     anchors {
-                        top: parent.top
+                        verticalCenter: materialWarningIcon.verticalCenter
                         left: materialWarningIcon.right
-                        leftMargin: 5
+                        leftMargin: 1
                     }
                     text: catalog.i18nc("@label", "The material in the device does not match with the material you choose. Please slice again with the correct material")
                 }
@@ -864,8 +902,8 @@ Item {
                     horizontalAlignment: Text.AlignLeft
                     anchors {
                         left: modelCompatibilityWarningIcon.right
-                        leftMargin: 5
-                        verticalCenter: parent.verticalCenter
+                        leftMargin: 1
+                        verticalCenter: modelCompatibilityWarningIcon.verticalCenter
                     }
                     text: catalog.i18nc("@warning", "This print is not compatible with this device model")
                 }

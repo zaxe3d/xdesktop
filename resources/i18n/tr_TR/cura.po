@@ -77,6 +77,10 @@ msgid "Firmware update available for your device"
 msgstr "Cihanız için yazılım güncellemesi mevcut"
 
 msgctxt "@label"
+msgid "Custom IP..."
+msgstr "Özel IP..."
+
+msgctxt "@label"
 msgid "Custom material settings"
 msgstr "Özel materyal ayarları"
 

@@ -1866,7 +1866,7 @@ Item
             UM.SettingPropertyProvider
             {
                 id: spiralVaseMode
-                containerStackId: Cura.MachineManager.activeStackId
+                containerStackId: Cura.MachineManager.activeMachineId
                 key: "magic_spiralize"
                 watchedProperties: [ "value" ]
                 storeIndex: 0

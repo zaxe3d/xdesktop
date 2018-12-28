@@ -19,6 +19,8 @@ Rectangle
         "custom": "Custom"
     }
 
+    property var helpStageIndex: 1
+
     property int currentModeIndex
 
     property variant printDuration: PrintInformation.currentPrintTime
@@ -85,7 +87,6 @@ Rectangle
         }
     }
 
-    // Setting mode: Recommended or Custom
     ListModel
     {
         id: modesListModel

@@ -424,6 +424,7 @@ class CuraApplication(QtApplication):
             "Toolbox",
             "NetworkMachineList",
             "PrepareStage",
+            "Help",
             "LocalFileOutputDevice",
             "LocalContainerProvider",
 
@@ -497,6 +498,9 @@ class CuraApplication(QtApplication):
         preferences.addPreference("custom_material/retraction_speed",           20)
         preferences.addPreference("custom_material/retraction_length",          2)
 
+        # Help page.
+        # TODO find a better way of communicating between sidebars
+        preferences.addPreference("cura/help_page", "")
 
         for key in [
             "dialog_load_path",  # dialog_save_path is in LocalFileOutputDevicePlugin

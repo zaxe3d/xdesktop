@@ -18,7 +18,6 @@ UM.MainWindow
     //: Cura application window title
     title: "XDesktop"
     viewportRect: Qt.rect(0, 0, (base.width - sidebar.width) / base.width, 1.0)
-    property bool showPrintMonitor: false
 
     backgroundColor: UM.Theme.getColor("viewport_background")
 
@@ -498,40 +497,6 @@ UM.MainWindow
     {
         target: Cura.Actions.expandSidebar
         onTriggered: sidebar.callExpandOrCollapse()
-    }
-
-    UM.PreferencesDialog
-    {
-        id: preferences
-
-        Component.onCompleted:
-        {
-            //; Remove & re-add the general page as we want to use our own instead of uranium standard.
-            removePage(0);
-            insertPage(0, catalog.i18nc("@title:tab","General"), Qt.resolvedUrl("Preferences/GeneralPage.qml"));
-
-            removePage(1);
-            insertPage(1, catalog.i18nc("@title:tab","Settings"), Qt.resolvedUrl("Preferences/SettingVisibilityPage.qml"));
-
-            insertPage(2, catalog.i18nc("@title:tab", "Printers"), Qt.resolvedUrl("Preferences/MachinesPage.qml"));
-
-            insertPage(3, catalog.i18nc("@title:tab", "Materials"), Qt.resolvedUrl("Preferences/Materials/MaterialsPage.qml"));
-
-            insertPage(4, catalog.i18nc("@title:tab", "Profiles"), Qt.resolvedUrl("Preferences/ProfilesPage.qml"));
-
-            // Remove plug-ins page because we will use the shiny new plugin browser:
-            removePage(5);
-
-            //Force refresh
-            setPage(0);
-        }
-
-        onVisibleChanged:
-        {
-            // When the dialog closes, switch to the General page.
-            // This prevents us from having a heavy page like Setting Visiblity active in the background.
-            setPage(0);
-        }
     }
 
     ContextMenu {

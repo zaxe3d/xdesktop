@@ -1,0 +1,8 @@
+{
+    "name": "Help",
+    "author": "Zaxe",
+    "version": "1.0.0",
+    "description": "Provides general help for XDesktop",
+    "api": 5,
+    "i18n-catalog": "cura"
+}

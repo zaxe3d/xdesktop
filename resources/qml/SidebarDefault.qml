@@ -220,6 +220,25 @@ Item
                             anchors.left: parent.left
                             anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
                         }
+                        Image
+                        {
+                            width: 11; height: 12
+
+                            source: UM.Theme.getImage("info")
+
+                            anchors { left: qualityLabel.right; verticalCenter: qualityLabel.verticalCenter; leftMargin: 5 }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+
+                                onClicked:
+                                {
+                                    UM.Preferences.setValue("cura/help_page", 0)
+                                    UM.Controller.setActiveStage("Help")
+                                }
+                            }
+                        }
                         Rectangle
                         {
                             id: qualityIcon
@@ -388,6 +407,25 @@ Item
                             anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
                             anchors.left: parent.left
                             anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                        }
+                        Image
+                        {
+                            width: 11; height: 12
+
+                            source: UM.Theme.getImage("info")
+
+                            anchors { left: supportLabel.right; verticalCenter: supportLabel.verticalCenter; leftMargin: 5 }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+
+                                onClicked:
+                                {
+                                    UM.Preferences.setValue("cura/help_page", 1)
+                                    UM.Controller.setActiveStage("Help")
+                                }
+                            }
                         }
                         Rectangle
                         {
@@ -620,6 +658,25 @@ Item
                                 }
                             }
                         }
+                        Image
+                        {
+                            width: 11; height: 12
+
+                            source: UM.Theme.getImage("info")
+
+                            anchors { left: adhesionCheckBox.right; verticalCenter: adhesionCheckBox.verticalCenter; leftMargin: 5 }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+
+                                onClicked:
+                                {
+                                    UM.Preferences.setValue("cura/help_page", 2)
+                                    UM.Controller.setActiveStage("Help")
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -661,6 +718,25 @@ Item
                             anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
                             anchors.left: parent.left
                             anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                        }
+                        Image
+                        {
+                            width: 11; height: 12
+
+                            source: UM.Theme.getImage("info")
+
+                            anchors { left: infillLabel.right; verticalCenter: infillLabel.verticalCenter; leftMargin: 5 }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+
+                                onClicked:
+                                {
+                                    UM.Preferences.setValue("cura/help_page", 3)
+                                    UM.Controller.setActiveStage("Help")
+                                }
+                            }
                         }
                         Rectangle
                         {
@@ -852,6 +928,25 @@ Item
                                     anchors.left: parent.left
                                     anchors.verticalCenter: parent.verticalCenter
                                 }
+                                Image
+                                {
+                                    width: 11; height: 12
+
+                                    source: UM.Theme.getImage("info")
+
+                                    anchors { left: perimeterCountLabel.right; verticalCenter: perimeterCountLabel.verticalCenter; leftMargin: 5 }
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+
+                                        onClicked:
+                                        {
+                                            UM.Preferences.setValue("cura/help_page", 4)
+                                            UM.Controller.setActiveStage("Help")
+                                        }
+                                    }
+                                }
                             }
 
                             Item
@@ -946,6 +1041,25 @@ Item
                                     anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
                                     anchors.left: parent.left
                                     anchors.verticalCenter: parent.verticalCenter
+                                }
+                                Image
+                                {
+                                    width: 11; height: 12
+
+                                    source: UM.Theme.getImage("info")
+
+                                    anchors { left: topSolidLayerCountLabel.right; verticalCenter:  topSolidLayerCountLabel.verticalCenter; leftMargin: 5 }
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+
+                                        onClicked:
+                                        {
+                                            UM.Preferences.setValue("cura/help_page", 4)
+                                            UM.Controller.setActiveStage("Help")
+                                        }
+                                    }
                                 }
                             }
 
@@ -1048,6 +1162,25 @@ Item
                                     anchors.left: parent.left
                                     anchors.verticalCenter: parent.verticalCenter
                                 }
+                                Image
+                                {
+                                    width: 11; height: 12
+
+                                    source: UM.Theme.getImage("info")
+
+                                    anchors { left: bottomSolidLayerCountLabel.right; verticalCenter:  bottomSolidLayerCountLabel.verticalCenter; leftMargin: 5 }
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+
+                                        onClicked:
+                                        {
+                                            UM.Preferences.setValue("cura/help_page", 4)
+                                            UM.Controller.setActiveStage("Help")
+                                        }
+                                    }
+                                }
                             }
 
                             Item
@@ -1149,6 +1282,25 @@ Item
                                     anchors.left: parent.left
                                     anchors.verticalCenter: parent.verticalCenter
                                 }
+                                Image
+                                {
+                                    width: 11; height: 12
+
+                                    source: UM.Theme.getImage("info")
+
+                                    anchors { left: fanSpeedLabel.right; top: fanSpeedLabel.top; leftMargin: 5 }
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+
+                                        onClicked:
+                                        {
+                                            UM.Preferences.setValue("cura/help_page", 5)
+                                            UM.Controller.setActiveStage("Help")
+                                        }
+                                    }
+                                }
                             }
 
                             Item
@@ -1173,7 +1325,7 @@ Item
 
                                     text: parseInt(coolFanSpeedMax.properties.value) == 0 ? catalog.i18nc("@label", "Fan off") : "%" + coolFanSpeedMax.properties.value
 
-                                    color: fanSpeedSlider.enabled ? UM.Theme.getColor("fanSpeed_slider_available") : UM.Theme.getColor("fanSpeed_slider_unavailable")
+                                    color: fanSpeedSlider.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
                                 }
 
                                 Slider
@@ -1286,6 +1438,25 @@ Item
                                     anchors.left: parent.left
                                     anchors.verticalCenter: parent.verticalCenter
                                 }
+                                Image
+                                {
+                                    width: 11; height: 12
+
+                                    source: UM.Theme.getImage("info")
+
+                                    anchors { left: xyToleranceLabel.right; top: xyToleranceLabel.top; leftMargin: 5 }
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+
+                                        onClicked:
+                                        {
+                                            UM.Preferences.setValue("cura/help_page", 6)
+                                            UM.Controller.setActiveStage("Help")
+                                        }
+                                    }
+                                }
                             }
 
                             Item
@@ -1310,7 +1481,7 @@ Item
 
                                     text: parseFloat(xyTolerance.properties.value) + " mm"
 
-                                    color: xyToleranceSlider.enabled ? UM.Theme.getColor("xyTolerance_slider_available") : UM.Theme.getColor("xyTolerance_slider_unavailable")
+                                    color: xyToleranceSlider.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
                                 }
 
                                 Slider
@@ -1480,6 +1651,25 @@ Item
                                         }
                                     }
                                 }
+                                Image
+                                {
+                                    width: 11; height: 12
+
+                                    source: UM.Theme.getImage("info")
+
+                                    anchors { left: spiralVaseModeCheckBox.right; verticalCenter: spiralVaseModeCheckBox.verticalCenter; leftMargin: 5 }
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+
+                                        onClicked:
+                                        {
+                                            UM.Preferences.setValue("cura/help_page", 8)
+                                            UM.Controller.setActiveStage("Help")
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -1531,6 +1721,25 @@ Item
                                         {
                                             parent.checked = !parent.checked;
                                             avoidSupports.setPropertyValue("value", booleanToString(parent.checked));
+                                        }
+                                    }
+                                }
+                                Image
+                                {
+                                    width: 11; height: 12
+
+                                    source: UM.Theme.getImage("info")
+
+                                    anchors { left: avoidSupportsCheckBox.right; verticalCenter: avoidSupportsCheckBox.verticalCenter; leftMargin: 5 }
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+
+                                        onClicked:
+                                        {
+                                            UM.Preferences.setValue("cura/help_page", 7)
+                                            UM.Controller.setActiveStage("Help")
                                         }
                                     }
                                 }

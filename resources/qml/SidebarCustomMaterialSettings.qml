@@ -14,12 +14,34 @@ Item
 {
     id: base
 
+    property var customMaterialSelected: Cura.MachineManager.activeStack.material.name == "custom"
 
-    Connections {
-        target: UM.Preferences
-        onPreferenceChanged:
-        {
-            //base.supportAngle = UM.Preferences.getValue("slicing/support_angle")
+    onCustomMaterialSelectedChanged:  {
+        // apply custom settings here
+        if (customMaterialSelected) {
+            //if (!Cura.MachineManager.hasUserSettings) { // custom settings hansn't been applied yet
+
+            Cura.MachineManager.setSettingForAllExtruders("material_print_temperature", "value", UM.Preferences.getValue("custom_material/material_print_temperature"))
+            Cura.MachineManager.setSettingForAllExtruders("material_print_temperature_layer_0", "value", UM.Preferences.getValue("custom_material/material_print_temperature"))
+            Cura.MachineManager.setSettingForAllExtruders("material_bed_temperature", "value", UM.Preferences.getValue("custom_material/material_bed_temperature"))
+            Cura.MachineManager.setSettingForAllExtruders("material_bed_temperature_layer_0", "value", UM.Preferences.getValue("custom_material/material_bed_temperature"))
+
+            // speed
+            var printSpeedMultiplier = UM.Preferences.getValue("custom_material/print_speed_multiplier")
+            speedInfill.setPropertyValue("value", (speedInfill.properties.value / printSpeedMultiplier) * printSpeedMultiplier)
+            speedTopbottom.setPropertyValue("value", (speedTopbottom.properties.value / printSpeedMultiplier) * printSpeedMultiplier)
+            speedRoofing.setPropertyValue("value", (speedRoofing.properties.value / printSpeedMultiplier) * printSpeedMultiplier)
+            speedWall0.setPropertyValue("value", (speedWall0.properties.value / printSpeedMultiplier) * printSpeedMultiplier)
+            speedWallX.setPropertyValue("value", (speedWallX.properties.value / printSpeedMultiplier) * printSpeedMultiplier)
+            speedSupportRoof.setPropertyValue("value", (speedSupportRoof.properties.value / printSpeedMultiplier) * printSpeedMultiplier)
+            speedSupportInfill.setPropertyValue("value", (speedSupportInfill.properties.value / printSpeedMultiplier) * printSpeedMultiplier)
+            // end of speed
+            Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", UM.Preferences.getValue("custom_material/material_flow"))
+            Cura.MachineManager.setSettingForAllExtruders("retraction_speed", "value", UM.Preferences.getValue("custom_material/retraction_speed"))
+            Cura.MachineManager.setSettingForAllExtruders("retraction_length", "value", UM.Preferences.getValue("custom_material/retraction_length"))
+        } else {
+            Cura.ContainerManager.clearUserContainers();
+            prepareSidebar.switchView(0) // Default view
         }
     }
 
@@ -115,13 +137,15 @@ Item
                                     height: UM.Theme.getSize("setting_control").height;
                                     property string unit: "°C";
                                     style: UM.Theme.styles.text_field;
-                                    text: parseInt(UM.Preferences.getValue("custom_material/extruder_temperature"))
+                                    text: parseInt(UM.Preferences.getValue("custom_material/material_print_temperature"))
                                     anchors.verticalCenter: parent.verticalCenter
                                     validator: IntValidator { }
 
                                     onEditingFinished:
                                     {
-                                        UM.Preferences.setValue("custom_material/extruder_temperature", parseInt(text))
+                                        UM.Preferences.setValue("custom_material/material_print_temperature", parseInt(text))
+                                        Cura.MachineManager.setSettingForAllExtruders("material_print_temperature", "value", parseInt(text))
+                                        Cura.MachineManager.setSettingForAllExtruders("material_print_temperature_layer_0", "value", parseInt(text))
                                     }
                                 }
                             }
@@ -180,14 +204,15 @@ Item
                                     height: UM.Theme.getSize("setting_control").height;
                                     property string unit: "°C";
                                     style: UM.Theme.styles.text_field;
-                                    text: parseInt(UM.Preferences.getValue("custom_material/bed_temperature"))
+                                    text: parseInt(UM.Preferences.getValue("custom_material/material_bed_temperature"))
                                     anchors.verticalCenter: parent.verticalCenter
                                     validator: IntValidator { }
 
                                     onEditingFinished:
                                     {
-                                        UM.Preferences.setValue("custom_material/bed_temperature", parseInt(text))
+                                        UM.Preferences.setValue("custom_material/material_bed_temperature", parseInt(text))
                                         Cura.MachineManager.setSettingForAllExtruders("material_bed_temperature", "value", parseInt(text))
+                                        Cura.MachineManager.setSettingForAllExtruders("material_bed_temperature_layer_0", "value", parseInt(text))
                                     }
                                 }
                             }
@@ -275,8 +300,18 @@ Item
                                     }
 
                                     onActivated: {
+                                        var lastValue = UM.Preferences.getValue("custom_material/print_speed_multiplier")
+                                        var value = model.get(index).value
+
+                                        speedInfill.setPropertyValue("value", (speedInfill.properties.value / lastValue) * value)
+                                        speedTopbottom.setPropertyValue("value", (speedTopbottom.properties.value / lastValue) * value)
+                                        speedRoofing.setPropertyValue("value", (speedRoofing.properties.value / lastValue) * value)
+                                        speedWall0.setPropertyValue("value", (speedWall0.properties.value / lastValue) * value)
+                                        speedWallX.setPropertyValue("value", (speedWallX.properties.value / lastValue) * value)
+                                        speedSupportRoof.setPropertyValue("value", (speedSupportRoof.properties.value / lastValue) * value)
+                                        speedSupportInfill.setPropertyValue("value", (speedSupportInfill.properties.value / lastValue) * value)
+
                                         UM.Preferences.setValue("custom_material/print_speed_multiplier", model.get(index).value)
-                                        //Cura.MachineManager.setSettingForAllExtruders("material_bed_temperature", "value", parseInt(model.get(index).value))
                                     }
 
                                     // Disable mouse wheel for combobox
@@ -355,28 +390,28 @@ Item
 
                                     model: ListModel {
                                         id: cbMFItems
-                                        ListElement { text: "120%"; value: 1.20  }
-                                        ListElement { text: "115%"; value: 1.15  }
-                                        ListElement { text: "110%"; value: 1.10  }
-                                        ListElement { text: "105%"; value: 1.05  }
-                                        ListElement { text: "100%"; value: 1.00  }
-                                        ListElement { text: "95%";  value: 0.95  }
-                                        ListElement { text: "90%";  value: 0.90  }
-                                        ListElement { text: "85%";  value: 0.85  }
-                                        ListElement { text: "80%";  value: 0.80  }
-                                        ListElement { text: "75%";  value: 0.75  }
-                                        ListElement { text: "70%";  value: 0.70  }
-                                        ListElement { text: "65%";  value: 0.65  }
-                                        ListElement { text: "60%";  value: 0.60  }
-                                        ListElement { text: "55%";  value: 0.55  }
-                                        ListElement { text: "50%";  value: 0.50  }
-                                        ListElement { text: "45%";  value: 0.45  }
-                                        ListElement { text: "40%";  value: 0.40  }
+                                        ListElement { text: "120%"; value: 120  }
+                                        ListElement { text: "115%"; value: 115  }
+                                        ListElement { text: "110%"; value: 110  }
+                                        ListElement { text: "105%"; value: 105  }
+                                        ListElement { text: "100%"; value: 100  }
+                                        ListElement { text: "95%";  value:  95  }
+                                        ListElement { text: "90%";  value:  90  }
+                                        ListElement { text: "85%";  value:  85  }
+                                        ListElement { text: "80%";  value:  80  }
+                                        ListElement { text: "75%";  value:  75  }
+                                        ListElement { text: "70%";  value:  70  }
+                                        ListElement { text: "65%";  value:  65  }
+                                        ListElement { text: "60%";  value:  60  }
+                                        ListElement { text: "55%";  value:  55  }
+                                        ListElement { text: "50%";  value:  50  }
+                                        ListElement { text: "45%";  value:  45  }
+                                        ListElement { text: "40%";  value:  40  }
                                     }
 
                                     currentIndex:
                                     {
-                                        var val = UM.Preferences.getValue("custom_material/material_flow_multiplier")
+                                        var val = UM.Preferences.getValue("custom_material/material_flow")
                                         for(var i = 0; i < cbMFItems.count; ++i)
                                         {
                                             if(model.get(i).value == val)
@@ -386,7 +421,11 @@ Item
                                         }
                                     }
 
-                                    onActivated: UM.Preferences.setValue("custom_material/material_flow_multiplier", model.get(index).value)
+                                    onActivated: {
+                                        var value = model.get(index).value
+                                        Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", value)
+                                        UM.Preferences.getValue("custom_material/material_flow", value)
+                                    }
 
                                     // Disable mouse wheel for combobox
                                     MouseArea {
@@ -482,7 +521,11 @@ Item
                                         }
                                     }
 
-                                    onActivated: UM.Preferences.setValue("custom_material/retraction_speed", model.get(index).value)
+                                    onActivated: {
+                                        var value = model.get(index).value
+                                        Cura.MachineManager.setSettingForAllExtruders("retraction_speed", "value", value)
+                                        UM.Preferences.setValue("custom_material/retraction_speed", value)
+                                    }
 
                                     // Disable mouse wheel for combobox
                                     MouseArea {
@@ -576,7 +619,10 @@ Item
                                         }
                                     }
 
-                                    onActivated: UM.Preferences.setValue("custom_material/retraction_length", model.get(index).value)
+                                    onActivated: {
+                                        UM.Preferences.setValue("custom_material/retraction_length", model.get(index).value)
+                                        Cura.MachineManager.setSettingForAllExtruders("retraction_length", "value", value)
+                                    }
 
                                     // Disable mouse wheel for combobox
                                     MouseArea {
@@ -609,9 +655,64 @@ Item
                         }
                     }
                 }
+
+                UM.SettingPropertyProvider
+                {
+                    id: speedInfill
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_infill"
+                    watchedProperties: [ "value" ]
+                    storeIndex: 0
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedWall0
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_wall_0"
+                    watchedProperties: [ "value" ]
+                    storeIndex: 0
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedWallX
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_wall_x"
+                    watchedProperties: [ "value" ]
+                    storeIndex: 0
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedRoofing
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_roofing"
+                    watchedProperties: [ "value" ]
+                    storeIndex: 0
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedTopbottom
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_topbottom"
+                    watchedProperties: [ "value" ]
+                    storeIndex: 0
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedSupportRoof
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_support_roof"
+                    watchedProperties: [ "value" ]
+                    storeIndex: 0
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedSupportInfill
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_support_infill"
+                    watchedProperties: [ "value" ]
+                    storeIndex: 0
+                }
             }
         }
-
     }
-
 }

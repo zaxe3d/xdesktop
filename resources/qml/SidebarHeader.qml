@@ -93,13 +93,14 @@ Column
                         materialPrintTempLayer0 = 250
                     }
 
-                    if (current.material != "custom")
-                        prepareSidebar.switchView(0) // Default view
+                    if (current.material != "custom") {
+                        Cura.MachineManager.setSettingForAllExtruders("material_print_temperature_layer_0", "value", materialPrintTempLayer0)
+                    }
 
                     Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_min", "value", fanSpeed)
                     Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_max", "value", fanSpeed)
                     Cura.MachineManager.setSettingForAllExtruders("cool_fan_full_layer", "value", coolFanFullLayer)
-                    Cura.MachineManager.setSettingForAllExtruders("material_print_temperature_layer_0", "value", materialPrintTempLayer0)
+
                 }
             }
             // ABS

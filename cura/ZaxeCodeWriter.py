@@ -100,17 +100,6 @@ class ZaxeCodeWriter(MeshWriter):
         return True
 
     def get_export_params(self):
-        #if Settings.get("material") == "custom":
-        #    print_temp = CustomSettings.get("material_print_temperature_layer_0")
-        #    bed_temp = CustomSettings.get("material_bed_temperature_layer_0")
-        #else:
-        #    print_layer_0 = self.get_non_custom_config()["material_print_temperature_layer_0"]
-        #    bed_layer_0 = self.get_non_custom_config()["material_bed_temperature_layer_0"]
-        #    print_temp = print_layer_0 if print_layer_0 is not None else self.get_non_custom_config()["material_print_temperature"]
-        #    bed_temp = bed_layer_0 if bed_layer_0 is not None else self.get_non_custom_config()["material_bed_temperature"]
-
-        #global_stack = self._application.getGlobalContainerStack() # not needed but can come in handy
-
         extruder_stack = self._application.getExtruderManager().getInstance().getExtruderStack(0)
         return {
             "extruder_temperature": extruder_stack.getProperty("material_print_temperature", "value"),

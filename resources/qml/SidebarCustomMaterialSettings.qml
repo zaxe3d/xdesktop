@@ -14,13 +14,12 @@ Item
 {
     id: base
 
+    property var lastSelectedMaterial: ""
     property var customMaterialSelected: Cura.MachineManager.activeStack.material.name == "custom"
 
     onCustomMaterialSelectedChanged:  {
         // apply custom settings here
         if (customMaterialSelected) {
-            //if (!Cura.MachineManager.hasUserSettings) { // custom settings hansn't been applied yet
-
             Cura.MachineManager.setSettingForAllExtruders("material_print_temperature", "value", UM.Preferences.getValue("custom_material/material_print_temperature"))
             Cura.MachineManager.setSettingForAllExtruders("material_print_temperature_layer_0", "value", UM.Preferences.getValue("custom_material/material_print_temperature"))
             Cura.MachineManager.setSettingForAllExtruders("material_bed_temperature", "value", UM.Preferences.getValue("custom_material/material_bed_temperature"))
@@ -39,10 +38,12 @@ Item
             Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", UM.Preferences.getValue("custom_material/material_flow"))
             Cura.MachineManager.setSettingForAllExtruders("retraction_speed", "value", UM.Preferences.getValue("custom_material/retraction_speed"))
             Cura.MachineManager.setSettingForAllExtruders("retraction_length", "value", UM.Preferences.getValue("custom_material/retraction_length"))
-        } else {
+        } else if (lastSelectedMaterial == "custom") {
             Cura.ContainerManager.clearUserContainers();
             prepareSidebar.switchView(0) // Default view
         }
+
+        lastSelectedMaterial = Cura.MachineManager.activeStack.material.name
     }
 
     ScrollView

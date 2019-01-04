@@ -30,12 +30,12 @@ Column
         "custom": "Custom"
     }
 
-    spacing: 7
+    spacing: 10
 
     width: parent.width - UM.Theme.getSize("sidebar_item_margin").width * 2
     anchors {
         top: parent.top
-        topMargin: 42
+        topMargin: 30
         horizontalCenter: parent.horizontalCenter
     }
 
@@ -43,9 +43,9 @@ Column
     Text {
         id: lblPrintDetails
         text: catalog.i18nc("@label", "Prepare to print")
-        color: UM.Theme.getColor("text_sidebar_medium")
+        color: UM.Theme.getColor("text_sidebar")
         width: parent.width
-        font: UM.Theme.getFont("xx_large")
+        font: UM.Theme.getFont("large")
         horizontalAlignment: Text.AlignHCenter
     }
     // Bottom Border
@@ -65,8 +65,8 @@ Column
             text: catalog.i18nc("@label", "Material");
             width: parent.width - UM.Theme.getSize("default_margin").width
             height: 20
-            verticalAlignment: Text.AlignVCenter
-            font: UM.Theme.getFont("large");
+            verticalAlignment: Text.AlignBottom
+            font: UM.Theme.getFont("large_semi_bold");
             color: UM.Theme.getColor("text_sidebar");
         }
 

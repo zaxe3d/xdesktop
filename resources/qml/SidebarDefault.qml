@@ -44,7 +44,6 @@ Item
         {
             width: parent.parent.width
             anchors.top: parent.top
-            anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
             spacing: UM.Theme.getSize("sidebar_spacing").height
 
             //
@@ -55,7 +54,7 @@ Item
                 id: qualityRow
 
                 Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                Layout.preferredHeight: 125
+                Layout.preferredHeight: 120
                 Layout.alignment: Qt.AlignLeft
 
                 Timer
@@ -212,11 +211,11 @@ Item
                         {
                             id: qualityLabel
                             text: catalog.i18nc("@label", "Layer height")
-                            font: UM.Theme.getFont("large");
-                            color: UM.Theme.getColor("text_sidebar")
+                            font: UM.Theme.getFont("large_semi_bold");
+                            color: UM.Theme.getColor("text_sidebar");
 
                             anchors.top: parent.top
-                            anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                            anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height + UM.Theme.getSize("default_lining").height
                             anchors.left: parent.left
                             anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
                         }
@@ -243,7 +242,7 @@ Item
                         {
                             id: qualityIcon
 
-                            width: 75; height: width
+                            width: 70; height: width
                             radius: 5
 
                             anchors.top: qualityLabel.bottom
@@ -277,7 +276,7 @@ Item
 
                         anchors.left: qualityCellLeft.right
                         anchors.bottom: qualityCellLeft.bottom
-                        anchors.bottomMargin: 12
+                        anchors.bottomMargin: 8
 
                         Label
                         {
@@ -288,11 +287,11 @@ Item
                             anchors.leftMargin: Math.round((qualitySlider.value / qualitySlider.stepSize) * (qualitySlider.width / (qualitySlider.maximumValue / qualitySlider.stepSize)) - 10 * screenScaleFactor)
                             anchors.right: parent.right
 
-                            font: UM.Theme.getFont("large_semi_bold")
+                            font: UM.Theme.getFont("large_nonbold")
 
                             text: Cura.QualityProfilesDropDownMenuModel.getItem(qualitySlider.value).layer_height + " mm"
 
-                            color: qualitySlider.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
+                            color: UM.Theme.getColor("text_sidebar_medium")
                         }
 
                         Slider
@@ -379,7 +378,7 @@ Item
             Item
             {
                 Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                Layout.preferredHeight: 125
+                Layout.preferredHeight: 120
                 Layout.alignment: Qt.AlignLeft
 
                 Rectangle {
@@ -400,7 +399,7 @@ Item
                         {
                             id: supportLabel
                             text: catalog.i18nc("@label", "Support")
-                            font: UM.Theme.getFont("large");
+                            font: UM.Theme.getFont("large_semi_bold");
                             color: UM.Theme.getColor("text_sidebar")
 
                             anchors.top: parent.top
@@ -431,7 +430,7 @@ Item
                         {
                             id: supportAngleIcon
 
-                            width: 75; height: width
+                            width: 70; height: width
                             radius: 5
 
                             anchors.top: supportLabel.bottom
@@ -477,11 +476,11 @@ Item
                             anchors.leftMargin: Math.round((supportAngleSlider.value / supportAngleSlider.stepSize) * (supportAngleSlider.width / (supportAngleSlider.maximumValue / supportAngleSlider.stepSize)) - 10 * screenScaleFactor)
                             anchors.right: parent.right
 
-                            font: UM.Theme.getFont("large_semi_bold")
+                            font: UM.Theme.getFont("large_nonbold")
 
                             text: base.supportEnabled ? base.supportAngle + "°" : catalog.i18nc("@label", "Support off")
 
-                            color: supportAngleSlider.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
+                            color: UM.Theme.getColor("text_sidebar_medium")
                         }
 
                         // We use a binding to make sure that after manually setting supportAngleSlider.value it is still bound to the property provider
@@ -573,7 +572,7 @@ Item
             Item
             {
                 Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                Layout.preferredHeight: 75
+                Layout.preferredHeight: 70
                 Layout.bottomMargin: 15
                 Layout.alignment: Qt.AlignLeft
 
@@ -597,7 +596,7 @@ Item
                         {
                             id: raftIcon
 
-                            width: 75; height: width
+                            width: 70; height: width
                             radius: 5
 
                             anchors.top: parent.top
@@ -690,7 +689,7 @@ Item
             Item
             {
                 Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                Layout.preferredHeight: 125
+                Layout.preferredHeight: 120
                 Layout.alignment: Qt.AlignLeft
 
                 Rectangle {
@@ -742,7 +741,7 @@ Item
                         {
                             id: infillIcon
 
-                            width: 75; height: width
+                            width: 70; height: width
                             radius: 5
 
                             anchors.top: infillLabel.bottom
@@ -787,11 +786,11 @@ Item
                             anchors.leftMargin: Math.round((infillSlider.value / infillSlider.stepSize) * (infillSlider.width / (infillSlider.maximumValue / infillSlider.stepSize)) - 10 * screenScaleFactor)
                             anchors.right: parent.right
 
-                            font: UM.Theme.getFont("large_semi_bold")
+                            font: UM.Theme.getFont("large_nonbold")
 
                             text: "%" + parseInt(infillDensity.properties.value)
 
-                            color: infillSlider.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
+                            color: UM.Theme.getColor("text_sidebar_medium")
                         }
 
                         // We use a binding to make sure that after manually setting infillSlider.value it is still bound to the property provider
@@ -1784,7 +1783,7 @@ Item
             // Button row
             RowLayout {
                 implicitWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                Layout.preferredHeight: 125
+                Layout.preferredHeight: 120
                 Layout.alignment: Qt.AlignHCenter
                 spacing: UM.Theme.getSize("sidebar_margin").width
                 Button {

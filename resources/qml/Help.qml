@@ -76,7 +76,7 @@ Item
             anchors {
                 top: parent.top
                 left: parent.left
-                topMargin: 45
+                topMargin: 30
                 leftMargin: UM.Theme.getSize("sidebar_item_margin").width
             }
 
@@ -135,7 +135,7 @@ Item
             anchors {
                 top: parent.top
                 left: parent.left
-                topMargin: 45
+                topMargin: 30
                 leftMargin: UM.Theme.getSize("sidebar_item_margin").width
             }
 
@@ -264,7 +264,7 @@ Item
             anchors {
                 top: parent.top
                 left: parent.left
-                topMargin: 45
+                topMargin: 30
                 leftMargin: UM.Theme.getSize("sidebar_item_margin").width
             }
 
@@ -388,7 +388,7 @@ Item
             anchors {
                 top: parent.top
                 left: parent.left
-                topMargin: 45
+                topMargin: 30
                 leftMargin: UM.Theme.getSize("sidebar_item_margin").width
             }
 
@@ -473,7 +473,7 @@ Item
             anchors {
                 top: parent.top
                 left: parent.left
-                topMargin: 45
+                topMargin: 30
                 leftMargin: UM.Theme.getSize("sidebar_item_margin").width
             }
 
@@ -653,7 +653,7 @@ Item
             anchors {
                 top: parent.top
                 left: parent.left
-                topMargin: 45
+                topMargin: 30
                 leftMargin: UM.Theme.getSize("sidebar_item_margin").width
             }
 
@@ -724,7 +724,7 @@ Item
             anchors {
                 top: parent.top
                 left: parent.left
-                topMargin: 45
+                topMargin: 30
                 leftMargin: UM.Theme.getSize("sidebar_item_margin").width
             }
 
@@ -808,7 +808,7 @@ Item
             anchors {
                 top: parent.top
                 left: parent.left
-                topMargin: 45
+                topMargin: 30
                 leftMargin: UM.Theme.getSize("sidebar_item_margin").width
             }
 
@@ -879,7 +879,7 @@ Item
             anchors {
                 top: parent.top
                 left: parent.left
-                topMargin: 45
+                topMargin: 30
                 leftMargin: UM.Theme.getSize("sidebar_item_margin").width
             }
 

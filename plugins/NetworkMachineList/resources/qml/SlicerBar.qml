@@ -59,11 +59,11 @@ Item {
         // FIXME
         // if i use childrenRect.height it counts invisible maximum height??!
         if (itemLoadOrSlice.visible)
-            return itemLoadOrSlice.height + itemMachineCourse.height + 10
+            return itemLoadOrSlice.height + itemMachineCourse.height
         else if (itemPrintDetails.visible)
-            return itemPrintDetails.height + itemMachineCourse.height + 10
+            return itemPrintDetails.height + itemMachineCourse.height
         else if (itemSlicing.visible)
-            return itemSlicing.height + 10
+            return itemSlicing.height
     }
 
     Connections {
@@ -74,7 +74,7 @@ Item {
         // 1 = ready to slice 4 = unable to slice
         id: itemLoadOrSlice
         visible: base.backendState != "undefined" && (base.backendState == 1 || base.backendState == 4) || !activity
-        height: childrenRect.height + 45 + 25
+        height: childrenRect.height + 30 + 15
         color: UM.Theme.getColor("sidebar_item_medium_dark")
         width: parent.width
         anchors.top: parent.top; anchors.left: parent.left
@@ -83,8 +83,8 @@ Item {
             width: parent.width - UM.Theme.getSize("sidebar_item_margin").width
             anchors {
                 top: parent.top
-                topMargin: 45
-                bottomMargin: 25
+                topMargin: 30
+                bottomMargin: 15
             }
 
             // Title row
@@ -93,30 +93,31 @@ Item {
                 color: UM.Theme.getColor("text_sidebar")
                 font: UM.Theme.getFont("extra_large_bold")
                 Layout.alignment: Qt.AlignHCenter
+                Layout.preferredHeight: 15
             }
 
             RowLayout {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-                Layout.preferredHeight: 180
+                Layout.preferredHeight: 130
 
-                MachineCarousel { modelName: "X1"; modelId: "zaxe_x1"; Layout.preferredWidth: 85; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "X1+"; modelId: "zaxe_x1+"; Layout.preferredWidth: 85; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "Z1+"; modelId: "zaxe_z1+"; Layout.preferredWidth: 85; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "Z1"; modelId: "zaxe_z1"; enabled: false; Layout.preferredWidth: 85; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "X1"; modelId: "zaxe_x1"; Layout.preferredWidth: 85; Layout.preferredHeight: 85 }
+                MachineCarousel { modelName: "X1+"; modelId: "zaxe_x1+"; Layout.preferredWidth: 85; Layout.preferredHeight: 85 }
+                MachineCarousel { modelName: "Z1+"; modelId: "zaxe_z1+"; Layout.preferredWidth: 85; Layout.preferredHeight: 85 }
+                MachineCarousel { modelName: "Z1"; modelId: "zaxe_z1"; enabled: false; Layout.preferredWidth: 85; Layout.preferredHeight: 85 }
             }
 
             Button {
                 id: btnPrepare
-                Layout.preferredWidth: 250
-                Layout.preferredHeight: 38
-                Layout.alignment: Qt.AlignHCenter
+                Layout.preferredWidth: 200
+                Layout.preferredHeight: 32
+                Layout.topMargin: 20
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
                 background: Rectangle {
                     color: UM.Theme.getColor("button_blue")
                     radius: 10
                 }
                 contentItem: Text {
                     color: "white"
-                    width: parent.width
                     text: {
                         if (!activity) {
                             return catalog.i18nc("@label", "Click to load a 3D model")
@@ -146,16 +147,16 @@ Item {
         // Show print details when slicing is done.
         id: itemPrintDetails
         visible: base.backendState != "undefined" && (base.backendState == 3 || base.backendState == 5)
-        height: childrenRect.height + 45 // doesn't count margin as childrenRect.height
+        height: childrenRect.height + 30 // doesn't count margin as childrenRect.height
         width: parent.width
         color: UM.Theme.getColor("sidebar_item_medium_dark")
 
         Column {
-            spacing: 7
+            spacing: 0
             width: parent.width - UM.Theme.getSize("sidebar_item_margin").width
             anchors {
                 top: parent.top
-                topMargin: 45
+                topMargin: 20
                 horizontalCenter: parent.horizontalCenter
             }
 
@@ -163,9 +164,10 @@ Item {
             Text {
                 id: lblPrintDetails
                 text: catalog.i18nc("@label", "Print details")
-                color: UM.Theme.getColor("text_sidebar_medium")
+                color: UM.Theme.getColor("text_sidebar")
                 width: parent.width
-                font: UM.Theme.getFont("xx_large")
+                font: UM.Theme.getFont("large")
+                padding: 10
                 horizontalAlignment: Text.AlignHCenter
             }
             // Bottom Border
@@ -174,21 +176,22 @@ Item {
             // File name row
             Item {
                 width: parent.width
-                height: 40
+                height: 32
                 RowLayout {
                     Label {
                         text: "T"
                         color: UM.Theme.getColor("text_sidebar")
                         font: UM.Theme.getFont("zaxe_icon_set")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.topMargin: -5
                     }
                     Text {
                         id: lblFileName
+                        Layout.preferredHeight: 32
                         text: PrintInformation.baseName + ".zaxe"
-                        color: UM.Theme.getColor("text_sidebar")
-                        font: UM.Theme.getFont("large")
+                        color: UM.Theme.getColor("text_sidebar_dark")
+                        font: UM.Theme.getFont("large_nonbold")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                        Layout.bottomMargin: 7
                     }
                 }
             }
@@ -198,21 +201,22 @@ Item {
             // Duration row
             Item {
                 width: parent.width
-                height: 40
+                height: 32
                 RowLayout {
                     Label {
                         text: "V"
                         color: UM.Theme.getColor("text_sidebar")
                         font: UM.Theme.getFont("zaxe_icon_set")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.topMargin: -5
                     }
                     Text {
                         id: lblDuration
                         text: (!base.printDuration || !base.printDuration.valid) ? catalog.i18nc("@label Hours and minutes", "00h 00min") : base.printDuration.getDisplayString(UM.DurationFormat.ISO8601)
-                        color: UM.Theme.getColor("text_sidebar")
+                        color: UM.Theme.getColor("text_sidebar_dark")
                         font: UM.Theme.getFont("large_nonbold")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                        Layout.bottomMargin: 7
+                        Layout.preferredHeight: 32
                     }
                 }
             }
@@ -222,13 +226,14 @@ Item {
             // Details row (weight - length - material
             Item {
                 width: parent.width
-                height: 40
+                height: 32
                 RowLayout {
                     Label {
                         text: "U"
                         color: UM.Theme.getColor("text_sidebar")
                         font: UM.Theme.getFont("zaxe_icon_set")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.topMargin: -5
                     }
                     Label {
                         id: lblWeight
@@ -255,38 +260,40 @@ Item {
                             base.mLength = lengths.join(" + ") + "m.";
                             return base.mWeight
                         }
-                        color: UM.Theme.getColor("text_sidebar")
+                        color: UM.Theme.getColor("text_sidebar_dark")
                         font: UM.Theme.getFont("large_nonbold")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                        Layout.bottomMargin: 7
+                        Layout.preferredHeight: 32
                     }
                     Label {
                         text: "W"
                         color: UM.Theme.getColor("text_sidebar")
                         font: UM.Theme.getFont("zaxe_icon_set")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.topMargin: -5
                     }
                     Text {
                         id: lblLength
                         text: base.mLength
-                        color: UM.Theme.getColor("text_sidebar")
+                        color: UM.Theme.getColor("text_sidebar_dark")
                         font: UM.Theme.getFont("large_nonbold")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                        Layout.bottomMargin: 7
+                        Layout.preferredHeight: 32
                     }
                     Label {
                         text: "X"
                         color: UM.Theme.getColor("text_sidebar")
                         font: UM.Theme.getFont("zaxe_icon_set")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.topMargin: -5
                     }
                     Text {
                         id: lblMaterial
                         text: PrintInformation.materialNames[0] ? networkMachineList.materialNames[PrintInformation.materialNames[0]] : ""
-                        color: UM.Theme.getColor("text_sidebar")
+                        color: UM.Theme.getColor("text_sidebar_dark")
                         font: UM.Theme.getFont("large_nonbold")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                        Layout.bottomMargin: 7
+                        Layout.preferredHeight: 32
                     }
                 }
             }
@@ -296,10 +303,10 @@ Item {
             // Button row
             Item {
                 width: parent.width
-                height: 70
+                height: 77
                 RowLayout {
-                    Layout.alignment: Qt.AlignVCenter
-                    height: 70
+                    anchors { verticalCenter: parent.verticalCenter }
+                    height: 25
                     Button {
                         id: saveToDisk
                         background: Rectangle {
@@ -309,10 +316,10 @@ Item {
                         contentItem: Text {
                             color: UM.Theme.getColor("text_white")
                             text: catalog.i18nc("@label", "Save to flash disk")
-                            font: UM.Theme.getFont("large_nonbold")
+                            font: UM.Theme.getFont("medium")
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
-                            padding: 5
+                            padding: 4
                         }
                         onClicked: {
                             UM.OutputDeviceManager.requestWriteToDevice(UM.OutputDeviceManager.activeDevice, PrintInformation.jobName,
@@ -330,10 +337,10 @@ Item {
                         contentItem: Text {
                             color: UM.Theme.getColor("text_danger")
                             text: catalog.i18nc("@label", "Cancel")
-                            font: UM.Theme.getFont("large_nonbold")
+                            font: UM.Theme.getFont("medium")
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
-                            padding: 5
+                            padding: 4
                         }
                         onClicked: {
                             if (base.backendState == 5) { // slicing unavailable
@@ -352,7 +359,7 @@ Item {
     // Machine course
     Rectangle {
         id: itemMachineCourse
-        height: 45
+        height: 43
         width: parent.width
         color: UM.Theme.getColor("sidebar_item_light")
         anchors.bottom: parent.bottom
@@ -360,12 +367,12 @@ Item {
         // Title row
         Text {
             text: catalog.i18nc("@label", "Machine course")
-            color: UM.Theme.getColor("text_sidebar_medium")
+            color: UM.Theme.getColor("text_sidebar")
             width: parent.width
-            font: UM.Theme.getFont("xx_large")
+            font: UM.Theme.getFont("extra_large_bold")
             horizontalAlignment: Text.AlignHCenter
             padding: 10
-            anchors.bottom: parent.bottom
+            anchors { bottom: parent.bottom; bottomMargin: -UM.Theme.getSize("default_lining").height }
         }
     }
 
@@ -377,8 +384,10 @@ Item {
         visible: base.backendState != "undefined" && base.backendState == 2
         height: childrenRect.height + 50
         width: base.width - 10
-        anchors.top: parent.top; anchors.left: parent.left
-        anchors.topMargin: 10; anchors.leftMargin: 15
+        anchors {
+            top: parent.top; left: parent.left
+            topMargin: 20; leftMargin: 15
+        }
         Column {
             spacing: UM.Theme.getSize("sidebar_item_margin").height
             width: parent.width
@@ -420,10 +429,10 @@ Item {
                 contentItem: Text {
                     color: UM.Theme.getColor("text_danger")
                     text: catalog.i18nc("@label", "Cancel")
-                    font: UM.Theme.getFont("large_nonbold")
+                    font: UM.Theme.getFont("medium")
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    padding: 5
+                    padding: 4
                 }
                 onClicked: {
                     CuraApplication.backend.stopSlicing();

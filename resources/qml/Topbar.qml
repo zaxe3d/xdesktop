@@ -50,7 +50,7 @@ Rectangle
         id: logo
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.topMargin: 30
+        anchors.topMargin: 40
         anchors.leftMargin: Math.round(UM.Theme.getSize("toolbar").width / 2 - UM.Theme.getSize("logo").width / 2)
 
         source: UM.Theme.getImage("logo");
@@ -94,7 +94,7 @@ Rectangle
         anchors {
             left: logo.right
             top: parent.top
-            topMargin: 23
+            topMargin: 33
             leftMargin: 8
         }
 

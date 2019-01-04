@@ -8,6 +8,10 @@
             "size": 2.5,
             "family": "Zaxe"
         },
+        "zaxe_icon_set_medium": {
+            "size": 3,
+            "family": "Zaxe"
+        },
         "zaxe_icon_set": {
             "size": 4,
             "family": "Zaxe"
@@ -21,37 +25,36 @@
             "family": "Zaxe"
         },
         "xx_large": {
-            "size": 2,
-            "family": "Mark-Regular"
+            "size": 1.75,
+            "family": "Mark-Medium"
         },
         "extra_large_bold": {
-            "size": 1.75,
+            "size": 1.40,
             "family": "Mark-Bold"
         },
         "extra_large": {
-            "size": 1.75,
+            "size": 1.40,
             "family": "Mark-Regular"
         },
         "large": {
-            "size": 1.55,
+            "size": 1.38,
             "bold": true,
             "family": "Mark-Bold"
         },
         "large_nonbold": {
-            "size": 1.45,
+            "size": 1.38,
             "family": "Mark-Regular"
         },
         "large_semi_bold": {
-            "size": 1.45,
-            "family": "Mark-Medium",
-            "bold": true
+            "size": 1.38,
+            "family": "Mark-Medium"
         },
         "medium": {
-            "size": 1.16,
+            "size": 1.05,
             "family": "Mark-Regular"
         },
         "medium_bold": {
-            "size": 1.16,
+            "size": 1.05,
             "family": "Mark-Bold"
         },
         "default": {
@@ -63,24 +66,24 @@
             "family": "Mark-Bold"
         },
         "default_italic": {
-            "size": 1.15,
+            "size": 1.0,
             "italic": true,
             "family": "Mark-Regular"
         },
         "small_bold": {
-            "size": 1.0,
+            "size": 0.9,
             "family": "Mark-Bold"
         },
         "small": {
-            "size": 1.0,
+            "size": 0.9,
             "family": "Mark-Regular"
         },
         "very_small": {
-            "size": 1.0,
+            "size": 0.8,
             "family": "Mark-Regular"
         },
         "extra_small": {
-            "size": 0.9,
+            "size": 0.8,
             "family": "Mark-Regular"
         },
         "button_tooltip": {
@@ -325,7 +328,7 @@
 
         "sidebar": [35.0, 10.0],
         "sidebar_margin": [0.9, 1.43],
-        "sidebar_spacing": [0.7, 0.7],
+        "sidebar_spacing": [0.3, 0.3],
         "sidebar_item_margin": [1.43, 1.0],
         "sidebar_item_icon_margin": [1.43, 0.7],
         "sidebar_item_icon_text_margin": [0.43, 0.43],
@@ -390,7 +393,7 @@
         "layerview_row": [11.0, 1.5],
         "layerview_row_spacing": [0.0, 0.5],
 
-        "checkbox": [2.0, 2.0],
+        "checkbox": [1.8, 1.8],
         "checkbox_small": [1.7, 1.7],
 
         "tooltip": [20.0, 10.0],

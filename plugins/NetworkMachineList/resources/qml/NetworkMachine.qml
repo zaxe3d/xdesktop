@@ -13,7 +13,7 @@ Item {
     id: device
 
     width: networkMachineList.width - 20
-    height: mainLayout.height + 20
+    height: mainLayout.height + 10
     x : 200 // to animate from right
 
     property string uid
@@ -306,11 +306,11 @@ Item {
                     Rectangle {
                         color: UM.Theme.getColor("sidebar_item_light")
                         Layout.preferredWidth: 90; Layout.preferredHeight: 90
-                        Layout.topMargin: 10
+                        Layout.topMargin: 5
                         z: 6
 
                         Rectangle {
-                            width: 75; height: 75
+                            width: 68; height: 68
                             Layout.leftMargin: 20
                             color: UM.Theme.getColor("sidebar_item_dark")
                             anchors.centerIn: parent
@@ -321,7 +321,7 @@ Item {
                                 anchors.centerIn: parent
                                 visible: (machineStates.bed_occupied || machineStates.printing || machineStates.heating) && device.hasSnapshot
                                 source: visible ? device.snapshot : ""
-                                width: 70
+                                width: 60
                                 height: width
                             }
 
@@ -329,7 +329,7 @@ Item {
                                 id: printerIcon
                                 anchors.centerIn: parent
                                 visible: !imgSnapshot.visible
-                                font: UM.Theme.getFont("extra_large")
+                                font: UM.Theme.getFont("xx_large")
                                 color: UM.Theme.getColor("text_sidebar_light")
                                 text: device.deviceModel.replace("plus", "+").toUpperCase()
                             }
@@ -605,7 +605,7 @@ Item {
                                         }
                                         contentItem: Text {
                                             color: UM.Theme.getColor("text_sidebar")
-                                            font: UM.Theme.getFont("zaxe_icon_set")
+                                            font: UM.Theme.getFont("zaxe_icon_set_medium")
                                             text: "M"
                                             horizontalAlignment: Text.AlignHCenter
                                             verticalAlignment: Text.AlignVCenter
@@ -631,23 +631,23 @@ Item {
                             // Second row (right pane)
                             Rectangle {
                                 Layout.preferredWidth: device.width - 90 - UM.Theme.getSize("sidebar_item_margin").width
-                                Layout.preferredHeight: 30
+                                Layout.preferredHeight: 23
 
                                 color: UM.Theme.getColor("sidebar_item_light")
                                 // Print Now button
                                 Button {
                                     id: btnPrintNow
                                     visible: !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
-                                    width: 150; height: 35
+                                    width: 130; height: 28
                                     anchors.top: parent.top
-                                    anchors.topMargin: 10
+                                    anchors.topMargin: 11
                                     padding: 0
                                     SequentialAnimation {
                                         id: shakeAnim
                                         running: false
-                                        NumberAnimation { target: btnPrintNow; property: "x"; to: -10; duration: 50 }
+                                        NumberAnimation { target: btnPrintNow; property: "x"; to: -5; duration: 50 }
                                         NumberAnimation { target: btnPrintNow; property: "x"; to: 10; duration: 50 }
-                                        NumberAnimation { target: btnPrintNow; property: "x"; to: -10; duration: 50 }
+                                        NumberAnimation { target: btnPrintNow; property: "x"; to: -5; duration: 50 }
                                         NumberAnimation { target: btnPrintNow; property: "x"; to: 10; duration: 50 }
                                         NumberAnimation { target: btnPrintNow; property: "x"; to: 0; duration: 50 }
                                     }
@@ -715,9 +715,8 @@ Item {
                                 Label {
                                     id: lblDeviceStatus
                                     font: UM.Theme.getFont("large_semi_bold")
-                                    color: UM.Theme.getColor("text_sidebar")
-                                    anchors.bottom: parent.bottom
-                                    anchors.left: parent.left
+                                    color: UM.Theme.getColor("text_sidebar_medium")
+                                    anchors { bottom: parent.bottom; left: parent.left }
                                     text: {
                                         if (machineStates.bed_occupied)
                                             return catalog.i18nc("@label", "Bed is occuppied...")
@@ -739,10 +738,10 @@ Item {
                                 Label {
                                     visible: machineStates.calibrating || machineStates.printing || machineStates.heating || machineStates.uploading
                                     font: UM.Theme.getFont("large")
-                                    color: UM.Theme.getColor("text_sidebar")
+                                    color: UM.Theme.getColor("text_sidebar_medium")
                                     anchors.bottom: parent.bottom
                                     anchors.right: parent.right
-                                    text: parseInt(device.progress * 100, 10) + "%"
+                                    text: "%" + parseInt(device.progress * 100, 10)
                                 }
                             }
 
@@ -805,10 +804,10 @@ Item {
             Rectangle {
                 visible: device.hasFWUpdate
                 Layout.preferredWidth: Math.round(device.width - 65 - (UM.Theme.getSize("sidebar_item_margin").width * 2))
-                Layout.preferredHeight: fwUpdateMessage.height
+                Layout.minimumHeight: fwUpdateMessage.height
                 Layout.alignment: Qt.AlignRight
-                //Layout.topMargin: Math.round(UM.Theme.getSize("sidebar_margin").height / 2)
-                Layout.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height
+                Layout.topMargin: -Math.round(UM.Theme.getSize("sidebar_item_margin").height)
+                Layout.bottomMargin: Math.round(UM.Theme.getSize("sidebar_item_margin").height * 2)
                 Layout.rightMargin: UM.Theme.getSize("sidebar_item_margin").width
                 color: UM.Theme.getColor("sidebar_item_light")
 
@@ -844,7 +843,7 @@ Item {
                 Layout.preferredWidth: Math.round(device.width - 65 - (UM.Theme.getSize("sidebar_item_margin").width * 2))
                 Layout.minimumHeight: childrenRect.height
                 Layout.alignment: Qt.AlignRight
-                Layout.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                Layout.bottomMargin: Math.round(UM.Theme.getSize("sidebar_item_margin").height / 2)
                 Layout.rightMargin: UM.Theme.getSize("sidebar_item_margin").width
                 color: UM.Theme.getColor("sidebar_item_light")
 
@@ -880,7 +879,7 @@ Item {
                 Layout.preferredWidth: Math.round(device.width - 65 - (UM.Theme.getSize("sidebar_item_margin").width * 2))
                 Layout.minimumHeight: 20
                 Layout.alignment: Qt.AlignRight
-                Layout.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                Layout.bottomMargin: Math.round(UM.Theme.getSize("sidebar_item_margin").height / 2)
                 Layout.rightMargin: UM.Theme.getSize("sidebar_item_margin").width
                 color: UM.Theme.getColor("sidebar_item_light")
 
@@ -922,29 +921,34 @@ Item {
                 // Extra info column
                 Rectangle {
                     width: parent.width; height: extraInfoColumn.height
-                    Layout.topMargin: 5
+                    anchors {
+                        top: parent.top
+                        topMargin: -3
+                    }
                     color: UM.Theme.getColor("sidebar_item_light")
 
                     ColumnLayout {
                         id: extraInfoColumn
                         width: parent.width
+                        spacing: 0
 
                         // Filename row
                         RowLayout {
                             visible: machineStates.printing
-                            Layout.preferredHeight: 38
+                            Layout.alignment: Qt.AlignVCenter
+                            Layout.preferredHeight: 30
                             Label {
                                 text: "T"
-                                color: UM.Theme.getColor("text_sidebar_dark")
+                                color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("zaxe_icon_set")
+                                Layout.preferredHeight: 15
+                                Layout.topMargin: -7
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                             }
                             Label {
                                 text: device.printingFile
-                                color: UM.Theme.getColor("text_sidebar_dark")
+                                color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("large_semi_bold")
-                                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                                Layout.bottomMargin: 7
                             }
                         }
                         // Bottom Border 
@@ -953,19 +957,21 @@ Item {
                         // Duration row
                         RowLayout {
                             visible: machineStates.printing
-                            Layout.preferredHeight: 38
+                            Layout.alignment: Qt.AlignVCenter
+                            Layout.preferredHeight: 30
                             Label {
                                 text: "V"
-                                color: UM.Theme.getColor("text_sidebar_dark")
+                                color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("zaxe_icon_set")
+                                Layout.preferredHeight: 15
+                                Layout.topMargin: -7
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                             }
                             Label {
                                 text: device.elapsedTimeTxt + " / " + device.estimatedTime
-                                color: UM.Theme.getColor("text_sidebar_dark")
+                                color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("large_semi_bold")
-                                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                                Layout.bottomMargin: 7
+                                Layout.preferredHeight: 15
                             }
                         }
                         // Bottom Border
@@ -973,32 +979,34 @@ Item {
 
                         // Material and nozzle row
                         RowLayout {
-                            Layout.preferredHeight: 38
+                            Layout.preferredHeight: 30
                             Label {
                                 text: "X"
-                                color: UM.Theme.getColor("text_sidebar_dark")
+                                color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("zaxe_icon_set")
+                                Layout.preferredHeight: 15
+                                Layout.topMargin: -7
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                             }
                             Label {
                                 text: networkMachineList.materialNames[device.material]
-                                color: UM.Theme.getColor("text_sidebar_dark")
+                                color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("large_semi_bold")
-                                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                                Layout.bottomMargin: 7
+                                Layout.preferredHeight: 15
                             }
                             Label {
                                 text: "b"
-                                color: UM.Theme.getColor("text_sidebar_dark")
+                                color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("zaxe_icon_set")
+                                Layout.preferredHeight: 15
+                                Layout.topMargin: -7
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                             }
                             Label {
                                 text: device.nozzle + " mm"
-                                color: UM.Theme.getColor("text_sidebar_dark")
+                                color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("large_semi_bold")
-                                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                                Layout.bottomMargin: 7
+                                Layout.preferredHeight: 15
                             }
                         }
                         // Bottom Border 
@@ -1006,23 +1014,25 @@ Item {
 
                         // IP row
                         RowLayout {
-                            Layout.preferredHeight: 38
+                            Layout.preferredHeight: 30
+                            Layout.alignment: Qt.AlignTop
                             Label {
                                 text: "c"
-                                color: UM.Theme.getColor("text_sidebar_dark")
+                                color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("zaxe_icon_set")
+                                Layout.preferredHeight: 15
+                                Layout.topMargin: -7
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                             }
                             Label {
                                 text: device.ip
-                                color: UM.Theme.getColor("text_sidebar_dark")
+                                color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("large_semi_bold")
-                                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                                Layout.bottomMargin: 7
+                                Layout.preferredHeight: 15
                             }
                         }
                         // Bottom Border
-                        Rectangle { Layout.leftMargin: 8; Layout.preferredWidth: parent.width; Layout.preferredHeight: UM.Theme.getSize("default_lining").width; color: UM.Theme.getColor("sidebar_item_dark") }
+                        Rectangle { Layout.bottomMargin: 5; Layout.leftMargin: 8; Layout.preferredWidth: parent.width; Layout.preferredHeight: UM.Theme.getSize("default_lining").width; color: UM.Theme.getColor("sidebar_item_dark") }
 
                         // elapsed time calculation
                         Timer {

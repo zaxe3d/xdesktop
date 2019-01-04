@@ -1001,8 +1001,8 @@ QtObject {
             }
             label: Label {
                 text: control.text
-                color: Theme.getColor("checkbox_text")
-                font: Theme.getFont("large_semi_bold")
+                color: Theme.getColor("text_sidebar_medium")
+                font: Theme.getFont("large_nonbold")
                 elide: Text.ElideRight
             }
         }
@@ -1038,8 +1038,8 @@ QtObject {
             }
             label: Label {
                 text: control.text
-                color: control.checkBoxSidebar ? Theme.getColor("text_sidebar") : Theme.getColor("checkbox_text")
-                font: control.checkBoxSidebar ? Theme.getFont("large_semi_bold") : Theme.getFont("medium")
+                color: control.checkBoxSidebar ? Theme.getColor("text_sidebar_medium") : Theme.getColor("checkbox_text")
+                font: control.checkBoxSidebar ? Theme.getFont("large_nonbold") : Theme.getFont("medium")
                 elide: Text.ElideRight
             }
         }
@@ -1162,7 +1162,7 @@ QtObject {
                 color: control.cancelButton ? UM.Theme.getColor("sidebar_item_light") : UM.Theme.getColor("button_blue")
 
                 implicitWidth: (control.cancelButton ? 0 : 100) + actualLabel.contentWidth + (UM.Theme.getSize("sidebar_margin").width * 2)
-                implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("sidebar_margin").height)
+                implicitHeight: actualLabel.contentHeight + UM.Theme.getSize("sidebar_margin").height
                 radius: 10
 
                 Label
@@ -1170,7 +1170,7 @@ QtObject {
                     id: actualLabel
                     anchors.centerIn: parent
                     color: control.cancelButton ? UM.Theme.getColor("text_danger") : UM.Theme.getColor("text_white")
-                    font: UM.Theme.getFont("large_nonbold")
+                    font: UM.Theme.getFont("medium")
                     text: control.text
                 }
             }

@@ -145,14 +145,14 @@ class NetworkMachineManager(QObject):
     def Cancel(self, mID, pin = "") -> None:
         machine = self.machineList[str(mID)]
         Logger.log("d", "canceling printing [%s - [%s]]" % (machine.name, machine.ip))
-        machine.cancel(pin)
+        machine.cancel(None if pin == "" else pin)
 
     ## pause printing on intended machine
     @pyqtSlot(str, str)
     def Pause(self, mID, pin = "") -> None:
         machine = self.machineList[str(mID)]
         Logger.log("d", "pausing [%s - [%s]]" % (machine.name, machine.ip))
-        machine.pause(pin)
+        machine.pause(None if pin == "" else pin)
 
     ## resume printing on intended machine
     @pyqtSlot(str)

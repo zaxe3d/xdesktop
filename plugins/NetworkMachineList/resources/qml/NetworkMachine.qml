@@ -259,7 +259,11 @@ Item {
                         verticalAlignment: Text.AlignVCenter
                     }
                     onClicked: {
-                        Cura.NetworkMachineManager.Cancel(device.uid)
+                        if (device.hasPin) {
+                            showPinCodeEntry("cancel")
+                        } else {
+                            Cura.NetworkMachineManager.Cancel(device.uid, "")
+                        }
                         confirmationPane.visible = false
                     }
                 }
@@ -312,6 +316,7 @@ Item {
                         Rectangle {
                             width: 68; height: 68
                             Layout.leftMargin: 20
+                            z: 6
                             color: UM.Theme.getColor("sidebar_item_dark")
                             anchors.centerIn: parent
                             radius: 10
@@ -466,7 +471,7 @@ Item {
                                             if (device.hasPin) {
                                                 showPinCodeEntry("pause")
                                             } else {
-                                                Cura.NetworkMachineManager.Pause(device.uid)
+                                                Cura.NetworkMachineManager.Pause(device.uid, "")
                                             }
                                         }
                                         onHoveredChanged: {
@@ -491,7 +496,7 @@ Item {
                                         contentItem: Text {
                                             font: UM.Theme.getFont("zaxe_icon_set")
                                             color: UM.Theme.getColor("text_sidebar")
-                                            text: "e"
+                                            text: catalog.i18nc("@button", "e")
                                             anchors.top: parent.top
                                             horizontalAlignment: Text.AlignHCenter
                                             verticalAlignment: Text.AlignVCenter

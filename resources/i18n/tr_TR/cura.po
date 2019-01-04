@@ -353,3 +353,8 @@ msgstr "Bu Zaxe Dosyası eski bir versiyona ait. Lütfen orjinal STL dosyasında
 msgctxt "@info:zaxecode"
 msgid "This Zaxe file is sliced for Zaxe {0}. Please switch to Zaxe {0} before importing this file again."
 msgstr "Bu Zaxe Dosyası Zaxe {0} için dilimlenmiş. Lütfen dosyayı tekrar açmadan önce Zaxe {0} modelini seçiniz."
+
+#resume button
+msgctxt "@button"
+msgid "e"
+msgstr "f"

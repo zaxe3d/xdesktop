@@ -21,10 +21,26 @@ Item {
     property variant printMaterialWeights: PrintInformation.materialWeights
     property variant printMaterialCosts: PrintInformation.materialCosts
     property variant printMaterialNames: PrintInformation.materialNames
- 
+
     property string mWeight
     property string mLength
     width: parent.width
+
+    function createManualMachine() {
+        if (!inputIPAddress.acceptableInput) {
+            return;
+        }
+        var customIPsPref = UM.Preferences.getValue("misc/custom_ips")
+        var customIPs = customIPsPref == "" ? [] : customIPsPref.split("|")
+        var ip = inputIPAddress.text
+        if (customIPs.indexOf(ip) == -1) {
+            customIPs.unshift(ip)
+            customIPModel.insert(0, {"ip": ip});
+            UM.Preferences.setValue("misc/custom_ips", customIPs.join("|"))
+            Cura.NetworkMachineManager.CreateManualMachine(ip)
+        }
+        inputIPAddress.text = ""
+    }
 
     Connections {
         target: PrintInformation
@@ -68,6 +84,169 @@ Item {
 
     Connections {
         target: CuraApplication
+    }
+
+    Rectangle {
+        id: itemCustomIP
+        z: 2
+        visible: false
+        color: UM.Theme.getColor("sidebar_item_medium_dark")
+        anchors { top: parent.top; bottom: itemMachineCourse.top; left: parent.left; right: parent.right }
+
+        ColumnLayout {
+            spacing: 0
+            width: parent.width - UM.Theme.getSize("sidebar_item_margin").width
+            anchors {
+                top: parent.top
+                topMargin: 25
+                horizontalCenter: parent.horizontalCenter
+                bottom: parent.bottom
+                bottomMargin: 15
+            }
+
+            // Title row
+            RowLayout {
+                Layout.preferredHeight: 20
+                Button {
+                    Layout.preferredHeight: 20
+                    background: Rectangle {
+                        color: UM.Theme.getColor("sidebar_item_medium_dark")
+                    }
+                    contentItem: Text {
+                        color: UM.Theme.getColor("text_sidebar_dark")
+                        text: catalog.i18nc("@label", "<")
+                        font: UM.Theme.getFont("large_semi_bold")
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        padding: 4
+                    }
+                    onClicked: {
+                        itemCustomIP.visible = false
+                        itemCustomIP.enabled = false
+                        itemLoadOrSlice.enabled = true
+                    }
+                }
+                Text {
+                    text: catalog.i18nc("@label", "Custom IP")
+                    color: UM.Theme.getColor("text_sidebar_dark")
+                    width: parent.width
+                    font: UM.Theme.getFont("large")
+                    horizontalAlignment: Text.AlignHCenter
+                    padding: 4
+                }
+            }
+            // Bottom Border
+            Rectangle { Layout.alignment: Qt.AlignHCenter; Layout.preferredWidth: parent.width - UM.Theme.getSize("sidebar_item_margin").width; Layout.preferredHeight: 2; color: UM.Theme.getColor("sidebar_item_extra_dark") }
+            ListModel {
+                id: customIPModel
+            }
+
+            Component {
+                id: customIPDelegate
+                Item {
+                    width: 270; height: 25
+                    Row {
+                        Text { width: 250; height: 20; text: ip; font: UM.Theme.getFont("default") }
+                        Button {
+                            implicitWidth: 20; implicitHeight: 20
+                            background: Rectangle {
+                                color: UM.Theme.getColor("button_danger")
+                                radius: 5
+                            }
+                            contentItem: Text {
+                                color: UM.Theme.getColor("text_white")
+                                font: UM.Theme.getFont("zaxe_icon_set_small")
+                                text: "a"
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                            onClicked: {
+                                var customIPsPref = UM.Preferences.getValue("misc/custom_ips")
+                                var customIPs = customIPsPref == "" ? [] : customIPsPref.split("|")
+                                var idx = customIPs.indexOf(ip)
+                                if (idx > -1) {
+                                    Cura.NetworkMachineManager.RemoveManualMachine(customIPs[idx])
+                                    customIPs.splice(idx, 1)
+                                    customIPModel.remove(idx, 1);
+                                    UM.Preferences.setValue("misc/custom_ips", customIPs.join("|"))
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            ListView {
+                id: listView
+                Layout.alignment: Qt.AlignHCenter
+                Layout.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                Layout.preferredHeight: 90
+                Layout.preferredWidth: 280
+                ScrollBar.vertical: ScrollBar {}
+                model: customIPModel
+                delegate: customIPDelegate
+                Component.onCompleted: {
+                    var customIPsPref = UM.Preferences.getValue("misc/custom_ips")
+                    var customIPs = customIPsPref == "" ? [] : customIPsPref.split("|")
+                    for (var i in customIPs) {
+                        customIPModel.append({"ip": customIPs[i]});
+                        Cura.NetworkMachineManager.CreateManualMachine(customIPs[i])
+                    }
+                }
+            }
+
+            RowLayout {
+                Layout.preferredWidth: 235; Layout.preferredHeight: 30
+                Layout.alignment: Qt.AlignHCenter
+
+                TextField {
+                    id: inputIPAddress
+                    placeholderText: catalog.i18nc("@label", "Enter an IP address...")
+                    selectByMouse: true
+                    font: UM.Theme.getFont("medium")
+                    color: UM.Theme.getColor("text_sidebar")
+                    padding: 0
+                    Layout.preferredWidth: 235; Layout.preferredHeight: 30
+                    validator: RegExpValidator {
+                        regExp:  /^\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b$/
+                    }
+
+                    background: Rectangle {
+                        color: UM.Theme.getColor("sidebar_item_medium_dark")
+                        border.width: 0
+                        radius: 2
+                        // Bottom border only
+                        Rectangle { width: parent.width; height: UM.Theme.getSize("default_lining").height; anchors.bottom: parent.bottom; anchors.bottomMargin: UM.Theme.getSize("default_lining").height; color: UM.Theme.getColor("sidebar_item_dark") }
+                    }
+                    Keys.onPressed: {
+                        if (event.key == Qt.Key_Escape) {
+                            inputIPAddress.text = "";
+                            event.accepted = true;
+                        }
+                    }
+                    onAccepted: {
+                        createManualMachine()
+                    }
+                }
+
+                Button {
+                    Layout.preferredHeight: 27
+                    background: Rectangle {
+                        color: UM.Theme.getColor("button_blue")
+                        radius: 10
+                    }
+                    contentItem: Text {
+                        color: UM.Theme.getColor("text_white")
+                        width: parent.width
+                        text: catalog.i18nc("@label", "+ Add")
+                        font: UM.Theme.getFont("medium_bold")
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    onClicked: createManualMachine()
+                }
+            }
+        }
     }
 
     Rectangle {
@@ -366,6 +545,7 @@ Item {
 
         // Title row
         Text {
+            id: titleText
             text: catalog.i18nc("@label", "Machine course")
             color: UM.Theme.getColor("text_sidebar")
             width: parent.width
@@ -373,6 +553,26 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             padding: 10
             anchors { bottom: parent.bottom; bottomMargin: -UM.Theme.getSize("default_lining").height }
+        }
+
+        Button {
+            anchors { right: parent.right; verticalCenter: titleText.verticalCenter }
+            background: Rectangle {
+                color: UM.Theme.getColor("sidebar_item_light")
+            }
+            contentItem: Text {
+                color: UM.Theme.getColor("text_sidebar_medium")
+                text: catalog.i18nc("@label", "Custom IP...")
+                font: UM.Theme.getFont("medium")
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                padding: 4
+            }
+            onClicked: {
+                itemCustomIP.enabled = true
+                itemLoadOrSlice.enabled = false
+                itemCustomIP.visible = true
+            }
         }
     }
 

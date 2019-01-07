@@ -104,6 +104,24 @@ class NetworkMachineManager(QObject):
         except AttributeError:
             pass
 
+    @pyqtSlot(str)
+    def CreateManualMachine(self, ip) -> None:
+        machine = self.networkMachineContainer.addMachine(ip, 9294, "Zaxe")
+
+        if machine is not None:
+            machine.machineEvent.connect(self._onMessage)
+            machine.machineUploadEvent.connect(self._onUpload)
+
+    @pyqtSlot(str)
+    def RemoveManualMachine(self, ip) -> None:
+        for mID in self.machineList.keys():
+            machine = self.machineList[mID]
+            if machine.ip == ip:
+                machine.close()
+                del self.machineList[machine.id]
+                self.machineRemoved.emit(machine.id)
+                break
+
     ## Says Hi on intended machine
     @pyqtSlot(str)
     def SayHi(self, mID) -> None:

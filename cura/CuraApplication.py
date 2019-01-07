@@ -498,6 +498,9 @@ class CuraApplication(QtApplication):
         preferences.addPreference("custom_material/retraction_speed",           20)
         preferences.addPreference("custom_material/retraction_length",          2)
 
+        # Custom IPs
+        preferences.addPreference("misc/custom_ips", "")
+
         # Help page.
         # TODO find a better way of communicating between sidebars
         preferences.addPreference("cura/help_page", "")

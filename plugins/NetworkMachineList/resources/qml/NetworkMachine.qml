@@ -161,8 +161,8 @@ Item {
         Rectangle {
             id: pinCodeEntryPane
             color: UM.Theme.getColor("sidebar_item_light")
-            width: 295; height: 45
-            x: parent.width - 295 - 50
+            width: device.width - 90 - btnShowExtraInfo.width - 20; height: 45
+            x: parent.width - width - 50
             z: 5
             visible: false
             RowLayout {
@@ -229,8 +229,8 @@ Item {
         Rectangle {
             id: confirmationPane
             color: UM.Theme.getColor("sidebar_item_light")
-            width: 295; height: 45
-            x: parent.width - 295 - 50
+            width: device.width - 90 - btnShowExtraInfo.width - 20; height: 45
+            x: parent.width - width - 50
             z: 5
             visible: false
             RowLayout {

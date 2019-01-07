@@ -304,7 +304,7 @@ Item
             Label {
                 width: parent.width
                 color: UM.Theme.getColor("text_sidebar")
-                font.pixelSize: 23
+                font.pixelSize: 20
                 textFormat: Qt.RichText
                 wrapMode: Text.WordWrap
                 text: "Ne zaman gerekir?"
@@ -792,7 +792,7 @@ Item
                 color: UM.Theme.getColor("text_sidebar")
                 textFormat: Qt.RichText
                 wrapMode: Text.WordWrap
-                text: "<i>XY tolerans: -1mm (Tüm polygonlar 1mm küçültüdü)</i>"
+                text: "<i>XY tolerans: 0.5mm (Tüm polygonlar 0.5mm büyütüldü)</i>"
             }
         }
     }

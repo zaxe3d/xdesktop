@@ -324,7 +324,7 @@ Item {
                             Image {
                                 id: imgSnapshot
                                 anchors.centerIn: parent
-                                visible: (machineStates.bed_occupied || machineStates.printing || machineStates.heating) && device.hasSnapshot
+                                visible: !machineStates.calibrating && (machineStates.bed_occupied || machineStates.printing || machineStates.heating) && device.hasSnapshot
                                 source: visible ? device.snapshot : ""
                                 width: 60
                                 height: width

@@ -72,6 +72,10 @@ msgctxt "@warning"
 msgid "This print is not compatible with this device model"
 msgstr "Bu baskı, bu cihaz ile uyumlu değildir"
 
+msgctxt "@label"
+msgid "Update"
+msgstr "Güncelle"
+
 msgctxt "@info"
 msgid "Firmware update available for your device"
 msgstr "Cihanız için yazılım güncellemesi mevcut"
@@ -215,6 +219,18 @@ msgstr "Modeli baskıya hazırla"
 msgctxt "@label"
 msgid "Machine course"
 msgstr "Makine parkuru"
+
+msgctxt "@label"
+msgid "Are you sure?"
+msgstr "Emin misiniz?"
+
+msgctxt "@label"
+msgid "YES"
+msgstr "EVET"
+
+msgctxt "@label"
+msgid "NO"
+msgstr "HAYIR"
 
 msgctxt "@label"
 msgid "Print now!"

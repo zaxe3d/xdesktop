@@ -107,7 +107,8 @@ Item {
         device.state = "anchored"
     }
 
-    function showConfirmation() {
+    function showConfirmation(state) {
+        device.nextState = state
         confirmationPane.visible = true
     }
     function showPinCodeEntry(state) {
@@ -116,8 +117,8 @@ Item {
         pinCodeEntryPane.visible = true
     }
 
-    function enterPinCode(pin) {
-        pinCodeEntryPane.visible = false
+    function applyState() {
+        var pin = device.hasPin ? inputPinCode.text : ""
 
         switch(device.nextState) {
             case "cancel":
@@ -126,9 +127,16 @@ Item {
             case "pause":
                 Cura.NetworkMachineManager.Pause(device.uid, pin)
                 break;
+            case "update":
+                Cura.NetworkMachineManager.FWUpdate(device.uid)
+                break;
         }
-
         device.nextState = ""
+        confirmationPane.visible = false
+    }
+    function enterPinCode(pin) {
+        pinCodeEntryPane.visible = false
+        applyState()
     }
 
     // Top Border
@@ -259,12 +267,7 @@ Item {
                         verticalAlignment: Text.AlignVCenter
                     }
                     onClicked: {
-                        if (device.hasPin) {
-                            showPinCodeEntry("cancel")
-                        } else {
-                            Cura.NetworkMachineManager.Cancel(device.uid, "")
-                        }
-                        confirmationPane.visible = false
+                        applyState()
                     }
                 }
                 Button {
@@ -471,7 +474,7 @@ Item {
                                             if (device.hasPin) {
                                                 showPinCodeEntry("pause")
                                             } else {
-                                                Cura.NetworkMachineManager.Pause(device.uid, "")
+                                                showConfirmation("pause")
                                             }
                                         }
                                         onHoveredChanged: {
@@ -545,7 +548,7 @@ Item {
                                             if (device.hasPin) {
                                                 showPinCodeEntry("cancel")
                                             } else {
-                                                showConfirmation()
+                                                showConfirmation("cancel")
                                             }
                                         }
                                         onHoveredChanged: {
@@ -829,7 +832,8 @@ Item {
                 }
                 Text {
                     id: fwUpdateMessage
-                    width: parent.width
+                    width: parent.width - (btnfwUpdate.visible ? btnfwUpdate.width : 0)
+
                     font: UM.Theme.getFont("medium")
                     color: UM.Theme.getColor("text_blue")
                     horizontalAlignment: Text.AlignLeft
@@ -841,6 +845,35 @@ Item {
                     }
                     text: catalog.i18nc("@info", "Firmware update available for your device")
                 }
+                Button {
+                    id: btnfwUpdate
+                    // only Z series has remote update
+                    visible: deviceModel.search("z") == 0 && !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
+                    Layout.preferredHeight: 27
+                    anchors {
+                        verticalCenter: fwUpdateMessage.verticalCenter
+                        left: fwUpdateMessage.right
+                        leftMargin: 1
+                    }
+                    background: Rectangle {
+                        color: UM.Theme.getColor("button_blue")
+                        border.color: UM.Theme.getColor("button_blue")
+                        border.width: UM.Theme.getSize("default_lining").width
+                        radius: 10
+                    }
+                    contentItem: Text {
+                        color: UM.Theme.getColor("text_white")
+                        width: parent.width
+                        text: catalog.i18nc("@label", "Update")
+                        font: UM.Theme.getFont("medium_bold")
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    onClicked: {
+                        showConfirmation("update")
+                    }
+                }
+
             }
             // Material warning message
             Rectangle {

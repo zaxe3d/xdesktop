@@ -220,6 +220,9 @@ class NetworkMachine(QThread, QObject):
     def cancel(self, pin=None):
         self.write({"request": "cancel", "pin": pin})
 
+    def fwUpdate(self):
+        self.write({"request": "fw_update"})
+
     def upload(self, filename):
         if self.uploader is not None and self.uploader.isUploading():
             return

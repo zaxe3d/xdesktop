@@ -390,6 +390,14 @@ msgctxt "@title:menu menubar:file"
 msgid "Export selection..."
 msgstr "Seçimi dışa aktar..."
 
+msgctxt "@title:window"
+msgid "Closing XDesktop"
+msgstr "XDesktop kapatılacak"
+
+msgctxt "@label"
+msgid "You will need to re-open XDesktop for the changes to take effect. Are you sure you want to exit XDesktop?"
+msgstr "Değişikliklerin uygulanması için XDesktop'u yeniden başlatmanız gerekecek. XDesktop'tan çıkmak istediğinize emin misiniz?"
+
 msgctxt "@item:inlistbox"
 msgid "Zaxe File"
 msgstr "Zaxe Dosyası"

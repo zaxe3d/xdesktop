@@ -220,7 +220,7 @@ UM.MainWindow
                             onTriggered:
                             {
                                 UM.Preferences.setValue("general/language", languageList.get(index).code)
-                                CuraApplication.checkAndExitApplication();
+                                languageExitConfirmationDialog.open();
                             }
                         }
                     }
@@ -509,6 +509,27 @@ UM.MainWindow
         if (!close.accepted)
         {
             CuraApplication.checkAndExitApplication();
+        }
+    }
+
+    MessageDialog
+    {
+        id: languageExitConfirmationDialog
+        title: catalog.i18nc("@title:window", "Closing XDesktop")
+        text: catalog.i18nc("@label", "You will need to re-open XDesktop for the changes to take effect. Are you sure you want to exit XDesktop?")
+        icon: StandardIcon.Question
+        modality: Qt.ApplicationModal
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: CuraApplication.checkAndExitApplication()
+        onNo: CuraApplication.callConfirmExitDialogCallback(false)
+        onRejected: CuraApplication.callConfirmExitDialogCallback(false)
+        onVisibilityChanged:
+        {
+            if (!visible)
+            {
+                // reset the text to default because other modules may change the message text.
+                text = catalog.i18nc("@label", "You will need to re-open XDesktop for the changes to take effect. Are you sure you want to exit XDesktop?")
+            }
         }
     }
 

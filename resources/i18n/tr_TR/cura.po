@@ -276,6 +276,10 @@ msgctxt "@action:button"
 msgid "Open File"
 msgstr "Dosya Aç"
 
+msgctxt "@title:menu menubar:file"
+msgid "Export Selection..."
+msgstr "Seçimi Dışa Aktar..."
+
 msgctxt "@action:inmenu menubar:edit"
 msgid "&Undo"
 msgstr "&Geri Al"
@@ -336,7 +340,7 @@ msgstr "&Modeli Çoğalt..."
 
 msgctxt "@action:inmenu menubar:edit"
 msgid "Select All Models"
-msgstr "Tüm modelleri Seç"
+msgstr "Tüm Modelleri Seç"
 
 msgctxt "@action:inmenu menubar:edit"
 msgid "Clear Build Plate"
@@ -370,6 +374,10 @@ msgctxt "@action:inmenu menubar:file"
 msgid "&Open File(s)..."
 msgstr "&Dosya Aç..."
 
+msgctxt "@title:menu menubar:file"
+msgid "Open &Recent"
+msgstr "En Son Öğeyi Aç"
+
 msgctxt "@title:menu menubar:toplevel"
 msgid "&File"
 msgstr "&Dosya"
@@ -392,7 +400,7 @@ msgstr "&Dil"
 
 msgctxt "@title:menu menubar:file"
 msgid "&Export..."
-msgstr "&Dışa aktar..."
+msgstr "&Dışa Aktar..."
 
 msgctxt "@title:menu menubar:file"
 msgid "Export selection..."

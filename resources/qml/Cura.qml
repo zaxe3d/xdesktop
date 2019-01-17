@@ -151,7 +151,7 @@ UM.MainWindow
                 MenuItem
                 {
                     id: exportSelectionMenu
-                    text: catalog.i18nc("@action:inmenu menubar:file", "Export Selection...");
+                    text: catalog.i18nc("@title:menu menubar:file", "Export Selection...");
                     enabled: UM.Selection.hasSelection;
                     iconName: "document-save-as";
                     onTriggered: UM.OutputDeviceManager.requestWriteSelectionToDevice("local_file", PrintInformation.jobName, { "filter_by_machine": false, "preferred_mimetypes": "application/vnd.ms-package.3dmanufacturing-3dmodel+xml"});

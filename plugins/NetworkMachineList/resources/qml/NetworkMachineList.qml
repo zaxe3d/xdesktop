@@ -21,7 +21,7 @@ Rectangle
         "zaxe_abs": "Zaxe ABS",
         "zaxe_pla": "Zaxe PLA",
         "zaxe_tpu": "Zaxe FLEX",
-        "custom": "Custom"
+        "custom": catalog.i18nc("@label", "Custom")
     }
 
     function toHHMMSS(str) {

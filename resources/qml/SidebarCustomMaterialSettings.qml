@@ -37,7 +37,9 @@ Item
             // end of speed
             Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", UM.Preferences.getValue("custom_material/material_flow"))
             Cura.MachineManager.setSettingForAllExtruders("retraction_speed", "value", UM.Preferences.getValue("custom_material/retraction_speed"))
-            Cura.MachineManager.setSettingForAllExtruders("retraction_length", "value", UM.Preferences.getValue("custom_material/retraction_length"))
+            var retractionAmount = parseFloat(UM.Preferences.getValue("custom_material/retraction_amount"))
+            Cura.MachineManager.setSettingForAllExtruders("retraction_enable", "value", retractionAmount == 0 ? "False" : "True")
+            Cura.MachineManager.setSettingForAllExtruders("retraction_amount", "value", retractionAmount)
         } else if (lastSelectedMaterial == "custom") {
             Cura.ContainerManager.clearUserContainers();
             prepareSidebar.switchView(0) // Default view
@@ -425,7 +427,7 @@ Item
                                     onActivated: {
                                         var value = model.get(index).value
                                         Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", value)
-                                        UM.Preferences.getValue("custom_material/material_flow", value)
+                                        UM.Preferences.setValue("custom_material/material_flow", value)
                                     }
 
                                     // Disable mouse wheel for combobox
@@ -573,7 +575,7 @@ Item
                                 Label
                                 {
                                     id: retractionLengthLabel
-                                    text: catalog.i18nc("@label", "Retraction length")
+                                    text: catalog.i18nc("@label", "Retraction amount")
                                     font: UM.Theme.getFont("medium");
                                     color: UM.Theme.getColor("text_sidebar")
 
@@ -603,14 +605,18 @@ Item
 
                                     model: ListModel {
                                         id: cbRLItems
-                                        ListElement { text: "1 mm"; value: 1 }
-                                        ListElement { text: "2 mm"; value: 2 }
-                                        ListElement { text: "3 mm"; value: 3 }
+                                        ListElement { text: "0 mm";   value: 0   }
+                                        ListElement { text: "0.4 mm"; value: 0.4 }
+                                        ListElement { text: "0.6 mm"; value: 0.6 }
+                                        ListElement { text: "0.8 mm"; value: 0.8 }
+                                        ListElement { text: "1 mm";   value: 1   }
+                                        ListElement { text: "2 mm";   value: 2   }
+                                        ListElement { text: "3 mm";   value: 3   }
                                     }
 
                                     currentIndex:
                                     {
-                                        var val = parseInt(UM.Preferences.getValue("custom_material/retraction_length"))
+                                        var val = parseFloat(UM.Preferences.getValue("custom_material/retraction_amount"))
                                         for(var i = 0; i < cbRLItems.count; ++i)
                                         {
                                             if(model.get(i).value == val)
@@ -621,8 +627,10 @@ Item
                                     }
 
                                     onActivated: {
-                                        UM.Preferences.setValue("custom_material/retraction_length", model.get(index).value)
-                                        Cura.MachineManager.setSettingForAllExtruders("retraction_length", "value", value)
+                                        var value = model.get(index).value
+                                        Cura.MachineManager.setSettingForAllExtruders("retraction_enable", "value", value == 0 ? "False" : "True")
+                                        Cura.MachineManager.setSettingForAllExtruders("retraction_amount", "value", value)
+                                        UM.Preferences.setValue("custom_material/retraction_amount", value)
                                     }
 
                                     // Disable mouse wheel for combobox
@@ -650,6 +658,7 @@ Item
                         text: catalog.i18nc("@label", "OK")
                         Layout.rightMargin: UM.Theme.getSize("sidebar_margin").width * 2
                         Layout.topMargin: UM.Theme.getSize("sidebar_item_margin").height * 2
+                        Layout.preferredWidth: 100
                         Layout.alignment: Qt.AlignRight
                         onClicked: {
                             prepareSidebar.switchView(0) // Default view

@@ -496,7 +496,7 @@ class CuraApplication(QtApplication):
         preferences.addPreference("custom_material/print_speed_multiplier",     1)
         preferences.addPreference("custom_material/material_flow",              100)
         preferences.addPreference("custom_material/retraction_speed",           20)
-        preferences.addPreference("custom_material/retraction_length",          2)
+        preferences.addPreference("custom_material/retraction_amount",          2)
 
         # Custom IPs
         preferences.addPreference("misc/custom_ips", "")

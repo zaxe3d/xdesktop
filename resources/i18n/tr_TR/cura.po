@@ -105,6 +105,38 @@ msgid "Hide custom material settings"
 msgstr "Özel materyal ayarlarını gizle"
 
 msgctxt "@label"
+msgid "Extruder temperature"
+msgstr "Extrüder sıcaklığı"
+
+msgctxt "@label"
+msgid "Bed temperature"
+msgstr "Tabla sıcaklığı"
+
+msgctxt "@label"
+msgid "Speed"
+msgstr "Hız"
+
+msgctxt "@label"
+msgid "Material flow"
+msgstr "Materyal akışı"
+
+msgctxt "@label"
+msgid "Retraction speed"
+msgstr "Geri çekme hızı"
+
+msgctxt "@label"
+msgid "Retraction amount"
+msgstr "Geri çekme uzunluğu"
+
+msgctxt "@label"
+msgid "Custom"
+msgstr "Özel"
+
+msgctxt "@label"
+msgid "OK"
+msgstr "Tamam"
+
+msgctxt "@label"
 msgid "Material"
 msgstr "Materyal"
 

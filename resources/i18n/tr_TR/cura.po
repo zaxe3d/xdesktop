@@ -268,6 +268,14 @@ msgctxt "@label"
 msgid "Print now!"
 msgstr "Baskı al!"
 
+msgctxt "@label"
+msgid "Support Blocker"
+msgstr "Destek Engelleyici"
+
+msgctxt "@action:button"
+msgid "Open File"
+msgstr "Dosya Aç"
+
 msgctxt "@action:inmenu menubar:edit"
 msgid "&Undo"
 msgstr "&Geri Al"

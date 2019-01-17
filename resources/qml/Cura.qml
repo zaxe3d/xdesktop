@@ -299,7 +299,7 @@ UM.MainWindow
                 anchors
                 {
                     top: topbar.bottom;
-                    topMargin: 25
+                    topMargin: 35
                     left: parent.left;
                     leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2)
                 }
@@ -331,7 +331,7 @@ UM.MainWindow
             Button
             {
                 id: multiplyModelButton;
-                text: catalog.i18ncp("@title:window", "Multiply Selected Model", "Multiply Selected Models", UM.Selection.selectionCount)
+                text: catalog.i18ncp("@action:inmenu menubar:edit", "Multiply Selected Model", "Multiply Selected Models", UM.Selection.selectionCount)
                 iconSource: UM.Theme.getIcon("multiply")
                 style: UM.Theme.styles.tool_button
                 tooltip: ""

@@ -491,12 +491,13 @@ class CuraApplication(QtApplication):
         preferences.addPreference("slicing/support_angle", 20)
 
         # custom material
-        preferences.addPreference("custom_material/material_print_temperature", 250)
-        preferences.addPreference("custom_material/material_bed_temperature",   80)
-        preferences.addPreference("custom_material/print_speed_multiplier",     1)
-        preferences.addPreference("custom_material/material_flow",              100)
-        preferences.addPreference("custom_material/retraction_speed",           20)
-        preferences.addPreference("custom_material/retraction_amount",          2)
+        preferences.addPreference("custom_material/material_print_temperature",         250)
+        preferences.addPreference("custom_material/material_bed_temperature",           80)
+        preferences.addPreference("custom_material/material_chamber_temperature",       50)
+        preferences.addPreference("custom_material/print_speed_multiplier",             1)
+        preferences.addPreference("custom_material/material_flow",                      100)
+        preferences.addPreference("custom_material/retraction_speed",                   20)
+        preferences.addPreference("custom_material/retraction_amount",                  2)
 
         # Custom IPs
         preferences.addPreference("misc/custom_ips", "")

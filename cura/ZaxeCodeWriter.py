@@ -103,7 +103,8 @@ class ZaxeCodeWriter(MeshWriter):
         extruder_stack = self._application.getExtruderManager().getInstance().getExtruderStack(0)
         return {
             "extruder_temperature": extruder_stack.getProperty("material_print_temperature", "value"),
-            "bed_temperature": extruder_stack.getProperty("material_bed_temperature", "value")
+            "bed_temperature": extruder_stack.getProperty("material_bed_temperature", "value"),
+            "chamber_temperature": self._application.getPreferences().getValue("custom_material/material_chamber_temperature")
         }
 
     def getCheckSum(self):

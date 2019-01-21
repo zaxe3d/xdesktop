@@ -113,6 +113,10 @@ msgid "Bed temperature"
 msgstr "Tabla sıcaklığı"
 
 msgctxt "@label"
+msgid "Chamber temperature"
+msgstr "Hazne sıcaklığı"
+
+msgctxt "@label"
 msgid "Speed"
 msgstr "Hız"
 

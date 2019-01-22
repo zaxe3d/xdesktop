@@ -226,6 +226,8 @@ Item
                     {
                         id: chamberTemperatureRow
 
+                        // X1 doesn't have chamber temp setting
+                        visible: Cura.MachineManager.activeMachineId != "X1"
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
                         Layout.preferredHeight: 40
                         Layout.alignment: Qt.AlignLeft

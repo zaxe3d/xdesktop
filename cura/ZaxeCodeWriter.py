@@ -78,7 +78,7 @@ class ZaxeCodeWriter(MeshWriter):
                 "version": self.ZAXE_FILE_VERSION,
                 "checksum": self.getCheckSum(),
                 "nozzle_diameter": 0.4 # self._machineManager.globalVariantName # FIXME hardcoded
-                }, self.get_export_params())
+                }, self.getExportParams(printInformation.materialNames[0]))
 
         infoFilePath = os.path.join(TMP_FOLDER, "info.json")
         snapshotFilePath = os.path.join(TMP_FOLDER, "snapshot.png")
@@ -99,13 +99,20 @@ class ZaxeCodeWriter(MeshWriter):
 
         return True
 
-    def get_export_params(self):
-        extruder_stack = self._application.getExtruderManager().getInstance().getExtruderStack(0)
-        return {
-            "extruder_temperature": extruder_stack.getProperty("material_print_temperature", "value"),
-            "bed_temperature": extruder_stack.getProperty("material_bed_temperature", "value"),
-            "chamber_temperature": self._application.getPreferences().getValue("custom_material/material_chamber_temperature")
-        }
+    def getExportParams(self, material):
+        if material == "custom":
+            preferences = self._application.getPreferences()
+            return {
+                "extruder_temperature": int(preferences.getValue("custom_material/material_print_temperature")),
+                "bed_temperature": int(preferences.getValue("custom_material/material_bed_temperature")),
+                "chamber_temperature": int(preferences.getValue("custom_material/material_chamber_temperature"))
+            }
+        else:
+            extruderStack = self._application.getExtruderManager().getInstance().getExtruderStack(0)
+            return {
+                "extruder_temperature": extruderStack.getProperty("material_print_temperature", "value"),
+                "bed_temperature": extruderStack.getProperty("material_bed_temperature", "value")
+            }
 
     def getCheckSum(self):
         #if self._checkSum is None:

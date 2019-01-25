@@ -169,7 +169,8 @@ class NetworkMachine(QThread, QObject):
         if message['event'] == "start_print":
             self.printingFile = message["filename"]
             self.estimatedTime = message["estimated_time"]
-            self.elapsedTime = 0
+            # Resurrected file has its elapsed time set according to percentage
+            self.elapsedTime = 0 if 'elapsed_time' not in message else message["elapsed_time"]
         if message['event'] == "pin_change":
             self.hasPin = message["has_pin"].lower() == "true"
         if message['event'] == "new_name":

@@ -33,7 +33,7 @@
         "acceleration_support_roof": { "value": 1000 },
         "acceleration_support_interface": { "value": 1000 },
         "acceleration_support_bottom": { "value": 1000 },
-        "acceleration_travel": { "default_value": 1400 },
+        "acceleration_travel": { "value": 1400 },
         "acceleration_print_layer_0": { "value": 1000 },
         "acceleration_travel_layer_0": { "value": 1000 },
         "raft_surface_acceleration": { "value": 1000 },

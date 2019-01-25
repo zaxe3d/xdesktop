@@ -24,7 +24,7 @@ Item {
     property string deviceModel
     property var  fwVersion
     property string printingFile
-    property string elapsedTime
+    property var elapsedTime
     property string elapsedTimeTxt
     property string estimatedTime
     property string snapshot
@@ -56,7 +56,7 @@ Item {
         onFileChange: {
             if (uid != arguments[0]) return
             printingFile = arguments[1]
-            elapsedTime = arguments[2] // reset the timer as well
+            elapsedTime = parseFloat(arguments[2]) // reset the timer as well
             estimatedTime = arguments[3]
             imgSnapshot.sourceChanged()
         }
@@ -90,7 +90,9 @@ Item {
         onStateChange: {
             if (uid != arguments[0]) return
             machineStates = arguments[1]
-            progress = 0 // new state new bar
+            if (!machineStates.paused) {
+                progress = 0 // new state new bar
+            }
         }
     }
 
@@ -1078,7 +1080,7 @@ Item {
                             running: machineStates.printing
                             repeat: true
                             onTriggered: {
-                                device.elapsedTime = parseFloat(device.elapsedTime) + 1
+                                device.elapsedTime = parseFloat(device.elapsedTime) + (machineStates.paused ? 0 : 1)
                                 elapsedTimeTxt = networkMachineList.toHHMMSS(device.elapsedTime)
                             }
                         }

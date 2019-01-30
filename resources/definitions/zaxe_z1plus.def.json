@@ -22,6 +22,7 @@
         "machine_width": { "default_value": 306 },
         "machine_height": { "default_value": 300 },
         "machine_depth": { "default_value": 306 },
+        "machine_start_gcode": { "default_value": "G28\nG91\nM83\nG1 E25 F150\nG1 X20 F10000\nG90\nG1 Y0 Z0.4 F500\nG91\nM83\nG1 X40 E15 F500\nG90\nM82\nG92 E0" },
         "machine_acceleration": { "value": 1000 },
         "machine_heated_bed": { "value": true },
         "acceleration_infill": { "value": 1000 },

@@ -35,8 +35,7 @@ Rectangle
         }
         allItemsWidth = (
             logo.width + UM.Theme.getSize("topbar_logo_right_margin").width +
-            UM.Theme.getSize("default_margin").width + viewModeButton.width +
-            rightMargin);
+            UM.Theme.getSize("default_margin").width + rightMargin);
     }
 
     UM.I18nCatalog

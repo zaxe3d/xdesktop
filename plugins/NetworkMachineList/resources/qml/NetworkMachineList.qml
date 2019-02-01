@@ -24,6 +24,8 @@ Rectangle
         "custom": catalog.i18nc("@label", "Custom")
     }
 
+    property var sidebarCollapsed: UM.Preferences.getValue("cura/sidebar_collapsed")
+
     function toHHMMSS(str) {
         var sec_num = parseInt(str, 10); // don't forget the second param
         var hours   = Math.floor(sec_num / 3600);
@@ -56,6 +58,30 @@ Rectangle
             machineListModel.onRemoved(arguments[0])
             if (machineListModel.count == 0)
                 noPrinterWarning.visible = true
+        }
+    }
+
+    Connections {
+        target: UM.Preferences
+        onPreferenceChanged:
+        {
+            networkMachineList.sidebarCollapsed = UM.Preferences.getValue("cura/sidebar_collapsed")
+        }
+    }
+
+    // Expand / Collapse bar
+    Text {
+        id: toggleSidebarButton
+        anchors.verticalCenter: parent.verticalCenter
+        width: 30; height: 50
+        x: -30
+        color: UM.Theme.getColor("text_sidebar_medium")
+        text:  networkMachineList.sidebarCollapsed ? "n" : "m"
+        font: UM.Theme.getFont("zaxe_icon_set_large")
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: sidebar.callExpandOrCollapse()
         }
     }
 

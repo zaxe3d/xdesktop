@@ -43,6 +43,9 @@ Item
         } else if (lastSelectedMaterial == "custom") {
             Cura.ContainerManager.clearUserContainers();
             prepareSidebar.switchView(0) // Default view
+            // set values coming from preferences back.
+            supportEnabled.setPropertyValue("value", parseInt(UM.Preferences.getValue("slicing/support_angle")) > 0)
+            supportAngle.setPropertyValue("value", (90 - Math.min(90, parseInt(UM.Preferences.getValue("slicing/support_angle")))))
         }
 
         lastSelectedMaterial = Cura.MachineManager.activeStack.material.name
@@ -787,6 +790,22 @@ Item
                     containerStackId: Cura.MachineManager.activeMachineId
                     key: "speed_support_infill"
                     watchedProperties: [ "value" ]
+                    storeIndex: 0
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: supportEnabled
+                    containerStack: Cura.MachineManager.activeMachine
+                    key: "support_enable"
+                    watchedProperties: [ "value", "enabled" ]
+                    storeIndex: 0
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: supportAngle
+                    containerStack: Cura.MachineManager.activeMachine
+                    key: "support_angle"
+                    watchedProperties: [ "value", "enabled" ]
                     storeIndex: 0
                 }
             }

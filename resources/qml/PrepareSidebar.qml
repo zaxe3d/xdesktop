@@ -15,7 +15,7 @@ Rectangle
     property var materialNames : {
         "zaxe_abs": "Zaxe ABS",
         "zaxe_pla": "Zaxe PLA",
-        "zaxe_tpu": "Zaxe FLEX",
+        "zaxe_flex": "Zaxe Flex",
         "custom": "Custom"
     }
 

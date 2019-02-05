@@ -26,7 +26,7 @@ Column
     property var materialNames : {
         "zaxe_abs": "Zaxe ABS",
         "zaxe_pla": "Zaxe PLA",
-        "zaxe_tpu": "Zaxe FLEX",
+        "zaxe_flex": "Zaxe Flex",
         "custom": catalog.i18nc("@label", "Custom")
     }
 
@@ -111,7 +111,7 @@ Column
                 property string material : "zaxe_abs"
                 checked: Cura.MachineManager.activeStack.material.name == "zaxe_abs"
                 Layout.preferredHeight: 80
-                Layout.preferredWidth: 80
+                Layout.preferredWidth: 100
                 Layout.alignment: Qt.AlignHCenter
                 style: UM.Theme.styles.radiobutton
                 text: "Zaxe ABS"
@@ -123,10 +123,22 @@ Column
                 property string material : "zaxe_pla"
                 checked: Cura.MachineManager.activeStack.material.name == "zaxe_pla"
                 Layout.preferredHeight: 80
-                Layout.preferredWidth: 80
+                Layout.preferredWidth: 100
                 Layout.alignment: Qt.AlignHCenter
                 style: UM.Theme.styles.radiobutton
                 text: "Zaxe PLA"
+            }
+            // FLEX
+            RadioButton
+            {
+                exclusiveGroup: materialGroup
+                property string material : "zaxe_flex"
+                checked: Cura.MachineManager.activeStack.material.name == "zaxe_flex"
+                Layout.preferredHeight: 80
+                Layout.preferredWidth: 100
+                Layout.alignment: Qt.AlignHCenter
+                style: UM.Theme.styles.radiobutton
+                text: "Zaxe Flex"
             }
             // Custom
             RadioButton
@@ -135,7 +147,7 @@ Column
                 property string material : "custom"
                 checked: Cura.MachineManager.activeStack.material.name == "custom"
                 Layout.preferredHeight: 80
-                Layout.preferredWidth: 120
+                Layout.preferredWidth: 100
                 Layout.alignment: Qt.AlignHCenter
                 style: UM.Theme.styles.radiobutton
                 text: catalog.i18nc("@label", "Custom")
@@ -151,7 +163,7 @@ Column
                 top: materialSelectionRow.bottom
                 right: parent.right
                 topMargin: 3
-                rightMargin: UM.Theme.getSize("sidebar_margin").width
+                rightMargin: -UM.Theme.getSize("sidebar_margin").width
             }
             onClicked: {
                 prepareSidebar.switchView(1) // Custom material settings view

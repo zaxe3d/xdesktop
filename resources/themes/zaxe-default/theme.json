@@ -45,6 +45,10 @@
             "size": 1.38,
             "family": "Mark-Regular"
         },
+        "medium_large_nonbold": {
+            "size": 1.25,
+            "family": "Mark-Regular"
+        },
         "large_semi_bold": {
             "size": 1.38,
             "family": "Mark-Medium"

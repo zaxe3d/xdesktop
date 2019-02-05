@@ -16,6 +16,7 @@ Item
 
     property var lastSelectedMaterial: ""
     property var customMaterialSelected: Cura.MachineManager.activeStack.material.name == "custom"
+    property var flexMaterialSelected: Cura.MachineManager.activeStack.material.name == "zaxe_flex"
 
     onCustomMaterialSelectedChanged:  {
         // apply custom settings here
@@ -40,7 +41,7 @@ Item
             var retractionAmount = parseFloat(UM.Preferences.getValue("custom_material/retraction_amount"))
             Cura.MachineManager.setSettingForAllExtruders("retraction_enable", "value", retractionAmount == 0 ? "False" : "True")
             Cura.MachineManager.setSettingForAllExtruders("retraction_amount", "value", retractionAmount)
-        } else if (lastSelectedMaterial == "custom") {
+        } else if (["custom", "zaxe_flex"].indexOf(lastSelectedMaterial) > -1) {
             Cura.ContainerManager.clearUserContainers();
             prepareSidebar.switchView(0) // Default view
             // set values coming from preferences back.
@@ -48,6 +49,20 @@ Item
             supportAngle.setPropertyValue("value", (90 - Math.min(90, parseInt(UM.Preferences.getValue("slicing/support_angle")))))
         }
 
+        lastSelectedMaterial = Cura.MachineManager.activeStack.material.name
+    }
+
+    onFlexMaterialSelectedChanged:  {
+        if (flexMaterialSelected) {
+            var printSpeed = 30
+            speedInfill.setPropertyValue("value", 30)
+            speedTopbottom.setPropertyValue("value", 30)
+            speedRoofing.setPropertyValue("value", 30)
+            speedWall0.setPropertyValue("value", 30)
+            speedWallX.setPropertyValue("value", 30)
+            speedSupportRoof.setPropertyValue("value", 30)
+            speedSupportInfill.setPropertyValue("value", 30)
+        }
         lastSelectedMaterial = Cura.MachineManager.activeStack.material.name
     }
 

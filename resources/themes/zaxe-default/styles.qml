@@ -1002,7 +1002,7 @@ QtObject {
             label: Label {
                 text: control.text
                 color: Theme.getColor("text_sidebar_medium")
-                font: Theme.getFont("large_nonbold")
+                font: Theme.getFont("medium_large_nonbold")
                 elide: Text.ElideRight
             }
         }

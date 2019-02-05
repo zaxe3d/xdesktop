@@ -13,6 +13,7 @@ from UM.Scene.SceneNodeDecorator import SceneNodeDecorator #To cast the deepcopy
 import cura.CuraApplication #To get the build plate.
 from cura.Settings.ExtruderStack import ExtruderStack #For typing.
 from cura.Settings.SettingOverrideDecorator import SettingOverrideDecorator #For per-object settings.
+from cura.Settings.ExtrudersModel import ExtrudersModel
 
 ##  Scene nodes that are models are only seen when selecting the corresponding build plate
 #   Note that many other nodes can just be UM SceneNode objects.
@@ -22,6 +23,7 @@ class CuraSceneNode(SceneNode):
         if not no_setting_override:
             self.addDecorator(SettingOverrideDecorator())  # now we always have a getActiveExtruderPosition, unless explicitly disabled
         self._outside_buildarea = False
+        self._extruders_model = ExtrudersModel()
 
     def setOutsideBuildArea(self, new_value: bool) -> None:
         self._outside_buildarea = new_value
@@ -35,46 +37,19 @@ class CuraSceneNode(SceneNode):
     def isSelectable(self) -> bool:
         return super().isSelectable() and self.callDecoration("getBuildPlateNumber") == cura.CuraApplication.CuraApplication.getInstance().getMultiBuildPlateModel().activeBuildPlate
 
-    ##  Get the extruder used to print this node. If there is no active node, then the extruder in position zero is returned
-    #   TODO The best way to do it is by adding the setActiveExtruder decorator to every node when is loaded
-    def getPrintingExtruder(self) -> Optional[ExtruderStack]:
-        global_container_stack = Application.getInstance().getGlobalContainerStack()
-        if global_container_stack is None:
-            return None
+    def getPrintingExtruderColor(self) -> Optional[ExtruderStack]:
+        extruder_index = 0
+        try:
+            material_color = self._extruders_model.getItem(extruder_index)["color"]
+        except KeyError:
+            material_color = self._extruders_model.defaultColors[0]
 
-        per_mesh_stack = self.callDecoration("getStack")
-        extruders = list(global_container_stack.extruders.values())
-
-        # Use the support extruder instead of the active extruder if this is a support_mesh
-        if per_mesh_stack:
-            if per_mesh_stack.getProperty("support_mesh", "value"):
-                return extruders[int(global_container_stack.getExtruderPositionValueWithDefault("support_extruder_nr"))]
-
-        # It's only set if you explicitly choose an extruder
-        extruder_id = self.callDecoration("getActiveExtruder")
-
-        for extruder in extruders:
-            # Find out the extruder if we know the id.
-            if extruder_id is not None:
-                if extruder_id == extruder.getId():
-                    return extruder
-            else: # If the id is unknown, then return the extruder in the position 0
-                try:
-                    if extruder.getMetaDataEntry("position", default = "0") == "0":  # Check if the position is zero
-                        return extruder
-                except ValueError:
-                    continue
-
-        # This point should never be reached
-        return None
+        return material_color
 
     ##  Return the color of the material used to print this model
     def getDiffuseColor(self) -> List[float]:
-        printing_extruder = self.getPrintingExtruder()
 
-        material_color = "#808080"  # Fallback color
-        if printing_extruder is not None and printing_extruder.material:
-            material_color = printing_extruder.material.getMetaDataEntry("color_code", default = material_color)
+        material_color = self.getPrintingExtruderColor()
 
         # Colors are passed as rgb hex strings (eg "#ffffff"), and the shader needs
         # an rgba list of floats (eg [1.0, 1.0, 1.0, 1.0])

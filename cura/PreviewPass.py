@@ -24,10 +24,12 @@ if MYPY:
 # Make color brighter by normalizing it (maximum factor 2.5 brighter)
 # color_list is a list of 4 elements: [r, g, b, a], each element is a float 0..1
 def prettier_color(color_list):
-    # Hardcoded blue for now. (took me 2 days to solve it)
-    # Solves grayscale image on machine change
-    return [0.000000, 0.607843, 0.874510, 1.000000]
-
+    maximum = max(color_list[:3])
+    if maximum > 0:
+        factor = min(1 / maximum, 2.5)
+    else:
+        factor = 1.0
+    return [min(i * factor, 1.0) for i in color_list]
 
 ##  A render pass subclass that renders slicable objects with default parameters.
 #   It uses the active camera by default, but it can be overridden to use a different camera.

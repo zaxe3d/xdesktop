@@ -57,6 +57,10 @@ msgid "Heating..."
 msgstr "Isınıyor..."
 
 msgctxt "@label"
+msgid "Updating..."
+msgstr "Güncelleniyor..."
+
+msgctxt "@label"
 msgid "Ready to print!"
 msgstr "Baskıya hazır!"
 

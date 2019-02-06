@@ -146,13 +146,18 @@ class NetworkMachine(QThread, QObject):
             old_states = self.__states
 
             # backward compatiblity
+            updating = False
             calibrating = False
             bedOccupied = False
             if "is_calibrating" in message:
                 calibrating = message["is_calibrating"].lower() == "true"
                 bedOccupied = message["is_bed_occupied"].lower() == "true"
 
+            if "is_updating" in message:
+                updating = message["is_updating"].lower() == "true"
+
             self.__states = {
+                "updating": updating,
                 "bed_occupied": bedOccupied,
                 "calibrating": calibrating,
                 "preheat": message["is_preheat"].lower() == "true",

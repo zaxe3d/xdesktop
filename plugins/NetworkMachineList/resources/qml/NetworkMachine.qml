@@ -83,6 +83,10 @@ Item {
             if (uid != arguments[0]) return
             progress = arguments[1]
         }
+        onPinChange: {
+            if (uid != arguments[0]) return
+            hasPin = arguments[1]
+        }
         onUploadProgress: {
             if (uid != arguments[0]) return
             progress = arguments[1]
@@ -647,7 +651,7 @@ Item {
                                 // Print Now button
                                 Button {
                                     id: btnPrintNow
-                                    visible: !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
+                                    visible: !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied && !machineStates.updating
                                     width: 130; height: 28
                                     anchors.top: parent.top
                                     anchors.topMargin: 11
@@ -740,6 +744,8 @@ Item {
                                             return catalog.i18nc("@label", "Calibrating...")
                                         else if (machineStates.heating)
                                             return catalog.i18nc("@label", "Heating...")
+                                        else if (machineStates.updating)
+                                            return catalog.i18nc("@label", "Updating...")
                                         else
                                             return ""
                                     }
@@ -812,7 +818,7 @@ Item {
             // Second row - main (fullrow messages)
             // FW update available message
             Rectangle {
-                visible: device.hasFWUpdate
+                visible: device.hasFWUpdate && !machineStates.updating
                 Layout.preferredWidth: Math.round(device.width - 65 - (UM.Theme.getSize("sidebar_item_margin").width * 2))
                 Layout.minimumHeight: fwUpdateMessage.height
                 Layout.alignment: Qt.AlignRight
@@ -855,7 +861,7 @@ Item {
                     anchors {
                         verticalCenter: fwUpdateMessage.verticalCenter
                         left: fwUpdateMessage.right
-                        leftMargin: 1
+                        leftMargin: -8
                     }
                     background: Rectangle {
                         color: UM.Theme.getColor("button_blue")
@@ -867,7 +873,7 @@ Item {
                         color: UM.Theme.getColor("text_white")
                         width: parent.width
                         text: catalog.i18nc("@label", "Update")
-                        font: UM.Theme.getFont("medium_bold")
+                        font: UM.Theme.getFont("small_bold")
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }

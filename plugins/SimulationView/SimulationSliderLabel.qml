@@ -45,7 +45,7 @@ UM.PointingRectangle {
     // Pause button
     QC2.Button {
         id: btnPause
-        implicitWidth: 25; implicitHeight: 30
+        implicitWidth: 20; implicitHeight: 25
         z: 5
         anchors {
             verticalCenter: parent.verticalCenter
@@ -62,7 +62,7 @@ UM.PointingRectangle {
             text: "K"
             anchors {
                 top: parent.top
-                topMargin: 10
+                topMargin: 12
             }
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter

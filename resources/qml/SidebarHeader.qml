@@ -112,6 +112,7 @@ Column
                 checked: Cura.MachineManager.activeStack.material.name == "zaxe_abs"
                 Layout.preferredHeight: 80
                 Layout.preferredWidth: 90
+                Layout.leftMargin: 10
                 Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
                 text: "Zaxe ABS"

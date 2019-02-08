@@ -73,7 +73,7 @@ Column
         RowLayout
         {
             id: materialSelectionRow
-            spacing: UM.Theme.getSize("sidebar_item_margin").width / 2
+            spacing: 0
             height: 50
             width: parent.width
             anchors.top: materialLabel.bottom
@@ -111,8 +111,8 @@ Column
                 property string material : "zaxe_abs"
                 checked: Cura.MachineManager.activeStack.material.name == "zaxe_abs"
                 Layout.preferredHeight: 80
-                Layout.preferredWidth: 100
-                Layout.alignment: Qt.AlignHCenter
+                Layout.preferredWidth: 90
+                Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
                 text: "Zaxe ABS"
             }
@@ -123,8 +123,8 @@ Column
                 property string material : "zaxe_pla"
                 checked: Cura.MachineManager.activeStack.material.name == "zaxe_pla"
                 Layout.preferredHeight: 80
-                Layout.preferredWidth: 100
-                Layout.alignment: Qt.AlignHCenter
+                Layout.preferredWidth: 90
+                Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
                 text: "Zaxe PLA"
             }
@@ -135,8 +135,8 @@ Column
                 property string material : "zaxe_flex"
                 checked: Cura.MachineManager.activeStack.material.name == "zaxe_flex"
                 Layout.preferredHeight: 80
-                Layout.preferredWidth: 100
-                Layout.alignment: Qt.AlignHCenter
+                Layout.preferredWidth: 90
+                Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
                 text: "Zaxe Flex"
             }
@@ -147,8 +147,8 @@ Column
                 property string material : "custom"
                 checked: Cura.MachineManager.activeStack.material.name == "custom"
                 Layout.preferredHeight: 80
-                Layout.preferredWidth: 100
-                Layout.alignment: Qt.AlignHCenter
+                Layout.preferredWidth: 90
+                Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
                 text: catalog.i18nc("@label", "Custom")
             }

@@ -1313,6 +1313,29 @@ class CuraApplication(QtApplication):
             else:
                 Logger.log("w", "Unable to reload data because we don't have a filename.")
 
+    @pyqtSlot(int, bool)
+    def pauseOrUnpauseAtLayer(self, layerNo, unpause) -> None:
+        scene = self.getController().getScene()
+        gcode_dict = getattr(scene, "gcode_dict")
+        gcode_list = gcode_dict.get(self.getMultiBuildPlateModel().activeBuildPlate, None)
+        layerCounter = 0
+        pauseKeyword = "pause\n"
+        for index, line in enumerate(gcode_list):
+            for i in range(0, 2): # FIXME gcode_list some times has more than one layer in layer
+                idxOfLayerKeyword = line.find(";LAYER:", i)
+                if idxOfLayerKeyword != -1: # we found an occurance
+                    if layerCounter == layerNo:
+                        if unpause:
+                            idxOfPauseKeyword = line.find(pauseKeyword, i) # hey, could be more than one
+                            gcode_list[index] = line[:idxOfPauseKeyword] + line[idxOfPauseKeyword + len(pauseKeyword):]
+                        else:
+                            gcode_list[index] = line[:idxOfLayerKeyword] + pauseKeyword + line[idxOfLayerKeyword:]
+
+                        self.getController().getScene().gcode_list = gcode_list
+                        return
+                    layerCounter += 1
+
+
     @pyqtSlot()
     def takeSnapshot(self) -> None:
         # write the png to the file

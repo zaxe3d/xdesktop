@@ -18,10 +18,11 @@
         <diameter>1.75</diameter>
     </properties>
     <settings>
-        <setting key="print temperature">225</setting>
+        <setting key="print temperature">210</setting>
         <setting key="print temperature layer 0">225</setting>
         <setting key="heated bed temperature">70</setting>
         <setting key="bed temperature layer 0">70</setting>
+        <setting key="retraction amount">0</setting>
         <setting key="cool fan full layer">5</setting>
 
         <machine>
@@ -39,7 +40,7 @@
         </machine>
 
         <machine>
-            <machine_identifier manufacturer="Zaxe" product="Zaxe X1+"/>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe X1PLUS"/>
 
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
@@ -48,16 +49,20 @@
         </machine>
 
         <machine>
-            <machine_identifier manufacturer="Zaxe" product="Zaxe Z1+"/>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe Z1"/>
 
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">250</setting>
-                <setting key="print temperature layer 0">250</setting>
-                <setting key="heated bed temperature">100</setting>
-                <setting key="bed temperature layer 0">100</setting>
-                <setting key="retraction amount">0.6</setting>
             </hotend>
         </machine>
+
+        <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe Z1PLUS"/>
+
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+            </hotend>
+        </machine>
+
     </settings>
 </fdmmaterial>

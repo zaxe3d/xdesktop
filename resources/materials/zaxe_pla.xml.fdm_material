@@ -38,7 +38,7 @@
         </machine>
 
         <machine>
-            <machine_identifier manufacturer="Zaxe" product="Zaxe X1+"/>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe X1PLUS"/>
 
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
@@ -47,17 +47,23 @@
         </machine>
 
         <machine>
-            <machine_identifier manufacturer="Zaxe" product="Zaxe Z1+"/>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe Z1"/>
 
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">200</setting>
-                <setting key="print temperature layer 0">220</setting>
-                <setting key="heated bed temperature">60</setting>
-                <setting key="cool fan full layer">1</setting>
+                <setting key="print temperature">210</setting>
                 <setting key="retraction amount">0.6</setting>
             </hotend>
         </machine>
 
+        <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe Z1PLUS"/>
+
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">210</setting>
+                <setting key="retraction amount">0.6</setting>
+            </hotend>
+        </machine>
     </settings>
 </fdmmaterial>

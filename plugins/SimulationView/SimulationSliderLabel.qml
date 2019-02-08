@@ -3,6 +3,7 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 1.2
+import QtQuick.Controls 2.2 as QC2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.1
 
@@ -18,6 +19,7 @@ UM.PointingRectangle {
     property var setValue // Function
     property bool busy: false
     property int startFrom: 1
+    property var layersToPauseAt: []
 
     target: Qt.point(parent.width, y + height / 2)
     arrowSize: UM.Theme.getSize("default_arrow").width
@@ -40,6 +42,49 @@ UM.PointingRectangle {
         anchors.fill: parent
     }
 
+    // Pause button
+    QC2.Button {
+        id: btnPause
+        implicitWidth: 25; implicitHeight: 30
+        z: 5
+        anchors {
+            verticalCenter: parent.verticalCenter
+            left: valueLabel.left
+            topMargin: 12
+        }
+
+        background: Rectangle {
+            color: UM.Theme.getColor("sidebar_item_light")
+        }
+        contentItem: Text {
+            font: UM.Theme.getFont("zaxe_icon_set")
+            color: layersToPauseAt.indexOf(sliderLabelRoot.value) > -1 ? UM.Theme.getColor("text_danger") : UM.Theme.getColor("text_sidebar")
+            text: "K"
+            anchors {
+                top: parent.top
+                topMargin: 10
+            }
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        onClicked: {
+            var layerNo = sliderLabelRoot.value
+            var idx = layersToPauseAt.indexOf(layerNo)
+            if (idx == -1) {
+                CuraApplication.pauseOrUnpauseAtLayer(layerNo, false)
+                layersToPauseAt.push(layerNo)
+            } else {
+                layersToPauseAt.splice(idx, 1);
+                CuraApplication.pauseOrUnpauseAtLayer(layerNo, true)
+            }
+            // FIXME couldn't update the color when selected
+            // go back and forth to do this if I update every
+            // layer color gets changed.
+            sliderLabelRoot.setValue(layerNo - layerNo == 1 ? -1 : 1)
+            sliderLabelRoot.setValue(layerNo)
+        }
+    }
+
     TextField {
         id: valueLabel
 
@@ -48,7 +93,7 @@ UM.PointingRectangle {
             horizontalCenter: parent.horizontalCenter
         }
 
-        width: (maximumValue.toString().length + 1) * 10 * screenScaleFactor
+        width: (maximumValue.toString().length + 1) * 10 * screenScaleFactor + btnPause.width
         text: sliderLabelRoot.value + startFrom // the current handle value, add 1 because layers is an array
         horizontalAlignment: TextInput.AlignRight
 

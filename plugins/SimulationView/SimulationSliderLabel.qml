@@ -50,7 +50,7 @@ UM.PointingRectangle {
         anchors {
             verticalCenter: parent.verticalCenter
             left: valueLabel.left
-            topMargin: 12
+            topMargin: 15
         }
 
         background: Rectangle {

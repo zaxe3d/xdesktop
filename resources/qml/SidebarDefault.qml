@@ -1552,6 +1552,130 @@ Item
 
                     Item
                     {
+                        id: supportxyDistanceRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 51
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: supportxyDistanceCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: supportxyDistanceLabel
+                                    text: catalog.i18nc("@label", "Support XY distance")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors.top: parent.top
+                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    anchors.left: parent.left
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                            }
+
+                            Item
+                            {
+                                id: supportxyDistanceCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: supportxyDistanceCellLeft.height
+
+                                anchors.left: supportxyDistanceCellLeft.right
+                                anchors.bottom: supportxyDistanceCellLeft.bottom
+
+                                Label
+                                {
+                                    id: selectedsupportxyDistanceText
+
+                                    anchors.bottom: parent.bottom
+                                    anchors.left: supportxyDistanceSlider.left
+                                    anchors.right: parent.right
+
+                                    font: UM.Theme.getFont("medium")
+
+                                    text: parseFloat(supportxyDistance.properties.value) + " mm"
+
+                                    color: supportxyDistanceSlider.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
+                                }
+
+                                Slider
+                                {
+                                    id: supportxyDistanceSlider
+
+                                    anchors.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height / 2
+                                    anchors.bottom: selectedsupportxyDistanceText.top
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+
+                                    height: UM.Theme.getSize("sidebar_margin").height
+
+                                    updateValueWhileDragging : true
+
+
+                                    width: parseInt(supportxyDistanceCellRight.width - UM.Theme.getSize("sidebar_margin").width - style.handleWidth)
+
+                                    minimumValue: 0
+                                    maximumValue: 1.5
+                                    stepSize: 0.1
+
+                                    value: parseFloat(supportxyDistance.properties.value)
+
+                                    onValueChanged: {
+                                        supportxyDistance.setPropertyValue("value", supportxyDistanceSlider.value);
+                                    }
+
+
+                                    style: SliderStyle
+                                    {
+                                        groove: Rectangle {
+                                            id: groove
+                                            implicitWidth: 100 * screenScaleFactor
+                                            implicitHeight: 10 * screenScaleFactor
+                                            color: control.enabled ? UM.Theme.getColor("slider_groove") : UM.Theme.getColor("quality_slider_unavailable")
+                                            radius: 5
+                                        }
+
+                                        handle: Item {
+                                            Rectangle {
+                                                id: handleButton
+                                                anchors.centerIn: parent
+                                                color: control.enabled ? UM.Theme.getColor("slider_handle") : UM.Theme.getColor("quality_slider_unavailable")
+                                                implicitWidth: 15 * screenScaleFactor
+                                                implicitHeight: 15 * screenScaleFactor
+                                                radius: 100
+                                            }
+                                        }
+                                    }
+
+                                    Component.onCompleted: {
+                                        // Disable mouse wheel on old sliders.
+                                        for (var i = 0; i < supportxyDistanceSlider.children.length; ++i) {
+                                            if (supportxyDistanceSlider.children[i].hasOwnProperty("onVerticalWheelMoved") && supportxyDistanceSlider.children[i].hasOwnProperty("onHorizontalWheelMoved")) {
+                                                supportxyDistanceSlider.children[i].destroy()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
                         id: zHopWhenRetractedRow
 
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
@@ -1840,6 +1964,15 @@ Item
                 id: xyTolerance
                 containerStackId: Cura.MachineManager.activeStackId
                 key: "xy_offset"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: supportxyDistance
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "support_xy_distance"
                 watchedProperties: [ "value" ]
                 storeIndex: 0
             }

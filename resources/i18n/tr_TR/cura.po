@@ -217,8 +217,8 @@ msgid "XY tolerance"
 msgstr "XY toleransı"
 
 msgctxt "@label"
-msgid "Support XY distance"
-msgstr "Destek XY uzaklığı"
+msgid "Support contact distance"
+msgstr "Destek kontakt mesafesi"
 
 msgctxt "@label"
 msgid "Avoid supports"

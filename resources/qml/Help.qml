@@ -59,6 +59,12 @@ Item
         modesListModel.append({
             item: spiralVaseMode
         })
+        modesListModel.append({
+            item: supportContactDistance
+        })
+        modesListModel.append({
+            item: zHopWhenRetracted
+        })
 
         sidebarContents.replace(modesListModel.get(UM.Preferences.getValue("cura/help_page")).item)
         sidebarContents.height = sidebarContents.childrenRect.height + 60
@@ -934,6 +940,94 @@ Item
                 textFormat: Qt.RichText
                 wrapMode: Text.WordWrap
                 text: "<i>Spiral mod açık</i>"
+            }
+        }
+    }
+    Item
+    {
+        id: supportContactDistance
+        visible: false
+        height: childrenRect.height
+
+        Column {
+            spacing: 7
+            width: base.width - Math.round(UM.Theme.getSize("sidebar_item_margin").width * 2)
+            anchors {
+                top: parent.top
+                left: parent.left
+                topMargin: 30
+                leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+            }
+
+            // Title row
+            RowLayout {
+                Button {
+                    Layout.preferredHeight: 20
+                    style: UM.Theme.styles.sidebar_simple_button
+                    text: catalog.i18nc("@label", "<")
+                    onClicked: { UM.Controller.setActiveStage("PrepareStage") }
+                }
+                Text {
+                    text: catalog.i18nc("@label", "Support contact distance")
+                    color: UM.Theme.getColor("text_sidebar_medium")
+                    width: parent.width
+                    font: UM.Theme.getFont("xx_large")
+                    horizontalAlignment: Text.AlignHCenter
+                }
+            }
+            // Bottom Border
+            Rectangle { width: parent.width; height: 2; color: UM.Theme.getColor("sidebar_item_extra_dark") }
+
+            Label {
+                width: parent.width
+                color: UM.Theme.getColor("text_sidebar")
+                textFormat: Qt.RichText
+                wrapMode: Text.WordWrap
+                text: "<p>Destek yapısının en alt katmanının, altındaki parçanın üst katmanıyla olan boşluk mesafesini ve destek yapısının en üst katmanının, üzerindeki parçanın alt katmanıyla olan boşluk mesafesini ayarlar. Küçük değerler, destekler söküldükten sonra parça yüzeyinin daha pürüzsüz olmasını sağlar ancak desteklerin sökülmesini zorlaştırır. Eğer bu değer arttırılırsa desteklerin sökülmesi kolaylaşır ancak parçanın desteklerle oluşturduğu temas yüzeyindeki kalitede düşme yaşanabilir. </p>"
+            }
+        }
+    }
+    Item
+    {
+        id: zHopWhenRetracted
+        visible: false
+        height: childrenRect.height
+
+        Column {
+            spacing: 7
+            width: base.width - Math.round(UM.Theme.getSize("sidebar_item_margin").width * 2)
+            anchors {
+                top: parent.top
+                left: parent.left
+                topMargin: 30
+                leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+            }
+
+            // Title row
+            RowLayout {
+                Button {
+                    Layout.preferredHeight: 20
+                    style: UM.Theme.styles.sidebar_simple_button
+                    text: catalog.i18nc("@label", "<")
+                    onClicked: { UM.Controller.setActiveStage("PrepareStage") }
+                }
+                Text {
+                    text: catalog.i18nc("@label", "Z hop when retracted")
+                    color: UM.Theme.getColor("text_sidebar_medium")
+                    width: parent.width
+                    font: UM.Theme.getFont("xx_large")
+                    horizontalAlignment: Text.AlignHCenter
+                }
+            }
+            // Bottom Border
+            Rectangle { width: parent.width; height: 2; color: UM.Theme.getColor("sidebar_item_extra_dark") }
+
+            Label {
+                width: parent.width
+                color: UM.Theme.getColor("text_sidebar")
+                textFormat: Qt.RichText
+                wrapMode: Text.WordWrap
+                text: "<p>Nozülün üst katmanlarda bıraktığı çizgiyi engellemek ve gereken durumlarda çok ince detayları olan baskılarda nozülün gezinti hareketi sırasında bu bölgelere temas etmemesi için baskı tablasını bir miktar aşağı indirir. (Dikkat: Malzeme türü ve geometriye bağlı olarak hafif ipliklenme yapabilir.)</p>"
             }
         }
     }

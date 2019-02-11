@@ -20,7 +20,7 @@ Rectangle
         "pla": "Zaxe PLA", // Backward compatibility?
         "zaxe_abs": "Zaxe ABS",
         "zaxe_pla": "Zaxe PLA",
-        "zaxe_flex": "Zaxe Flex",
+        "zaxe_flex": "Zaxe FLEX",
         "custom": catalog.i18nc("@label", "Custom")
     }
 

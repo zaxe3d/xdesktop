@@ -1552,7 +1552,7 @@ Item
 
                     Item
                     {
-                        id: supportxyDistanceRow
+                        id: supportContactDistanceRow
 
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
                         Layout.preferredHeight: 51
@@ -1565,7 +1565,7 @@ Item
                             width: parent.width
                             Item
                             {
-                                id: supportxyDistanceCellLeft
+                                id: supportContactDistanceCellLeft
 
                                 anchors.top: parent.top
                                 anchors.left: parent.left
@@ -1575,8 +1575,8 @@ Item
 
                                 Label
                                 {
-                                    id: supportxyDistanceLabel
-                                    text: catalog.i18nc("@label", "Support XY distance")
+                                    id: supportContactDistanceLabel
+                                    text: catalog.i18nc("@label", "Support contact distance")
                                     font: UM.Theme.getFont("medium");
                                     color: UM.Theme.getColor("text_sidebar")
 
@@ -1585,39 +1585,59 @@ Item
                                     anchors.left: parent.left
                                     anchors.verticalCenter: parent.verticalCenter
                                 }
+
+                                Image
+                                {
+                                    width: 11; height: 12
+
+                                    source: UM.Theme.getImage("info")
+
+                                    anchors { left: supportContactDistanceLabel.right; top: supportContactDistanceLabel.top; leftMargin: 5 }
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+
+                                        onClicked:
+                                        {
+                                            UM.Preferences.setValue("cura/help_page", 9)
+                                            UM.Controller.setActiveStage("Help")
+                                        }
+                                    }
+                                }
                             }
 
                             Item
                             {
-                                id: supportxyDistanceCellRight
+                                id: supportContactDistanceCellRight
 
                                 width: Math.round(base.width * .38)
-                                height: supportxyDistanceCellLeft.height
+                                height: supportContactDistanceCellLeft.height
 
-                                anchors.left: supportxyDistanceCellLeft.right
-                                anchors.bottom: supportxyDistanceCellLeft.bottom
+                                anchors.left: supportContactDistanceCellLeft.right
+                                anchors.bottom: supportContactDistanceCellLeft.bottom
 
                                 Label
                                 {
-                                    id: selectedsupportxyDistanceText
+                                    id: selectedsupportContactDistanceText
 
                                     anchors.bottom: parent.bottom
-                                    anchors.left: supportxyDistanceSlider.left
+                                    anchors.left: supportContactDistanceSlider.left
                                     anchors.right: parent.right
 
                                     font: UM.Theme.getFont("medium")
 
-                                    text: parseFloat(supportxyDistance.properties.value) + " mm"
+                                    text: parseFloat(supportContactDistance.properties.value) + " mm"
 
-                                    color: supportxyDistanceSlider.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
+                                    color: supportContactDistanceSlider.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
                                 }
 
                                 Slider
                                 {
-                                    id: supportxyDistanceSlider
+                                    id: supportContactDistanceSlider
 
                                     anchors.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height / 2
-                                    anchors.bottom: selectedsupportxyDistanceText.top
+                                    anchors.bottom: selectedsupportContactDistanceText.top
                                     anchors.left: parent.left
                                     anchors.right: parent.right
 
@@ -1626,16 +1646,16 @@ Item
                                     updateValueWhileDragging : true
 
 
-                                    width: parseInt(supportxyDistanceCellRight.width - UM.Theme.getSize("sidebar_margin").width - style.handleWidth)
+                                    width: parseInt(supportContactDistanceCellRight.width - UM.Theme.getSize("sidebar_margin").width - style.handleWidth)
 
                                     minimumValue: 0
-                                    maximumValue: 1.5
+                                    maximumValue: 0.4
                                     stepSize: 0.1
 
-                                    value: parseFloat(supportxyDistance.properties.value)
+                                    value: parseFloat(supportContactDistance.properties.value)
 
                                     onValueChanged: {
-                                        supportxyDistance.setPropertyValue("value", supportxyDistanceSlider.value);
+                                        supportContactDistance.setPropertyValue("value", supportContactDistanceSlider.value);
                                     }
 
 
@@ -1663,9 +1683,9 @@ Item
 
                                     Component.onCompleted: {
                                         // Disable mouse wheel on old sliders.
-                                        for (var i = 0; i < supportxyDistanceSlider.children.length; ++i) {
-                                            if (supportxyDistanceSlider.children[i].hasOwnProperty("onVerticalWheelMoved") && supportxyDistanceSlider.children[i].hasOwnProperty("onHorizontalWheelMoved")) {
-                                                supportxyDistanceSlider.children[i].destroy()
+                                        for (var i = 0; i < supportContactDistanceSlider.children.length; ++i) {
+                                            if (supportContactDistanceSlider.children[i].hasOwnProperty("onVerticalWheelMoved") && supportContactDistanceSlider.children[i].hasOwnProperty("onHorizontalWheelMoved")) {
+                                                supportContactDistanceSlider.children[i].destroy()
                                             }
                                         }
                                     }
@@ -1721,6 +1741,25 @@ Item
                                         {
                                             parent.checked = !parent.checked;
                                             zHopWhenRetracted.setPropertyValue("value", booleanToString(parent.checked));
+                                        }
+                                    }
+                                }
+                                Image
+                                {
+                                    width: 11; height: 12
+
+                                    source: UM.Theme.getImage("info")
+
+                                    anchors { left: zHopWhenRetractedCheckBox.right; verticalCenter: zHopWhenRetractedCheckBox.verticalCenter; leftMargin: 5 }
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+
+                                        onClicked:
+                                        {
+                                            UM.Preferences.setValue("cura/help_page", 10)
+                                            UM.Controller.setActiveStage("Help")
                                         }
                                     }
                                 }
@@ -1970,9 +2009,9 @@ Item
 
             UM.SettingPropertyProvider
             {
-                id: supportxyDistance
+                id: supportContactDistance
                 containerStackId: Cura.MachineManager.activeStackId
-                key: "support_xy_distance"
+                key: "support_z_distance"
                 watchedProperties: [ "value" ]
                 storeIndex: 0
             }

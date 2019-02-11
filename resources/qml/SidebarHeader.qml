@@ -26,7 +26,7 @@ Column
     property var materialNames : {
         "zaxe_abs": "Zaxe ABS",
         "zaxe_pla": "Zaxe PLA",
-        "zaxe_flex": "Zaxe Flex",
+        "zaxe_flex": "Zaxe FLEX",
         "custom": catalog.i18nc("@label", "Custom")
     }
 
@@ -136,10 +136,10 @@ Column
                 property string material : "zaxe_flex"
                 checked: Cura.MachineManager.activeStack.material.name == "zaxe_flex"
                 Layout.preferredHeight: 80
-                Layout.preferredWidth: 90
+                Layout.preferredWidth: 100
                 Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
-                text: "Zaxe Flex"
+                text: "Zaxe FLEX"
             }
             // Custom
             RadioButton

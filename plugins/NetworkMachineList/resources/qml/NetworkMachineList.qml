@@ -151,6 +151,7 @@ Rectangle
             fwVersion: mFWVersion
             printingFile: mPrintingFile
             elapsedTime: mElapsedTime
+            startTime: mStartTime
             estimatedTime: mEstimatedTime
             snapshot: mSnapshot
             hasPin: mHasPin

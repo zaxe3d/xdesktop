@@ -25,6 +25,7 @@ Item {
     property var  fwVersion
     property string printingFile
     property var elapsedTime
+    property var startTime
     property string elapsedTimeTxt
     property string estimatedTime
     property string snapshot
@@ -32,6 +33,8 @@ Item {
     property bool hasPin
     property bool hasFWUpdate
     property var progress: 0
+
+    property var pausedSeconds: 0
 
     property bool canceling
 
@@ -59,6 +62,7 @@ Item {
             elapsedTime = parseFloat(arguments[2]) // reset the timer as well
             estimatedTime = arguments[3]
             imgSnapshot.sourceChanged()
+            pausedSeconds = 0
         }
         onNozzleChange: {
             if (uid != arguments[0]) return
@@ -121,6 +125,7 @@ Item {
         inputPinCode.text = ""
         device.nextState = state
         pinCodeEntryPane.visible = true
+        inputPinCode.focus = true
     }
 
     function applyState() {
@@ -335,6 +340,7 @@ Item {
                                 anchors.centerIn: parent
                                 visible: !machineStates.calibrating && (machineStates.bed_occupied || machineStates.printing || machineStates.heating) && device.hasSnapshot
                                 source: visible ? device.snapshot : ""
+                                cache: false
                                 width: 60
                                 height: width
                             }
@@ -417,8 +423,9 @@ Item {
                                         cursorShape: Qt.PointingHandCursor
                                         onClicked: {
                                             inputDeviceName.text = name
-                                            lblDeviceName.visible = false;
-                                            inputDeviceName.visible = true;
+                                            lblDeviceName.visible = false
+                                            inputDeviceName.visible = true
+                                            inputDeviceName.focus = true
                                         }
                                     }
                                 }
@@ -1086,8 +1093,14 @@ Item {
                             running: machineStates.printing
                             repeat: true
                             onTriggered: {
-                                device.elapsedTime = parseFloat(device.elapsedTime) + (machineStates.paused ? 0 : 1)
-                                elapsedTimeTxt = networkMachineList.toHHMMSS(device.elapsedTime)
+                                elapsedTimeTxt = networkMachineList.toHHMMSS(
+                                    // get time in unix time
+                                    Math.floor(Date.now() / 1000) -
+                                    // subtract the start time as we proceed
+                                    parseFloat(device.startTime) -
+                                    // below line enables us to pause timer when device is paused
+                                    (machineStates.paused ? device.pausedSeconds++ : device.pausedSeconds)
+                                )
                             }
                         }
                     }

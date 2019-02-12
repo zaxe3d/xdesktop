@@ -59,6 +59,7 @@ class NetworkMachineListModel(ListModel):
             "mPrintingFile": networkMachine.printingFile,
             "mElapsedTime": networkMachine.elapsedTime,
             "mEstimatedTime": networkMachine.estimatedTime,
+            "mStartTime": networkMachine.startTime,
             "mHasPin": networkMachine.hasPin,
             "mHasSnapshot": networkMachine.hasSnapshot,
             "mHasFWUpdate": self._compareVersion(networkMachine),

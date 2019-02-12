@@ -9,6 +9,7 @@ import ftplib
 import traceback
 import sys
 import uuid
+import time
 from . import tool
 
 from UM.Logger import Logger
@@ -71,6 +72,7 @@ class NetworkMachine(QThread, QObject):
         self.snapshot = "ftp://" + self.ip + ":9494/snapshot.png"
         self.elapsedTime = 0
         self.fwVersion = [999, 0, 0]
+        self.startTime = None
         self.__states = {}
 
         # class specific
@@ -134,6 +136,7 @@ class NetworkMachine(QThread, QObject):
             try:
                 self.printingFile = message["filename"]
                 self.elapsedTime = message["elapsed_time"]
+                self.startTime = time.time() - float(self.elapsedTime)
                 self.estimatedTime = message["estimated_time"]
                 self.hasPin = message["has_pin"].lower() == "true"
             except:
@@ -176,6 +179,7 @@ class NetworkMachine(QThread, QObject):
             self.estimatedTime = message["estimated_time"]
             # Resurrected file has its elapsed time set according to percentage
             self.elapsedTime = 0 if 'elapsed_time' not in message else message["elapsed_time"]
+            self.startTime = time.time() - float(self.elapsedTime)
         if message['event'] == "pin_change":
             self.hasPin = message["has_pin"].lower() == "true"
         if message['event'] == "new_name":

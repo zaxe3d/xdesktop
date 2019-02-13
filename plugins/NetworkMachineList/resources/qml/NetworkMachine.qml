@@ -998,10 +998,27 @@ Item {
                                 Layout.topMargin: -7
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                             }
-                            Label {
-                                text: device.printingFile
-                                color: UM.Theme.getColor("text_sidebar_medium")
-                                font: UM.Theme.getFont("large_semi_bold")
+                            Item {
+                                property string text: device.printingFile
+                                property string spacing: "      "
+                                property string combined: text + spacing
+                                property string display: combined.substring(step) + combined.substring(0, step)
+                                property int step: 0
+                                Layout.preferredHeight: parent.height
+                                Timer {
+                                    interval: 250
+                                    running: parent.visible && parent.text.length > 35
+                                    repeat: true
+                                    onTriggered: parent.step = (parent.step + 1) % parent.combined.length
+                                }
+                                Text {
+                                    width: parent.width - UM.Theme.getSize("sidebar_item_margin").width
+                                    height: parent.height
+                                    verticalAlignment: Text.AlignVCenter
+                                    color: UM.Theme.getColor("text_sidebar_medium")
+                                    font: UM.Theme.getFont("large_semi_bold")
+                                    text: parent.display
+                                }
                             }
                         }
                         // Bottom Border 

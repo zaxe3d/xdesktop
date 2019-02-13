@@ -290,7 +290,7 @@
         "layerview_move_combing": [0,  0,  255, 255],
         "layerview_move_retraction": [128,  128,  255, 255],
         "layerview_support_interface": [249,  66,  58, 255],
-        "layerview_nozzle": [181, 166, 66, 50],
+        "layerview_nozzle": [0, 155, 223, 50],
 
         "setting_control": [255, 255, 255, 255],
         "setting_control_selected": [31, 36, 39, 255],

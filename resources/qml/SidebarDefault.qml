@@ -123,16 +123,8 @@ Item
                             if (Cura.MachineManager.activeQualityType == qualityItem.quality_type)
                             {
                                 // set to -1 when switching to user created profile so all ticks are clickable
-                                if (Cura.SimpleModeSettingsManager.isProfileUserCreated)
-                                {
-                                    qualityModel.qualitySliderActiveIndex = -1
-                                }
-                                else
-                                {
-                                    qualityModel.qualitySliderActiveIndex = i
-                                }
-
-                                 qualityModel.existingQualityProfile = 1
+                                qualityModel.qualitySliderActiveIndex = i
+                                qualityModel.existingQualityProfile = 1
                             }
 
                             // Set min available

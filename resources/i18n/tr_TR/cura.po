@@ -438,6 +438,14 @@ msgctxt "@info:status"
 msgid "Parsing Zaxe Code"
 msgstr "Zaxe Kod'u çözümleniyor"
 
+msgctxt "@info:status"
+msgid "Processing Layers"
+msgstr "Katmanlar İşleniyor"
+
+msgctxt "@info:title"
+msgid "Information"
+msgstr "Bilgi"
+
 msgctxt "@info:title"
 msgid "Zaxe Code Details"
 msgstr "Zaxe Kod Detayları"

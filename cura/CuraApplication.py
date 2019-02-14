@@ -75,12 +75,9 @@ from cura.Machines.Models.QualitySettingsModel import QualitySettingsModel
 from cura.Machines.Models.MachineManagementModel import MachineManagementModel
 from cura.Machines.Models.NetworkMachineListModel import NetworkMachineListModel
 
-from cura.Machines.Models.SettingVisibilityPresetsModel import SettingVisibilityPresetsModel
-
 from cura.Machines.MachineErrorChecker import MachineErrorChecker
 
 from cura.Settings.SettingInheritanceManager import SettingInheritanceManager
-from cura.Settings.SimpleModeSettingsManager import SimpleModeSettingsManager
 
 from cura.Machines.VariantManager import VariantManager
 
@@ -152,7 +149,6 @@ class CuraApplication(QtApplication):
         MachineStack = Resources.UserType + 8
         ExtruderStack = Resources.UserType + 9
         DefinitionChangesContainer = Resources.UserType + 10
-        SettingVisibilityPreset = Resources.UserType + 11
 
     Q_ENUMS(ResourceTypes)
 
@@ -198,7 +194,6 @@ class CuraApplication(QtApplication):
         self._object_manager = None
         self._build_plate_model = None
         self._multi_build_plate_model = None
-        self._setting_visibility_presets_model = None
         self._setting_inheritance_manager = None
         self._simple_mode_settings_manager = None
         self._cura_scene_controller = None
@@ -356,7 +351,6 @@ class CuraApplication(QtApplication):
         Resources.addStorageType(self.ResourceTypes.ExtruderStack, "extruders")
         Resources.addStorageType(self.ResourceTypes.MachineStack, "machine_instances")
         Resources.addStorageType(self.ResourceTypes.DefinitionChangesContainer, "definition_changes")
-        Resources.addStorageType(self.ResourceTypes.SettingVisibilityPreset, "setting_visibility")
 
         self._container_registry.addResourceType(self.ResourceTypes.QualityInstanceContainer, "quality")
         self._container_registry.addResourceType(self.ResourceTypes.QualityChangesInstanceContainer, "quality_changes")
@@ -625,8 +619,6 @@ class CuraApplication(QtApplication):
             self._message_box_callback = None
             self._message_box_callback_arguments = []
 
-    showPrintMonitor = pyqtSignal(bool, arguments = ["show"])
-
     def setSaveDataEnabled(self, enabled: bool) -> None:
         self._save_data_enabled = enabled
 
@@ -716,11 +708,6 @@ class CuraApplication(QtApplication):
         self._print_information = PrintInformation.PrintInformation(self)
         self._cura_actions = CuraActions.CuraActions(self)
 
-        # Initialize setting visibility presets model
-        self._setting_visibility_presets_model = SettingVisibilityPresetsModel(self)
-        default_visibility_profile = self._setting_visibility_presets_model.getItem(0)
-        self.getPreferences().setDefault("general/visible_settings", ";".join(default_visibility_profile["settings"]))
-
         # Detect in which mode to run and execute that mode
         if self._is_headless:
             self.runWithoutGUI()
@@ -792,7 +779,7 @@ class CuraApplication(QtApplication):
         # Initialize camera tool
         camera_tool = controller.getTool("CameraTool")
         camera_tool.setOrigin(Vector(0, 100, 0))
-        camera_tool.setZoomRange(0.1, 2000)
+        camera_tool.setZoomRange(0.1, 4000)
 
         # Initialize camera animations
         self._camera_animation = CameraAnimation.CameraAnimation()
@@ -807,17 +794,12 @@ class CuraApplication(QtApplication):
 
         # Initialize UI state
         controller.setActiveStage("NetworkMachineList")
-        #controller.setActiveStage("PrepareStage")
         controller.setActiveView("SolidView")
         controller.setCameraTool("CameraTool")
         controller.setSelectionTool("SelectionTool")
 
         # Hide the splash screen
         self.closeSplash()
-
-    @pyqtSlot(result = QObject)
-    def getSettingVisibilityPresetsModel(self, *args) -> SettingVisibilityPresetsModel:
-        return self._setting_visibility_presets_model
 
     def getMachineErrorChecker(self, *args) -> MachineErrorChecker:
         return self._machine_error_checker
@@ -881,11 +863,6 @@ class CuraApplication(QtApplication):
     def getMachineActionManager(self, *args):
         return self._machine_action_manager
 
-    def getSimpleModeSettingsManager(self, *args):
-        if self._simple_mode_settings_manager is None:
-            self._simple_mode_settings_manager = SimpleModeSettingsManager()
-        return self._simple_mode_settings_manager
-
     ##   Handle Qt events
     def event(self, event):
         if event.type() == QEvent.FileOpen:
@@ -937,7 +914,6 @@ class CuraApplication(QtApplication):
         qmlRegisterSingletonType(ExtruderManager, "Cura", 1, 0, "ExtruderManager", self.getExtruderManager)
         qmlRegisterSingletonType(MachineManager, "Cura", 1, 0, "MachineManager", self.getMachineManager)
         qmlRegisterSingletonType(SettingInheritanceManager, "Cura", 1, 0, "SettingInheritanceManager", self.getSettingInheritanceManager)
-        qmlRegisterSingletonType(SimpleModeSettingsManager, "Cura", 1, 0, "SimpleModeSettingsManager", self.getSimpleModeSettingsManager)
         qmlRegisterSingletonType(MachineActionManager.MachineActionManager, "Cura", 1, 0, "MachineActionManager", self.getMachineActionManager)
         qmlRegisterSingletonType(NetworkMachineManager, "Cura", 1, 0, "NetworkMachineManager", self.getNetworkMachineManager)
 
@@ -960,7 +936,6 @@ class CuraApplication(QtApplication):
         qmlRegisterType(NozzleModel, "Cura", 1, 0, "NozzleModel")
 
         qmlRegisterType(MaterialSettingsVisibilityHandler, "Cura", 1, 0, "MaterialSettingsVisibilityHandler")
-        qmlRegisterType(SettingVisibilityPresetsModel, "Cura", 1, 0, "SettingVisibilityPresetsModel")
         qmlRegisterType(QualitySettingsModel, "Cura", 1, 0, "QualitySettingsModel")
         qmlRegisterType(MachineNameValidator, "Cura", 1, 0, "MachineNameValidator")
         qmlRegisterType(UserChangesModel, "Cura", 1, 0, "UserChangesModel")

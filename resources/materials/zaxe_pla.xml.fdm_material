@@ -19,7 +19,6 @@
     </properties>
     <settings>
         <setting key="print temperature">200</setting>
-        <setting key="print temperature layer 0">220</setting>
         <setting key="heated bed temperature">60</setting>
         <setting key="cool fan full layer">2</setting>
 
@@ -51,8 +50,8 @@
 
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">210</setting>
-                <setting key="retraction amount">0.6</setting>
+                <setting key="print temperature">215</setting>
+                <setting key="retraction amount">0.8</setting>
             </hotend>
         </machine>
 
@@ -61,8 +60,8 @@
 
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">210</setting>
-                <setting key="retraction amount">0.6</setting>
+                <setting key="print temperature">215</setting>
+                <setting key="retraction amount">0.8</setting>
             </hotend>
         </machine>
     </settings>

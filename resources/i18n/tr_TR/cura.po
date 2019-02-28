@@ -442,6 +442,18 @@ msgctxt "@info:status"
 msgid "Processing Layers"
 msgstr "Katmanlar İşleniyor"
 
+msgctxt "@info:status"
+msgid "Unable to find a location within the build volume for all objects"
+msgstr "Model(ler) tablaya sığdırılamadı"
+
+msgctxt "@info:status"
+msgid "Multiplying and placing objects"
+msgstr "Model coğaltılıp yerleştiriliyor"
+
+msgctxt "@info:title"
+msgid "Placing Object"
+msgstr "Model Yerleştiriliyor"
+
 msgctxt "@info:title"
 msgid "Information"
 msgstr "Bilgi"

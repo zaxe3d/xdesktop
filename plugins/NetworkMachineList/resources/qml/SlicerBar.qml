@@ -281,8 +281,8 @@ Item {
 
                 MachineCarousel { modelName: "X1"; modelId: "zaxe_x1"; Layout.preferredWidth: 85; Layout.preferredHeight: 85 }
                 MachineCarousel { modelName: "X1+"; modelId: "zaxe_x1+"; Layout.preferredWidth: 85; Layout.preferredHeight: 85 }
-                //MachineCarousel { modelName: "Z1"; modelId: "zaxe_z1"; Layout.preferredWidth: 85; Layout.preferredHeight: 85 }
-                //MachineCarousel { modelName: "Z1+"; modelId: "zaxe_z1+"; Layout.preferredWidth: 85; Layout.preferredHeight: 85 }
+                MachineCarousel { modelName: "Z1"; modelId: "zaxe_z1"; Layout.preferredWidth: 85; Layout.preferredHeight: 85 }
+                MachineCarousel { modelName: "Z1+"; modelId: "zaxe_z1+"; Layout.preferredWidth: 85; Layout.preferredHeight: 85 }
             }
 
             Button {

@@ -17,18 +17,15 @@ Item
     property alias undo: undoAction;
     property alias redo: redoAction;
 
-    property alias view3DCamera: view3DCameraAction;
-    property alias viewFrontCamera: viewFrontCameraAction;
-    property alias viewTopCamera: viewTopCameraAction;
-    property alias viewLeftSideCamera: viewLeftSideCameraAction;
-    property alias viewRightSideCamera: viewRightSideCameraAction;
-
     property alias expandSidebar: expandSidebarAction;
     property alias takeSnapshot: takeSnapshotAction;
 
     property alias deleteSelection: deleteSelectionAction;
     property alias centerSelection: centerSelectionAction;
     property alias multiplySelection: multiplySelectionAction;
+    property alias layFlatSelection: layFlatSelectionAction;
+
+    property alias clearSelection: clearSelectionAction;
 
     property alias deleteObject: deleteObjectAction;
     property alias centerObject: centerObjectAction;
@@ -49,27 +46,12 @@ Item
     property alias resetAll: resetAllAction;
 
     property alias addMachine: addMachineAction;
-    property alias configureMachines: settingsAction;
-    property alias addProfile: addProfileAction;
     property alias updateProfile: updateProfileAction;
     property alias resetProfile: resetProfileAction;
-    property alias manageProfiles: manageProfilesAction;
 
-    property alias manageMaterials: manageMaterialsAction;
-
-    property alias preferences: preferencesAction;
-
-    property alias showEngineLog: showEngineLogAction;
-    property alias showProfileFolder: showProfileFolderAction;
-    property alias documentation: documentationAction;
-    property alias reportBug: reportBugAction;
     property alias about: aboutAction;
 
     property alias toggleFullScreen: toggleFullScreenAction;
-
-    property alias configureSettingVisibility: configureSettingVisibilityAction
-
-    property alias browsePackages: browsePackagesAction
 
     UM.I18nCatalog{id: catalog; name:"cura"}
 
@@ -110,64 +92,8 @@ Item
 
     Action
     {
-        id: view3DCameraAction;
-        text: catalog.i18nc("@action:inmenu menubar:view","3D View");
-        onTriggered: UM.Controller.rotateView("3d", 0);
-    }
-
-    Action
-    {
-        id: viewFrontCameraAction;
-        text: catalog.i18nc("@action:inmenu menubar:view","Front View");
-        onTriggered: UM.Controller.rotateView("home", 0);
-    }
-
-    Action
-    {
-        id: viewTopCameraAction;
-        text: catalog.i18nc("@action:inmenu menubar:view","Top View");
-        onTriggered: UM.Controller.rotateView("y", 90);
-    }
-
-    Action
-    {
-        id: viewLeftSideCameraAction;
-        text: catalog.i18nc("@action:inmenu menubar:view","Left Side View");
-        onTriggered: UM.Controller.rotateView("x", 90);
-    }
-
-    Action
-    {
-        id: viewRightSideCameraAction;
-        text: catalog.i18nc("@action:inmenu menubar:view","Right Side View");
-        onTriggered: UM.Controller.rotateView("x", -90);
-    }
-
-    Action
-    {
-        id: preferencesAction;
-        text: catalog.i18nc("@action:inmenu","Configure Cura...");
-        iconName: "configure";
-    }
-
-    Action
-    {
         id: addMachineAction;
         text: catalog.i18nc("@action:inmenu menubar:printer","&Add Printer...");
-    }
-
-    Action
-    {
-        id: settingsAction;
-        text: catalog.i18nc("@action:inmenu menubar:printer","Manage Pr&inters...");
-        iconName: "configure";
-    }
-
-    Action
-    {
-        id: manageMaterialsAction
-        text: catalog.i18nc("@action:inmenu", "Manage Materials...")
-        iconName: "configure"
     }
 
     Action
@@ -188,36 +114,6 @@ Item
             forceActiveFocus();
             Cura.ContainerManager.clearUserContainers();
         }
-    }
-
-    Action
-    {
-        id: addProfileAction;
-        enabled: !Cura.MachineManager.stacksHaveErrors && Cura.MachineManager.hasUserSettings
-        text: catalog.i18nc("@action:inmenu menubar:profile","&Create profile from current settings/overrides...");
-    }
-
-    Action
-    {
-        id: manageProfilesAction;
-        text: catalog.i18nc("@action:inmenu menubar:profile","Manage Profiles...");
-        iconName: "configure";
-    }
-
-    Action
-    {
-        id: documentationAction;
-        text: catalog.i18nc("@action:inmenu menubar:help","Show Online &Documentation");
-        iconName: "help-contents";
-        shortcut: StandardKey.Help;
-        onTriggered: CuraActions.openDocumentation();
-    }
-
-    Action {
-        id: reportBugAction;
-        text: catalog.i18nc("@action:inmenu menubar:help","Report a &Bug");
-        iconName: "tools-report-bug";
-        onTriggered: CuraActions.openBugReportPage();
     }
 
     Action
@@ -244,6 +140,29 @@ Item
         enabled: UM.Controller.toolsEnabled && UM.Selection.hasSelection;
         iconName: "align-vertical-center";
         onTriggered: CuraActions.centerSelection();
+    }
+
+    Action
+    {
+        id: layFlatSelectionAction;
+        text: catalog.i18ncp("@action:inmenu menubar:edit", "Lay Flat Selected Model", "Lay Flat Selected Models", UM.Selection.selectionCount);
+        enabled: UM.Controller.toolsEnabled && UM.Selection.hasSelection;
+        iconName: "align-vertical-center";
+        onTriggered: {
+            UM.Controller.setActiveTool("RotateTool");
+            UM.ActiveTool.triggerAction("layFlat");
+        }
+    }
+
+    Action
+    {
+        id: clearSelectionAction;
+        text: catalog.i18ncp("@action:inmenu menubar:edit", "Clear selection");
+        enabled: UM.Controller.toolsEnabled && UM.Selection.hasSelection;
+        iconName: "align-vertical-center";
+        onTriggered: {
+            UM.Selection.clearSelection()
+        }
     }
 
     Action
@@ -401,28 +320,12 @@ Item
         id: showEngineLogAction;
         text: catalog.i18nc("@action:inmenu menubar:help","Show Engine &Log...");
         iconName: "view-list-text";
-        shortcut: StandardKey.WhatsThis;
     }
 
     Action
     {
         id: showProfileFolderAction;
         text: catalog.i18nc("@action:inmenu menubar:help","Show Configuration Folder");
-    }
-
-
-    Action
-    {
-        id: configureSettingVisibilityAction
-        text: catalog.i18nc("@action:menu", "Configure setting visibility...");
-        iconName: "configure"
-    }
-
-    Action
-    {
-        id: browsePackagesAction
-        text: catalog.i18nc("@action:menu", "Browse packages...")
-        iconName: "plugins_browse"
     }
 
     Action

@@ -21,6 +21,7 @@ Menu
     MenuItem { action: Cura.Actions.centerSelection; }
     MenuItem { action: Cura.Actions.deleteSelection; }
     MenuItem { action: Cura.Actions.multiplySelection; }
+    MenuItem { action: Cura.Actions.layFlatSelection; }
 
     // Extruder selection - only visible if there is more than 1 extruder
     MenuSeparator { visible: base.shouldShowExtruders }

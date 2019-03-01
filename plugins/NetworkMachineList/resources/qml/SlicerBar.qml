@@ -314,6 +314,7 @@ Item {
                         Cura.Actions.open.trigger()
                     } else {
                         UM.Controller.setActiveStage("PrepareStage")
+                        Cura.Actions.clearSelection.trigger()
                     }
                 }
             }

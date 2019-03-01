@@ -326,6 +326,12 @@ msgid_plural "Multiply Selected Models"
 msgstr[0] "Seçili Modeli Çoğalt"
 msgstr[1] "Seçili Modelleri Çoğalt"
 
+msgctxt "@action:inmenu menubar:edit"
+msgid "Lay Flat Selected Model"
+msgid_plural "Lay Flat Selected Models"
+msgstr[0] "Seçili Modeli Düz Şekilde Yerleştir"
+msgstr[1] "Seçili Modelleri Düz Şekilde Yerleştir"
+
 msgctxt "@action:inmenu"
 msgid "Delete Model"
 msgstr "Modeli Sil"

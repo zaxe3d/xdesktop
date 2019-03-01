@@ -90,11 +90,11 @@ class NetworkMachineListModel(ListModel):
         self.fileChange.emit(
             uuid,
             networkMachine.printingFile,
-            networkMachine.elapsedTime,
+            networkMachine.startTime,
             networkMachine.estimatedTime
         )
         self._itemUpdated(uuid, "mPrintingFile", networkMachine.printingFile)
-        self._itemUpdated(uuid, "mElapsedTime", networkMachine.elapsedTime)
+        self._itemUpdated(uuid, "mStartTime", networkMachine.startTime)
         self._itemUpdated(uuid, "mEstimatedTime", networkMachine.estimatedTime)
 
     def _compareVersion(self, networkMachine):

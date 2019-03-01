@@ -24,7 +24,6 @@ Item {
     property string deviceModel
     property var  fwVersion
     property string printingFile
-    property var elapsedTime
     property var startTime
     property string elapsedTimeTxt
     property string estimatedTime
@@ -59,7 +58,7 @@ Item {
         onFileChange: {
             if (uid != arguments[0]) return
             printingFile = arguments[1]
-            elapsedTime = parseFloat(arguments[2]) // reset the timer as well
+            startTime= parseFloat(arguments[2]) // reset the timer as well
             estimatedTime = arguments[3]
             imgSnapshot.sourceChanged()
             pausedSeconds = 0

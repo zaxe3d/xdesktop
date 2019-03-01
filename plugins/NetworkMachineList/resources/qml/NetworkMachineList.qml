@@ -150,7 +150,6 @@ Rectangle
             deviceModel: mDeviceModel
             fwVersion: mFWVersion
             printingFile: mPrintingFile
-            elapsedTime: mElapsedTime
             startTime: mStartTime
             estimatedTime: mEstimatedTime
             snapshot: mSnapshot

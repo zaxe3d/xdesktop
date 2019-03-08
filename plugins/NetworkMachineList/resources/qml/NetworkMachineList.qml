@@ -70,14 +70,12 @@ Rectangle
     }
 
     // Expand / Collapse bar
-    Text {
+    Image {
         id: toggleSidebarButton
+        width: 24; height: 39
+        x: -23
+        source: "../images/" + (networkMachineList.sidebarCollapsed ? "expand" : "collapse") + ".png"
         anchors.verticalCenter: parent.verticalCenter
-        width: 30; height: 50
-        x: -30
-        color: UM.Theme.getColor("text_sidebar_medium")
-        text:  networkMachineList.sidebarCollapsed ? "n" : "m"
-        font: UM.Theme.getFont("zaxe_icon_set_large")
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor

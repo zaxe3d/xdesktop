@@ -100,6 +100,9 @@ class SupportEraser(Tool):
         node.setSelectable(True)
         mesh = self._createCube(10)
         node.setMeshData(mesh.build())
+        Selection.clear()
+        Selection.add(node)
+        #self._controller.setActiveTool("ScaleTool")
 
         active_build_plate = CuraApplication.getInstance().getMultiBuildPlateModel().activeBuildPlate
         node.addDecorator(BuildPlateDecorator(active_build_plate))
@@ -118,9 +121,6 @@ class SupportEraser(Tool):
         # First add node to the scene at the correct position/scale, before parenting, so the eraser mesh does not get scaled with the parent
         op.addOperation(AddSceneNodeOperation(node, self._controller.getScene().getRoot()))
         op.addOperation(SetParentOperation(node, parent))
-        op.addOperation(Selection.clear())
-        op.addOperation(Selection.add(node))
-        op.addOperation(self._controller.setActiveTool("ScaleTool"))
         op.push()
         node.setPosition(position, CuraSceneNode.TransformSpace.World)
 

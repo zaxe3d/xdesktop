@@ -69,20 +69,6 @@ Rectangle
         }
     }
 
-    // Expand / Collapse bar
-    Image {
-        id: toggleSidebarButton
-        width: 24; height: 39
-        x: -23
-        source: "../images/" + (networkMachineList.sidebarCollapsed ? "expand" : "collapse") + ".png"
-        anchors.verticalCenter: parent.verticalCenter
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: sidebar.callExpandOrCollapse()
-        }
-    }
-
     ListModel
     {
         id: machineListModel

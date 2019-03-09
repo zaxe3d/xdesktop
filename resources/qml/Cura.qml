@@ -478,6 +478,23 @@ UM.MainWindow
                 }
             }
 
+            // Expand / Collapse bar
+            Image {
+                id: toggleSidebarButton
+                width: 24; height: 39
+                source: "../images/" + (sidebar.collapsed ? "expand" : "collapse") + ".png"
+                anchors {
+                    verticalCenter: sidebar.verticalCenter
+                    right: sidebar.left
+                    rightMargin: -1
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: sidebar.callExpandOrCollapse()
+                }
+            }
+
             UM.MessageStack
             {
                 anchors

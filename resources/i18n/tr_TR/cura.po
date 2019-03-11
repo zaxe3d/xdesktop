@@ -480,3 +480,9 @@ msgstr "Bu Zaxe Dosyası Zaxe {0} için dilimlenmiş. Lütfen dosyayı tekrar a�
 msgctxt "@button"
 msgid "e"
 msgstr "f"
+
+#stop button
+msgctxt "@button"
+msgid "L"
+msgstr "o"
+

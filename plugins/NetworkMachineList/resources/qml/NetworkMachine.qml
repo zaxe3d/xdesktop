@@ -551,7 +551,7 @@ Item {
                                         contentItem: Text {
                                             font: UM.Theme.getFont("zaxe_icon_set")
                                             color: UM.Theme.getColor("text_danger")
-                                            text: "L"
+                                            text: catalog.i18nc("@button", "L")
                                             anchors.top: parent.top
                                             horizontalAlignment: Text.AlignHCenter
                                             verticalAlignment: Text.AlignVCenter

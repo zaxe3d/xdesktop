@@ -1316,7 +1316,10 @@ class CuraApplication(QtApplication):
         # write the png to the file
         TMP_FOLDER = tempfile.gettempdir()
         snapshotFilePath = os.path.join(TMP_FOLDER, "snapshot.png")
-        snapshot = Snapshot.snapshot(width = 130, height = 130)
+        model = self.getMachineManager().activeMachineName.replace("+", "PLUS")
+        # Z3's screen is much bigger...
+        size = 500 if "Z3" in model else 130
+        snapshot = Snapshot.snapshot(width = size, height = size)
         snapshot.save(snapshotFilePath, "PNG", 100)
 
     ##  Get logging data of the backend engine

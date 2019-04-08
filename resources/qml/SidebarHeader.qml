@@ -95,6 +95,11 @@ Column
 
                     if (current.material != "custom") {
                         Cura.MachineManager.setSettingForAllExtruders("material_print_temperature_layer_0", "value", materialPrintTempLayer0)
+                        if (current.material == "zaxe_flex") {
+                            Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", 105)
+                        } else {
+                            Cura.MachineManager.resetSettingForAllExtruders("material_flow")
+                        }
                     }
 
                     Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_min", "value", fanSpeed)

@@ -234,6 +234,7 @@
 
         "tooltip": [68, 192, 255, 255],
         "tooltip_text": [255, 255, 255, 255],
+        "tooltip_text_ext": [0, 0, 0, 255],
 
         "tool_button_border": [255, 255, 255, 0],
 
@@ -316,7 +317,7 @@
         "window_minimum_size": [70, 50],
 
         "default_lining": [0.12, 0.12],
-        "default_arrow": [0.8, 0.8],
+        "default_arrow": [1, 1],
         "logo": [2.0, 2.0],
         "desktop": [14.0, 3.0],
 
@@ -401,6 +402,7 @@
         "checkbox_small": [1.7, 1.7],
 
         "tooltip": [20.0, 10.0],
+        "tooltip_ext": [28.0, 10.0],
         "tooltip_margins": [1.0, 1.0],
         "tooltip_arrow_margins": [2.0, 2.0],
 

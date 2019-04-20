@@ -14,6 +14,8 @@ Item
 {
     id: base
 
+    signal showFirstrunTip(point position, string title, string text, bool nextAvailable, bool imgPath)
+
     property int backendState: UM.Backend.state
     property int  supportAngle: UM.Preferences.getValue("slicing/support_angle")
     property bool supportEnabled: UM.Preferences.getValue("slicing/support_angle") > 0
@@ -1954,6 +1956,9 @@ Item
                     onClicked: {
                         CuraApplication.backend.stopSlicing();
                         UM.Controller.setActiveStage("NetworkMachineList")
+
+                        if (UM.Preferences.getValue("general/firstrun"))
+                            UM.Preferences.setValue("general/firstrun_step", 4)
                     }
                     Layout.alignment: Qt.AlignRight
                 }
@@ -2173,6 +2178,23 @@ Item
                 key: "support_extruder_nr"
                 watchedProperties: [ "value" ]
                 storeIndex: 0
+            }
+        }
+    }
+
+    Connections {
+        target: UM.Preferences
+        onPreferenceChanged:
+        {
+            if (UM.Preferences.getValue("general/firstrun")) {
+                switch(UM.Preferences.getValue("general/firstrun_step")) {
+                    case 6:
+                        base.showFirstrunTip(
+                            qualityLabel.mapToItem(base, 0, -5),
+                            catalog.i18nc("@firstrun", "Slicing Options"),
+                            catalog.i18nc("@firstrun", "Adjust resolution (layer height), infill density, raft and fill density according to needs. Then hit the Slice! button when ready!"), false, "")
+                        break
+                }
             }
         }
     }

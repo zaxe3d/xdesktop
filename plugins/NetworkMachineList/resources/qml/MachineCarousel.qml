@@ -29,6 +29,8 @@ Item {
             onClicked:
             {
                 Cura.MachineManager.setActiveMachine(base.modelName)
+                if (UM.Preferences.getValue("general/firstrun"))
+                    UM.Preferences.setValue("general/firstrun_step", 4)
             }
         }
     }

@@ -12,6 +12,8 @@ Rectangle
 {
     id: prepareSidebar
 
+    signal showFirstrunTip(point position, string title, string text, bool nextAvailable, bool imgPath)
+
     property var materialNames : {
         "zaxe_abs": "Zaxe ABS",
         "zaxe_pla": "Zaxe PLA",
@@ -52,6 +54,9 @@ Rectangle
 
     SidebarHeader {
         id: header
+        onShowFirstrunTip: {
+            prepareSidebar.showFirstrunTip(header.mapToItem(prepareSidebar, position.x, position.y), title, text, nextAvailable, imgPath)
+        }
         visible: machineExtruderCount.properties.value > 1 || Cura.MachineManager.hasMaterials || Cura.MachineManager.hasVariants
         anchors.top: parent.top
     }
@@ -95,6 +100,9 @@ Rectangle
     SidebarDefault
     {
         id: sidebarDefault
+        onShowFirstrunTip: {
+            prepareSidebar.showFirstrunTip(sidebarDefault.mapToItem(prepareSidebar, position.x, position.y), title, text, nextAvailable, imgPath)
+        }
         visible: false
     }
 
@@ -127,4 +135,5 @@ Rectangle
         watchedProperties: [ "value" ]
         storeIndex: 0
     }
+
 }

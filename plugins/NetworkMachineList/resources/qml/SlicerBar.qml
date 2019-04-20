@@ -10,6 +10,9 @@ import Cura 1.0 as Cura
 
 Item {
     id: base
+
+    signal showFirstrunTip(point position, string title, string text, bool nextAvailable, bool imgPath)
+
     UM.I18nCatalog { id: catalog; name:"cura"}
 
     property real progress: UM.Backend.progress
@@ -83,7 +86,42 @@ Item {
     }
 
     Connections {
-        target: CuraApplication
+        target: UM.Preferences
+        onPreferenceChanged:
+        {
+            if (UM.Preferences.getValue("general/firstrun")) {
+                switch(UM.Preferences.getValue("general/firstrun_step")) {
+                    case 3:
+                        base.showFirstrunTip(
+                            machineCarousel.mapToItem(base, 0, Math.round(machineCarousel.height / 2)),
+                            catalog.i18nc("@firstrun", "Model Selection"),
+                            catalog.i18nc("@firstrun", "Select Zaxe model you are using"), true, "")
+                        break
+                    case 4:
+                        base.showFirstrunTip(
+                            btnPrepare.mapToItem(base, 0, 5),
+                            catalog.i18nc("@firstrun", "Prepare Model for Print"),
+                            catalog.i18nc("@firstrun", "Set slicing options and slice your model"), false, "")
+                        break
+                    case 7:
+                        if (Cura.NetworkMachineListModel.rowCount() == 0) {
+                            UM.Preferences.setValue("general/firstrun_step", 8)
+                        } else {
+                            base.showFirstrunTip(
+                                titleText.mapToItem(base, 0, 75),
+                                catalog.i18nc("@firstrun", "Print It on Your Zaxe"),
+                                catalog.i18nc("@firstrun", "Hit the Print Now! button on your Zaxe!"), false, "")
+                        }
+                        break
+                    case 8:
+                        base.showFirstrunTip(
+                            saveToDisk.mapToItem(base, 0, 5),
+                            catalog.i18nc("@firstrun", "Save to Flash Disk"),
+                            catalog.i18nc("@firstrun", "Save your Zaxe file to your flash disk and print it on your Zaxe"), false, "")
+                        break
+                }
+            }
+        }
     }
 
     Rectangle {
@@ -276,6 +314,7 @@ Item {
             }
 
             RowLayout {
+                id: machineCarousel
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
                 Layout.preferredHeight: 130
 
@@ -315,6 +354,9 @@ Item {
                     } else {
                         UM.Controller.setActiveStage("PrepareStage")
                         Cura.Actions.clearSelection.trigger()
+
+                        if (UM.Preferences.getValue("general/firstrun"))
+                            UM.Preferences.setValue("general/firstrun_step", 5)
                     }
                 }
             }
@@ -529,6 +571,9 @@ Item {
                                 CuraApplication.backend.stopSlicing();
                             }
                             UM.Controller.setActiveView("SolidView")
+
+                            if (UM.Preferences.getValue("general/firstrun"))
+                                UM.Preferences.setValue("general/firstrun_step", 4)
                         }
                     }
                 }
@@ -638,6 +683,8 @@ Item {
                 onClicked: {
                     CuraApplication.backend.stopSlicing();
                     UM.Controller.setActiveView("SolidView")
+                    if (UM.Preferences.getValue("general/firstrun"))
+                        UM.Preferences.setValue("general/firstrun_step", 4)
                 }
             }
         }

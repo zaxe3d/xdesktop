@@ -9,9 +9,11 @@ import QtQuick.Layouts 1.3
 import UM 1.2 as UM
 import Cura 1.0 as Cura
 
-Rectangle
+Item
 {
     id: networkMachineList
+
+    signal showFirstrunTip(point position, string title, string text, bool nextAvailable, bool imgPath)
 
     UM.I18nCatalog { id: catalog; name:"cura"}
 
@@ -23,8 +25,6 @@ Rectangle
         "zaxe_flex": "Zaxe FLEX",
         "custom": catalog.i18nc("@label", "Custom")
     }
-
-    property var sidebarCollapsed: UM.Preferences.getValue("cura/sidebar_collapsed")
 
     function toHHMMSS(str) {
         var sec_num = parseInt(str, 10); // don't forget the second param
@@ -58,14 +58,6 @@ Rectangle
             machineListModel.onRemoved(arguments[0])
             if (machineListModel.count == 0)
                 noPrinterWarning.visible = true
-        }
-    }
-
-    Connections {
-        target: UM.Preferences
-        onPreferenceChanged:
-        {
-            networkMachineList.sidebarCollapsed = UM.Preferences.getValue("cura/sidebar_collapsed")
         }
     }
 
@@ -152,6 +144,9 @@ Rectangle
         id: slicerBar
         anchors.top: parent.top
         anchors.right: parent.right
+        onShowFirstrunTip: {
+            networkMachineList.showFirstrunTip(slicerBar.mapToItem(networkMachineList, position.x, position.y), title, text, nextAvailable, imgPath)
+        }
     }
 
     // Bottom Border

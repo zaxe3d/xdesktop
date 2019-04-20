@@ -308,6 +308,10 @@ msgctxt "@action:inmenu menubar:help"
 msgid "About..."
 msgstr "Hakkında..."
 
+msgctxt "@action:inmenu menubar:help"
+msgid "First-run Guide"
+msgstr "İlk Açılış Rehberi"
+
 msgctxt "@action:inmenu menubar:edit"
 msgid "Delete Selected Model"
 msgid_plural "Delete Selected Models"
@@ -486,3 +490,75 @@ msgctxt "@button"
 msgid "L"
 msgstr "o"
 
+#first-run
+msgctxt "@firstrun"
+msgid "Model Selection"
+msgstr "Model Seçimi"
+
+msgctxt "@firstrun"
+msgid "Select Zaxe model you are using"
+msgstr "Kullandığınız Zaxe modelini seçin"
+
+msgctxt "@firstrun"
+msgid "Prepare Model for Print"
+msgstr "Modeli Baskıya Hazırla"
+
+msgctxt "@firstrun"
+msgid "Set slicing options and slice your model"
+msgstr "Dilimleme opsiyonlarını seçin ve modelinizi dilimleyin"
+
+msgctxt "@firstrun"
+msgid "Print It on Your Zaxe"
+msgstr "Zaxe'nizde Baskı Alın"
+
+msgctxt "@firstrun"
+msgid "Hit the Print Now! button on your Zaxe!"
+msgstr "Zaxe'nizde Baskı Al! düğmesine basınız!"
+
+msgctxt "@firstrun"
+msgid "Save to Flash Disk"
+msgstr "Flash Diske Kaydet"
+
+msgctxt "@firstrun"
+msgid "Save your Zaxe file to your flash disk and print it on your Zaxe"
+msgstr "Zaxe dosyasını flash diskinize kaydedin ve Zaxe'nizde baskı alın"
+
+msgctxt "@firstrun"
+msgid "Open File"
+msgstr "Dosya Aç"
+
+msgctxt "@firstrun"
+msgid "Import a 3D model"
+msgstr "Bir 3B model dosyası açın"
+
+msgctxt "@firstrun"
+msgid "Model Modifications"
+msgstr "Model Değişimi"
+
+msgctxt "@firstrun"
+msgid "From this panel you can center, multiply, re-position and mirror your model. Or you can use the support blocker"
+msgstr "Bu panelden modelinizi ortalayabilir, çoğaltabilir, konumlayabilir ve aynalayabilirsiniz. Veya destek engelleyicisini kullanabilirsiniz"
+
+msgctxt "@firstrun"
+msgid "Slicing Options"
+msgstr "Dilimleme Seçenekleri"
+
+msgctxt "@firstrun"
+msgid "Adjust resolution (layer height), infill density, raft and fill density according to needs. Then hit the Slice! button when ready!"
+msgstr "Çözünürlüğü (katman kalınlığı), destekleyici tabanı ve doldurma yoğunluğunu ihtiyacınıza göre ayarlayın. Daha sonra Dilimle! düğmesine tıklayın!"
+
+msgctxt "@firstrun"
+msgid "Material Selection"
+msgstr "Materyal Seçimi"
+
+msgctxt "@firstrun"
+msgid "Select the material currently installed on your Zaxe"
+msgstr "Zaxe'nizde şu anda takılı olan materyali seçin"
+
+msgctxt "@firstrun"
+msgid "XDesktop first-run guide has finished"
+msgstr "XDesktop ilk açılış rehberi sona erdi"
+
+msgctxt "@firstrun"
+msgid "You can now continue using XDesktop... You can re-run it from Help menu if needed."
+msgstr "XDesktop'u kullanmaya devam edebilirsiniz. Eğer isterseniz Yardım menüsünden tekrar başlatabilirsiniz."

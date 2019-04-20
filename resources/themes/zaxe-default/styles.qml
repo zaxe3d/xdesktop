@@ -1192,10 +1192,13 @@ QtObject {
                 Label
                 {
                     id: actualLabel
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: typeof control.topMargin == 'undefined'
+                                            ? Math.round(Theme.getSize("default_margin").height / 2)
+                                            : control.topMargin
                     horizontalAlignment: Text.AlignRight
                     color: UM.Theme.getColor("text_sidebar_medium")
-                    font: UM.Theme.getFont("large_semi_bold")
+                    font: control.font ? control.font : UM.Theme.getFont("large_semi_bold")
                     text: control.text
                 }
             }

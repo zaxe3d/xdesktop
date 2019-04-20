@@ -723,6 +723,9 @@ Item {
                                                 Cura.NetworkMachineManager.upload(device.uid) == false
                                             }
                                         }
+                                        // final step for first-run
+                                        if (UM.Preferences.getValue("general/firstrun"))
+                                            UM.Preferences.setValue("general/firstrun_step", 8)
                                     }
                                     onHoveredChanged: {
                                         btnPrintNow.contentItem.color = hovered

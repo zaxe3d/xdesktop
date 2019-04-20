@@ -50,6 +50,7 @@ Item
     property alias resetProfile: resetProfileAction;
 
     property alias about: aboutAction;
+    property alias firstrun: firstrunAction;
 
     property alias toggleFullScreen: toggleFullScreenAction;
 
@@ -121,6 +122,12 @@ Item
         id: aboutAction;
         text: catalog.i18nc("@action:inmenu menubar:help","About...");
         iconName: "help-about";
+    }
+
+    Action
+    {
+        id: firstrunAction;
+        text: catalog.i18nc("@action:inmenu menubar:help", "First-run Guide");
     }
 
     Action

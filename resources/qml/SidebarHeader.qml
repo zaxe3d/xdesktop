@@ -16,6 +16,8 @@ Column
 {
     id: base;
 
+    signal showFirstrunTip(point position, string title, string text, bool nextAvailable, bool imgPath)
+
     UM.I18nCatalog { id: catalog; name:"cura" }
 
     property int currentExtruderIndex: Cura.ExtruderManager.activeExtruderIndex;
@@ -106,6 +108,8 @@ Column
                     Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_max", "value", fanSpeed)
                     Cura.MachineManager.setSettingForAllExtruders("cool_fan_full_layer", "value", coolFanFullLayer)
 
+                    if (UM.Preferences.getValue("general/firstrun"))
+                        UM.Preferences.setValue("general/firstrun_step", 6)
                 }
             }
             // ABS
@@ -179,4 +183,20 @@ Column
     // Bottom Border
     Rectangle { width: parent.width; height: UM.Theme.getSize("default_lining").height; color: UM.Theme.getColor("sidebar_item_dark") }
 
+    Connections {
+        target: UM.Preferences
+        onPreferenceChanged:
+        {
+            if (UM.Preferences.getValue("general/firstrun")) {
+                switch(UM.Preferences.getValue("general/firstrun_step")) {
+                    case 5:
+                        base.showFirstrunTip(
+                            materialSelectionRow.mapToItem(base, 0, Math.round(materialSelectionRow.height / 2) + 2),
+                            catalog.i18nc("@firstrun", "Material Selection"),
+                            catalog.i18nc("@firstrun", "Select the material currently installed on your Zaxe"), true, "")
+                        break
+                }
+            }
+        }
+    }
 }

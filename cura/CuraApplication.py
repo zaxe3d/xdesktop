@@ -500,6 +500,10 @@ class CuraApplication(QtApplication):
         # TODO find a better way of communicating between sidebars
         preferences.addPreference("cura/help_page", "")
 
+        # First-run
+        preferences.addPreference("general/firstrun", True)
+        preferences.addPreference("general/firstrun_step", 1)
+
         for key in [
             "dialog_load_path",  # dialog_save_path is in LocalFileOutputDevicePlugin
             "dialog_profile_path",
@@ -581,6 +585,10 @@ class CuraApplication(QtApplication):
         self.showMessageBox.emit(title, text, informativeText, detailedText, buttons, icon)
 
     showDiscardOrKeepProfileChanges = pyqtSignal()
+
+    @pyqtSlot(str, str)
+    def message(self, msgTitle, msgText):
+        Message(msgText, title = msgTitle).show()
 
     def discardOrKeepProfileChanges(self):
         has_user_interaction = False

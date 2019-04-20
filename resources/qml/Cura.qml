@@ -15,7 +15,6 @@ import "Menus"
 UM.MainWindow
 {
     id: base
-    //: Cura application window title
     title: "XDesktop"
     viewportRect: Qt.rect(0, 0, (base.width - sidebar.width) / base.width, 1.0)
 
@@ -23,14 +22,40 @@ UM.MainWindow
 
     property int currentBackendState: 1 // Solidview
 
+    function firstrunOpenFile() {
+        base.showFirstrunTip(
+            { x: toolbarBackground.width, y: openFileButton.y + 25 },
+            catalog.i18nc("@firstrun", "Open File"),
+            catalog.i18nc("@firstrun", "Import a 3D model"))
+    }
+
     Connections
     {
         target: CuraApplication
         onActivityChanged: {
 
-            if (CuraApplication.platformActivity && UM.Backend.state == 1)
+            if (CuraApplication.platformActivity && UM.Backend.state == 1) {
                 // Take snapshot if ready to slice - 1 = Ready to slice
                 Cura.Actions.takeSnapshot.trigger()
+                if (UM.Preferences.getValue("general/firstrun") && UM.Preferences.getValue("general/firstrun_step") == 1) {
+                    UM.Preferences.setValue("general/firstrun_step", 2)
+                    base.showFirstrunTip(
+                        { x: toolbarBackground.width, y: centerModelButton.y + 23 },
+                        catalog.i18nc("@firstrun", "Model Modifications"),
+                        catalog.i18nc("@firstrun", "From this panel you can center, multiply, re-position and mirror your model. Or you can use the support blocker"),
+                        true,
+                        "../../resources/images/first-run/modifications_" + UM.Preferences.getValue("general/language") + ".png")
+                }
+            // 2 - loading, 3 - done
+            } else if (UM.Preferences.getValue("general/firstrun")) {
+                if ([2, 3].indexOf(UM.Backend.state) == -1) {
+                    base.firstrunOpenFile()
+                    // set to 1 no matter what since there is no model left
+                    UM.Preferences.setValue("general/firstrun_step", 1)
+                } else if (UM.Backend.state == 3)  {
+                    UM.Preferences.setValue("general/firstrun_step", 7)
+                }
+            }
 
             if (!CuraApplication.platformActivity && UM.Controller.activeStage.stageId == "PrepareStage")
                 UM.Controller.setActiveStage("NetworkMachineList")
@@ -95,6 +120,19 @@ UM.MainWindow
         CuraApplication.purgeWindows()
     }
 
+    function showFirstrunTip(position, title, text, nextAvailable, imgPath) {
+        if (sidebar.collapsed) {
+            firstrunTip.hide()
+            return
+        }
+        firstrunTip.title = title;
+        firstrunTip.text = text;
+        firstrunTip.nextAvailable = typeof nextAvailable != "undefined" ? nextAvailable : false
+        firstrunTip.imgPath = (typeof imgPath === "undefined" || imgPath == "" ? "" : imgPath)
+        firstrunTip.z = UM.Preferences.getValue("general/firstrun_step") > 2 ? 1 : 0
+        firstrunTip.show(position)
+    }
+
     Item
     {
         id: backgroundItem;
@@ -114,6 +152,20 @@ UM.MainWindow
             if (event.key == Qt.Key_Backspace)
             {
                 Cura.Actions.deleteSelection.trigger()
+            }
+        }
+
+        Tooltip
+        {
+            id: firstrunTip
+            onClose : function() {
+                // user skipped first-run by clicking on close button
+                UM.Preferences.setValue("general/firstrun", false)
+                UM.Preferences.setValue("general/firstrun_step", 1)
+            }
+            onNext : function() {
+                // user skipped first-run step by clicking on next button
+                UM.Preferences.setValue("general/firstrun_step", UM.Preferences.getValue("general/firstrun_step") + 1)
             }
         }
 
@@ -233,17 +285,8 @@ UM.MainWindow
                 title: catalog.i18nc("@title:menu menubar:toplevel","&Help");
 
                 MenuItem { action: Cura.Actions.about; }
+                MenuItem { action: Cura.Actions.firstrun; }
             }
-        }
-
-        UM.SettingPropertyProvider
-        {
-            id: machineExtruderCount
-
-            containerStack: Cura.MachineManager.activeMachine
-            key: "machine_extruder_count"
-            watchedProperties: [ "value" ]
-            storeIndex: 0
         }
 
         Item
@@ -413,6 +456,7 @@ UM.MainWindow
             Loader
             {
                 id: sidebar
+                z: 0
 
                 property bool collapsed: false;
                 property var initialWidth: UM.Theme.getSize("sidebar").width;
@@ -478,6 +522,14 @@ UM.MainWindow
                 }
             }
 
+            Connections {
+                target: sidebar.item
+                onShowFirstrunTip: {
+                    x: base.width - sidebar.width
+                    base.showFirstrunTip( { x: base.width - sidebar.width, y: position.y }, title, text, nextAvailable, imgPath)
+                }
+            }
+
             // Expand / Collapse bar
             Image {
                 id: toggleSidebarButton
@@ -526,6 +578,9 @@ UM.MainWindow
         if (!close.accepted)
         {
             CuraApplication.checkAndExitApplication();
+
+            if (UM.Preferences.getValue("general/firstrun"))
+                UM.Preferences.setValue("general/firstrun_step", 1)
         }
     }
 
@@ -681,39 +736,6 @@ UM.MainWindow
         id: openFilesDialog
     }
 
-    EngineLog
-    {
-        id: engineLog;
-    }
-
-    // Dialog to handle first run machine actions
-    UM.Wizard
-    {
-        id: machineActionsWizard;
-
-        title: catalog.i18nc("@title:window", "Add Printer")
-        property var machine;
-
-        function start(id)
-        {
-            var actions = Cura.MachineActionManager.getFirstStartActions(id)
-            resetPages() // Remove previous pages
-
-            for (var i = 0; i < actions.length; i++)
-            {
-                actions[i].displayItem.reset()
-                machineActionsWizard.appendPage(actions[i].displayItem, catalog.i18nc("@title", actions[i].label));
-            }
-
-            //Only start if there are actions to perform.
-            if (actions.length > 0)
-            {
-                machineActionsWizard.currentPage = 0;
-                show()
-            }
-        }
-    }
-
     MessageDialog
     {
         id: messageDialog
@@ -753,14 +775,28 @@ UM.MainWindow
         target: Cura.Actions.about
         onTriggered: aboutDialog.visible = true;
     }
+    Connections {
+        target: Cura.Actions.firstrun
+        onTriggered: UM.Preferences.setValue("general/firstrun", true)
+    }
 
-    Connections
-    {
-        target: CuraApplication
-        onRequestAddPrinter:
+    Connections {
+        target: UM.Preferences
+        onPreferenceChanged:
         {
-            addMachineDialog.visible = true
-            addMachineDialog.firstRun = false
+            if (UM.Preferences.getValue("general/firstrun")) {
+                switch(UM.Preferences.getValue("general/firstrun_step")) {
+                    case 1:
+                        base.firstrunOpenFile()
+                        break
+                    case 8:
+                        CuraApplication.message(catalog.i18nc("@firstrun", "XDesktop first-run guide has finished"), catalog.i18nc("@firstrun", "You can now continue using XDesktop... You can re-run it from Help menu if needed."))
+                        firstrunTip.hide()
+                        UM.Preferences.setValue("general/firstrun", false)
+                        UM.Preferences.setValue("general/firstrun_step", 1)
+                        break
+                }
+            }
         }
     }
 
@@ -784,6 +820,10 @@ UM.MainWindow
                 Cura.MachineManager.addMachine("Z1", "zaxe_z1")
                 Cura.MachineManager.addMachine("X1+", "zaxe_x1plus")
                 Cura.MachineManager.addMachine("X1", "zaxe_x1")
+            }
+
+            if (UM.Preferences.getValue("general/firstrun") && UM.Preferences.getValue("general/firstrun_step") == 1) {
+                base.firstrunOpenFile()
             }
         }
     }

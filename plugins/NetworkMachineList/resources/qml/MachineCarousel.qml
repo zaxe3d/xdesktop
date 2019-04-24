@@ -26,12 +26,27 @@ Item {
         MouseArea
         {
             anchors.fill: parent;
-            onClicked:
-            {
-                Cura.MachineManager.setActiveMachine(base.modelName)
-                if (UM.Preferences.getValue("general/firstrun"))
-                    UM.Preferences.setValue("general/firstrun_step", 4)
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: {
+                switch (mouse.button) {
+                    case Qt.LeftButton:
+                        Cura.MachineManager.setActiveMachine(base.modelName)
+
+                        if (UM.Preferences.getValue("general/firstrun"))
+                            UM.Preferences.setValue("general/firstrun_step", 4)
+                        break;
+                    case Qt.RightButton:
+                        // only show variant menu if the printer is selected
+                        if (printerButton.checked)
+                            nozzleMenu.popup()
+                        break;
+                }
             }
         }
+    }
+
+    NozzleMenu {
+        id: nozzleMenu
+        extruderIndex: 0
     }
 }

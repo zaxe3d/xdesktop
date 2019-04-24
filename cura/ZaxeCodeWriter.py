@@ -77,7 +77,7 @@ class ZaxeCodeWriter(MeshWriter):
                 "model": self._machineManager.activeMachineName.replace("+", "PLUS"),
                 "version": self.ZAXE_FILE_VERSION,
                 "checksum": self.getCheckSum(),
-                "nozzle_diameter": 0.4 # self._machineManager.globalVariantName # FIXME hardcoded
+                "nozzle_diameter": float(self._machineManager.activeVariantName)
                 }, self.getExportParams(printInformation.materialNames[0]))
 
         infoFilePath = os.path.join(TMP_FOLDER, "info.json")

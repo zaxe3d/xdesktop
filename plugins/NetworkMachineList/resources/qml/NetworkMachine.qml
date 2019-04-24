@@ -41,6 +41,7 @@ Item {
     property var machineStates
 
     // warnings
+    property bool nozzleWarning
     property bool materialWarning
     property bool modelCompatibilityWarning
 
@@ -714,10 +715,14 @@ Item {
                                             } else if (Cura.MachineManager.activeMachineName.replace("+", "PLUS") != device.deviceModel.toUpperCase()) {
                                                 device.modelCompatibilityWarning = true
                                                 shakeAnim.start()
+                                            } else if (Cura.MachineManager.activeVariantName != device.nozzle) {
+                                                device.nozzleWarning = true
+                                                shakeAnim.start()
                                             } else if (PrintInformation.materialNames[0] != device.material) {
                                                 device.materialWarning = true
                                                 shakeAnim.start()
                                             } else {
+                                                device.nozzleWarning = true
                                                 device.materialWarning = false
                                                 device.modelCompatibilityWarning = false
                                                 Cura.NetworkMachineManager.upload(device.uid) == false
@@ -891,6 +896,41 @@ Item {
                     }
                 }
 
+            }
+            // Nozzle warning message
+            Rectangle {
+                visible: device.nozzleWarning
+                Layout.preferredWidth: Math.round(device.width - 65 - (UM.Theme.getSize("sidebar_item_margin").width * 2))
+                Layout.minimumHeight: childrenRect.height
+                Layout.alignment: Qt.AlignRight
+                Layout.bottomMargin: Math.round(UM.Theme.getSize("sidebar_item_margin").height / 2)
+                Layout.rightMargin: UM.Theme.getSize("sidebar_item_margin").width
+                color: UM.Theme.getColor("sidebar_item_light")
+
+                Text {
+                    id: nozzleWarningIcon
+                    font: UM.Theme.getFont("zaxe_icon_set")
+                    color: UM.Theme.getColor("text_danger")
+                    horizontalAlignment: Text.AlignLeft
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                    }
+                    text: "d"
+                }
+                Text {
+                    width: parent.width
+                    font: UM.Theme.getFont("medium")
+                    color: UM.Theme.getColor("text_danger")
+                    horizontalAlignment: Text.AlignLeft
+                    wrapMode: Text.WordWrap
+                    anchors {
+                        verticalCenter: nozzleWarningIcon.verticalCenter
+                        left: nozzleWarningIcon.right
+                        leftMargin: 1
+                    }
+                    text: catalog.i18nc("@warning", "The nozzle [%1] currently installed on machine does not match with the Zaxe file [%2] Please slice again with the correct nozzle diameter [%1]").arg(device.nozzle).arg(Cura.MachineManager.activeVariantName)
+                }
             }
             // Material warning message
             Rectangle {

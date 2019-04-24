@@ -73,6 +73,10 @@ msgid "The material in the device does not match with the material you choose. P
 msgstr "Cihaza takılı materyal ile baskıya hazırladığınız materyal eşleşmiyor. Lütfen doğru materyal ile tekrar baskıya hazırlayınız"
 
 msgctxt "@warning"
+msgid "The nozzle [%1] currently installed on machine does not match with the Zaxe file [%2] Please slice again with the correct nozzle diameter [%1]"
+msgstr "Cihazın üzerindeki nozül [%1] ile Zaxe dosyasındaki nozül [%2] eşleşmiyor. Lütfen doğru nozülü [%1] seçerek tekrar dilimleyiniz"
+
+msgctxt "@warning"
 msgid "This print is not compatible with this device model"
 msgstr "Bu baskı, bu cihaz ile uyumlu değildir"
 

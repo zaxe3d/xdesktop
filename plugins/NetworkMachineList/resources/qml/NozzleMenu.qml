@@ -25,7 +25,7 @@ Menu
 
         MenuItem
         {
-            text: model.hotend_name
+            text: model.hotend_name + " mm"
             checkable: true
             checked: {
                 return Cura.MachineManager.activeVariantNames[extruderIndex] == model.hotend_name

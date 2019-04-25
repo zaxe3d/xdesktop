@@ -899,7 +899,7 @@ Item {
             }
             // Nozzle warning message
             Rectangle {
-                visible: device.nozzleWarning
+                visible: device.nozzleWarning && Cura.MachineManager.activeVariantName != device.nozzle
                 Layout.preferredWidth: Math.round(device.width - 65 - (UM.Theme.getSize("sidebar_item_margin").width * 2))
                 Layout.minimumHeight: childrenRect.height
                 Layout.alignment: Qt.AlignRight
@@ -934,7 +934,7 @@ Item {
             }
             // Material warning message
             Rectangle {
-                visible: device.materialWarning
+                visible: device.materialWarning && PrintInformation.materialNames[0] != device.material
                 Layout.preferredWidth: Math.round(device.width - 65 - (UM.Theme.getSize("sidebar_item_margin").width * 2))
                 Layout.minimumHeight: childrenRect.height
                 Layout.alignment: Qt.AlignRight

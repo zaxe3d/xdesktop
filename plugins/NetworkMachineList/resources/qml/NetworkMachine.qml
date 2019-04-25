@@ -722,7 +722,7 @@ Item {
                                                 device.materialWarning = true
                                                 shakeAnim.start()
                                             } else {
-                                                device.nozzleWarning = true
+                                                device.nozzleWarning = false
                                                 device.materialWarning = false
                                                 device.modelCompatibilityWarning = false
                                                 Cura.NetworkMachineManager.upload(device.uid) == false

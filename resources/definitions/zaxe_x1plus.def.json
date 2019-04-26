@@ -5,12 +5,6 @@
     "inherits": "zaxe",
     "metadata": {
         "visible": true,
-        "author": "Zaxe",
-        "manufacturer": "Zaxe",
-        "variants_name": "Nozzle",
-        "preferred_variant_name": "0.4",
-        "preferred_material": "zaxe_abs",
-        "preferred_quality_type": "normal",
         "machine_extruder_trains":
         {
             "0": "zaxe_x1plus_extruder_0"

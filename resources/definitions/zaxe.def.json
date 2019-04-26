@@ -5,14 +5,18 @@
     "metadata": {
         "author": "Zaxe",
         "manufacturer": "Zaxe",
-        "category": "Zaxe",
         "visible": false,
-        "weight": 4,
-        "file_formats": "application/zaxe",
+        "category": "Zaxe",
         "has_materials": true,
         "has_machine_quality": true,
         "has_variants": true,
-        "exclude_materials": [ ]
+        "variants_name": "Nozzle",
+        "preferred_material": "zaxe_abs",
+        "preferred_quality_type": "normal",
+        "preferred_variant_name": "0.4",
+        "file_formats": "application/zaxe",
+        "exclude_materials": [ ],
+        "weight": 4
     },
     "overrides": {
         "machine_acceleration": { "value": 500 },

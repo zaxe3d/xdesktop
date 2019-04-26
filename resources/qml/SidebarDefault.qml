@@ -278,7 +278,8 @@ Item
 
                             anchors.bottom: parent.bottom
                             anchors.left: qualitySlider.left
-                            anchors.leftMargin: Math.round((qualitySlider.value / qualitySlider.stepSize) * (qualitySlider.width / (qualitySlider.maximumValue / qualitySlider.stepSize)) - 10 * screenScaleFactor)
+                            anchors.leftMargin: Math.round(((qualitySlider.value - qualitySlider.minimumValue) / qualitySlider.stepSize) * (qualitySlider.width
+                                                / ((qualitySlider.maximumValue - qualitySlider.minimumValue) / qualitySlider.stepSize)) - 10 * screenScaleFactor)
                             anchors.right: parent.right
 
                             font: UM.Theme.getFont("large_nonbold")

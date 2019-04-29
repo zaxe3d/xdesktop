@@ -51,6 +51,7 @@ Item
 
     property alias about: aboutAction;
     property alias firstrun: firstrunAction;
+    property alias checkForUpdates: checkForUpdatesAction;
 
     property alias toggleFullScreen: toggleFullScreenAction;
 
@@ -128,6 +129,13 @@ Item
     {
         id: firstrunAction;
         text: catalog.i18nc("@action:inmenu menubar:help", "First-run Guide");
+    }
+
+    Action
+    {
+        id: checkForUpdatesAction;
+        text: catalog.i18nc("@action:inmenu menubar:help", "Check for Updates");
+        onTriggered: CuraActions.checkForUpdates();
     }
 
     Action

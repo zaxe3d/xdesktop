@@ -316,6 +316,10 @@ msgctxt "@action:inmenu menubar:help"
 msgid "First-run Guide"
 msgstr "İlk Açılış Rehberi"
 
+msgctxt "@action:inmenu menubar:help"
+msgid "Check for Updates"
+msgstr "Güncellemeleri Kontrol Et"
+
 msgctxt "@action:inmenu menubar:edit"
 msgid "Delete Selected Model"
 msgid_plural "Delete Selected Models"

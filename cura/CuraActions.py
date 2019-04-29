@@ -24,12 +24,18 @@ from cura.Operations.SetBuildPlateNumberOperation import SetBuildPlateNumberOper
 
 from UM.Logger import Logger
 
+
 if TYPE_CHECKING:
     from UM.Scene.SceneNode import SceneNode
 
 class CuraActions(QObject):
     def __init__(self, parent: QObject = None) -> None:
         super().__init__(parent)
+
+    @pyqtSlot()
+    def checkForUpdates(self) -> None:
+        from UM.PluginRegistry import PluginRegistry
+        PluginRegistry.getInstance().getPluginObject("UpdateChecker").checkNewVersion()
 
     @pyqtSlot()
     def openDocumentation(self) -> None:

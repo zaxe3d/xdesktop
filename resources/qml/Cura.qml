@@ -284,8 +284,9 @@ UM.MainWindow
                 id: helpMenu
                 title: catalog.i18nc("@title:menu menubar:toplevel","&Help");
 
-                MenuItem { action: Cura.Actions.about; }
+                MenuItem { action: Cura.Actions.checkForUpdates; }
                 MenuItem { action: Cura.Actions.firstrun; }
+                MenuItem { action: Cura.Actions.about; }
             }
         }
 

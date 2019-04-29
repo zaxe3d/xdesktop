@@ -1,7 +1,7 @@
 import argparse
 from aead import AEAD
 
-parser = argparse.ArgumentParser(description="NFC material tag writer")
+parser = argparse.ArgumentParser(description="Config file encrypter")
 
 parser.add_argument('--in', dest="inFile", default="")
 parser.add_argument('--out', dest="outFile", default="")

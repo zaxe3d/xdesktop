@@ -13,7 +13,7 @@ args = parser.parse_args()
 
 def write_encrypted(password, infile, outfile):
     with open(infile, 'r', encoding='utf-8') as ifile:
-        with open(outfile, 'wb') as ofile:
+        with open(outfile, 'wb+') as ofile:
             cryptor = AEAD(b'5TcXLQkWEpRxzCMvXXOU0M7hmM3wbpEyTxaRgbg5sQM=')
             ciphertext = cryptor.encrypt(bytes(ifile.read(), encoding='utf-8'), bytes(password, encoding='utf-8'))
             print(ciphertext)

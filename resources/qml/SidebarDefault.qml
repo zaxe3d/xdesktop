@@ -1553,6 +1553,7 @@ Item
                     Item
                     {
                         id: supportContactDistanceRow
+                        visible: false // not visible until it gets figured out
 
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
                         Layout.preferredHeight: 51

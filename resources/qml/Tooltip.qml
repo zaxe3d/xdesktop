@@ -121,6 +121,7 @@ UM.PointingRectangleExt {
         anchors {
             top: parent.top
             right: parent.right
+            rightMargin: 5
         }
         onClicked: {
             base.close()

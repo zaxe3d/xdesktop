@@ -730,7 +730,7 @@ Item {
                                         }
                                         // final step for first-run
                                         if (UM.Preferences.getValue("general/firstrun"))
-                                            UM.Preferences.setValue("general/firstrun_step", 8)
+                                            UM.Preferences.setValue("general/firstrun_step", 9)
                                     }
                                     onHoveredChanged: {
                                         btnPrintNow.contentItem.color = hovered

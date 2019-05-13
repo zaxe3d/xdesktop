@@ -55,6 +55,8 @@ UM.PointingRectangleExt {
         }
         base.opacity = 1;
         base.enabled = true
+        if (Qt.platform.os == "windows") // on Windows, doesn't show where it is suppose to show in terms of Y
+            position.y += 20
         target = Qt.point(targetX, position.y + Math.round(UM.Theme.getSize("tooltip_arrow_margins").height / 2))
     }
 

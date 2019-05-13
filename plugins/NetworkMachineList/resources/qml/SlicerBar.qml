@@ -544,6 +544,7 @@ Item {
                             padding: 4
                         }
                         onClicked: {
+                            UM.Preferences.setValue("general/firstrun_step", 9)
                             UM.OutputDeviceManager.requestWriteToDevice(UM.OutputDeviceManager.activeDevice, PrintInformation.jobName,
                                 { "filter_by_machine": true, "preferred_mimetypes": "application/zaxe" });
                         }

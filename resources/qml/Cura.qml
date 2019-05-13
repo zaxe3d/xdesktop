@@ -790,7 +790,7 @@ UM.MainWindow
                     case 1:
                         base.firstrunOpenFile()
                         break
-                    case 8:
+                    case 9:
                         CuraApplication.message(catalog.i18nc("@firstrun", "XDesktop first-run guide has finished"), catalog.i18nc("@firstrun", "You can now continue using XDesktop... You can re-run it from Help menu if needed."))
                         firstrunTip.hide()
                         UM.Preferences.setValue("general/firstrun", false)

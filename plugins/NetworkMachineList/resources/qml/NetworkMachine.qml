@@ -80,7 +80,7 @@ Item {
         onTempProgress: {
             if (uid != arguments[0]) return
             if (!machineStates.heating) return
-            if (machineStates.printing || machineStates.calibrating || machineStates.uploading) return
+            if (machineStates.calibrating || machineStates.uploading) return
             progress = arguments[1]
         }
         onCalibrationProgress: {
@@ -348,7 +348,7 @@ Item {
                             Text {
                                 id: printerIcon
                                 anchors.centerIn: parent
-                                visible: !imgSnapshot.visible
+                                visible: !imgSnapshot.visible && imgSnapshot.progress != 1
                                 font: UM.Theme.getFont("xx_large")
                                 color: UM.Theme.getColor("text_sidebar_light")
                                 text: device.deviceModel.replace("plus", "+").toUpperCase()
@@ -500,7 +500,7 @@ Item {
                                     // Resume button
                                     Button {
                                         id: btnResume
-                                        visible: machineStates.paused
+                                        visible: machineStates.paused && !machineStates.heating
                                         implicitWidth: 65; implicitHeight: 40
                                         anchors.top: parent.top
                                         anchors.topMargin: 1
@@ -748,16 +748,16 @@ Item {
                                     text: {
                                         if (machineStates.bed_occupied)
                                             return catalog.i18nc("@label", "Bed is occuppied...")
+                                        else if (machineStates.calibrating)
+                                            return catalog.i18nc("@label", "Calibrating...")
+                                        else if (machineStates.heating)
+                                            return catalog.i18nc("@label", "Heating...")
                                         else if (machineStates.paused)
                                             return catalog.i18nc("@label", "Paused")
                                         else if (machineStates.printing)
                                             return catalog.i18nc("@label", "Printing...")
                                         else if (machineStates.uploading)
                                             return catalog.i18nc("@label", "Uploading...")
-                                        else if (machineStates.calibrating)
-                                            return catalog.i18nc("@label", "Calibrating...")
-                                        else if (machineStates.heating)
-                                            return catalog.i18nc("@label", "Heating...")
                                         else if (machineStates.updating)
                                             return catalog.i18nc("@label", "Updating...")
                                         else

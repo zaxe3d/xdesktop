@@ -50,13 +50,13 @@
 
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">215</setting>
-                <setting key="retraction amount">0.8</setting>
+                <setting key="print temperature">210</setting>
+                <setting key="retraction amount">0.6</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="print temperature">215</setting>
-                <setting key="retraction amount">0.8</setting>
+                <setting key="retraction amount">0.6</setting>
             </hotend>
         </machine>
 
@@ -65,13 +65,13 @@
 
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">215</setting>
-                <setting key="retraction amount">0.8</setting>
+                <setting key="print temperature">210</setting>
+                <setting key="retraction amount">0.6</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="print temperature">215</setting>
-                <setting key="retraction amount">0.8</setting>
+                <setting key="retraction amount">0.6</setting>
             </hotend>
         </machine>
     </settings>

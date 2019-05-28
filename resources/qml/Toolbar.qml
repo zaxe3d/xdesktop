@@ -100,7 +100,7 @@ Item
             topMargin: base.activeY
         }
 
-        z: buttons.z -1
+        z: buttons.z
 
         target: Qt.point(parent.right, base.activeY +  Math.round(UM.Theme.getSize("button").height/2))
         arrowSize: 0

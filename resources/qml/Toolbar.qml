@@ -89,7 +89,7 @@ Item
         }
     }
 
-    UM.PointingRectangleExt
+    UM.PointingRectangle
     {
         id: panelBorder;
 

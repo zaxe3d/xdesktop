@@ -24,7 +24,7 @@ UM.MainWindow
 
     function firstrunOpenFile() {
         base.showFirstrunTip(
-            { x: toolbarBackground.width, y: openFileButton.y + 25 },
+            { x: toolbarBackground.width, y: openFileButton.y + 15 },
             catalog.i18nc("@firstrun", "Open File"),
             catalog.i18nc("@firstrun", "Import a 3D model"))
     }
@@ -40,7 +40,7 @@ UM.MainWindow
                 if (UM.Preferences.getValue("general/firstrun") && UM.Preferences.getValue("general/firstrun_step") == 1) {
                     UM.Preferences.setValue("general/firstrun_step", 2)
                     base.showFirstrunTip(
-                        { x: toolbarBackground.width, y: centerModelButton.y + 23 },
+                        { x: toolbarBackground.width, y: centerModelButton.y + 14 },
                         catalog.i18nc("@firstrun", "Model Modifications"),
                         catalog.i18nc("@firstrun", "From this panel you can center, multiply, re-position and mirror your model. Or you can use the support blocker"),
                         true,
@@ -343,7 +343,7 @@ UM.MainWindow
                 anchors
                 {
                     top: topbar.bottom;
-                    topMargin: 10
+                    topMargin: 15
                     left: parent.left;
                     leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2)
                 }

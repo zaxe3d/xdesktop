@@ -49,7 +49,7 @@ Rectangle
         id: logo
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.topMargin: 40
+        anchors.topMargin: 25
         anchors.leftMargin: Math.round(UM.Theme.getSize("toolbar").width / 2 - UM.Theme.getSize("logo").width / 2)
 
         source: UM.Theme.getImage("logo");
@@ -93,8 +93,8 @@ Rectangle
         anchors {
             left: logo.right
             top: parent.top
-            topMargin: 33
-            leftMargin: 8
+            topMargin: 20
+            leftMargin: 3
         }
 
 
@@ -107,7 +107,7 @@ Rectangle
     }
 
     // Bottom Border
-    Rectangle { id: logoBorder; anchors { top: logo.bottom; topMargin: 20; left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: 2; color: UM.Theme.getColor("sidebar_item_extra_dark") }
+    Rectangle { id: logoBorder; anchors { top: logo.bottom; topMargin: 20; left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: UM.Theme.getSize("toolbar_lining").height; color: UM.Theme.getColor("text_sidebar") }
 
 
     // Expand or collapse sidebar

@@ -98,9 +98,11 @@ Column
                     if (current.material != "custom") {
                         Cura.MachineManager.setSettingForAllExtruders("material_print_temperature_layer_0", "value", materialPrintTempLayer0)
                         if (current.material == "zaxe_flex") {
+                            Cura.MachineManager.setSettingForAllExtruders("retraction_combing", "value", "All")
                             Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", 105)
                         } else {
                             Cura.MachineManager.resetSettingForAllExtruders("material_flow")
+                            Cura.MachineManager.resetSettingForAllExtruders("retraction_combing")
                         }
                     }
 

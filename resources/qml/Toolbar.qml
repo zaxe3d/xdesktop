@@ -72,7 +72,7 @@ Item
                     }
                 }
                 // Bottom Border
-                Rectangle { anchors { left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: 2; color: UM.Theme.getColor("sidebar_item_dark") }
+                Rectangle { anchors { left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: UM.Theme.getSize("toolbar_lining").height; color: UM.Theme.getColor("sidebar_item_dark") }
             }
         }
 
@@ -89,14 +89,17 @@ Item
         }
     }
 
-    UM.PointingRectangle
+    UM.PointingRectangleExt
     {
         id: panelBorder;
 
-        anchors.left: parent.right;
-        anchors.leftMargin: UM.Theme.getSize("default_margin").width;
-        anchors.top: base.top;
-        anchors.topMargin: base.activeY
+        anchors {
+            left: parent.left
+            leftMargin: base.marginL
+            top: base.top;
+            topMargin: base.activeY
+        }
+
         z: buttons.z -1
 
         target: Qt.point(parent.right, base.activeY +  Math.round(UM.Theme.getSize("button").height/2))
@@ -113,7 +116,7 @@ Item
                 return 0;
             }
         }
-        height: panel.item ? panel.height + 2 * UM.Theme.getSize("default_margin").height : 0;
+        height: panel.item ? panel.height + 2.5 * UM.Theme.getSize("default_margin").height : 0;
 
         opacity: panel.item && panel.width > 0 ? 1 : 0
         Behavior on opacity { NumberAnimation { duration: 100 } }

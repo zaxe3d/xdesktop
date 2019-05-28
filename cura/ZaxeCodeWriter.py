@@ -103,9 +103,10 @@ class ZaxeCodeWriter(MeshWriter):
         if material == "custom":
             preferences = self._application.getPreferences()
             return {
-                "extruder_temperature": int(preferences.getValue("custom_material/material_print_temperature")),
-                "bed_temperature": int(preferences.getValue("custom_material/material_bed_temperature")),
-                "chamber_temperature": int(preferences.getValue("custom_material/material_chamber_temperature"))
+                # int(float( --> https://stackoverflow.com/questions/1841565/valueerror-invalid-literal-for-int-with-base-10
+                "extruder_temperature": int(float(preferences.getValue("custom_material/material_print_temperature"))),
+                "bed_temperature": int(float(preferences.getValue("custom_material/material_bed_temperature"))),
+                "chamber_temperature": int(float(preferences.getValue("custom_material/material_chamber_temperature")))
             }
         else:
             extruderStack = self._application.getExtruderManager().getInstance().getExtruderStack(0)

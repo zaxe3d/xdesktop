@@ -343,7 +343,7 @@ UM.MainWindow
                 anchors
                 {
                     top: topbar.bottom;
-                    topMargin: 35
+                    topMargin: 10
                     left: parent.left;
                     leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2)
                 }
@@ -351,7 +351,7 @@ UM.MainWindow
             }
 
             // Bottom Border
-            Rectangle { id: openFileButtonBottomBorder; anchors { top: openFileButton.bottom; left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: 2; color: UM.Theme.getColor("sidebar_item_dark") }
+            Rectangle { id: openFileButtonBottomBorder; anchors { top: openFileButton.bottom; left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: UM.Theme.getSize("toolbar_lining").height; color: UM.Theme.getColor("sidebar_item_dark") }
 
             Button
             {
@@ -370,7 +370,7 @@ UM.MainWindow
             }
 
             // Bottom Border
-            Rectangle { id: centerModelButtonBottomBorder; anchors { top: centerModelButton.bottom; left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: 2; color: UM.Theme.getColor("sidebar_item_dark") }
+            Rectangle { id: centerModelButtonBottomBorder; anchors { top: centerModelButton.bottom; left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: UM.Theme.getSize("toolbar_lining").height; color: UM.Theme.getColor("sidebar_item_dark") }
 
             Button
             {
@@ -389,7 +389,7 @@ UM.MainWindow
             }
 
             // Bottom Border
-            Rectangle { id: multiplyModelButtonBottomBorder; anchors { top: multiplyModelButton.bottom; left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: 2; color: UM.Theme.getColor("sidebar_item_dark") }
+            Rectangle { id: multiplyModelButtonBottomBorder; anchors { top: multiplyModelButton.bottom; left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) } width: toolbarBackground.width - UM.Theme.getSize("sidebar_margin").width; height: UM.Theme.getSize("toolbar_lining").height; color: UM.Theme.getColor("sidebar_item_dark") }
 
             Toolbar
             {
@@ -397,6 +397,7 @@ UM.MainWindow
 
                 property int mouseX: base.mouseX
                 property int mouseY: base.mouseY
+                property var marginL: toolbarBackground.width
 
                 anchors {
                     top: multiplyModelButtonBottomBorder.bottom;

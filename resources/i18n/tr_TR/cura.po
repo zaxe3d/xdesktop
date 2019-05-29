@@ -105,6 +105,10 @@ msgid "Enter an IP address..."
 msgstr "Bir IP adresi giriniz..."
 
 msgctxt "@label"
+msgid "Enter pin code..."
+msgstr "Pin kodunu giriniz..."
+
+msgctxt "@label"
 msgid "Custom material settings"
 msgstr "Özel materyal ayarları"
 

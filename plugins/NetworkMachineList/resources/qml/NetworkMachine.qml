@@ -196,7 +196,7 @@ Item {
                     font: UM.Theme.getFont("medium")
                     color: UM.Theme.getColor("text_sidebar")
                     padding: 0
-                    Layout.preferredWidth: 235; Layout.preferredHeight: 30
+                    Layout.preferredWidth: 212; Layout.preferredHeight: 30
                     anchors {
                         top: parent.top
                         left: parent.left
@@ -224,6 +224,7 @@ Item {
                 }
                 Button {
                     Layout.preferredHeight: 27
+                    Layout.preferredWidth: 63
                     background: Rectangle {
                         color: UM.Theme.getColor("button_blue")
                         border.color: UM.Theme.getColor("button_blue")

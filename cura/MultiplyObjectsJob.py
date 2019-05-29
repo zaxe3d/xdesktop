@@ -65,6 +65,8 @@ class MultiplyObjectsJob(Job):
             for i in range(self._count):
                 # We do place the nodes one by one, as we want to yield in between.
                 new_node = copy.deepcopy(node)
+                # copy source objects extruder model as well to get material
+                new_node.setExtrudersModel(node.getExtrudersModel())
                 solution_found = False
                 if not node_too_big:
                     solution_found = arranger.findNodePlacement(new_node, offset_shape_arr, hull_shape_arr)

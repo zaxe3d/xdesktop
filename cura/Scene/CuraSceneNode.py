@@ -25,6 +25,12 @@ class CuraSceneNode(SceneNode):
         self._outside_buildarea = False
         self._extruders_model = ExtrudersModel()
 
+    def setExtrudersModel(self, extModel):
+        self._extruders_model = extModel
+
+    def getExtrudersModel(self):
+        return self._extruders_model
+
     def setOutsideBuildArea(self, new_value: bool) -> None:
         self._outside_buildarea = new_value
 

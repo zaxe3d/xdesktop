@@ -114,7 +114,7 @@ Menu
         id: multiplyDialog
         modality: Qt.ApplicationModal
 
-        title: catalog.i18ncp("@title:window", "Multiply Selected Model", "Multiply Selected Models", UM.Selection.selectionCount)
+        title: catalog.i18ncp("@action:inmenu menubar:edit", "Multiply Selected Model", "Multiply Selected Models", UM.Selection.selectionCount)
 
 
         onAccepted: CuraActions.multiplySelection(copiesField.value)
@@ -135,6 +135,7 @@ Menu
 
         Row
         {
+            anchors.horizontalCenter: parent.horizontalCenter
             spacing: UM.Theme.getSize("default_margin").width
 
             Label

@@ -97,7 +97,7 @@ Item
 
         anchors {
             left: parent.left
-            leftMargin: base.marginL
+            leftMargin: base.marginL + 1
             top: base.top;
             topMargin: base.activeY
         }

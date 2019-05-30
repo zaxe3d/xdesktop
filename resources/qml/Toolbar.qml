@@ -25,6 +25,8 @@ Item
         anchors.left: parent.left
         spacing: UM.Theme.getSize("button_lining").width
 
+        z: 5
+
         Repeater
         {
             id: repeat
@@ -99,8 +101,6 @@ Item
             top: base.top;
             topMargin: base.activeY
         }
-
-        z: buttons.z
 
         target: Qt.point(parent.right, base.activeY +  Math.round(UM.Theme.getSize("button").height/2))
         arrowSize: 0

@@ -2194,7 +2194,7 @@ Item
                         base.showFirstrunTip(
                             qualityLabel.mapToItem(base, 0, -5),
                             catalog.i18nc("@firstrun", "Slicing Options"),
-                            catalog.i18nc("@firstrun", "Adjust resolution (layer height), infill density, raft and fill density according to needs. Then hit the Slice! button when ready!"), false, "")
+                            catalog.i18nc("@firstrun", "Adjust layer height (resolution), infill density, raft and fill density according to needs. Then hit the Slice! button when ready!"), false, "")
                         break
                 }
             }

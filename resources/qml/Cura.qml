@@ -277,6 +277,12 @@ UM.MainWindow
                         }
                     }
                 }
+
+                Menu
+                {
+                    title: catalog.i18nc("@title:menu menubar:settings", "&Device")
+                    NozzleMenu { title: catalog.i18nc("@title:menu menubar:settings", "&Nozzle"); visible: Cura.MachineManager.hasVariants; extruderIndex: 0 }
+                }
             }
 
             Menu

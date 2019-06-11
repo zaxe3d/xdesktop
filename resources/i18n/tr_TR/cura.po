@@ -436,6 +436,14 @@ msgctxt "@title:menu menubar:settings"
 msgid "&Language"
 msgstr "&Dil"
 
+msgctxt "@title:menu menubar:settings"
+msgid "&Device"
+msgstr "&Cihaz"
+
+msgctxt "@title:menu menubar:settings"
+msgid "&Nozzle"
+msgstr "&Nozül"
+
 msgctxt "@title:menu menubar:file"
 msgid "&Export..."
 msgstr "&Dışa Aktar..."
@@ -560,8 +568,8 @@ msgid "Slicing Options"
 msgstr "Dilimleme Seçenekleri"
 
 msgctxt "@firstrun"
-msgid "Adjust resolution (layer height), infill density, raft and fill density according to needs. Then hit the Slice! button when ready!"
-msgstr "Çözünürlüğü (katman kalınlığı), destekleyici tabanı ve doldurma yoğunluğunu ihtiyacınıza göre ayarlayın. Daha sonra Dilimle! düğmesine tıklayın!"
+msgid "Adjust layer height (resolution), infill density, raft and fill density according to needs. Then hit the Slice! button when ready!"
+msgstr "Katman kalınlığı (çözünürlüğü), destekleyici tabanı ve doldurma yoğunluğunu ihtiyacınıza göre ayarlayın. Daha sonra Dilimle! düğmesine tıklayın!"
 
 msgctxt "@firstrun"
 msgid "Material Selection"

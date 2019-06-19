@@ -69,6 +69,10 @@ msgid "Please take your print!"
 msgstr "Lütfen baskınızı tabladan alınız!"
 
 msgctxt "@warning"
+msgid "Remaining filament on device may not be enough for this print."
+msgstr "Cihaza takılı filament baskıyı bitirmeye yetmeyebilir."
+
+msgctxt "@warning"
 msgid "The material in the device does not match with the material you choose. Please slice again with the correct material"
 msgstr "Cihaza takılı materyal ile baskıya hazırladığınız materyal eşleşmiyor. Lütfen doğru materyal ile tekrar baskıya hazırlayınız"
 

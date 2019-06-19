@@ -30,8 +30,10 @@ Item {
     property string snapshot
     property bool hasSnapshot
     property bool hasPin
+    property bool hasNFCSpool
     property bool hasFWUpdate
     property var progress: 0
+    property var filamentRemaining: 0
 
     property var pausedSeconds: 0
 
@@ -43,6 +45,7 @@ Item {
     // warnings
     property bool nozzleWarning
     property bool materialWarning
+    property bool filamentLengthWarning
     property bool modelCompatibilityWarning
 
     property string nextState
@@ -90,6 +93,11 @@ Item {
         onPinChange: {
             if (uid != arguments[0]) return
             hasPin = arguments[1]
+        }
+        onSpoolChange: {
+            if (uid != arguments[0]) return
+            hasNFCSpool = arguments[1]
+            filamentRemaining = arguments[2]
         }
         onUploadProgress: {
             if (uid != arguments[0]) return
@@ -144,6 +152,7 @@ Item {
         }
         device.nextState = ""
         confirmationPane.visible = false
+        device.filamentLengthWarning = false
     }
     function enterPinCode(pin) {
         pinCodeEntryPane.visible = false
@@ -703,6 +712,11 @@ Item {
                                                 device.materialWarning = true
                                                 shakeAnim.start()
                                             } else {
+                                                if (device.hasNFCSpool && device.filamentRemaining - (info.filament_used / 1000) <= 0) {
+                                                    device.filamentLengthWarning = true
+                                                } else {
+                                                    device.filamentLengthWarning = false
+                                                }
                                                 device.materialWarning = false
                                                 device.modelCompatibilityWarning = false
                                                 Cura.NetworkMachineManager.upload(device.uid) == false
@@ -712,6 +726,7 @@ Item {
                                             if (UM.Backend.state != "undefined" && UM.Backend.state != 3 || !CuraApplication.platformActivity) {
                                                 device.materialWarning = false
                                                 device.modelCompatibilityWarning = false
+                                                device.filamentLengthWarning = false
                                                 shakeAnim.start()
                                             } else if (Cura.MachineManager.activeMachineName.replace("+", "PLUS") != device.deviceModel.toUpperCase()) {
                                                 device.modelCompatibilityWarning = true
@@ -723,6 +738,11 @@ Item {
                                                 device.materialWarning = true
                                                 shakeAnim.start()
                                             } else {
+                                                if (device.hasNFCSpool && device.filamentRemaining - PrintInformation.materialLengths[0] <= 0) {
+                                                    device.filamentLengthWarning = true
+                                                } else {
+                                                    device.filamentLengthWarning = false
+                                                }
                                                 device.nozzleWarning = false
                                                 device.materialWarning = false
                                                 device.modelCompatibilityWarning = false
@@ -933,6 +953,43 @@ Item {
                     text: catalog.i18nc("@warning", "The nozzle [%1] currently installed on machine does not match with the Zaxe file [%2] Please slice again with the correct nozzle diameter [%1]").arg(device.nozzle).arg(Cura.MachineManager.activeVariantName)
                 }
             }
+
+            // Material warning message
+            Rectangle {
+                visible: device.filamentLengthWarning
+                Layout.preferredWidth: Math.round(device.width - 65 - (UM.Theme.getSize("sidebar_item_margin").width * 2))
+                Layout.minimumHeight: childrenRect.height
+                Layout.alignment: Qt.AlignRight
+                Layout.bottomMargin: Math.round(UM.Theme.getSize("sidebar_item_margin").height / 2)
+                Layout.rightMargin: UM.Theme.getSize("sidebar_item_margin").width
+                color: UM.Theme.getColor("sidebar_item_light")
+
+                Text {
+                    id: filamentLengthWarningIcon
+                    font: UM.Theme.getFont("zaxe_icon_set")
+                    color: UM.Theme.getColor("text_danger")
+                    horizontalAlignment: Text.AlignLeft
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                    }
+                    text: "d"
+                }
+                Text {
+                    width: parent.width
+                    font: UM.Theme.getFont("medium")
+                    color: UM.Theme.getColor("text_warning")
+                    horizontalAlignment: Text.AlignLeft
+                    wrapMode: Text.WordWrap
+                    anchors {
+                        verticalCenter: filamentLengthWarningIcon.verticalCenter
+                        left: filamentLengthWarningIcon.right
+                        leftMargin: 1
+                    }
+                    text: catalog.i18nc("@warning", "Remaining filament on device may not be enough for this print.")
+                }
+            }
+
             // Material warning message
             Rectangle {
                 visible: device.materialWarning && PrintInformation.materialNames[0] != device.material
@@ -1102,10 +1159,11 @@ Item {
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                             }
                             Label {
-                                text: networkMachineList.materialNames[device.material]
+                                text: networkMachineList.materialNames[device.material] +
+                                      (device.hasNFCSpool ? " ~" + device.filamentRemaining + "m" : "")
                                 color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("large_semi_bold")
-                                Layout.preferredHeight: 15
+                                Layout.preferredHeight: device.hasNFCSpool ? 20 : 15 // ?!
                             }
                             Label {
                                 text: "b"

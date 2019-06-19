@@ -67,10 +67,12 @@ class NetworkMachine(QThread, QObject):
         self.material = ""
         self.deviceModel = "x1"
         self.hasPin = False
+        self.hasNFCSpool = False
         self.hasSnapshot = False
         # anonymous ftp address (only for to serve the snapshot for now)
         self.snapshot = "ftp://" + self.ip + ":9494/snapshot.png"
         self.elapsedTime = 0
+        self.filamentRemaining = 0
         self.fwVersion = [999, 0, 0]
         self.startTime = None
         self.__states = {}
@@ -139,11 +141,15 @@ class NetworkMachine(QThread, QObject):
                 self.startTime = time.time() - self.elapsedTime
                 self.estimatedTime = message["estimated_time"]
                 self.hasPin = message["has_pin"].lower() == "true"
+                self.hasNFCSpool = message["has_nfc_spool"].lower() == "true" if "has_nfc_spool" in message else False
+                self.filamentRemaining = float(message["filament_remaining"]) if self.hasNFCSpool else 0
             except:
                 self.printingFile = ""
                 self.elapsedTime = 0
                 self.estimatedTime = ""
                 self.hasPin = False
+                self.hasNFCSpool = False
+                self.filamentRemaining = 0
 
         if message['event'] in ["hello", "states_update"]:
             old_states = self.__states
@@ -182,6 +188,9 @@ class NetworkMachine(QThread, QObject):
             self.startTime = time.time() - self.elapsedTime
         if message['event'] == "pin_change":
             self.hasPin = message["has_pin"].lower() == "true"
+        if message['event'] == "spool_data_change":
+            self.hasNFCSpool = message["has_nfc_spool"].lower() == "true"
+            self.filamentRemaining = float(message["filament_remaining"])
         if message['event'] == "new_name":
             self.setName(message['name'])
 

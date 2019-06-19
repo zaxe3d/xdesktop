@@ -128,8 +128,10 @@ Item
             printingFile: mPrintingFile
             startTime: mStartTime
             estimatedTime: mEstimatedTime
+            filamentRemaining: mFilamentRemaining
             snapshot: mSnapshot
             hasPin: mHasPin
+            hasNFCSpool: mHasNFCSpool
             hasFWUpdate: mHasFWUpdate
             hasSnapshot: mHasSnapshot
 

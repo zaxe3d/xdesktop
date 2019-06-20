@@ -46,7 +46,7 @@ class NetworkMachineListModel(ListModel):
     fileChange = pyqtSignal(str, str, float, str)
     stateChange = pyqtSignal(str, QVariant)
     pinChange = pyqtSignal(str, bool)
-    spoolChange = pyqtSignal(str, bool, float)
+    spoolChange = pyqtSignal(str, bool, float, str)
 
     def _getItem(self, networkMachine):
         item = {
@@ -64,6 +64,7 @@ class NetworkMachineListModel(ListModel):
             "mHasPin": networkMachine.hasPin,
             "mHasNFCSpool": networkMachine.hasNFCSpool,
             "mFilamentRemaining": networkMachine.filamentRemaining,
+            "mFilamentColor": networkMachine.filamentColor,
             "mHasSnapshot": networkMachine.hasSnapshot,
             "mHasFWUpdate": self._compareVersion(networkMachine),
             "mSnapshot": networkMachine.snapshot,
@@ -151,9 +152,10 @@ class NetworkMachineListModel(ListModel):
             self.pinChange.emit(uuid, bool(eventArgs.machine.hasPin))
             self._itemUpdated(uuid, "mHasPin", eventArgs.machine.hasPin)
         if message["event"] in ["hello", "spool_data_change"]:
-            self.spoolChange.emit(uuid, bool(eventArgs.machine.hasNFCSpool), eventArgs.machine.filamentRemaining)
+            self.spoolChange.emit(uuid, bool(eventArgs.machine.hasNFCSpool), eventArgs.machine.filamentRemaining, eventArgs.machine.filamentColor)
             self._itemUpdated(uuid, "mHasNFCSpool", eventArgs.machine.hasNFCSpool)
             self._itemUpdated(uuid, "mFilamentRemaining", eventArgs.machine.filamentRemaining)
+            self._itemUpdated(uuid, "mFilamentColor", eventArgs.machine.filamentColor)
 
     def _itemUploadProgress(self, eventArgs):
         self.uploadProgress.emit(eventArgs.machine.id, float(eventArgs.progress / 100))

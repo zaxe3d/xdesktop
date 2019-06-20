@@ -26,6 +26,17 @@ Item
         "custom": catalog.i18nc("@label", "Custom")
     }
 
+    property var materialColors : {
+        "White": catalog.i18nc("@color", "White"), "Gray": catalog.i18nc("@color", "Gray"),
+        "Black": catalog.i18nc("@color", "Black"), "Chocolate": catalog.i18nc("@color", "Chocolate"),
+        "Red": catalog.i18nc("@color", "Red"), "Orange": catalog.i18nc("@color", "Orange"),
+        "Yellow": catalog.i18nc("@color", "Yellow"), "Blue": catalog.i18nc("@color", "Blue"),
+        "Dark Green": catalog.i18nc("@color", "Dark Green"), "Green": catalog.i18nc("@color", "Green"),
+        "Purple": catalog.i18nc("@color", "Purple"), "Galaxy Blue": catalog.i18nc("@color", "Galaxy Blue"),
+        "Natural": catalog.i18nc("@color", "Natural"), "Silver": catalog.i18nc("@color", "Silver"),
+        "Gold": catalog.i18nc("@color", "Gold"), "Glow Blue": catalog.i18nc("@color", "Glow Blue")
+    }
+
     function toHHMMSS(str) {
         var sec_num = parseInt(str, 10); // don't forget the second param
         var hours   = Math.floor(sec_num / 3600);
@@ -129,6 +140,7 @@ Item
             startTime: mStartTime
             estimatedTime: mEstimatedTime
             filamentRemaining: mFilamentRemaining
+            filamentColor: mFilamentColor
             snapshot: mSnapshot
             hasPin: mHasPin
             hasNFCSpool: mHasNFCSpool

@@ -28,6 +28,7 @@ Item {
     property string elapsedTimeTxt
     property string estimatedTime
     property string snapshot
+    property string filamentColor
     property bool hasSnapshot
     property bool hasPin
     property bool hasNFCSpool
@@ -98,6 +99,7 @@ Item {
             if (uid != arguments[0]) return
             hasNFCSpool = arguments[1]
             filamentRemaining = arguments[2]
+            filamentColor = arguments[3]
         }
         onUploadProgress: {
             if (uid != arguments[0]) return
@@ -1159,8 +1161,18 @@ Item {
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                             }
                             Label {
-                                text: networkMachineList.materialNames[device.material] +
-                                      (device.hasNFCSpool ? " ~" + device.filamentRemaining + "m" : "")
+                                text: {
+                                    if (device.hasNFCSpool) {
+                                        var colorUpper = device.filamentColor.charAt(0).toUpperCase() +
+                                                         device.filamentColor.slice(1)
+                                        var color = networkMachineList.materialColors[colorUpper]
+                                        return color + " " +
+                                               networkMachineList.materialNames[device.material] +
+                                               " ~" + device.filamentRemaining + "m"
+                                    } else {
+                                        return networkMachineList.materialNames[device.material]
+                                    }
+                                }
                                 color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("large_semi_bold")
                                 Layout.preferredHeight: device.hasNFCSpool ? 20 : 15 // ?!

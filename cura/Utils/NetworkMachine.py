@@ -62,6 +62,7 @@ class NetworkMachine(QThread, QObject):
         self.currentSize = 0
         self.totalSize = 0
         self.nozzle = 0.4
+        self.filamentColor = "unknown"
         self.printingFile = ""
         self.estimatedTime = ""
         self.material = ""
@@ -143,6 +144,7 @@ class NetworkMachine(QThread, QObject):
                 self.hasPin = message["has_pin"].lower() == "true"
                 self.hasNFCSpool = message["has_nfc_spool"].lower() == "true" if "has_nfc_spool" in message else False
                 self.filamentRemaining = float(message["filament_remaining"]) if self.hasNFCSpool else 0
+                self.filamentColor = message["filament_color"] if self.hasNFCSpool else "unknown"
             except:
                 self.printingFile = ""
                 self.elapsedTime = 0
@@ -150,6 +152,7 @@ class NetworkMachine(QThread, QObject):
                 self.hasPin = False
                 self.hasNFCSpool = False
                 self.filamentRemaining = 0
+                self.filamentColor = "unknown"
 
         if message['event'] in ["hello", "states_update"]:
             old_states = self.__states

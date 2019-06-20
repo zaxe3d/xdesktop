@@ -618,3 +618,64 @@ msgstr "XDesktop ilk açılış rehberi sona erdi"
 msgctxt "@firstrun"
 msgid "You can now continue using XDesktop... You can re-run it from Help menu if needed."
 msgstr "XDesktop'u kullanmaya devam edebilirsiniz. Eğer isterseniz Yardım menüsünden tekrar başlatabilirsiniz."
+
+msgctxt "@color"
+msgid "White"
+msgstr "Beyaz"
+
+msgctxt "@color"
+msgid "Gray"
+msgstr "Gri"
+
+msgctxt "@color"
+msgid "Chocolate"
+msgstr "Çikolata"
+
+msgctxt "@color"
+msgid "Red"
+msgstr "Kırmızı"
+
+msgctxt "@color"
+msgid "Orange"
+msgstr "Turuncu"
+
+msgctxt "@color"
+msgid "Yellow"
+msgstr "Sarı"
+
+msgctxt "@color"
+msgid "Blue"
+msgstr "Mavi"
+
+msgctxt "@color"
+msgid "Dark Green"
+msgstr "Koyu Yeşil"
+
+msgctxt "@color"
+msgid "Green"
+msgstr "Yeşil"
+
+msgctxt "@color"
+msgid "Purple"
+msgstr "Mor"
+
+msgctxt "@color"
+msgid "Galaxy Blue"
+msgstr "Galaksi Mavi"
+
+msgctxt "@color"
+msgid "Natural"
+msgstr "Naturel"
+
+msgctxt "@color"
+msgid "Silver"
+msgstr "Gümüş"
+
+msgctxt "@color"
+msgid "Gold"
+msgstr "Altın"
+
+msgctxt "@color"
+msgid "Glow Blue"
+msgstr "Gece Parlayan"
+

@@ -644,6 +644,10 @@ msgid "Yellow"
 msgstr "Sarı"
 
 msgctxt "@color"
+msgid "Pink"
+msgstr "Pembe"
+
+msgctxt "@color"
 msgid "Blue"
 msgstr "Mavi"
 

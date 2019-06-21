@@ -34,7 +34,8 @@ Item
         "Dark Green": catalog.i18nc("@color", "Dark Green"), "Green": catalog.i18nc("@color", "Green"),
         "Purple": catalog.i18nc("@color", "Purple"), "Galaxy Blue": catalog.i18nc("@color", "Galaxy Blue"),
         "Natural": catalog.i18nc("@color", "Natural"), "Silver": catalog.i18nc("@color", "Silver"),
-        "Gold": catalog.i18nc("@color", "Gold"), "Glow Blue": catalog.i18nc("@color", "Glow Blue")
+        "Gold": catalog.i18nc("@color", "Gold"), "Glow Blue": catalog.i18nc("@color", "Glow Blue"),
+        "Pink": catalog.i18nc("@color", "Pink")
     }
 
     function toHHMMSS(str) {

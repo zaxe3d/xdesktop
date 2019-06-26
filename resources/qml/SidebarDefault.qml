@@ -1085,15 +1085,16 @@ Item
 
                                     model: ListModel {
                                         id: cbTSLCItems
-                                        ListElement { text: "0"; value: 0 }
-                                        ListElement { text: "1"; value: 1 }
-                                        ListElement { text: "2"; value: 2 }
-                                        ListElement { text: "3"; value: 3 }
-                                        ListElement { text: "4"; value: 4 }
-                                        ListElement { text: "5"; value: 5 }
-                                        ListElement { text: "6"; value: 6 }
-                                        ListElement { text: "7"; value: 7 }
-                                        ListElement { text: "8"; value: 8 }
+                                        ListElement { text: "0";  value: 0  }
+                                        ListElement { text: "1";  value: 1  }
+                                        ListElement { text: "2";  value: 2  }
+                                        ListElement { text: "3";  value: 3  }
+                                        ListElement { text: "4";  value: 4  }
+                                        ListElement { text: "5";  value: 5  }
+                                        ListElement { text: "6";  value: 6  }
+                                        ListElement { text: "7";  value: 7  }
+                                        ListElement { text: "8";  value: 8  }
+                                        ListElement { text: "16"; value: 16 }
                                     }
 
                                     currentIndex:
@@ -1205,15 +1206,16 @@ Item
 
                                     model: ListModel {
                                         id: cbBSLCItems
-                                        ListElement { text: "0"; value: 0 }
-                                        ListElement { text: "1"; value: 1 }
-                                        ListElement { text: "2"; value: 2 }
-                                        ListElement { text: "3"; value: 3 }
-                                        ListElement { text: "4"; value: 4 }
-                                        ListElement { text: "5"; value: 5 }
-                                        ListElement { text: "6"; value: 6 }
-                                        ListElement { text: "7"; value: 7 }
-                                        ListElement { text: "8"; value: 8 }
+                                        ListElement { text: "0";  value: 0  }
+                                        ListElement { text: "1";  value: 1  }
+                                        ListElement { text: "2";  value: 2  }
+                                        ListElement { text: "3";  value: 3  }
+                                        ListElement { text: "4";  value: 4  }
+                                        ListElement { text: "5";  value: 5  }
+                                        ListElement { text: "6";  value: 6  }
+                                        ListElement { text: "7";  value: 7  }
+                                        ListElement { text: "8";  value: 8  }
+                                        ListElement { text: "16"; value: 16 }
                                     }
 
                                     currentIndex:

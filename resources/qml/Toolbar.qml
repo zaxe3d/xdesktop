@@ -40,7 +40,7 @@ Item
                 {
                     text: model.name + (model.shortcut ? (" (" + model.shortcut + ")") : "")
                     anchors { left: parent.left; leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2) }
-                    iconSource: (UM.Theme.getIcon(model.icon) != "") ? UM.Theme.getIcon(model.icon) : "file:///" + model.location + "/" + model.icon
+                    property string iconText: model.iconText
                     checkable: true
                     checked: model.active
                     enabled: model.enabled && UM.Selection.hasSelection && UM.Controller.toolsEnabled

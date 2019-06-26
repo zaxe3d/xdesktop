@@ -268,7 +268,7 @@ Item
                                 Label
                                 {
                                     id: chamberTemperatureLabel
-                                    text: catalog.i18nc("@label", "Chamber temperature") + " (10-50°C)"
+                                    text: catalog.i18nc("@label", "Chamber temperature") + " (10-60°C)"
                                     font: UM.Theme.getFont("medium");
                                     color: UM.Theme.getColor("text_sidebar")
 
@@ -296,7 +296,7 @@ Item
                                     style: UM.Theme.styles.text_field;
                                     text: parseInt(UM.Preferences.getValue("custom_material/material_chamber_temperature"))
                                     anchors.verticalCenter: parent.verticalCenter
-                                    validator: RegExpValidator { regExp: /^(?:[1-4][0-9]|50)$/ }
+                                    validator: RegExpValidator { regExp: /^(?:[1-5][0-9]|60)$/ }
                                     maximumLength: 2
                                     onEditingFinished:
                                     {

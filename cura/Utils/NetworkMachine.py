@@ -194,6 +194,7 @@ class NetworkMachine(QThread, QObject):
         if message['event'] == "spool_data_change":
             self.hasNFCSpool = message["has_nfc_spool"].lower() == "true"
             self.filamentRemaining = float(message["filament_remaining"])
+            self.filamentColor = message["filament_color"]
         if message['event'] == "new_name":
             self.setName(message['name'])
 
@@ -205,7 +206,7 @@ class NetworkMachine(QThread, QObject):
         self.emit(eventMessage)
 
     def onError(self, errorCode):
-        Logger.log("w", "error connecting device: %s - [%s]" % (self.ip, errorCode))
+        Logger.log("w", "error connecting device: %s - [%s]" % (self.ip, self.socket.errorString()))
 
     def close(self):
         Logger.log("i", "closing - %s[%s]" % (self.name, self.ip))

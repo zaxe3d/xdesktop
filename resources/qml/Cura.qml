@@ -342,9 +342,8 @@ UM.MainWindow
             {
                 id: openFileButton;
                 text: catalog.i18nc("@action:button","Open File");
-                iconSource: UM.Theme.getIcon("load")
                 style: UM.Theme.styles.tool_button
-                property var rectangleButton : true
+                property string iconText : "A"
                 tooltip: ""
                 anchors
                 {
@@ -363,8 +362,8 @@ UM.MainWindow
             {
                 id: centerModelButton;
                 text: catalog.i18ncp("@action:inmenu menubar:edit", "Center Selected Model", "Center Selected Models", UM.Selection.selectionCount)
-                iconSource: UM.Theme.getIcon("center")
                 style: UM.Theme.styles.tool_button
+                property string iconText : "B"
                 tooltip: ""
                 anchors
                 {
@@ -382,7 +381,7 @@ UM.MainWindow
             {
                 id: multiplyModelButton;
                 text: catalog.i18ncp("@action:inmenu menubar:edit", "Multiply Selected Model", "Multiply Selected Models", UM.Selection.selectionCount)
-                iconSource: UM.Theme.getIcon("multiply")
+                property string iconText: "F"
                 style: UM.Theme.styles.tool_button
                 tooltip: ""
                 anchors

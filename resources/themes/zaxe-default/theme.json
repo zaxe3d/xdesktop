@@ -355,9 +355,8 @@
         "standard_list_input": [20.0, 25.0],
         "standard_arrow": [0.8, 0.8],
 
-        "button": [4.5, 4.0],
+        "button": [4.5, 4.5],
         "button_icon": [2.0, 2.0],
-        "button_icon_rectangle": [2.4, 1.5],
         "button_lining": [0, 0],
 
         "sidebar_button": [7, 7],

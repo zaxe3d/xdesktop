@@ -497,34 +497,36 @@ QtObject {
                 }
             }
 
-            label: Item {
-                UM.RecolorImage {
-                    anchors.centerIn: parent;
-                    opacity: !control.enabled ? 0.2 : 1.0
-                    source: control.iconSource;
-                    width: control.rectangleButton ? Theme.getSize("button_icon_rectangle").width : Theme.getSize("button_icon").width;
-                    height: control.rectangleButton ? Theme.getSize("button_icon_rectangle").height : Theme.getSize("button_icon").height;
-                    color:
+            label: Label {
+                text: control.iconText
+                font: Theme.getFont("zaxe_icon_set_medium")
+                opacity: !control.enabled ? 0.2 : 1.0
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                anchors {
+                    top: parent.top
+                    topMargin: 4
+                    left: parent.left
+                    leftMargin: -2
+                }
+                color:
+                {
+                    if(control.checkable && control.checked && control.hovered)
                     {
-                        if(control.checkable && control.checked && control.hovered)
-                        {
-                            return Theme.getColor("button_text_active_hover");
-                        }
-                        else if(control.pressed || (control.checkable && control.checked))
-                        {
-                            return Theme.getColor("button_text_active");
-                        }
-                        else if(control.hovered)
-                        {
-                            return Theme.getColor("button_text_hover");
-                        }
-                        else
-                        {
-                            return Theme.getColor("button_text");
-                        }
+                        return Theme.getColor("button_text_active_hover");
                     }
-
-                    sourceSize: Theme.getSize("button_icon")
+                    else if(control.pressed || (control.checkable && control.checked))
+                    {
+                        return Theme.getColor("button_text_active");
+                    }
+                    else if(control.hovered)
+                    {
+                        return Theme.getColor("button_text_hover");
+                    }
+                    else
+                    {
+                        return Theme.getColor("button_text");
+                    }
                 }
             }
         }

@@ -1094,6 +1094,7 @@ Item
                                         ListElement { text: "6";  value: 6  }
                                         ListElement { text: "7";  value: 7  }
                                         ListElement { text: "8";  value: 8  }
+                                        ListElement { text: "12"; value: 12 }
                                         ListElement { text: "16"; value: 16 }
                                     }
 
@@ -1215,6 +1216,7 @@ Item
                                         ListElement { text: "6";  value: 6  }
                                         ListElement { text: "7";  value: 7  }
                                         ListElement { text: "8";  value: 8  }
+                                        ListElement { text: "12"; value: 12 }
                                         ListElement { text: "16"; value: 16 }
                                     }
 

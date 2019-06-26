@@ -347,10 +347,22 @@ Item {
                             anchors.centerIn: parent
                             radius: 10
 
+                            MouseArea {
+                                id: mouseAreaSnapshot
+                                hoverEnabled: true
+                                anchors.fill: parent
+                                onHoveredChanged: {
+                                     printerIcon.visible = containsMouse
+                                        ? true
+                                        : printerIcon.isVisible
+                                }
+                            }
+
                             Image {
                                 id: imgSnapshot
                                 anchors.centerIn: parent
                                 visible: !machineStates.calibrating && (machineStates.bed_occupied || machineStates.printing || machineStates.heating) && device.hasSnapshot
+                                onVisibleChanged: { printerIcon.visible = !visible }
                                 source: visible ? device.snapshot : ""
                                 cache: false
                                 width: 60
@@ -359,8 +371,9 @@ Item {
 
                             Text {
                                 id: printerIcon
+                                property bool isVisible : !imgSnapshot.visible && imgSnapshot.progress != 1
                                 anchors.centerIn: parent
-                                visible: !imgSnapshot.visible && imgSnapshot.progress != 1
+                                visible: isVisible
                                 font: UM.Theme.getFont("xx_large")
                                 color: UM.Theme.getColor("text_sidebar_light")
                                 text: device.deviceModel.replace("plus", "+").toUpperCase()

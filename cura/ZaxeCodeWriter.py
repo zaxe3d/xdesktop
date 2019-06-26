@@ -71,6 +71,7 @@ class ZaxeCodeWriter(MeshWriter):
             info["checksum"] = self.getCheckSum()
         else:
             info = tool.merge_two_dicts({
+                "name": printInformation.baseName,
                 "filament_used": printInformation.materialLengths[0] * 1000, # 0 for current build plate
                 "duration": printInformation.currentPrintTime.getDisplayString(DurationFormat.Format.ISO8601),
                 "material": printInformation.materialNames[0], # 0 for current build plate

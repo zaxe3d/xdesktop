@@ -215,7 +215,7 @@ class NetworkMachine(QThread, QObject):
     # end of connection related
 
     def setName(self, newName):
-        self.name = tool.clearChars(newName)
+        self.name = newName
 
     def getStates(self):
         return tool.merge_two_dicts(self.__states, {"uploading": self.uploader is not None and self.uploader.isUploading()})

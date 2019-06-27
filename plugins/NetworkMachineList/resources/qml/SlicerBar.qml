@@ -54,7 +54,7 @@ Item {
                 lblFileName.text = PrintInformation.baseName + ".zaxe"
                 lblDuration.text = info.duration
                 lblLength.text = (info.filament_used / 1000) + "m."
-                lblMaterial.text = networkMachineList.materialNames[info.material]
+                lblMaterial.text = networkMachineList.materialNames[info.hasOwnProperty("sub_material") ? info.sub_material : info.material]
 
                 if (info.material == "zaxe_abs" || info.material == "zaxe_pla") {
                     lblWeight.text = (info.filament_used / 10 *

@@ -624,6 +624,10 @@ msgid "White"
 msgstr "Beyaz"
 
 msgctxt "@color"
+msgid "Black"
+msgstr "Siyah"
+
+msgctxt "@color"
 msgid "Gray"
 msgstr "Gri"
 

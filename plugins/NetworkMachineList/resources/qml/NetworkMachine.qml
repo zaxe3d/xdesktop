@@ -723,7 +723,7 @@ Item {
                                             } else if (info.model != device.deviceModel.toUpperCase()) {
                                                 device.modelCompatibilityWarning = true
                                                 shakeAnim.start()
-                                            } else if (info.material != device.material) {
+                                            } else if (info.material.indexOf(device.material) == -1) {
                                                 device.materialWarning = true
                                                 shakeAnim.start()
                                             } else {
@@ -749,7 +749,7 @@ Item {
                                             } else if (Cura.MachineManager.activeVariantName != device.nozzle) {
                                                 device.nozzleWarning = true
                                                 shakeAnim.start()
-                                            } else if (PrintInformation.materialNames[0] != device.material) {
+                                            } else if (PrintInformation.materialNames[0].indexOf(device.material) == -1) {
                                                 device.materialWarning = true
                                                 shakeAnim.start()
                                             } else {

@@ -4,12 +4,12 @@
     <metadata>
         <name>
             <brand>Zaxe</brand>
-            <material>zaxe_flex</material>
+            <material>zaxe_flex_white</material>
             <color>Generic</color>
         </name>
-        <GUID>e1e298bf-6ee8-405c-ac07-874f94f9a0fa</GUID>
+        <GUID>52064794-7152-4e8f-86c6-fed7dd4a1c58</GUID>
         <version>1</version>
-        <color_code>#fdff00</color_code>
+        <color_code>#ecece7</color_code>
         <description></description>
         <adhesion_info></adhesion_info>
     </metadata>
@@ -18,8 +18,7 @@
         <diameter>1.75</diameter>
     </properties>
     <settings>
-        <setting key="print temperature">193</setting>
-        <setting key="print temperature layer 0">205</setting>
+        <setting key="print temperature">213</setting>
         <setting key="heated bed temperature">70</setting>
         <setting key="bed temperature layer 0">70</setting>
         <setting key="retraction amount">0</setting>

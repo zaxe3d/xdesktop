@@ -225,6 +225,23 @@ Column
                 Cura.MachineManager.setMaterialById(currentExtruderIndex, matObj.material)
                 color = matObj.color
             }
+
+
+            // Disable mouse wheel for combobox
+            MouseArea {
+                anchors.fill: parent
+                onWheel: {
+                    // do nothing
+                }
+                onPressed: {
+                    // propogate to ComboBox
+                    mouse.accepted = false;
+                }
+                onReleased: {
+                    // propogate to ComboBox
+                    mouse.accepted = false;
+                }
+            }
         }
 
         Button {

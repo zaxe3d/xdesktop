@@ -343,7 +343,7 @@
                         "MACH3": "Mach3",
                         "Repetier": "Repetier"
                     },
-                    "default_value": "RepRap (RepRap)",
+                    "default_value": "RepRap (Marlin/Sprinter)",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false,
                     "settable_per_meshgroup": false
@@ -753,7 +753,7 @@
                     "description": "The height of the initial layer in mm. A thicker initial layer makes adhesion to the build plate easier.",
                     "unit": "mm",
                     "type": "float",
-                    "default_value": 0.3,
+                    "default_value": 0.4,
                     "resolve": "min(extruderValues('layer_height_0'))",
                     "minimum_value": "0.001",
                     "minimum_value_warning": "0.1",
@@ -1234,7 +1234,7 @@
                     "label": "Optimize Wall Printing Order",
                     "description": "Optimize the order in which walls are printed so as to reduce the number of retractions and the distance travelled. Most parts will benefit from this being enabled but some may actually take longer so please compare the print time estimates with and without optimization. First layer is not optimized when choosing brim as build plate adhesion type.",
                     "type": "bool",
-                    "default_value": false,
+                    "default_value": true,
                     "settable_per_mesh": true
                 },
                 "outer_inset_first":

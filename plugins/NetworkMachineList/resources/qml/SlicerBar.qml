@@ -56,9 +56,9 @@ Item {
                 lblLength.text = (info.filament_used / 1000) + "m."
                 lblMaterial.text = networkMachineList.materialNames[info.hasOwnProperty("sub_material") ? info.sub_material : info.material]
 
-                if (info.material == "zaxe_abs" || info.material == "zaxe_pla") {
+                if (info.material == "zaxe_abs" || info.material == "zaxe_pla" || info.material.indexOf("zaxe_flex") > -1) {
                     lblWeight.text = (info.filament_used / 10 *
-                                     (info.material == "zaxe_abs" ? 1.10 : 1.21) *
+                                     (info.material == "zaxe_pla" ? 1.21 : 1.10) *
                                      Math.PI * Math.pow(0.175 / 2, 2) ).toFixed(2) + "gr."
                 } else {
                     lblWeight.text = "-"

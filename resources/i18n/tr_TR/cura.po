@@ -197,6 +197,10 @@ msgid "Hide advanced settings"
 msgstr "Gelişmiş ayarları gizle"
 
 msgctxt "@label"
+msgid "Infill pattern"
+msgstr "Doldurma deseni"
+
+msgctxt "@label"
 msgid "Perimeter count"
 msgstr "Duvar sayısı"
 

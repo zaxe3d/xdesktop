@@ -893,6 +893,130 @@ Item
 
                     Item
                     {
+                        id: infillPatternRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: infillPatternCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: infillPatternLabel
+                                    text: catalog.i18nc("@label", "Infill pattern")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors.top: parent.top
+                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    anchors.left: parent.left
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                                Image
+                                {
+                                    width: 11; height: 12
+
+                                    source: UM.Theme.getImage("info")
+
+                                    anchors { left: infillPatternLabel.right; verticalCenter: infillPatternLabel.verticalCenter; leftMargin: 5 }
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+
+                                        onClicked:
+                                        {
+                                            UM.Preferences.setValue("cura/help_page", 3)
+                                            UM.Controller.setActiveStage("Help")
+                                        }
+                                    }
+                                }
+                            }
+
+                            Item
+                            {
+                                id: infillPatternCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: infillPatternCellLeft.height
+
+                                anchors.left: infillPatternCellLeft.right
+                                anchors.bottom: infillPatternCellLeft.bottom
+
+                                ComboBox
+                                {
+                                    id: infillPatternCB
+                                    anchors.right: parent.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    width: 100
+
+                                    model: ListModel {
+                                        id: cbIPItems
+                                        ListElement { text: "Grid";                   value: "grid"           }
+                                        ListElement { text: "Lines";                  value: "lines"          }
+                                        ListElement { text: "Triangles";              value: "triangles"      }
+                                        ListElement { text: "Tri-Hexagon";            value: "trihexagon"     }
+                                        ListElement { text: "Cubic";                  value: "cubic"          }
+                                        ListElement { text: "Cubic Subdivision";      value: "cubicsubdiv"    }
+                                        ListElement { text: "Octet";                  value: "tetrahedral"    }
+                                        ListElement { text: "Quarter Cubic";          value: "quarter_cubic"  }
+                                        ListElement { text: "Concentric";             value: "concentric"     }
+                                        ListElement { text: "Zig Zag";                value: "zigzag"         }
+                                        ListElement { text: "Cross";                  value: "cross"          }
+                                        ListElement { text: "Cross 3D";               value: "cross_3d"       }
+                                        ListElement { text: "Gyroid";                 value: "gyroid"         }
+                                    }
+
+                                    currentIndex:
+                                    {
+                                        var iP = infillPattern.properties.value
+                                        for(var i = 0; i < cbIPItems.count; ++i)
+                                        {
+                                            if(model.get(i).value == iP)
+                                            {
+                                                return i
+                                            }
+                                        }
+                                    }
+
+                                    onActivated: infillPattern.setPropertyValue("value", model.get(index).value)
+
+                                    // Disable mouse wheel for combobox
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onWheel: {
+                                            // do nothing
+                                        }
+                                        onPressed: {
+                                            // propogate to ComboBox
+                                            mouse.accepted = false;
+                                        }
+                                        onReleased: {
+                                            // propogate to ComboBox
+                                            mouse.accepted = false;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
                         id: perimeterCountRow
 
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
@@ -2119,6 +2243,15 @@ Item
                 id: outerInsetFirst
                 containerStackId: Cura.MachineManager.activeStackId
                 key: "outer_inset_first"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: infillPattern
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "infill_pattern"
                 watchedProperties: [ "value" ]
                 storeIndex: 0
             }

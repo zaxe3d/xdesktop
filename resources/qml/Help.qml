@@ -464,6 +464,19 @@ Item
                 wrapMode: Text.WordWrap
                 text: "<i>80% Doluluk</i>"
             }
+
+            Image {
+                source: "../../plugins/Help/resources/images/infill_patterns.png"
+                sourceSize.width: parent.width
+            }
+
+            Label {
+                width: parent.width
+                color: UM.Theme.getColor("text_sidebar")
+                textFormat: Qt.RichText
+                wrapMode: Text.WordWrap
+                text: "<i>Doldurma desenleri listedeki sırasıyla soldan sağa doğru sırasıyla</i>"
+            }
         }
     }
 

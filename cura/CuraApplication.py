@@ -487,7 +487,7 @@ class CuraApplication(QtApplication):
         # custom material
         preferences.addPreference("custom_material/material_print_temperature",         250)
         preferences.addPreference("custom_material/material_bed_temperature",           80)
-        preferences.addPreference("custom_material/material_chamber_temperature",       50)
+        preferences.addPreference("custom_material/material_chamber_temperature",       10)
         preferences.addPreference("custom_material/print_speed_multiplier",             1)
         preferences.addPreference("custom_material/material_flow",                      100)
         preferences.addPreference("custom_material/retraction_speed",                   20)

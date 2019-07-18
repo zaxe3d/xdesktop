@@ -594,7 +594,8 @@ Item
                                         ListElement { text: "10 mm/s"; value: 10  }
                                         ListElement { text: "15 mm/s"; value: 15  }
                                         ListElement { text: "20 mm/s"; value: 20  }
-                                        ListElement { text: "25 mm/s"; value: 250 }
+                                        ListElement { text: "25 mm/s"; value: 25  }
+                                        ListElement { text: "35 mm/s"; value: 35  }
                                     }
 
                                     currentIndex:

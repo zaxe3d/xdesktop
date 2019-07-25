@@ -59,7 +59,7 @@ UM.PointingRectangle {
         contentItem: Text {
             font: UM.Theme.getFont("zaxe_icon_set")
             color: layersToPauseAt.indexOf(sliderLabelRoot.value) > -1 ? UM.Theme.getColor("text_danger") : UM.Theme.getColor("text_sidebar")
-            text: "p"
+            text: "r"
             anchors {
                 top: parent.top
                 topMargin: 8

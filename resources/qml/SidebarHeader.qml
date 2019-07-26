@@ -29,6 +29,7 @@ Column
         "zaxe_abs": "Zaxe ABS",
         "zaxe_pla": "Zaxe PLA",
         "zaxe_flex": "Zaxe FLEX",
+        "zaxe_petg": "Zaxe PETG",
         "custom": catalog.i18nc("@label", "Custom")
     }
 
@@ -55,9 +56,9 @@ Column
 
     Item
     {
-        id: materialRow
+        id: materialGrid
         width: parent.width
-        height: 100
+        height: 130
         anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
         anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
 
@@ -72,12 +73,13 @@ Column
             color: UM.Theme.getColor("text_sidebar");
         }
 
-        RowLayout
+        GridLayout
         {
-            id: materialSelectionRow
-            spacing: 0
-            height: 50
+            id: materialSelectionGrid
             width: parent.width
+            columns: 3
+            columnSpacing: 5
+            rowSpacing: 5
             anchors.top: materialLabel.bottom
             ExclusiveGroup {
                 id: materialGroup
@@ -97,6 +99,9 @@ Column
                     if (current.material == "zaxe_abs") {
                         fanSpeed = 30
                         coolFanFullLayer = 5
+                        materialPrintTempLayer0 = 250
+                    } else if (current.material == "zaxe_petg") {
+                        fanSpeed = 60
                         materialPrintTempLayer0 = 250
                     }
 
@@ -126,7 +131,7 @@ Column
                 exclusiveGroup: materialGroup
                 property string material : "zaxe_abs"
                 checked: Cura.MachineManager.activeStack.material.name == "zaxe_abs"
-                Layout.preferredHeight: 80
+                Layout.preferredHeight: 50
                 Layout.preferredWidth: 90
                 Layout.leftMargin: 10
                 Layout.alignment: Qt.AlignLeft
@@ -139,7 +144,7 @@ Column
                 exclusiveGroup: materialGroup
                 property string material : "zaxe_pla"
                 checked: Cura.MachineManager.activeStack.material.name == "zaxe_pla"
-                Layout.preferredHeight: 80
+                Layout.preferredHeight: 50
                 Layout.preferredWidth: 90
                 Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
@@ -152,11 +157,25 @@ Column
                 exclusiveGroup: materialGroup
                 property string material : "zaxe_flex"
                 checked: Cura.MachineManager.activeStack.material.name.indexOf("zaxe_flex") > -1
-                Layout.preferredHeight: 80
+                Layout.preferredHeight: 50
                 Layout.preferredWidth: 100
                 Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
                 text: "Zaxe FLEX"
+            }
+            // PETG
+            RadioButton
+            {
+                // can't get the id of the current item from onCurrentChanged so I created another field
+                exclusiveGroup: materialGroup
+                property string material : "zaxe_petg"
+                checked: Cura.MachineManager.activeStack.material.name == "zaxe_petg"
+                Layout.preferredHeight: 30
+                Layout.preferredWidth: 90
+                Layout.leftMargin: 10
+                Layout.alignment: Qt.AlignLeft
+                style: UM.Theme.styles.radiobutton
+                text: "Zaxe PETG"
             }
             // Custom
             RadioButton
@@ -164,7 +183,7 @@ Column
                 exclusiveGroup: materialGroup
                 property string material : "custom"
                 checked: Cura.MachineManager.activeStack.material.name == "custom"
-                Layout.preferredHeight: 80
+                Layout.preferredHeight: 30
                 Layout.preferredWidth: 90
                 Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
@@ -182,8 +201,8 @@ Column
 
             x: rBMaterialFlex.x + 19
             anchors {
-                top: materialSelectionRow.bottom
-                topMargin: 3
+                top: materialSelectionGrid.bottom
+                topMargin: -48
             }
 
             ListModel {
@@ -250,7 +269,7 @@ Column
             text: catalog.i18nc("@label", "Custom material settings")
             visible: prepareSidebar.currentModeIndex == 0 && Cura.MachineManager.activeStack.material.name == "custom"
             anchors {
-                top: materialSelectionRow.bottom
+                top: materialSelectionGrid.bottom
                 right: parent.right
                 topMargin: 3
                 rightMargin: -UM.Theme.getSize("sidebar_margin").width
@@ -271,7 +290,7 @@ Column
                 switch(UM.Preferences.getValue("general/firstrun_step")) {
                     case 5:
                         base.showFirstrunTip(
-                            materialSelectionRow.mapToItem(base, 0, Math.round(materialSelectionRow.height / 2) + 2),
+                            materialSelectionGrid.mapToItem(base, 0, Math.round(materialSelectionGrid.height / 2) + 2),
                             catalog.i18nc("@firstrun", "Material Selection"),
                             catalog.i18nc("@firstrun", "Select the material currently installed on your Zaxe"), true, "")
                         break

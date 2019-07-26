@@ -484,6 +484,8 @@ class CuraApplication(QtApplication):
         # slicing
         preferences.addPreference("slicing/support_angle", 20)
 
+        # material
+        preferences.addPreference("material/settings_applied",                         False)
         # custom material
         preferences.addPreference("custom_material/material_print_temperature",         250)
         preferences.addPreference("custom_material/material_bed_temperature",           80)

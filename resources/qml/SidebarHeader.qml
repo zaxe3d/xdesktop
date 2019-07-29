@@ -290,7 +290,7 @@ Column
                 switch(UM.Preferences.getValue("general/firstrun_step")) {
                     case 5:
                         base.showFirstrunTip(
-                            materialSelectionGrid.mapToItem(base, 0, Math.round(materialSelectionGrid.height / 2) + 2),
+                            materialSelectionGrid.mapToItem(base, 0, Math.round(materialSelectionGrid.height / 2) - 65),
                             catalog.i18nc("@firstrun", "Material Selection"),
                             catalog.i18nc("@firstrun", "Select the material currently installed on your Zaxe"), true, "")
                         break

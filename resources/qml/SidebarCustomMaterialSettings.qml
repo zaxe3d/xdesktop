@@ -69,7 +69,6 @@ Item
     }
 
     onPetGMaterialSelectedChanged:  {
-        console.log(UM.Preferences.getValue("material/settings_applied"))
         if (petGMaterialSelected && !UM.Preferences.getValue("material/settings_applied")) {
             var printSpeedMultiplier = 0.7; 
             speedInfill.setPropertyValue("value", speedInfill.properties.value * printSpeedMultiplier)

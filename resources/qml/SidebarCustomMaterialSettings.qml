@@ -329,6 +329,72 @@ Item
 
                     Item
                     {
+                        id: materialFlowRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: materialFlowCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .69)
+
+                                Label
+                                {
+                                    id: materialFlowLabel
+                                    text: catalog.i18nc("@label", "Material flow") + " (40-120%)"
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors.top: parent.top
+                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    anchors.left: parent.left
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                            }
+
+                            Item
+                            {
+                                id: materialFlowCellRight
+
+                                width: Math.round(base.width * .22)
+                                height: materialFlowCellLeft.height
+
+                                anchors.left: materialFlowCellLeft.right
+                                anchors.bottom: materialFlowCellLeft.bottom
+
+                                TextField {
+                                    width: parent.width
+                                    height: UM.Theme.getSize("setting_control").height;
+                                    property string unit: "%";
+                                    style: UM.Theme.styles.text_field;
+                                    text: parseInt(UM.Preferences.getValue("custom_material/material_flow"))
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    validator: RegExpValidator { regExp: /^([4-8][0-9]|9[0-9]|1[01][0-9]|120)$/ }
+
+                                    onEditingFinished:
+                                    {
+                                        UM.Preferences.setValue("custom_material/material_flow", parseInt(text))
+                                        Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", parseInt(text))
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
                         id: printSpeedRow
 
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
@@ -442,118 +508,6 @@ Item
                         }
                     }
 
-                    Item
-                    {
-                        id: materialFlowRow
-
-                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                        Layout.preferredHeight: 40
-                        Layout.alignment: Qt.AlignLeft
-
-                        Rectangle {
-                            anchors.fill: parent
-                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
-                            color: UM.Theme.getColor("sidebar_item_light")
-                            width: parent.width
-                            Item
-                            {
-                                id: materialFlowCellLeft
-
-                                anchors.top: parent.top
-                                anchors.left: parent.left
-                                anchors.bottom: parent.bottom
-
-                                width: Math.round(base.width * .66)
-
-                                Label
-                                {
-                                    id: materialFlowLabel
-                                    text: catalog.i18nc("@label", "Material flow")
-                                    font: UM.Theme.getFont("medium");
-                                    color: UM.Theme.getColor("text_sidebar")
-
-                                    anchors.top: parent.top
-                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
-                                    anchors.left: parent.left
-                                    anchors.verticalCenter: parent.verticalCenter
-                                }
-                            }
-
-                            Item
-                            {
-                                id: materialFlowCellRight
-
-                                width: Math.round(base.width * .25)
-                                height: materialFlowCellLeft.height
-
-                                anchors.left: materialFlowCellLeft.right
-                                anchors.bottom: materialFlowCellLeft.bottom
-
-                                ComboBox
-                                {
-                                    id: materialFlowCB
-                                    anchors.right: parent.right
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    width: 100
-
-                                    model: ListModel {
-                                        id: cbMFItems
-                                        ListElement { text: "120%"; value: 120  }
-                                        ListElement { text: "115%"; value: 115  }
-                                        ListElement { text: "110%"; value: 110  }
-                                        ListElement { text: "105%"; value: 105  }
-                                        ListElement { text: "100%"; value: 100  }
-                                        ListElement { text: "95%";  value:  95  }
-                                        ListElement { text: "90%";  value:  90  }
-                                        ListElement { text: "85%";  value:  85  }
-                                        ListElement { text: "80%";  value:  80  }
-                                        ListElement { text: "75%";  value:  75  }
-                                        ListElement { text: "70%";  value:  70  }
-                                        ListElement { text: "65%";  value:  65  }
-                                        ListElement { text: "60%";  value:  60  }
-                                        ListElement { text: "55%";  value:  55  }
-                                        ListElement { text: "50%";  value:  50  }
-                                        ListElement { text: "45%";  value:  45  }
-                                        ListElement { text: "40%";  value:  40  }
-                                    }
-
-                                    currentIndex:
-                                    {
-                                        var val = UM.Preferences.getValue("custom_material/material_flow")
-                                        for(var i = 0; i < cbMFItems.count; ++i)
-                                        {
-                                            if(model.get(i).value == val)
-                                            {
-                                                return i
-                                            }
-                                        }
-                                    }
-
-                                    onActivated: {
-                                        var value = model.get(index).value
-                                        Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", value)
-                                        UM.Preferences.setValue("custom_material/material_flow", value)
-                                    }
-
-                                    // Disable mouse wheel for combobox
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onWheel: {
-                                            // do nothing
-                                        }
-                                        onPressed: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                        onReleased: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
                     Item
                     {
                         id: retractionSpeedRow

@@ -1254,7 +1254,7 @@
                     "label": "Optimize Wall Printing Order",
                     "description": "Optimize the order in which walls are printed so as to reduce the number of retractions and the distance travelled. Most parts will benefit from this being enabled but some may actually take longer so please compare the print time estimates with and without optimization. First layer is not optimized when choosing brim as build plate adhesion type.",
                     "type": "bool",
-                    "default_value": true,
+                    "default_value": false,
                     "settable_per_mesh": true
                 },
                 "outer_inset_first":
@@ -1436,7 +1436,7 @@
                         "z_seam_corner_any":      "Hide or Expose Seam",
                         "z_seam_corner_weighted": "Smart Hiding"
                     },
-                    "default_value": "z_seam_corner_any",
+                    "default_value": "z_seam_corner_inner",
                     "enabled": "z_seam_type != 'random'",
                     "limit_to_extruder": "wall_0_extruder_nr",
                     "settable_per_mesh": true
@@ -5960,7 +5960,7 @@
                     "label": "Infill Travel Optimization",
                     "description": "When enabled, the order in which the infill lines are printed is optimized to reduce the distance travelled. The reduction in travel time achieved very much depends on the model being sliced, infill pattern, density, etc. Note that, for some models that have many small areas of infill, the time to slice the model may be greatly increased.",
                     "type": "bool",
-                    "default_value": false,
+                    "default_value": true,
                     "settable_per_mesh": true
                 },
                 "material_flow_dependent_temperature":

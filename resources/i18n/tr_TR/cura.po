@@ -456,6 +456,14 @@ msgctxt "@title:menu menubar:settings"
 msgid "&Nozzle"
 msgstr "&Nozül"
 
+msgctxt "@title:menu menubar:settings"
+msgid "&View"
+msgstr "&Görünüm"
+
+msgctxt "@title:menu menubar:settings"
+msgid "&Simulation"
+msgstr "&Simülasyon"
+
 msgctxt "@title:menu menubar:file"
 msgid "&Export..."
 msgstr "&Dışa Aktar..."
@@ -467,6 +475,10 @@ msgstr "Seçimi dışa aktar..."
 msgctxt "@title:window"
 msgid "Closing XDesktop"
 msgstr "XDesktop kapatılacak"
+
+msgctxt "@label"
+msgid "Show travels"
+msgstr "Hareketleri Göster"
 
 msgctxt "@label"
 msgid "You will need to re-open XDesktop for the changes to take effect. Are you sure you want to exit XDesktop?"

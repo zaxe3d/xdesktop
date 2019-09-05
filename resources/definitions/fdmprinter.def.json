@@ -1395,7 +1395,7 @@
                         "random": "Random",
                         "sharpest_corner": "Sharpest Corner"
                     },
-                    "default_value": "sharpest_corner",
+                    "default_value": "shortest",
                     "limit_to_extruder": "wall_0_extruder_nr",
                     "settable_per_mesh": true
                 },

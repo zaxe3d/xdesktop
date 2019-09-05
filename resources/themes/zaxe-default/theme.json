@@ -288,7 +288,7 @@
         "layerview_skirt": [249,  66,  58, 255],
         "layerview_infill": [114, 198, 237, 255],
         "layerview_support_infill":  [249,  66,  58, 255],
-        "layerview_move_combing": [0,  0,  255, 255],
+        "layerview_move_combing": [255,  0,  0, 255],
         "layerview_move_retraction": [128,  128,  255, 255],
         "layerview_support_interface": [249,  66,  58, 255],
         "layerview_nozzle": [0, 155, 223, 50],

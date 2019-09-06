@@ -15,6 +15,6 @@
         "machine_name": { "default_value": "Z1" },
         "machine_width": { "default_value": 207 },
         "machine_depth": { "default_value": 210 },
-        "machine_height": { "default_value": 225 }
+        "machine_height": { "default_value": 205 }
     }
 }

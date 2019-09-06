@@ -87,8 +87,8 @@ class ChangeLog(Extension, QObject,):
 
         # Do not show the changelog when there is no global container stack
         # This implies we are running Cura for the first time.
-        if not Application.getInstance().getGlobalContainerStack():
-            return
+        #if not Application.getInstance().getGlobalContainerStack():
+        #    return
 
         if self._current_app_version > latest_version_shown:
             self.showChangelog()

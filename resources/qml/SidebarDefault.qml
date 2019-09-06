@@ -1968,7 +1968,7 @@ Item
                             }
                         }
                     }
-
+                    /*
                     Item
                     {
                         id: avoidSupportsRow
@@ -2040,7 +2040,7 @@ Item
                                 }
                             }
                         }
-                    }
+                    }*/
 
                     Item
                     {

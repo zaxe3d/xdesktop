@@ -1,0 +1,16 @@
+[2.0.1]
+*Slicer optimizations
+Now XDesktop is even more robust.
+Added new infill options.
+Updated default XY distance to match real world scenarios.
+
+*New filament options are available
+Added Zaxe PETG.
+
+*Simulation view -> show moves
+Showing moves option is now available.
+
+*Removed avoid supports option
+Avoid supports option has been removed due to causing ambiguity.
+
+

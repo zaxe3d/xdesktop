@@ -1,0 +1,15 @@
+[2.0.1]
+*Dilimleme optimizasyonları
+XDesktop şimdi daha da güçlü.
+Yeni doldurma seçenekleri eklendi.
+XY uzaklığı iyileştirildi.
+
+*Yeni filament seçenekleri eklendi
+Zaxe PETG eklendi.
+
+*Simülasyon Görünümü -> Hareketleri göster
+Hareketleri göster seçeneği eklendi.
+
+*Destekleri yoksay seçeneği kaldırıldı
+Destekleri yoksay seçeneği anlam karmaşasına yol açtığı için kaldırıldı.
+

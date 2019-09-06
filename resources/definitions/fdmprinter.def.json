@@ -1366,7 +1366,7 @@
                     "type": "float",
                     "minimum_value_warning": "-1",
                     "maximum_value_warning": "1",
-                    "default_value": 0,
+                    "default_value": -0.04,
                     "limit_to_extruder": "wall_0_extruder_nr",
                     "settable_per_mesh": true
                 },
@@ -1378,7 +1378,7 @@
                     "type": "float",
                     "minimum_value_warning": "-1",
                     "maximum_value_warning": "1",
-                    "default_value": 0,
+                    "default_value": -0.04,
                     "value": "xy_offset",
                     "limit_to_extruder": "wall_0_extruder_nr",
                     "settable_per_mesh": true

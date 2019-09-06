@@ -308,6 +308,10 @@ msgctxt "@action:button"
 msgid "Open File"
 msgstr "Dosya Aç"
 
+msgctxt "@action:button"
+msgid "Close"
+msgstr "Kapat"
+
 msgctxt "@title:menu menubar:file"
 msgid "Export Selection..."
 msgstr "Seçimi Dışa Aktar..."
@@ -483,6 +487,11 @@ msgstr "Hareketleri Göster"
 msgctxt "@label"
 msgid "You will need to re-open XDesktop for the changes to take effect. Are you sure you want to exit XDesktop?"
 msgstr "Değişikliklerin uygulanması için XDesktop'u yeniden başlatmanız gerekecek. XDesktop'tan çıkmak istediğinize emin misiniz?"
+
+
+msgctxt "@label"
+msgid "Changelog"
+msgstr "Sürüm Notları"
 
 msgctxt "@item:inlistbox"
 msgid "Zaxe File"

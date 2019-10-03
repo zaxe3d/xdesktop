@@ -21,7 +21,7 @@
         <setting key="print temperature">240</setting>
         <setting key="heated bed temperature">70</setting>
         <setting key="bed temperature layer 0">70</setting>
-        <setting key="retraction amount">0</setting>
+        <setting key="retraction amount">0.6</setting>
         <setting key="cool fan full layer">5</setting>
 
         <machine>

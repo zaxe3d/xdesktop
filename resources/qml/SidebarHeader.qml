@@ -21,9 +21,6 @@ Column
     UM.I18nCatalog { id: catalog; name:"cura" }
 
     property int currentExtruderIndex: Cura.ExtruderManager.activeExtruderIndex;
-    property var activeExtruder: Cura.MachineManager.activeStack
-    property var hasActiveExtruder: activeExtruder != null
-    property var currentRootMaterialName: hasActiveExtruder ? materialNames[activeExtruder.material.name] : ""
 
     property var materialNames : {
         "zaxe_abs": "Zaxe ABS",
@@ -31,6 +28,38 @@ Column
         "zaxe_flex": "Zaxe FLEX",
         "zaxe_petg": "Zaxe PETG",
         "custom": catalog.i18nc("@label", "Custom")
+    }
+
+    function applyFinalMaterialSettings() {
+        // Apply last material specific settings here
+        var currentMaterial = Cura.MachineManager.activeStack.material.name
+        var fanSpeed = 100
+        var coolFanFullLayer = 2
+        var materialPrintTempLayer0 = 220
+
+        if (currentMaterial == "zaxe_abs") {
+            fanSpeed = 30
+            coolFanFullLayer = 5
+            materialPrintTempLayer0 = 250
+        } else if (currentMaterial == "zaxe_petg") {
+            fanSpeed = 60
+            materialPrintTempLayer0 = 240
+        }
+
+        if (currentMaterial != "custom") {
+            Cura.MachineManager.setSettingForAllExtruders("material_print_temperature_layer_0", "value", materialPrintTempLayer0)
+            if (currentMaterial.indexOf("zaxe_flex") > -1) {
+                Cura.MachineManager.setSettingForAllExtruders("retraction_combing", "value", "all")
+                Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", 105)
+            } else {
+                Cura.MachineManager.resetSettingForAllExtruders("material_flow")
+                Cura.MachineManager.resetSettingForAllExtruders("retraction_combing")
+            }
+        }
+
+        Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_min", "value", fanSpeed)
+        Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_max", "value", fanSpeed)
+        Cura.MachineManager.setSettingForAllExtruders("cool_fan_full_layer", "value", coolFanFullLayer)
     }
 
     spacing: 10
@@ -90,35 +119,6 @@ Column
                     } else {
                         Cura.MachineManager.setMaterialById(currentExtruderIndex, current.material)
                     }
-
-                    // material specific settings
-                    var fanSpeed = 100
-                    var coolFanFullLayer = 2
-                    var materialPrintTempLayer0 = 220
-
-                    if (current.material == "zaxe_abs") {
-                        fanSpeed = 30
-                        coolFanFullLayer = 5
-                        materialPrintTempLayer0 = 250
-                    } else if (current.material == "zaxe_petg") {
-                        fanSpeed = 60
-                        materialPrintTempLayer0 = 250
-                    }
-
-                    if (current.material != "custom") {
-                        Cura.MachineManager.setSettingForAllExtruders("material_print_temperature_layer_0", "value", materialPrintTempLayer0)
-                        if (current.material == "zaxe_flex") {
-                            Cura.MachineManager.setSettingForAllExtruders("retraction_combing", "value", "all")
-                            Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", 105)
-                        } else {
-                            Cura.MachineManager.resetSettingForAllExtruders("material_flow")
-                            Cura.MachineManager.resetSettingForAllExtruders("retraction_combing")
-                        }
-                    }
-
-                    Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_min", "value", fanSpeed)
-                    Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_max", "value", fanSpeed)
-                    Cura.MachineManager.setSettingForAllExtruders("cool_fan_full_layer", "value", coolFanFullLayer)
 
                     if (UM.Preferences.getValue("general/firstrun"))
                         UM.Preferences.setValue("general/firstrun_step", 6)
@@ -281,6 +281,16 @@ Column
     }
     // Bottom Border
     Rectangle { width: parent.width; height: UM.Theme.getSize("default_lining").height; color: UM.Theme.getColor("sidebar_item_dark") }
+
+    Connections
+    {
+        target: Cura.MachineManager
+        onActiveQualityChanged:
+        {
+            // Apply on every material change and quality change
+            applyFinalMaterialSettings()
+        }
+    }
 
     Connections {
         target: UM.Preferences

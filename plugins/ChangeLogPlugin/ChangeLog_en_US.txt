@@ -1,3 +1,8 @@
+[2.0.2]
+*Slicer optimizations
+Configuration optimizations.
+Bug fixes.
+
 [2.0.1]
 *Slicer optimizations
 Now XDesktop is even more robust.

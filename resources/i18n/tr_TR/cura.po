@@ -233,6 +233,10 @@ msgid "Outer wall first"
 msgstr "İlk önce dış duvar"
 
 msgctxt "@label"
+msgid "More detailed slicing"
+msgstr "Daha detaylı dilimleme"
+
+msgctxt "@label"
 msgid "XY tolerance"
 msgstr "XY toleransı"
 

@@ -2095,6 +2095,59 @@ Item
                             }
                         }
                     }
+                    Item
+                    {
+                        id: slicingToleranceRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: slicingToleranceCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .70)
+
+                                CheckBox
+                                {
+                                    id: slicingToleranceCheckBox
+                                    property alias _hovered: slicingToleranceMouseArea.containsMouse
+                                    property bool checkBoxSmall: true
+
+                                    anchors.top: parent.top
+                                    anchors.left: parent.left
+
+                                    //: Setting enable printing build-plate adhesion helper checkbox
+                                    style: UM.Theme.styles.checkbox;
+
+                                    checked: slicingTolerance.properties.value == "exclusive"
+                                    text: catalog.i18nc("@label", "More detailed slicing")
+
+                                    MouseArea
+                                    {
+                                        id: slicingToleranceMouseArea
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onClicked:
+                                        {
+                                            parent.checked = !parent.checked;
+                                            slicingTolerance.setPropertyValue("value", parent.checked ? "exclusive" : "middle");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -2243,6 +2296,15 @@ Item
                 id: outerInsetFirst
                 containerStackId: Cura.MachineManager.activeStackId
                 key: "outer_inset_first"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: slicingTolerance
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "slicing_tolerance"
                 watchedProperties: [ "value" ]
                 storeIndex: 0
             }

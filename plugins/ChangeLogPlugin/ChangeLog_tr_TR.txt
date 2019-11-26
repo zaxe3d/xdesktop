@@ -1,5 +1,12 @@
 [2.0.2]
 *Dilimleme optimizasyonları
+Yeni "Daha detaylı dilimleme" seçeneği eklendi. Bu seçenek seçildiğinde
+modelinizin tüm detaylarını dilimleyebileceksiniz.
+Konfigurasyonlar optimize edildi.
+
+
+[2.0.2]
+*Dilimleme optimizasyonları
 Konfigurasyonlar optimize edildi.
 Böcekler temizlendi.
 

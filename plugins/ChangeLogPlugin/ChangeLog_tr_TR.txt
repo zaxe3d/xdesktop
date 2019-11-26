@@ -1,4 +1,4 @@
-[2.0.2]
+[2.0.3]
 *Dilimleme optimizasyonları
 Yeni "Daha detaylı dilimleme" seçeneği eklendi. Bu seçenek seçildiğinde
 modelinizin tüm detaylarını dilimleyebileceksiniz.

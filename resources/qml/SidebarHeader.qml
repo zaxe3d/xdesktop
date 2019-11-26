@@ -35,7 +35,8 @@ Column
         var currentMaterial = Cura.MachineManager.activeStack.material.name
         var fanSpeed = 100
         var coolFanFullLayer = 2
-        var materialPrintTempLayer0 = 220
+        // If Z series templayer0 is different
+        var materialPrintTempLayer0 = Cura.MachineManager.activeMachineId.indexOf("Z1") > -1 ? 208 : 220
 
         if (currentMaterial == "zaxe_abs") {
             fanSpeed = 30

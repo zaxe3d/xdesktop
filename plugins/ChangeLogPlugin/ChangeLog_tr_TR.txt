@@ -1,9 +1,10 @@
-[2.0.3]
+[2.0.4]
+*Güncelleme süreci optimize edildi.
+İndir tuşuna basılınca programdan çıkış sağlandı.
 *Dilimleme optimizasyonları
 Yeni "Daha detaylı dilimleme" seçeneği eklendi. Bu seçenek seçildiğinde
 modelinizin tüm detaylarını dilimleyebileceksiniz.
 Konfigurasyonlar optimize edildi.
-
 
 [2.0.2]
 *Dilimleme optimizasyonları

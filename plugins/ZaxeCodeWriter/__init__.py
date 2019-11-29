@@ -14,7 +14,8 @@ def getMetaData():
                 "extension": "zaxe",
                 "description": catalog.i18nc("@item:inlistbox", "Zaxe File"),
                 "mode": MeshWriter.OutputMode.BinaryMode,
-                "mime_type": "application/zaxe"
+                "mime_type": "application/zaxe",
+                "device_specific": True
             }]
         }
     }

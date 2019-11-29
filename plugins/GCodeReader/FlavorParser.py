@@ -312,9 +312,9 @@ class FlavorParser:
 
         self._clearValues()
 
-        self._message = Message(catalog.i18nc("@info:status", "Parsing Zaxe Code"),
+        self._message = Message(catalog.i18nc("@info:status", "Parsing Code"),
                                 lifetime=0,
-                                title = catalog.i18nc("@info:title", "Zaxe Code Details"))
+                                title = catalog.i18nc("@info:title", "Code Details"))
 
         assert(self._message is not None) # use for typing purposes
         self._message.setProgress(0)

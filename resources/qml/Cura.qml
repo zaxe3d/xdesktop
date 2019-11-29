@@ -321,12 +321,23 @@ UM.MainWindow
                     {
 
                         var nonPackages = [];
+                        var preferredMimetypes = Cura.MachineManager.activeMachine.preferred_output_file_formats.split(";")
                         for (var i = 0; i < drop.urls.length; i++)
                         {
                             var filename = drop.urls[i];
+                            var extension = filename.split('.').pop()
+                            var isCompatible = true
+                            if (extension == "gcode")
+                                for (var j in preferredMimetypes) {
+                                    // If the extension isn't included in devices accepted mime types
+                                    if (preferredMimetypes[j].indexOf(extension) < 0)
+                                        isCompatible = false
+                                }
+                            if (isCompatible)
                                 nonPackages.push(filename);
                         }
-                        openDialog.handleOpenFileUrls(nonPackages);
+                        if (nonPackages.length > 0)
+                            openDialog.handleOpenFileUrls(nonPackages);
                     }
                 }
             }
@@ -669,7 +680,7 @@ UM.MainWindow
         title: catalog.i18nc("@title:window","Open file(s)")
         modality: UM.Application.platform == "linux" ? Qt.NonModal : Qt.WindowModal;
         selectMultiple: true
-        nameFilters: UM.MeshFileHandler.supportedReadFileTypes;
+        nameFilters: UM.MeshFileHandler.supportedReadFileTypes({ "preferred_mimetypes": Cura.MachineManager.activeMachine.preferred_output_file_formats });
         folder: CuraApplication.getDefaultPath("dialog_load_path")
         onAccepted:
         {
@@ -693,7 +704,7 @@ UM.MainWindow
             var nonGcodeFileList = [];
             for (var i in fileUrlList)
             {
-                var endsWithGcode = /\.zaxe$/;
+                var endsWithGcode = /(\.zaxe$|\.gcode$)/;
                 if (endsWithGcode.test(fileUrlList[i]))
                 {
                     continue;
@@ -829,6 +840,7 @@ UM.MainWindow
             if(Cura.MachineManager.activeMachine == null)
             {
                 // Add all the machines here
+                Cura.MachineManager.addMachine("ZLite", "zaxe_zlite")
                 Cura.MachineManager.addMachine("Z1+", "zaxe_z1plus")
                 Cura.MachineManager.addMachine("Z1", "zaxe_z1")
                 Cura.MachineManager.addMachine("X1+", "zaxe_x1plus")

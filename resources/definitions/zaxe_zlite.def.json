@@ -1,0 +1,22 @@
+{
+    "id": "zaxe_zlite",
+    "name": "ZLite",
+    "version": 2,
+    "inherits": "zaxe_z",
+    "metadata": {
+        "visible": true,
+        "file_formats": "text/x-gcode",
+        "machine_extruder_trains":
+        {
+            "0": "zaxe_zlite_extruder_0"
+        }
+    },
+
+    "overrides": {
+        "machine_start_gcode": { "default_value": "G28\nG29\nG91\nM83\nG1 E3 F150\nG1 X20 F10000\nG90\nG1 Y0 Z0.4 F500\nG91\nM83\nG1 X40 E15 F500\nG90\nM82\nG92 E0" },
+        "machine_name": { "default_value": "ZLite" },
+        "machine_width": { "default_value": 200 },
+        "machine_depth": { "default_value": 200 },
+        "machine_height": { "default_value": 200 }
+    }
+}

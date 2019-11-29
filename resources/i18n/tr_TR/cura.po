@@ -68,6 +68,10 @@ msgctxt "@label"
 msgid "Please take your print!"
 msgstr "Lütfen baskınızı tabladan alınız!"
 
+msgctxt "@text:window"
+msgid "We have found one or more G-Code files within the files you have selected. You can only open one G-Code file at a time. If you want to open a G-Code file, please just select only one."
+msgstr "Seçtiğiniz dosyalar arasında birden fazla G-code dosyası bulunuyor. Tek seferde sadece bir G-code dosyası açabilirsiniz. G-code dosyası açmak istiyorsanız, sadece birini seçiniz."
+
 msgctxt "@warning"
 msgid "Remaining filament on device may not be enough for this print."
 msgstr "Cihaza takılı filament baskıyı bitirmeye yetmeyebilir."
@@ -506,8 +510,8 @@ msgid "STL File"
 msgstr "STL Dosyası"
 
 msgctxt "@info:status"
-msgid "Parsing Zaxe Code"
-msgstr "Zaxe Kod'u çözümleniyor"
+msgid "Parsing Code"
+msgstr "Kod çözümleniyor"
 
 msgctxt "@info:status"
 msgid "Processing Layers"
@@ -530,8 +534,8 @@ msgid "Information"
 msgstr "Bilgi"
 
 msgctxt "@info:title"
-msgid "Zaxe Code Details"
-msgstr "Zaxe Kod Detayları"
+msgid "Code Details"
+msgstr "Kod Detayları"
 
 msgctxt "@info:zaxecode"
 msgid "This Zaxe file belongs to an older version. Please slice your original mesh file again."

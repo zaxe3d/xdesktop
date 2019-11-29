@@ -17,6 +17,13 @@ from . import MarlinFlavorParser, RepRapFlavorParser
 
 MimeTypeDatabase.addMimeType(
     MimeType(
+        name = "application/x-zaxe-gcode-file",
+        comment = "GCode File",
+        suffixes = ["gcode"]
+    )
+)
+MimeTypeDatabase.addMimeType(
+    MimeType(
         name = "application/x-xdesktop-zaxe_code-file",
         comment = "Zaxe Code File",
         suffixes = ["zaxe_code"]
@@ -33,7 +40,7 @@ class GCodeReader(MeshReader):
 
     def __init__(self) -> None:
         super().__init__()
-        self._supported_extensions = ["zaxe_code"]
+        self._supported_extensions = ["zaxe_code", "gcode"]
         self._flavor_reader = None
 
     def preReadFromStream(self, stream, *args, **kwargs):
@@ -59,8 +66,9 @@ class GCodeReader(MeshReader):
     def getCurrentDeviceModel(self):
         return CuraApplication.getInstance().getMachineManager().activeMachineName
 
-    def readFromStream(self, stream, info):
-        CuraApplication.getInstance().getPrintInformation().setInfo(info)
+    def readFromStream(self, stream, info = None):
+        if info is not None:
+            CuraApplication.getInstance().getPrintInformation().setInfo(info)
 
         return self._flavor_reader.processGCodeStream(stream)
 

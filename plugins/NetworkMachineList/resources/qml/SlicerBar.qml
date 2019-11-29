@@ -18,6 +18,9 @@ Item {
     property real progress: UM.Backend.progress
     property int backendState: UM.Backend.state
     property bool activity: CuraApplication.platformActivity
+    // For now only ZLite has gcode compatibility
+    property string preferredMimeTypes: Cura.MachineManager.activeMachine.preferred_output_file_formats
+    property bool isGCode: preferredMimeTypes.indexOf("gcode") > -1
 
     property variant printDuration: PrintInformation.currentPrintTime
     property variant printMaterialLengths: PrintInformation.materialLengths
@@ -51,12 +54,19 @@ Item {
         onPreSlicedChanged: {
             if (PrintInformation.preSliced) {
                 var info = PrintInformation.preSlicedInfo
-                lblFileName.text = PrintInformation.baseName + ".zaxe"
-                lblDuration.text = info.duration
-                lblLength.text = (info.filament_used / 1000) + "m."
-                lblMaterial.text = networkMachineList.materialNames[info.hasOwnProperty("sub_material") ? info.sub_material : info.material]
+                if (isGCode) { // We don't have presliced info for gcode
+                    lblFileName.text = PrintInformation.baseName + ".gcode"
+                    lblDuration.text = lblLength.text = lblMaterial.text = "-"
+                } else {
+                    lblFileName.text = PrintInformation.baseName + ".zaxe"
+                    lblDuration.text = info.duration
+                    lblLength.text = (info.filament_used / 1000) + "m."
+                    lblMaterial.text = networkMachineList.materialNames[info.hasOwnProperty("sub_material") ? info.sub_material : info.material]
+                }
 
-                if (info.material == "zaxe_abs" || info.material == "zaxe_pla" || info.material.indexOf("zaxe_flex") > -1) {
+                if (info.material == undefined) {
+                    lblWeight.text = "-"
+                } else if (info.material == "zaxe_abs" || info.material == "zaxe_pla" || info.material.indexOf("zaxe_flex") > -1) {
                     lblWeight.text = (info.filament_used / 10 *
                                      (info.material == "zaxe_pla" ? 1.21 : 1.10) *
                                      Math.PI * Math.pow(0.175 / 2, 2) ).toFixed(2) + "gr."
@@ -322,6 +332,7 @@ Item {
                 MachineCarousel { modelName: "X1+"; modelId: "zaxe_x1+"; Layout.preferredWidth: 85; Layout.preferredHeight: 85 }
                 MachineCarousel { modelName: "Z1"; modelId: "zaxe_z1"; Layout.preferredWidth: 85; Layout.preferredHeight: 85 }
                 MachineCarousel { modelName: "Z1+"; modelId: "zaxe_z1+"; Layout.preferredWidth: 85; Layout.preferredHeight: 85 }
+                MachineCarousel { modelName: "ZLite"; modelId: "zaxe_zlite"; Layout.preferredWidth: 85; Layout.preferredHeight: 85 }
             }
 
             Button {
@@ -410,7 +421,7 @@ Item {
                     Text {
                         id: lblFileName
                         Layout.preferredHeight: 32
-                        text: PrintInformation.baseName + ".zaxe"
+                        text: PrintInformation.baseName + (isGCode ? ".gcode" : ".zaxe")
                         color: UM.Theme.getColor("text_sidebar_dark")
                         font: UM.Theme.getFont("large_nonbold")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
@@ -546,7 +557,7 @@ Item {
                         onClicked: {
                             UM.Preferences.setValue("general/firstrun_step", 9)
                             UM.OutputDeviceManager.requestWriteToDevice(UM.OutputDeviceManager.activeDevice, PrintInformation.jobName,
-                                { "filter_by_machine": true, "preferred_mimetypes": "application/zaxe" });
+                                { "filter_by_machine": true, "preferred_mimetypes": preferredMimeTypes });
                         }
                     }
                     Button {

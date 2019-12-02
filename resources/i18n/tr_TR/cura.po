@@ -366,6 +366,22 @@ msgid_plural "Multiply Selected Models"
 msgstr[0] "Seçili Modeli Çoğalt"
 msgstr[1] "Seçili Modelleri Çoğalt"
 
+msgctxt "@action:inmenu"
+msgid "Disable Left Extruder"
+msgstr "Sol Extrüderi Devredışı Bırak"
+
+msgctxt "@action:inmenu"
+msgid "Disable Right Extruder"
+msgstr "Sağ Extrüderi Devredışı Bırak"
+
+msgctxt "@action:inmenu"
+msgid "Enable Left Extruder"
+msgstr "Sol Extrüderi Etkinleştir"
+
+msgctxt "@action:inmenu"
+msgid "Enable Right Extruder"
+msgstr "Sağ Extrüderi Etkinleştir"
+
 msgctxt "@label"
 msgid "Number of Copies"
 msgstr "Kopyalama Adedi"
@@ -467,6 +483,10 @@ msgstr "&Cihaz"
 msgctxt "@title:menu menubar:settings"
 msgid "&Nozzle"
 msgstr "&Nozül"
+
+msgctxt "@title:menu menubar:settings"
+msgid "&Extruder"
+msgstr "&Extrüder"
 
 msgctxt "@title:menu menubar:settings"
 msgid "&View"

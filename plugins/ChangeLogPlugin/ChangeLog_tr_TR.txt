@@ -1,4 +1,6 @@
-[2.0.4]
+[2.1.0]
+*Zaxe ZLite eklendi.
+Çift kafa optimizasyonları yapıldı.
 *Destek açısı optimize edildi.
 *Güncelleme süreci optimize edildi.
 İndir tuşuna basılınca programdan çıkış sağlandı.

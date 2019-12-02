@@ -20,7 +20,7 @@ Column
 
     UM.I18nCatalog { id: catalog; name:"cura" }
 
-    property int currentExtruderIndex: Cura.ExtruderManager.activeExtruderIndex;
+    property int extruderIndex: Cura.ExtruderManager.activeExtruderIndex;
 
     property var materialNames : {
         "zaxe_abs": "Zaxe ABS",
@@ -30,9 +30,17 @@ Column
         "custom": catalog.i18nc("@label", "Custom")
     }
 
+    function setMaterial(material) {
+        Cura.MachineManager.setMaterialById(0, material)
+        // All extruders must have the same material
+        if (machineExtruderCount.properties.value > 1) {
+            Cura.MachineManager.setMaterialById(1, material)
+        }
+    }
+
     function applyFinalMaterialSettings() {
         // Apply last material specific settings here
-        var currentMaterial = Cura.MachineManager.activeStack.material.name
+        var currentMaterial = Cura.MachineManager.currentRootMaterialId[extruderIndex]
         var fanSpeed = 100
         var coolFanFullLayer = 2
         // If Z series templayer0 is different
@@ -116,9 +124,9 @@ Column
                 onCurrentChanged : {
                     if (current.material == "zaxe_flex") {
                         var flexMaterialObj = materialSubModel.get(flexSubMaterialCombobox.currentIndex)
-                        Cura.MachineManager.setMaterialById(currentExtruderIndex, flexMaterialObj.material)
+                        setMaterial(flexMaterialObj.material)
                     } else {
-                        Cura.MachineManager.setMaterialById(currentExtruderIndex, current.material)
+                        setMaterial(current.material)
                     }
 
                     if (UM.Preferences.getValue("general/firstrun"))
@@ -131,7 +139,7 @@ Column
                 // can't get the id of the current item from onCurrentChanged so I created another field
                 exclusiveGroup: materialGroup
                 property string material : "zaxe_abs"
-                checked: Cura.MachineManager.activeStack.material.name == "zaxe_abs"
+                checked: Cura.MachineManager.currentRootMaterialId[0] == material
                 Layout.preferredHeight: 50
                 Layout.preferredWidth: 90
                 Layout.leftMargin: 10
@@ -144,7 +152,7 @@ Column
             {
                 exclusiveGroup: materialGroup
                 property string material : "zaxe_pla"
-                checked: Cura.MachineManager.activeStack.material.name == "zaxe_pla"
+                checked: Cura.MachineManager.currentRootMaterialId[0] == material
                 Layout.preferredHeight: 50
                 Layout.preferredWidth: 90
                 Layout.alignment: Qt.AlignLeft
@@ -157,7 +165,7 @@ Column
                 id: rBMaterialFlex
                 exclusiveGroup: materialGroup
                 property string material : "zaxe_flex"
-                checked: Cura.MachineManager.activeStack.material.name.indexOf("zaxe_flex") > -1
+                checked: Cura.MachineManager.currentRootMaterialId[0] == material
                 Layout.preferredHeight: 50
                 Layout.preferredWidth: 100
                 Layout.alignment: Qt.AlignLeft
@@ -170,7 +178,7 @@ Column
                 // can't get the id of the current item from onCurrentChanged so I created another field
                 exclusiveGroup: materialGroup
                 property string material : "zaxe_petg"
-                checked: Cura.MachineManager.activeStack.material.name == "zaxe_petg"
+                checked: Cura.MachineManager.currentRootMaterialId[0] == material
                 Layout.preferredHeight: 30
                 Layout.preferredWidth: 90
                 Layout.leftMargin: 10
@@ -183,7 +191,7 @@ Column
             {
                 exclusiveGroup: materialGroup
                 property string material : "custom"
-                checked: Cura.MachineManager.activeStack.material.name == "custom"
+                checked: Cura.MachineManager.currentRootMaterialId[0] == material
                 Layout.preferredHeight: 30
                 Layout.preferredWidth: 90
                 Layout.alignment: Qt.AlignLeft
@@ -195,7 +203,7 @@ Column
         ComboBox // Flex sub material
         {
             id: flexSubMaterialCombobox
-            visible: Cura.MachineManager.activeStack.material.name.indexOf("zaxe_flex") > -1
+            visible: Cura.MachineManager.currentRootMaterialId[0].indexOf("zaxe_flex") > -1
 
             width: 95
             height: UM.Theme.getSize("setting_control").height
@@ -215,8 +223,8 @@ Column
                 materialSubModel.append({ material: "zaxe_flex_white", color: "white", text: catalog.i18nc("@color", "White") })
                 materialSubModel.append({ material: "zaxe_flex_black", color: "black", text: catalog.i18nc("@color", "Black") })
 
-                if (Cura.MachineManager.activeStack.material.name.indexOf("zaxe_flex") > -1) {
-                    currentIndex = Cura.MachineManager.activeStack.material.name == "zaxe_flex_white" ? 0 : 1
+                if (Cura.MachineManager.currentRootMaterialId[0].indexOf("zaxe_flex") > -1) {
+                    currentIndex = Cura.MachineManager.currentRootMaterialId[0] == "zaxe_flex_white" ? 0 : 1
                     var matObj = materialSubModel.get(index)
                     color = matObj.color
 
@@ -242,7 +250,7 @@ Column
             onActivated:
             {
                 var matObj = materialSubModel.get(index)
-                Cura.MachineManager.setMaterialById(currentExtruderIndex, matObj.material)
+                setMaterial(matObj.material)
                 color = matObj.color
             }
 
@@ -268,7 +276,8 @@ Column
             id: customMaterialSettingsButton
             style: UM.Theme.styles.sidebar_simple_button
             text: catalog.i18nc("@label", "Custom material settings")
-            visible: prepareSidebar.currentModeIndex == 0 && Cura.MachineManager.activeStack.material.name == "custom"
+            visible: prepareSidebar.currentModeIndex == 0 &&
+                     Cura.MachineManager.currentRootMaterialId[extruderIndex] == "custom"
             anchors {
                 top: materialSelectionGrid.bottom
                 right: parent.right
@@ -278,6 +287,15 @@ Column
             onClicked: {
                 prepareSidebar.switchView(1) // Custom material settings view
             }
+        }
+
+        UM.SettingPropertyProvider
+        {
+            id: machineExtruderCount
+
+            containerStack: Cura.MachineManager.activeMachine
+            key: "machine_extruder_count"
+            watchedProperties: [ "value" ]
         }
     }
     // Bottom Border

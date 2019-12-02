@@ -174,7 +174,7 @@
         "button_text_active": [0, 155, 223, 255],
         "button_text_active_hover": [0, 155, 223, 255],
         "button_disabled": [31, 36, 39, 255],
-        "button_disabled_text": [255, 255, 255, 101],
+        "button_disabled_text": [60, 60, 60, 101],
         "button_blue": [0, 155, 223, 255],
         "button_gray": [246, 244, 244, 255],
         "button_danger": [239, 65, 54, 255],
@@ -193,7 +193,7 @@
         "button_tooltip_border": [68, 192, 255, 255],
         "button_tooltip_text": [192, 193, 194, 255],
 
-        "extruder_button_material_border": [255, 255, 255, 255],
+        "extruder_button_material_border": [0, 0, 0, 255],
 
         "scrollbar_background": [255, 255, 255, 255],
         "scrollbar_handle": [209, 211, 212, 255],
@@ -298,7 +298,7 @@
         "setting_control_highlight": [255, 255, 255, 255],
         "setting_control_border": [246, 244, 244, 255],
         "setting_control_border_highlight": [12, 169, 227, 255],
-        "setting_control_text": [128, 128, 128, 255],
+        "setting_control_text": [27, 27, 27, 255],
         "setting_control_depth_line": [127, 127, 127, 255],
         "setting_control_button": [127, 127, 127, 255],
         "setting_control_button_hover": [70, 84, 113, 255],
@@ -316,7 +316,7 @@
     "sizes": {
         "window_minimum_size": [70, 50],
 
-        "default_lining": [0.12, 0.12],
+        "default_lining": [0.10, 0.10],
         "toolbar_lining": [0.1, 0.1],
         "default_arrow": [1, 1],
         "logo": [1.5, 1.5],
@@ -356,7 +356,7 @@
         "standard_arrow": [0.8, 0.8],
 
         "button": [4.5, 4.5],
-        "button_icon": [2.0, 2.0],
+        "button_icon": [2.8, 2.8],
         "button_lining": [0, 0],
 
         "sidebar_button": [7, 7],

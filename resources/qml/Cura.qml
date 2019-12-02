@@ -282,6 +282,7 @@ UM.MainWindow
                 {
                     title: catalog.i18nc("@title:menu menubar:settings", "&Device")
                     NozzleMenu { title: catalog.i18nc("@title:menu menubar:settings", "&Nozzle"); visible: Cura.MachineManager.hasVariants; extruderIndex: 0 }
+                    ExtruderMenu { title: catalog.i18nc("@title:menu menubar:settings", "&Extruder"); visible: machineExtruderCount.properties.value > 1 }
                 }
 
                 Menu
@@ -822,6 +823,15 @@ UM.MainWindow
                 }
             }
         }
+    }
+
+    UM.SettingPropertyProvider
+    {
+        id: machineExtruderCount
+
+        containerStack: Cura.MachineManager.activeMachine
+        key: "machine_extruder_count"
+        watchedProperties: [ "value" ]
     }
 
     Timer

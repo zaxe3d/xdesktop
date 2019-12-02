@@ -13,6 +13,16 @@ Menu
 {
     id: base
 
+    property var materialNames : {
+        "zaxe_abs": "Zaxe ABS",
+        "zaxe_pla": "Zaxe PLA",
+        "zaxe_flex": "Zaxe FLEX",
+        "zaxe_flex_white": "Zaxe FLEX" + " " + catalog.i18nc("@color", "White"),
+        "zaxe_flex_black": "Zaxe FLEX" + " " + catalog.i18nc("@color", "Black"),
+        "zaxe_petg": "Zaxe PETG",
+        "custom": catalog.i18nc("@label", "Custom")
+    }
+
     property bool shouldShowExtruders: machineExtruderCount.properties.value > 1;
 
     property var multiBuildPlateModel: CuraApplication.getMultiBuildPlateModel()
@@ -25,17 +35,27 @@ Menu
 
     // Extruder selection - only visible if there is more than 1 extruder
     MenuSeparator { visible: base.shouldShowExtruders }
-    MenuItem { id: extruderHeader; text: catalog.i18ncp("@label", "Print Selected Model With:", "Print Selected Models With:", UM.Selection.selectionCount); enabled: false; visible: base.shouldShowExtruders }
+    MenuItem {
+        id: extruderHeader
+        text: catalog.i18ncp("@label", "Print Selected Model With:",
+                             "Print Selected Models With:",
+                             UM.Selection.selectionCount)
+        enabled: false
+        visible: base.shouldShowExtruders
+    }
     Instantiator
     {
         model: Cura.ExtrudersModel { id: extrudersModel }
         MenuItem {
-            text: "%1: %2 - %3".arg(model.name).arg(model.material).arg(model.variant)
+            text: "%1: %2 - %3".arg(catalog.i18nc("@label", model.name)).arg(materialNames[model.material]).arg(model.variant)
             visible: base.shouldShowExtruders
             enabled: UM.Selection.hasSelection && model.enabled
             checkable: true
             checked: Cura.ExtruderManager.selectedObjectExtruders.indexOf(model.id) != -1
-            onTriggered: CuraActions.setExtruderForSelection(model.id)
+            onTriggered: {
+                CuraActions.setExtruderForSelection(model.id)
+                Cura.ExtruderManager.setActiveExtruderIndex(index);
+            }
             shortcut: "Ctrl+" + (model.index + 1)
         }
         onObjectAdded: base.insertItem(index, object)

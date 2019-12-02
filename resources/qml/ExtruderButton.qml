@@ -13,12 +13,18 @@ Button
 
     property var extruder;
 
-    text: catalog.i18ncp("@label %1 is filled in with the name of an extruder", "Print Selected Model with %1", "Print Selected Models with %1", UM.Selection.selectionCount).arg(extruder.name)
+    anchors.left: parent.left
+    anchors.leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2)
+    text: catalog.i18ncp("@label %1 is filled in with the name of an extruder", "Print Selected Model with %1", "Print Selected Models with %1", UM.Selection.selectionCount).arg(catalog.i18nc("@label", extruder.name))
 
-    style: UM.Theme.styles.tool_button;
+    style: UM.Theme.styles.tool_button_icon;
     iconSource: UM.Theme.getIcon("extruder_button")
 
     checked: Cura.ExtruderManager.selectedObjectExtruders.indexOf(extruder.id) != -1
+    onCheckedChanged: {
+        if (checked)
+            Cura.ExtruderManager.setActiveExtruderIndex(index);
+    }
     enabled: UM.Selection.hasSelection && extruder.stack.isEnabled
 
     property color customColor: base.hovered ? UM.Theme.getColor("button_hover") : UM.Theme.getColor("button");
@@ -39,13 +45,14 @@ Button
         anchors.centerIn: parent
         width: UM.Theme.getSize("default_margin").width
         height: UM.Theme.getSize("default_margin").height
+        property string name: catalog.i18nc("@label", model.name)
 
         Label
         {
-            anchors.centerIn: parent;
-            text: index + 1;
+            anchors.centerIn: parent
+            text: parent.name.substring(0, parent.name.indexOf(" "))
             color: parent.enabled ? UM.Theme.getColor("button_text") : UM.Theme.getColor("button_disabled_text")
-            font: UM.Theme.getFont("default_bold");
+            font: UM.Theme.getFont("extra_small");
         }
     }
 
@@ -73,9 +80,22 @@ Button
         opacity: !base.enabled ? 0.2 : 1.0
     }
 
-    onClicked:
+    MouseArea
     {
-        forceActiveFocus() //First grab focus, so all the text fields are updated
-        CuraActions.setExtruderForSelection(extruder.id);
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: {
+            switch (mouse.button) {
+                case Qt.LeftButton:
+                    forceActiveFocus() //First grab focus, so all the text fields are updated
+                    Cura.ExtruderManager.setActiveExtruderIndex(index);
+                    CuraActions.setExtruderForSelection(extruder.id);
+                    break;
+                case Qt.RightButton:
+                    extruderMenu.popup();
+                    break;
+            }
+
+        }
     }
 }

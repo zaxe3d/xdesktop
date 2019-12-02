@@ -11,7 +11,7 @@ import Cura 1.0 as Cura
 
 Item
 {
-    id: base;
+    id: toolbar;
 
     width: buttons.width;
     height: buttons.height
@@ -50,7 +50,7 @@ Item
                     {
                         if (checked)
                         {
-                            base.activeY = parent.y;
+                            toolbar.activeY = parent.y;
                         }
                     }
 
@@ -97,12 +97,12 @@ Item
 
         anchors {
             left: parent.left
-            leftMargin: base.marginL + 1
-            top: base.top;
-            topMargin: base.activeY
+            leftMargin: toolbar.marginL + 1
+            top: toolbar.top;
+            topMargin: toolbar.activeY
         }
 
-        target: Qt.point(parent.right, base.activeY +  Math.round(UM.Theme.getSize("button").height/2))
+        target: Qt.point(parent.right, toolbar.activeY +  Math.round(UM.Theme.getSize("button").height/2))
         arrowSize: 0
 
         width:
@@ -146,8 +146,8 @@ Item
     // dragging a tool handle.
     Rectangle
     {
-        x: -base.x + base.mouseX + UM.Theme.getSize("default_margin").width
-        y: -base.y + base.mouseY + UM.Theme.getSize("default_margin").height
+        x: -toolbar.x + toolbar.mouseX + UM.Theme.getSize("default_margin").width
+        y: -toolbar.y + toolbar.mouseY + UM.Theme.getSize("default_margin").height
 
         width: toolHint.width + UM.Theme.getSize("default_margin").width
         height: toolHint.height;
@@ -163,4 +163,5 @@ Item
 
         visible: toolHint.text != ""
     }
+
 }

@@ -404,6 +404,7 @@ Item
                         }
                         Image
                         {
+                            id: supportHelp
                             width: 11; height: 12
 
                             source: UM.Theme.getImage("info")
@@ -418,6 +419,65 @@ Item
                                 {
                                     UM.Preferences.setValue("cura/help_page", 1)
                                     UM.Controller.setActiveStage("Help")
+                                }
+                            }
+                        }
+                        ComboBox
+                        {
+                            id: supportExtruderCombobox
+                            visible: supportEnabled.properties.value == "True" && extrudersEnabledCount.properties.value > 1
+                            model: extruderModel
+                            anchors.verticalCenter: supportHelp.verticalCenter
+                            anchors.left: supportHelp.right
+
+                            property string color_override: ""  // for manually setting values
+                            property string color:  // is evaluated automatically, but the first time is before extruderModel being filled
+                            {
+                                var current_extruder = extruderModel.get(currentIndex);
+                                color_override = "";
+                                if (current_extruder === undefined) return ""
+                                return (current_extruder.color) ? current_extruder.color : "";
+                            }
+
+                            textRole: "text"  // this solves that the combobox isn't populated in the first time Cura is started
+
+                            anchors.leftMargin: Math.round(UM.Theme.getSize("sidebar_margin").width / 2)
+
+                            width: 125
+                            height: UM.Theme.getSize("setting_control").height
+
+                            Behavior on height { NumberAnimation { duration: 100 } }
+
+                            style: UM.Theme.styles.combobox_color
+
+                            currentIndex:
+                            {
+                                if (supportExtruderNr.properties == null)
+                                {
+                                    return Cura.MachineManager.defaultExtruderPosition;
+                                }
+                                else
+                                {
+                                    var extruder = parseInt(supportExtruderNr.properties.value);
+                                    if ( extruder === -1)
+                                    {
+                                        return Cura.MachineManager.defaultExtruderPosition;
+                                    }
+                                    return extruder;
+                                }
+                            }
+
+                            onActivated:
+                            {
+                                // Send the extruder nr as a string.
+                                supportExtruderNr.setPropertyValue("value", String(index));
+                            }
+
+                            function updateCurrentColor()
+                            {
+                                var current_extruder = extruderModel.get(currentIndex);
+                                if (current_extruder !== undefined) {
+                                    supportExtruderCombobox.color_override = current_extruder.color;
                                 }
                             }
                         }
@@ -2443,7 +2503,33 @@ Item
                 watchedProperties: [ "value" ]
                 storeIndex: 0
             }
+
+            ListModel
+            {
+                id: extruderModel
+                Component.onCompleted: populateExtruderModel()
+            }
+
+            //: Model used to populate the extrudelModel
+            Cura.ExtrudersModel
+            {
+                id: extruders
+                onModelChanged: populateExtruderModel()
+            }
         }
+    }
+
+    function populateExtruderModel()
+    {
+        extruderModel.clear();
+        for(var extruderNumber = 0; extruderNumber < extruders.rowCount(); extruderNumber++)
+        {
+            extruderModel.append({
+                text: catalog.i18nc("@label", extruders.getItem(extruderNumber).name),
+                color: extruders.getItem(extruderNumber).color
+            })
+        }
+        supportExtruderCombobox.updateCurrentColor();
     }
 
     Connections {

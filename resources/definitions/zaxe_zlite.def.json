@@ -8,7 +8,8 @@
         "file_formats": "text/x-gcode",
         "machine_extruder_trains":
         {
-            "0": "zaxe_zlite_extruder_0"
+            "0": "zaxe_zlite_extruder_right",
+            "1": "zaxe_zlite_extruder_left"
         }
     },
 
@@ -17,6 +18,7 @@
         "machine_name": { "default_value": "ZLite" },
         "machine_width": { "default_value": 200 },
         "machine_depth": { "default_value": 200 },
-        "machine_height": { "default_value": 200 }
+        "machine_height": { "default_value": 200 },
+        "machine_extruder_count": { "default_value": 2 }
     }
 }

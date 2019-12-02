@@ -70,5 +70,13 @@
             </hotend>
         </machine>
 
+        <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe ZLite"/>
+
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+            </hotend>
+        </machine>
+
     </settings>
 </fdmmaterial>

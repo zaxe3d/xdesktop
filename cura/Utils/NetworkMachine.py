@@ -344,8 +344,8 @@ class NetworkMachineContainer():
 
     def addMachine(self, ip, port, name):
         if len([machine for machine in iter(self.machineList.values()) if machine.ip == ip]) == 0:
-            Logger.log("d", "adding machine: %s" % name)
             machine = NetworkMachine(ip, port, name)
+            Logger.log("d", "adding machine: %s [%s]" % (name, machine.ip))
             machine.daemon = True
             machine.machineEvent.connect(self.onMachineEvent)
             self.machineList[machine.id] = machine

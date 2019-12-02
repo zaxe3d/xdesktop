@@ -488,6 +488,26 @@ msgctxt "@title:window"
 msgid "Closing XDesktop"
 msgstr "XDesktop kapatılacak"
 
+msgctxt "@label %1 is filled in with the name of an extruder"
+msgid "Print Selected Model with %1"
+msgid_plural "Print Selected Models with %1"
+msgstr[0] "Seçili Modeli %1 ile Bas"
+msgstr[1] "Seçili Modelleri %1 ile Bas"
+
+msgctxt "@label"
+msgid "Print Selected Model With:"
+msgid_plural "Print Selected Models With:"
+msgstr[0] "Seçili Model İçin Ekstüder Seçimi:"
+msgstr[1] "Seçili Modeller İçin Ekstrüder Seçimi:"
+
+msgctxt "@label"
+msgid "Left Extruder"
+msgstr "Sol Ekstrüder"
+
+msgctxt "@label"
+msgid "Right Extruder"
+msgstr "Sağ Ekstrüder"
+
 msgctxt "@label"
 msgid "Show travels"
 msgstr "Hareketleri Göster"

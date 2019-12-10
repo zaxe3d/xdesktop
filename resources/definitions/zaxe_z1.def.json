@@ -13,8 +13,8 @@
 
     "overrides": {
         "machine_name": { "default_value": "Z1" },
-        "machine_width": { "default_value": 200 },
-        "machine_depth": { "default_value": 200 },
+        "machine_width": { "default_value": 202 },
+        "machine_depth": { "default_value": 202 },
         "machine_height": { "default_value": 200 }
     }
 }

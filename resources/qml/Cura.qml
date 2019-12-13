@@ -855,6 +855,11 @@ UM.MainWindow
                 Cura.MachineManager.addMachine("Z1", "zaxe_z1")
                 Cura.MachineManager.addMachine("X1+", "zaxe_x1plus")
                 Cura.MachineManager.addMachine("X1", "zaxe_x1")
+            // If dual extruder set the same material for both extuders
+            } else if (machineExtruderCount.properties.value > 1) {
+                var material = Cura.MachineManager.currentRootMaterialId[0]
+                Cura.MachineManager.setMaterialById(0, material)
+                Cura.MachineManager.setMaterialById(1, material)
             }
 
             if (UM.Preferences.getValue("general/firstrun") && UM.Preferences.getValue("general/firstrun_step") == 1) {

@@ -8,6 +8,7 @@ from UM.i18n import i18nCatalog
 import UM.Qt.ListModel
 from UM.Application import Application
 import UM.FlameProfiler
+from UM.Scene.Iterator.DepthFirstIterator import DepthFirstIterator
 
 from cura.Settings.ExtruderStack import ExtruderStack  # To listen to changes on the extruders.
 
@@ -141,6 +142,27 @@ class ExtrudersModel(UM.Qt.ListModel.ListModel):
             self._active_machine_extruders.append(extruder)
 
         self._updateExtruders()  # Since the new extruders may have different properties, update our own model.
+
+        # If the last machine was dual extruder and now it is single then
+        # set all models to be printed by extruder 0
+        global_container_stack = Application.getInstance().getGlobalContainerStack()
+        if global_container_stack:
+
+            extruder_stack = extruder_manager.getInstance().getExtruderStack(0)
+
+            if extruder_stack:
+                root_node = Application.getInstance().getController().getScene().getRoot()
+                for node in DepthFirstIterator(root_node):
+                    new_stack_id = extruder_stack.getId()
+                    # Get position of old extruder stack for this node
+                    old_extruder_pos = node.callDecoration("getActiveExtruderPosition")
+                    if old_extruder_pos is not None:
+                        # Fetch current (new) extruder stack at position
+                        new_stack = extruder_manager.getInstance().getExtruderStack(old_extruder_pos)
+                        if new_stack:
+                            new_stack_id = new_stack.getId()
+                    node.callDecoration("setActiveExtruder", new_stack_id)
+
 
     def _onExtruderStackContainersChanged(self, container):
         # Update when there is an empty container or material change

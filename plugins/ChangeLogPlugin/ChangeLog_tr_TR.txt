@@ -5,11 +5,12 @@
 *Güncelleme süreci optimize edildi.
 İndir tuşuna basılınca programdan çıkış sağlandı.
 
-[2.0.3]
+[2.0.4]
 *Dilimleme optimizasyonları
 Yeni "Daha detaylı dilimleme" seçeneği eklendi. Bu seçenek seçildiğinde
 modelinizin tüm detaylarını dilimleyebileceksiniz.
 Konfigurasyonlar optimize edildi.
+*Z1 serisi tabla boyutları güncellendi.
 
 [2.0.2]
 *Dilimleme optimizasyonları

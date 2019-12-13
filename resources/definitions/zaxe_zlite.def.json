@@ -8,17 +8,18 @@
         "file_formats": "text/x-gcode",
         "machine_extruder_trains":
         {
-            "0": "zaxe_zlite_extruder_right",
-            "1": "zaxe_zlite_extruder_left"
+            "0": "zaxe_zlite_extruder_left",
+            "1": "zaxe_zlite_extruder_right"
         }
     },
 
     "overrides": {
-        "machine_start_gcode": { "default_value": "G28\nG29\nG91\nM83\nG1 E3 F150\nG1 X20 F10000\nG90\nG1 Y0 Z0.4 F500\nG91\nM83\nG1 X40 E15 F500\nG90\nM82\nG92 E0" },
+        "machine_gcode_flavor": { "default_value": "RepRap (Marlin/Sprinter)" },
+        "machine_start_gcode": { "default_value": "G28\nM211 S0\nM206 Z1.4\nM211 S1\nG29\nG91\nM83\nG1 E3 F150\nG1 X20 Y50 F10000\nG90\nG1 Y20 Z0.4 F500\nG91\nM83\nG1 X40 E15 F500\nG90\nM82\nG92 E0" },
         "machine_name": { "default_value": "ZLite" },
-        "machine_width": { "default_value": 200 },
-        "machine_depth": { "default_value": 200 },
-        "machine_height": { "default_value": 200 },
+        "machine_width": { "default_value": 260 },
+        "machine_depth": { "default_value": 300 },
+        "machine_height": { "default_value": 300 },
         "machine_extruder_count": { "default_value": 2 }
     }
 }

@@ -72,6 +72,10 @@ Item
             if (machineListModel.count == 0)
                 noPrinterWarning.visible = true
         }
+        onCleared: {
+            machineListModel.clear()
+            noPrinterWarning.visible = true
+        }
     }
 
     ListModel

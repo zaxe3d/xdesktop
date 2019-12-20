@@ -21,18 +21,29 @@ class NetworkMachineListModel(ListModel):
         super().__init__(parent)
 
         self._application = Application.getInstance()
-        self._machine_manager = self._application.getNetworkMachineManager()
+        self._controller = self._application.getController()
+        self._machine_manager = self._application.getMachineManager()
+        self._network_machine_manager = self._application.getNetworkMachineManager()
+        self._application.globalContainerStackChanged.connect(self._filter)
 
-        self._machine_manager.machineAdded.connect(self._itemAdded)
-        self._machine_manager.machineRemoved.connect(self._itemRemoved)
-        self._machine_manager.machineNewMessage.connect(self._itemUpdate)
-        self._machine_manager.machineUploadProgress.connect(self._itemUploadProgress)
+        # to be able to filter machines according to stage
+        self._controller.activeStageChanged.connect(self._onActiveStageChanged)
+
+        self._network_machine_manager.machineAdded.connect(self._itemAdded)
+        self._network_machine_manager.machineRemoved.connect(self._itemRemoved)
+        self._network_machine_manager.machineNewMessage.connect(self._itemUpdate)
+        self._network_machine_manager.machineUploadProgress.connect(self._itemUploadProgress)
+
+        self._allItems = []
+        self._filterStr = self._machine_manager.activeMachineId.replace("+", "plus").lower()
+        self._filtered = False # don't filter at the beginning
 
     temperatureProgressEnabled = False
 
     # general events
     itemAdded = pyqtSignal(int)
     itemRemoved = pyqtSignal(int)
+    cleared = pyqtSignal()
 
     # update events
     tempChange = pyqtSignal(str, int)
@@ -102,7 +113,7 @@ class NetworkMachineListModel(ListModel):
         self._itemUpdated(uuid, "mEstimatedTime", networkMachine.estimatedTime)
 
     def _compareVersion(self, networkMachine):
-        version = self._machine_manager.DEVICE_VERSIONS[networkMachine.deviceModel]["version"]
+        version = self._network_machine_manager.DEVICE_VERSIONS[networkMachine.deviceModel]["version"]
         if version > networkMachine.fwVersion:
             Logger.log("d", "[%s] has FW update available" % networkMachine.name)
             return True
@@ -160,14 +171,26 @@ class NetworkMachineListModel(ListModel):
     def _itemUploadProgress(self, eventArgs):
         self.uploadProgress.emit(eventArgs.machine.id, float(eventArgs.progress / 100))
 
-    def _itemAdded(self, networkMachine):
-        index = len(self._items)
-        self.beginInsertRows(QModelIndex(), index, index)
-        self._items.insert(index, self._getItem(networkMachine))
-        self.endInsertRows()
-        self.itemAdded.emit(index)
+    def _itemAdded(self, networkMachine, nm = None):
+        if nm is None: # first time adding on connect to device (New)
+            nm = self._getItem(networkMachine)
+            index = len(self._allItems)
+            self._allItems.insert(index, nm)
 
-    def _itemRemoved(self, mId):
+        if not self._filtered or nm["mDeviceModel"] == self._filterStr: # add to visible list
+            index = len(self._items)
+            self.beginInsertRows(QModelIndex(), index, index)
+            self._items.insert(index, nm)
+            self.endInsertRows()
+            self.itemAdded.emit(index)
+
+    def _itemRemoved(self, mId, nm = None):
+        if nm is None: # real deletion nm is gone
+            index = next((index for (index, nm) in enumerate(self._allItems) if nm["mID"] == mId), None)
+            if index == -1:
+                return
+            del self._allItems[index]
+
         index = self.find("mID", mId)
         if index == -1:
             return
@@ -175,6 +198,7 @@ class NetworkMachineListModel(ListModel):
         del self._items[index]
         self.endRemoveRows()
         self.itemRemoved.emit(index)
+
 
     ## Updates model item's property
     #  Use this to update model item's less updated properties like
@@ -190,4 +214,25 @@ class NetworkMachineListModel(ListModel):
         if index == -1:
             return
         self.setProperty(index, property, value)
+
+    def _filter(self):
+        #if self._backendState == BackendState.Done: # filter to machine type
+        if self._filtered:
+            self._filterStr = self._machine_manager.activeMachineId.replace("+", "plus").lower()
+            for nm in self._allItems:
+                if nm["mDeviceModel"] == self._filterStr:
+                    self._itemAdded(None, nm)
+                else:
+                    self._itemRemoved(nm["mID"], nm)
+        else: # add all without filter
+            for nm in self._allItems:
+                if self.find("mID", nm["mID"]) == -1:
+                    self._itemAdded(None, nm)
+                
+    def _onActiveStageChanged(self):
+        if self._controller.getActiveStageName() == "NetworkMachineList":
+            self.clear()
+            self.cleared.emit()
+            self._filtered = True
+            self._filter()
 

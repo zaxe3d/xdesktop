@@ -55,10 +55,11 @@ Item
        // draw list items here. If previously added
        count = Cura.NetworkMachineListModel.rowCount()
        noPrinterWarningTimer.start()
-       for(idx = 0; idx < count; idx++) {
+       /*for(idx = 0; idx < count; idx++) {
+           // no need for this since it is now using filtering
            item = Cura.NetworkMachineListModel.getItem(idx)
            machineListModel.append(item)
-       }
+       }*/
     }
 
     Connections

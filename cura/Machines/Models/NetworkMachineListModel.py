@@ -1,16 +1,10 @@
-# Copyright (c) 2018 Ultimaker B.V.
-# Cura is released under the terms of the LGPLv3 or higher.
-
-from PyQt5.QtCore import Qt, pyqtSlot, pyqtSignal, QModelIndex, QVariant
+from PyQt5.QtCore import pyqtSignal, QModelIndex, QVariant, QTimer
 
 from UM.Application import Application
 from UM.Logger import Logger
 from UM.Qt.ListModel import ListModel
 
 from cura.NetworkMachineManager import NetworkMachineManager
-
-import json
-
 
 #
 # QML Model for network machines
@@ -36,6 +30,7 @@ class NetworkMachineListModel(ListModel):
 
         self._allItems = []
         self._filterStr = self._machine_manager.activeMachineId.replace("+", "plus").lower()
+        self._previousFilterStr = None
         self._filtered = False # don't filter at the beginning
 
     temperatureProgressEnabled = False
@@ -216,9 +211,11 @@ class NetworkMachineListModel(ListModel):
         self.setProperty(index, property, value)
 
     def _filter(self):
-        #if self._backendState == BackendState.Done: # filter to machine type
+        self._filterStr = self._machine_manager.activeMachineId.replace("+", "plus").lower()
         if self._filtered:
-            self._filterStr = self._machine_manager.activeMachineId.replace("+", "plus").lower()
+            if self._previousFilterStr == self._filterStr:
+                return
+            self._previousFilterStr = self._filterStr
             for nm in self._allItems:
                 if nm["mDeviceModel"] == self._filterStr:
                     self._itemAdded(None, nm)
@@ -230,7 +227,13 @@ class NetworkMachineListModel(ListModel):
                     self._itemAdded(None, nm)
                 
     def _onActiveStageChanged(self):
+        # call _onActiveStageChangedDelayed to resolve blocking stage change
         if self._controller.getActiveStageName() == "NetworkMachineList":
+            QTimer.singleShot(1000, self._onActiveStageChangedDelayed)
+
+    def _onActiveStageChangedDelayed(self):
+        if self._controller.getActiveStageName() == "NetworkMachineList":
+            self._previousFilterStr = None # reset
             self.clear()
             self.cleared.emit()
             self._filtered = True

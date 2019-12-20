@@ -165,7 +165,7 @@ Column
                 id: rBMaterialFlex
                 exclusiveGroup: materialGroup
                 property string material : "zaxe_flex"
-                checked: Cura.MachineManager.currentRootMaterialId[0] == material
+                checked: Cura.MachineManager.currentRootMaterialId[0].indexOf("zaxe_flex") > -1
                 Layout.preferredHeight: 50
                 Layout.preferredWidth: 100
                 Layout.alignment: Qt.AlignLeft

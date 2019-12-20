@@ -18,7 +18,7 @@ class NetworkMachineListModel(ListModel):
         self._controller = self._application.getController()
         self._machine_manager = self._application.getMachineManager()
         self._network_machine_manager = self._application.getNetworkMachineManager()
-        self._application.globalContainerStackChanged.connect(self._filter)
+        self._application.globalContainerStackChanged.connect(self._delayedFilter)
 
         # to be able to filter machines according to stage
         self._controller.activeStageChanged.connect(self._onActiveStageChanged)
@@ -209,6 +209,9 @@ class NetworkMachineListModel(ListModel):
         if index == -1:
             return
         self.setProperty(index, property, value)
+
+    def _delayedFilter(self):
+        QTimer.singleShot(100, self._filter)
 
     def _filter(self):
         self._filterStr = self._machine_manager.activeMachineId.replace("+", "plus").lower()

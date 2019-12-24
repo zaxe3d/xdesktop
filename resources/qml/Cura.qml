@@ -850,9 +850,10 @@ UM.MainWindow
             if(Cura.MachineManager.activeMachine == null)
             {
                 // Add all the machines here
-                Cura.MachineManager.addMachine("ZLite", "zaxe_zlite")
                 Cura.MachineManager.addMachine("Z1+", "zaxe_z1plus")
                 Cura.MachineManager.addMachine("Z1", "zaxe_z1")
+                Cura.MachineManager.addMachine("ZLite", "zaxe_zlite")
+                Cura.MachineManager.addMachine("X2", "zaxe_x2")
                 Cura.MachineManager.addMachine("X1+", "zaxe_x1plus")
                 Cura.MachineManager.addMachine("X1", "zaxe_x1")
             // If dual extruder set the same material for both extuders

@@ -15,6 +15,7 @@ Item {
     Button
     {
         id: printerButton
+        anchors.fill: parent
         text: ""
         iconSource: UM.Theme.getImage(base.modelId)
         checkable: true

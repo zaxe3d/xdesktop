@@ -328,11 +328,12 @@ Item {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
                 Layout.preferredHeight: 130
 
-                MachineCarousel { modelName: "X1"; modelId: "zaxe_x1"; Layout.preferredWidth: 77; Layout.preferredHeight: 85 }
-                MachineCarousel { modelName: "X1+"; modelId: "zaxe_x1+"; Layout.preferredWidth: 77; Layout.preferredHeight: 85 }
-                MachineCarousel { modelName: "Z1"; modelId: "zaxe_z1"; Layout.preferredWidth: 77; Layout.preferredHeight: 85 }
-                MachineCarousel { modelName: "Z1+"; modelId: "zaxe_z1+"; Layout.preferredWidth: 77; Layout.preferredHeight: 85 }
-                MachineCarousel { modelName: "ZLite"; modelId: "zaxe_zlite"; Layout.preferredWidth: 77; Layout.preferredHeight: 85 }
+                MachineCarousel { modelName: "X1"; modelId: "zaxe_x1"; Layout.preferredWidth: 57; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "X1+"; modelId: "zaxe_x1+"; Layout.preferredWidth: 67; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "X2"; modelId: "zaxe_x2"; Layout.preferredWidth: 57; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "Z1"; modelId: "zaxe_z1"; Layout.preferredWidth: 54; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "Z1+"; modelId: "zaxe_z1+"; Layout.preferredWidth: 75; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "ZLite"; modelId: "zaxe_zlite"; Layout.preferredWidth: 67; Layout.preferredHeight: 80 }
             }
 
             Button {

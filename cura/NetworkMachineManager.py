@@ -32,6 +32,7 @@ class NetworkMachineManager(QObject):
     DEVICE_VERSIONS = {
         "x1": {"version": [0, 0, 0], "path": "/firmware.json"},
         "x1plus": {"version": [0, 0, 0], "path": "/x1plus/firmware.json"},
+        "x2": {"version": [0, 0, 0], "path": "/x2/firmware.json"},
         "z1": {"version": [0, 0, 0], "path": "/z1/firmware.json"},
         "z1plus": {"version": [0, 0, 0], "path": "/z1/firmware.json"},
         "z3": {"version": [0, 0, 0], "path": "/z3/firmware.json"},

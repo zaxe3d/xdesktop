@@ -327,6 +327,7 @@ Item {
                 id: machineCarousel
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
                 Layout.preferredHeight: 130
+                Layout.leftMargin: 10
 
                 MachineCarousel { modelName: "X1"; modelId: "zaxe_x1"; Layout.preferredWidth: 57; Layout.preferredHeight: 80 }
                 MachineCarousel { modelName: "X1+"; modelId: "zaxe_x1+"; Layout.preferredWidth: 67; Layout.preferredHeight: 80 }

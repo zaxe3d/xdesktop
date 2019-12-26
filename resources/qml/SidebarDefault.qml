@@ -459,7 +459,7 @@ Item
                                 else
                                 {
                                     var extruder = parseInt(supportExtruderNr.properties.value);
-                                    if ( extruder === -1)
+                                    if (extruder === -1)
                                     {
                                         return Cura.MachineManager.defaultExtruderPosition;
                                     }

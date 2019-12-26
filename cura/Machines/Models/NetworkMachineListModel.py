@@ -181,7 +181,7 @@ class NetworkMachineListModel(ListModel):
 
     def _itemRemoved(self, mId, nm = None):
         if nm is None: # real deletion nm is gone
-            index = next((index for (index, nm) in enumerate(self._allItems) if nm["mID"] == mId), None)
+            index = self._findInAll("mID", mId)
             if index == -1:
                 return
             del self._allItems[index]
@@ -205,10 +205,25 @@ class NetworkMachineListModel(ListModel):
     #   \property property name
     #   \value valuea of the intended property
     def _itemUpdated(self, mId, property, value):
+        # update all items (which may not be visible atm)
+        index = self._findInAll("mID", mId)
+        if index == -1:
+            return # if we don't have it in all items visible items shouldn't have it.
+        self._allItems[index][property] = value
+
+        # also update visible ones
         index = self.find("mID", mId)
         if index == -1:
             return
-        self.setProperty(index, property, value)
+        self.setProperty(index, property, value)        
+
+    def _findInAll(self, property, value):
+        index = -1
+        for item in self._allItems:
+            index += 1
+            if item[property] == value:
+                break
+        return index
 
     def _delayedFilter(self):
         QTimer.singleShot(100, self._filter)

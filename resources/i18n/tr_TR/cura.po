@@ -92,6 +92,10 @@ msgctxt "@label"
 msgid "Update"
 msgstr "Güncelle"
 
+msgctxt "@label"
+msgid "Unload"
+msgstr "Çıkart"
+
 msgctxt "@info"
 msgid "Firmware update available for your device"
 msgstr "Cihanız için yazılım güncellemesi mevcut"
@@ -349,6 +353,12 @@ msgid "Check for Updates"
 msgstr "Güncellemeleri Kontrol Et"
 
 msgctxt "@action:inmenu menubar:edit"
+msgid "Split Selected Model Into Parts"
+msgid_plural "Split Selected Models Into Parts"
+msgstr[0] "Seçili Modeli Parçalara Ayır"
+msgstr[1] "Seçili Modelleri Parçalara Ayır"
+
+msgctxt "@action:inmenu menubar:edit"
 msgid "Delete Selected Model"
 msgid_plural "Delete Selected Models"
 msgstr[0] "Seçili Modeli Sil"
@@ -550,6 +560,18 @@ msgid "STL File"
 msgstr "STL Dosyası"
 
 msgctxt "@info:status"
+msgid "Split result:"
+msgstr "Ayırma raporu:"
+
+msgctxt "@info:status"
+msgid "was split in %d submeshes"
+msgstr "%d alt parçaya ayrıldı"
+
+msgctxt "@info:status"
+msgid "could not be split into submeshes"
+msgstr "daha fazla parçaya ayrılamıyor"
+
+msgctxt "@info:status"
 msgid "Parsing Code"
 msgstr "Kod çözümleniyor"
 
@@ -563,7 +585,11 @@ msgstr "Model(ler) tablaya sığdırılamadı"
 
 msgctxt "@info:status"
 msgid "Multiplying and placing objects"
-msgstr "Model coğaltılıp yerleştiriliyor"
+msgstr "Model çoğaltılıp yerleştiriliyor"
+
+msgctxt "@info:title"
+msgid "Mesh Tools"
+msgstr "Modelleme Araçları"
 
 msgctxt "@info:title"
 msgid "Placing Object"

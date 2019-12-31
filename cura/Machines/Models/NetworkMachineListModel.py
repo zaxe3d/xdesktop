@@ -62,7 +62,7 @@ class NetworkMachineListModel(ListModel):
             "mMaterial": networkMachine.material,
             "mNozzle": networkMachine.nozzle,
             "mDeviceModel": networkMachine.deviceModel,
-            "mFWVersion": networkMachine.fwVersion,
+            "mFWVersion": ".".join(map(str, networkMachine.fwVersion)),
             "mPrintingFile": networkMachine.printingFile,
             "mElapsedTime": networkMachine.elapsedTime,
             "mEstimatedTime": networkMachine.estimatedTime,

@@ -246,6 +246,9 @@ class NetworkMachine(QThread, QObject):
     def fwUpdate(self):
         self.write({"request": "fw_update"})
 
+    def filamentUnload(self):
+        self.write({"request": "filament_unload"})
+
     def upload(self, filename):
         if self.uploader is not None and self.uploader.isUploading():
             return

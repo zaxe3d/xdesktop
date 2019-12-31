@@ -189,6 +189,14 @@ class NetworkMachineManager(QObject):
         Logger.log("d", "FW update request sent [%s - [%s]]" % (machine.name, machine.ip))
         machine.fwUpdate()
 
+    ## filament unload on intended machine
+    @pyqtSlot(str)
+    def FilamentUnload(self, mID) -> None:
+        machine = self.machineList[str(mID)]
+        Logger.log("d", "Filament unload request sent [%s - [%s]]" % (machine.name, machine.ip))
+        machine.filamentUnload()
+
+
     __instance = None   # type: NetworkMachineManager
 
     @classmethod

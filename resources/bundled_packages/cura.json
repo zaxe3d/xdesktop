@@ -271,6 +271,17 @@
             }
         }
     },
+    "MeshTools": {
+        "package_info": {
+            "package_id": "MeshTools",
+            "package_type": "plugin",
+            "display_name": "Mesh Tools",
+            "description": "Adds several mesh analysis and manipulation tools",
+            "package_version": "3.5.3",
+            "sdk_version": 5,
+            "author": "fieldOfView"
+        }
+    },
     "Toolbox": {
         "package_info": {
             "package_id": "Toolbox",

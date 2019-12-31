@@ -1,4 +1,9 @@
 [2.1.0]
+* X2 serisi eklendi.
+* Filament çıkart tuşu eklendi.
+Sadece Z serisi için firmware v2.4.76+
+* Modelleme Araçları eklendi.
+Modeli parçalara ayırma özelliği kontekst menüsüne eklendi.
 *Zaxe ZLite eklendi.
 Çift kafa optimizasyonları yapıldı.
 *Destek açısı optimize edildi.

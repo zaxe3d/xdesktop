@@ -417,6 +417,7 @@ class CuraApplication(QtApplication):
             "XmlMaterialProfile",
             "Toolbox",
             "NetworkMachineList",
+            "MeshTools",
             "PrepareStage",
             "Help",
             "LocalFileOutputDevice",
@@ -1320,6 +1321,11 @@ class CuraApplication(QtApplication):
                         return
                     layerCounter += 1
 
+
+    @pyqtSlot()
+    def splitIntoParts(self) -> None:
+        mt = self._plugin_registry.getPluginObject("MeshTools")
+        mt.splitMeshes()
 
     @pyqtSlot()
     def takeSnapshot(self) -> None:

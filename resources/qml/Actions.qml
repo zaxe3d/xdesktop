@@ -24,6 +24,7 @@ Item
     property alias centerSelection: centerSelectionAction;
     property alias multiplySelection: multiplySelectionAction;
     property alias layFlatSelection: layFlatSelectionAction;
+    property alias splitIntoPartsSelection: splitIntoPardsSelectionAction;
 
     property alias clearSelection: clearSelectionAction;
 
@@ -167,6 +168,15 @@ Item
             UM.Controller.setActiveTool("RotateTool");
             UM.ActiveTool.triggerAction("layFlat");
         }
+    }
+
+    Action
+    {
+        id: splitIntoPardsSelectionAction;
+        text: catalog.i18ncp("@action:inmenu menubar:edit", "Split Selected Model Into Parts", "Split Selected Models Into Parts", UM.Selection.selectionCount);
+        enabled: UM.Controller.toolsEnabled && UM.Selection.hasSelection;
+        iconName: "align-vertical-center";
+        onTriggered: CuraApplication.splitIntoParts()
     }
 
     Action

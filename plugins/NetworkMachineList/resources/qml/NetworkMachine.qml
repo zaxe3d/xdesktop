@@ -22,7 +22,7 @@ Item {
     property string material
     property string nozzle
     property string deviceModel
-    property var  fwVersion
+    property string  fwVersion
     property string printingFile
     property var startTime
     property string elapsedTimeTxt
@@ -150,6 +150,9 @@ Item {
                 break;
             case "update":
                 Cura.NetworkMachineManager.FWUpdate(device.uid)
+                break;
+            case "filament_unload":
+                Cura.NetworkMachineManager.FilamentUnload(device.uid)
                 break;
         }
         device.nextState = ""
@@ -1203,6 +1206,30 @@ Item {
                                 color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("large_semi_bold")
                                 Layout.preferredHeight: 15
+                            }
+
+                            Button {
+                                id: btnFilamentUnload
+                                // only Z series has remote update
+                                visible: deviceModel.search("z") == 0 && fwVersion.split(".") >= [2, 4, 76] && !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
+                                Layout.preferredHeight: parent.height / 2
+                                background: Rectangle {
+                                    color: UM.Theme.getColor("button_blue")
+                                    border.color: UM.Theme.getColor("button_blue")
+                                    border.width: UM.Theme.getSize("default_lining").width
+                                    radius: 10
+                                }
+                                contentItem: Text {
+                                    color: UM.Theme.getColor("text_white")
+                                    width: parent.width
+                                    text: catalog.i18nc("@label", "Unload")
+                                    font: UM.Theme.getFont("small_bold")
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                }
+                                onClicked: {
+                                    showConfirmation("filament_unload")
+                                }
                             }
                         }
                         // Bottom Border 

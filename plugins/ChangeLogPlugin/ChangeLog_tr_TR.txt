@@ -1,5 +1,6 @@
 [2.1.0]
 * X2 serisi eklendi.
+Tüm metal nozül eklendi.
 * Filament çıkart tuşu eklendi.
 Sadece Z serisi için firmware v2.4.76+
 * Modelleme Araçları eklendi.

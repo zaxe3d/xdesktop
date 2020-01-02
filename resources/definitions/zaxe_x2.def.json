@@ -8,7 +8,8 @@
         "machine_extruder_trains":
         {
             "0": "zaxe_x2_extruder_0"
-        }
+        },
+        "preferred_variant_name": "AM 0.4"
     },
 
     "overrides": {

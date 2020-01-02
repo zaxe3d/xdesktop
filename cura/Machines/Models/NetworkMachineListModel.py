@@ -48,7 +48,7 @@ class NetworkMachineListModel(ListModel):
     uploadProgress = pyqtSignal(str, float)
     tempProgress = pyqtSignal(str, float)
     materialChange = pyqtSignal(str, str)
-    nozzleChange = pyqtSignal(str, float)
+    nozzleChange = pyqtSignal(str, str)
     fileChange = pyqtSignal(str, str, float, str)
     stateChange = pyqtSignal(str, QVariant)
     pinChange = pyqtSignal(str, bool)
@@ -143,8 +143,8 @@ class NetworkMachineListModel(ListModel):
             self.materialChange.emit(uuid, eventArgs.machine.material)
             self._itemUpdated(uuid, "mMaterial", eventArgs.machine.material)
         if message['event'] in ["nozzle_change", "hello"]:
-            self.nozzleChange.emit(uuid, eventArgs.machine.nozzle)
-            self._itemUpdated(uuid, "mNozzle", eventArgs.machine.nozzle)
+            self.nozzleChange.emit(uuid, str(eventArgs.machine.nozzle))
+            self._itemUpdated(uuid, "mNozzle", str(eventArgs.machine.nozzle))
         if message["event"] == "temperature_progress":
             self.temperatureProgressEnabled = True
             self.tempProgress.emit(uuid, float(message["progress"]) / 100)

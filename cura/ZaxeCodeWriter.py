@@ -70,6 +70,7 @@ class ZaxeCodeWriter(MeshWriter):
             # remake checksum with the new file
             info["checksum"] = self.getCheckSum()
         else:
+            vName = self._machineManager.activeVariantName
             info = tool.merge_two_dicts({
                 "name": printInformation.baseName,
                 "filament_used": printInformation.materialLengths[0] * 1000, # 0 for current build plate
@@ -79,7 +80,7 @@ class ZaxeCodeWriter(MeshWriter):
                 "model": self._machineManager.activeMachineName.replace("+", "PLUS"),
                 "version": self.ZAXE_FILE_VERSION,
                 "checksum": self.getCheckSum(),
-                "nozzle_diameter": float(self._machineManager.activeVariantName)
+                "nozzle_diameter": float(vName) if vName.isnumeric() else str(vName)
                 }, self.getExportParams(printInformation.materialNames[0]))
 
         infoFilePath = os.path.join(TMP_FOLDER, "info.json")

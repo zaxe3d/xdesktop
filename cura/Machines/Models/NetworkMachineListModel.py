@@ -60,7 +60,7 @@ class NetworkMachineListModel(ListModel):
             "mName": networkMachine.name,
             "mIP": networkMachine.ip,
             "mMaterial": networkMachine.material,
-            "mNozzle": networkMachine.nozzle,
+            "mNozzle": str(networkMachine.nozzle),
             "mDeviceModel": networkMachine.deviceModel,
             "mFWVersion": ".".join(map(str, networkMachine.fwVersion)),
             "mPrintingFile": networkMachine.printingFile,

@@ -69,6 +69,7 @@ Item
     }
 
     onPetGMaterialSelectedChanged:  {
+        return
         if (petGMaterialSelected && !UM.Preferences.getValue("material/settings_applied")) {
             var printSpeedMultiplier = 0.7; 
             speedInfill.setPropertyValue("value", speedInfill.properties.value * printSpeedMultiplier)
@@ -78,7 +79,6 @@ Item
             speedWallX.setPropertyValue("value", speedWallX.properties.value * printSpeedMultiplier)
             speedSupportRoof.setPropertyValue("value", speedSupportRoof.properties.value * printSpeedMultiplier)
             speedSupportInfill.setPropertyValue("value", speedSupportInfill.properties.value * printSpeedMultiplier)
-
             Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", 100)
             Cura.MachineManager.setSettingForAllExtruders("retraction_speed", "value", 25)
             UM.Preferences.setValue("material/settings_applied", true)

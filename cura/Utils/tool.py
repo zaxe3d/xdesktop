@@ -48,3 +48,10 @@ def multiply(_dict, multiplier, _min, _max):
 
 def clearChars(text):
     return ''.join([i if ord(i) < 128 else ' ' for i in text.replace("\n", "")])
+
+def isNumber(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False

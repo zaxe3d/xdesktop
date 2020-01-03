@@ -80,7 +80,7 @@ class ZaxeCodeWriter(MeshWriter):
                 "model": self._machineManager.activeMachineName.replace("+", "PLUS"),
                 "version": self.ZAXE_FILE_VERSION,
                 "checksum": self.getCheckSum(),
-                "nozzle_diameter": float(vName) if vName.isnumeric() else str(vName)
+                "nozzle_diameter": float(vName) if tool.isNumber(vName) else str(vName)
                 }, self.getExportParams(printInformation.materialNames[0]))
 
         infoFilePath = os.path.join(TMP_FOLDER, "info.json")

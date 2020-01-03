@@ -18,7 +18,7 @@
         <diameter>1.75</diameter>
     </properties>
     <settings>
-        <setting key="print temperature">243</setting>
+        <setting key="print temperature">250</setting>
         <setting key="print temperature layer 0">250</setting>
         <setting key="heated bed temperature">100</setting>
         <setting key="bed temperature layer 0">100</setting>
@@ -39,6 +39,18 @@
         </machine>
 
         <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe X2"/>
+
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+            </hotend>
+            <hotend id="AM 0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="retraction amount">0.6</setting>
+            </hotend>
+        </machine>
+
+        <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe X1PLUS"/>
 
             <hotend id="0.4">
@@ -51,8 +63,8 @@
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="retraction amount">0.6</setting>
-                <setting key="print temperature">250</setting>
-                <setting key="print temperature layer 0">254</setting>
+                <setting key="print temperature">243</setting>
+                <setting key="print temperature layer 0">250</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
@@ -67,8 +79,8 @@
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="retraction amount">0.6</setting>
-                <setting key="print temperature">250</setting>
-                <setting key="print temperature layer 0">254</setting>
+                <setting key="print temperature">243</setting>
+                <setting key="print temperature layer 0">250</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>

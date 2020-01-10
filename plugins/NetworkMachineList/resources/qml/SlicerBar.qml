@@ -301,7 +301,7 @@ Item {
         // 1 = ready to slice 4 = unable to slice
         id: itemLoadOrSlice
         visible: base.backendState != "undefined" && (base.backendState == 1 || base.backendState == 4) || !activity
-        height: childrenRect.height + 30 + 15
+        height: childrenRect.height + 20 + 25
         color: UM.Theme.getColor("sidebar_item_medium_dark")
         width: parent.width
         anchors.top: parent.top; anchors.left: parent.left
@@ -310,7 +310,7 @@ Item {
             width: parent.width - UM.Theme.getSize("sidebar_item_margin").width
             anchors {
                 top: parent.top
-                topMargin: 30
+                topMargin: 20
                 bottomMargin: 15
             }
 
@@ -320,7 +320,7 @@ Item {
                 color: UM.Theme.getColor("text_sidebar")
                 font: UM.Theme.getFont("extra_large_bold")
                 Layout.alignment: Qt.AlignHCenter
-                Layout.preferredHeight: 15
+                Layout.preferredHeight: 25
             }
 
             RowLayout {
@@ -339,7 +339,7 @@ Item {
 
             Button {
                 id: btnPrepare
-                Layout.preferredWidth: 200
+                Layout.preferredWidth: 230
                 Layout.preferredHeight: 32
                 Layout.topMargin: 20
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom

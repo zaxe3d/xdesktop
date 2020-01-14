@@ -20,9 +20,13 @@
     <settings>
         <setting key="print temperature">193</setting>
         <setting key="heated bed temperature">70</setting>
-        <setting key="bed temperature layer 0">70</setting>
+        <setting key="heated bed temperature layer 0">70</setting>
         <setting key="retraction amount">0</setting>
         <setting key="cool fan full layer">5</setting>
+        <setting key="fan speed min">100</setting>
+        <setting key="fan speed max">100</setting>
+        <setting key="retraction combing">all</setting>
+        <setting key="material flow">105</setting>
 
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe X1"/>

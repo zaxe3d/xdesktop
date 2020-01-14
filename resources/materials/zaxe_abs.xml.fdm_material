@@ -21,8 +21,10 @@
         <setting key="print temperature">250</setting>
         <setting key="print temperature layer 0">250</setting>
         <setting key="heated bed temperature">100</setting>
-        <setting key="bed temperature layer 0">100</setting>
+        <setting key="heated bed temperature layer 0">100</setting>
         <setting key="cool fan full layer">5</setting>
+        <setting key="fan speed min">30</setting>
+        <setting key="fan speed max">30</setting>
 
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe X1"/>

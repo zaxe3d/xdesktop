@@ -38,39 +38,6 @@ Column
         }
     }
 
-    function applyFinalMaterialSettings() {
-        // Apply last material specific settings here
-        var currentMaterial = Cura.MachineManager.currentRootMaterialId[extruderIndex]
-        var fanSpeed = 100
-        var coolFanFullLayer = 2
-        // If Z series templayer0 is different
-        var materialPrintTempLayer0 = Cura.MachineManager.activeMachineId.indexOf("Z1") > -1 ? 208 : 220
-
-        if (currentMaterial == "zaxe_abs") {
-            fanSpeed = 30
-            coolFanFullLayer = 5
-            materialPrintTempLayer0 = 250
-        } else if (currentMaterial == "zaxe_petg") {
-            fanSpeed = 60
-            materialPrintTempLayer0 = 240
-        }
-
-        if (currentMaterial != "custom") {
-            Cura.MachineManager.setSettingForAllExtruders("material_print_temperature_layer_0", "value", materialPrintTempLayer0)
-            if (currentMaterial.indexOf("zaxe_flex") > -1) {
-                Cura.MachineManager.setSettingForAllExtruders("retraction_combing", "value", "all")
-                Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", 105)
-            } else {
-                Cura.MachineManager.resetSettingForAllExtruders("material_flow")
-                Cura.MachineManager.resetSettingForAllExtruders("retraction_combing")
-            }
-        }
-
-        Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_min", "value", fanSpeed)
-        Cura.MachineManager.setSettingForAllExtruders("cool_fan_speed_max", "value", fanSpeed)
-        Cura.MachineManager.setSettingForAllExtruders("cool_fan_full_layer", "value", coolFanFullLayer)
-    }
-
     spacing: 10
 
     width: parent.width - UM.Theme.getSize("sidebar_item_margin").width * 2
@@ -300,16 +267,6 @@ Column
     }
     // Bottom Border
     Rectangle { width: parent.width; height: UM.Theme.getSize("default_lining").height; color: UM.Theme.getColor("sidebar_item_dark") }
-
-    Connections
-    {
-        target: Cura.MachineManager
-        onActiveQualityChanged:
-        {
-            // Apply on every material change and quality change
-            applyFinalMaterialSettings()
-        }
-    }
 
     Connections {
         target: UM.Preferences

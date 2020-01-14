@@ -1179,7 +1179,9 @@ class XmlMaterialProfile(InstanceContainer):
     # Map XML file setting names to internal names
     __material_settings_setting_map = {
         "print temperature": "default_material_print_temperature",
+        "print temperature layer 0": "material_print_temperature_layer_0",
         "heated bed temperature": "default_material_bed_temperature",
+        "heated bed temperature layer 0": "material_bed_temperature_layer_0",
         "standby temperature": "material_standby_temperature",
         "processing temperature graph": "material_flow_temp_graph",
         "print cooling": "cool_fan_speed",
@@ -1188,7 +1190,11 @@ class XmlMaterialProfile(InstanceContainer):
         "adhesion tendency": "material_adhesion_tendency",
         "surface energy": "material_surface_energy",
         "shrinkage percentage": "material_shrinkage_percentage",
-        "cool fan full layer": "cool_fan_full_layer"
+        "cool fan full layer": "cool_fan_full_layer",
+        "fan speed min": "cool_fan_speed_min",
+        "fan speed max": "cool_fan_speed_max",
+        "retraction combing": "retraction_combing",
+        "material flow": "material_flow"
     }
     __unmapped_settings = [
         "hardware compatible",

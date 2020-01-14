@@ -114,7 +114,7 @@ class ZaxeCodeWriter(MeshWriter):
         else:
             extruderStack = self._application.getExtruderManager().getInstance().getExtruderStack(0)
             return {
-                "extruder_temperature": extruderStack.getProperty("material_print_temperature", "value"),
+                "extruder_temperature": extruderStack.getProperty("material_print_temperature_layer_0", "value"),
                 "bed_temperature": extruderStack.getProperty("material_bed_temperature", "value")
             }
 

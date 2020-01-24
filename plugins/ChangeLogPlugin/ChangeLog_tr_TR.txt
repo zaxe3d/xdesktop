@@ -1,4 +1,6 @@
 [2.1.0]
+* 150 μm katman kalınlığı eklendi.
+0.15mm katman kalınlığı önerilen olarak kullanılmaya başlandı.
 * X2 serisi eklendi.
 Tüm metal nozül eklendi.
 * Filament çıkart tuşu eklendi.

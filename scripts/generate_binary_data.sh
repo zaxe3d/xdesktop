@@ -26,9 +26,9 @@ do
     encrypt "variants" $def
 done
 
-qualities=( "expert.inst.cfg" "fast.inst.cfg" "high.inst.cfg" "low.inst.cfg" "recommended.inst.cfg"
-            "zaxe_z/0.4/0.4_expert.inst.cfg" "zaxe_z/0.4/0.4_fast.inst.cfg" "zaxe_z/0.4/0.4_high.inst.cfg" "zaxe_z/0.4/0.4_low.inst.cfg" "zaxe_z/0.4/0.4_recommended.inst.cfg"
-            "zaxe_z/0.6/0.6_fast.inst.cfg" "zaxe_z/0.6/0.6_low.inst.cfg" "zaxe_z/0.6/0.6_recommended.inst.cfg"
+qualities=( "expert.inst.cfg" "high.inst.cfg" "recommended.inst.cfg" "fast.inst.cfg" "draft.inst.cfg" "low.inst.cfg"
+            "zaxe_z/0.4/0.4_expert.inst.cfg" "zaxe_z/0.4/0.4_high.inst.cfg" "zaxe_z/0.4/0.4_recommended.inst.cfg" "zaxe_z/0.4/0.4_fast.inst.cfg" "zaxe_z/0.4/0.4_draft.inst.cfg" "zaxe_z/0.4/0.4_low.inst.cfg"
+            "zaxe_z/0.6/0.6_fast.inst.cfg" "zaxe_z/0.6/0.6_draft.inst.cfg" "zaxe_z/0.6/0.6_low.inst.cfg"
           )
 for quality in "${qualities[@]}"
 do

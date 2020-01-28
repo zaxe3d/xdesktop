@@ -80,9 +80,13 @@
 
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
+                <setting key="fan speed min">100</setting>
+                <setting key="fan speed max">100</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
+                <setting key="fan speed min">100</setting>
+                <setting key="fan speed max">100</setting>
             </hotend>
         </machine>
 
@@ -91,9 +95,13 @@
 
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
+                <setting key="fan speed min">100</setting>
+                <setting key="fan speed max">100</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
+                <setting key="fan speed min">100</setting>
+                <setting key="fan speed max">100</setting>
             </hotend>
         </machine>
 

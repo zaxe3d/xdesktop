@@ -52,6 +52,18 @@
         </machine>
 
         <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe X2"/>
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">200</setting>
+            </hotend>
+            <hotend id="AM 0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">250</setting>
+            </hotend>
+        </machine>
+
+        <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe Z1"/>
 
             <hotend id="0.4">

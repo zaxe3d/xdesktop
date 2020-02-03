@@ -1885,6 +1885,60 @@ Item
 
                     Item
                     {
+                        id: seamToBackRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: seamToBackCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .70)
+
+                                CheckBox
+                                {
+                                    id: seamToBackCheckBox
+                                    property alias _hovered: seamToBackMouseArea.containsMouse
+                                    property bool checkBoxSmall: true
+
+                                    anchors.top: parent.top
+                                    anchors.left: parent.left
+
+                                    //: Setting enable printing build-plate adhesion helper checkbox
+                                    style: UM.Theme.styles.checkbox;
+
+                                    checked: seamToBack.properties.value == "back"
+                                    text: catalog.i18nc("@label", "Seam on back")
+
+                                    MouseArea
+                                    {
+                                        id: seamToBackMouseArea
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onClicked:
+                                        {
+                                            parent.checked = !parent.checked;
+                                            seamToBack.setPropertyValue("value", parent.checked ? "back" : "shortest");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
                         id: zHopWhenRetractedRow
 
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
@@ -2320,6 +2374,15 @@ Item
                 id: xyToleranceLayer0
                 containerStackId: Cura.MachineManager.activeStackId
                 key: "xy_offset_layer_0"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: seamToBack
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "z_seam_type"
                 watchedProperties: [ "value" ]
                 storeIndex: 0
             }

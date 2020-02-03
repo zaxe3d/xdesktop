@@ -229,6 +229,10 @@ msgid "Fan off"
 msgstr "Fan kapalı"
 
 msgctxt "@label"
+msgid "Seam on back"
+msgstr "Dikiş izi arka tarafta"
+
+msgctxt "@label"
 msgid "Z hop when retracted"
 msgstr "Geri çekildiğinde Z sıçraması"
 

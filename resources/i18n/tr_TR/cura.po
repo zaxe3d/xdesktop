@@ -356,6 +356,14 @@ msgctxt "@action:inmenu menubar:help"
 msgid "Check for Updates"
 msgstr "Güncellemeleri Kontrol Et"
 
+msgctxt "@action:inmenu menubar:help"
+msgid "Reset XDesktop"
+msgstr "XDesktop'u Sıfırla"
+
+msgctxt "@action:inmenu menubar:help"
+msgid "Show Changelog"
+msgstr "Sürüm Notları"
+
 msgctxt "@action:inmenu menubar:edit"
 msgid "Split Selected Model Into Parts"
 msgid_plural "Split Selected Models Into Parts"

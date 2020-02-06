@@ -53,6 +53,8 @@ Item
     property alias about: aboutAction;
     property alias firstrun: firstrunAction;
     property alias checkForUpdates: checkForUpdatesAction;
+    property alias showChangelog: showChangelogAction;
+    property alias factoryReset: factoryResetAction;
 
     property alias toggleFullScreen: toggleFullScreenAction;
 
@@ -137,6 +139,20 @@ Item
         id: checkForUpdatesAction;
         text: catalog.i18nc("@action:inmenu menubar:help", "Check for Updates");
         onTriggered: CuraActions.checkForUpdates();
+    }
+
+    Action
+    {
+        id: factoryResetAction;
+        text: catalog.i18nc("@action:inmenu menubar:help", "Reset XDesktop");
+        onTriggered: CuraApplication.factoryReset();
+    }
+
+    Action
+    {
+        id: showChangelogAction;
+        text: catalog.i18nc("@action:inmenu menubar:help", "Show Changelog");
+        onTriggered: CuraApplication.showChangelog();
     }
 
     Action

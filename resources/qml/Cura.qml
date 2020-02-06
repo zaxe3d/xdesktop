@@ -300,6 +300,8 @@ UM.MainWindow
                 MenuItem { action: Cura.Actions.checkForUpdates; }
                 MenuItem { action: Cura.Actions.firstrun; }
                 MenuItem { action: Cura.Actions.about; }
+                //MenuItem { action: Cura.Actions.showChangelog; }
+                MenuItem { action: Cura.Actions.factoryReset; }
             }
         }
 

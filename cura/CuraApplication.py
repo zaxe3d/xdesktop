@@ -437,7 +437,7 @@ class CuraApplication(QtApplication):
             "RotateTool",
             "ScaleTool",
             "SelectionTool",
-            "TranslateTool",
+            "TranslateTool"
         ])
         self._i18n_catalog = i18nCatalog("cura")
 
@@ -1337,6 +1337,15 @@ class CuraApplication(QtApplication):
         size = 500 if "Z3" in model else 130
         snapshot = Snapshot.snapshot(width = size, height = size)
         snapshot.save(snapshotFilePath, "PNG", 100)
+
+    @pyqtSlot()
+    def showChangelog(self):
+        self._plugin_registry.getPluginObject("Changelog").showChangelog()
+
+    @pyqtSlot()
+    def factoryReset(self):
+        Resources.factoryReset()
+        sys.exit(1)
 
     ##  Get logging data of the backend engine
     #   \returns \type{string} Logging data

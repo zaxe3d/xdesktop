@@ -1,4 +1,5 @@
 [2.1.0]
+* Türkçe karakter desteği eklendi.
 * Dikiş izini modelini arka tarafına at seçeneği eklendi.
 * 150 μm katman kalınlığı eklendi.
 0.15mm katman kalınlığı önerilen olarak kullanılmaya başlandı.

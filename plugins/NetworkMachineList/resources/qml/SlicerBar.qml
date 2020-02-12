@@ -558,7 +558,7 @@ Item {
                         }
                         onClicked: {
                             UM.Preferences.setValue("general/firstrun_step", 9)
-                            UM.OutputDeviceManager.requestWriteToDevice(UM.OutputDeviceManager.activeDevice, PrintInformation.jobName,
+                            UM.OutputDeviceManager.requestWriteToDevice(UM.OutputDeviceManager.activeDevice, PrintInformation.baseName,
                                 { "filter_by_machine": true, "preferred_mimetypes": preferredMimeTypes });
                         }
                     }

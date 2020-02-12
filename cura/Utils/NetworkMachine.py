@@ -10,6 +10,7 @@ import traceback
 import sys
 import uuid
 import time
+import urllib.parse
 from . import tool
 
 from UM.Logger import Logger
@@ -322,7 +323,7 @@ class FTPUploader(QThread, QObject):
         self.ftp.login("zaxe", "zaxe")
         filePtr = open(self.filename, 'rb')
         try:
-            self.ftp.storbinary("stor " + tool.clearChars(os.path.basename(self.filename)), filePtr, io.DEFAULT_BUFFER_SIZE, callback)
+            self.ftp.storbinary("stor " + urllib.parse.quote(os.path.basename(self.filename)), filePtr, io.DEFAULT_BUFFER_SIZE, callback)
         except ftplib.all_errors:
             pass
         self.ftp.close()

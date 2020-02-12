@@ -599,6 +599,50 @@ msgctxt "@info:status"
 msgid "Multiplying and placing objects"
 msgstr "Model çoğaltılıp yerleştiriliyor"
 
+msgctxt "@info:status"
+msgid "Could not save to removable drive {0}: {1}"
+msgstr "Çıkarılabilir aygıta {0} kaydedilemedi: {1}"
+
+msgctxt "@info:title"
+msgid "Error"
+msgstr "Hata"
+
+msgctxt "@info:status"
+msgid "Saved to Removable Drive {0} as {1}"
+msgstr "Çıkarılabilir Sürücüye {0}, {1} olarak kaydedildi"
+
+msgctxt "@info:title"
+msgid "File Saved"
+msgstr "Dosya Kaydedildi"
+
+msgctxt "@action:button"
+msgid "Eject"
+msgstr "Çıkar"
+
+msgctxt "@action"
+msgid "Eject removable device {0}"
+msgstr "Çıkarılabilir aygıtı çıkar {0}"
+
+msgctxt "@info:title"
+msgid "Warning"
+msgstr "Uyarı"
+
+msgctxt "@info:status"
+msgid "Ejected {0}. You can now safely remove the drive."
+msgstr "Çıkarıldı {0}. Şimdi sürücüyü güvenle çıkartabilirsiniz."
+
+msgctxt "@info:title"
+msgid "Safely Remove Hardware"
+msgstr "Donanımı Güvenli Bir Şekilde Kaldırın"
+
+msgctxt "@info:status"
+msgid "Failed to eject {0}. Another program may be using the drive."
+msgstr "Çıkarma işlemi başarısız oldu {0}. Başka bir program sürücüyü kullanıyor olabilir."
+
+msgctxt "@item:intext"
+msgid "Removable Drive"
+msgstr "Çıkarılabilir Sürücü"
+
 msgctxt "@info:title"
 msgid "Mesh Tools"
 msgstr "Modelleme Araçları"

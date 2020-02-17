@@ -1,3 +1,27 @@
+[2.1.0]
+* Added Turkish character support for file names when exporting.
+* Seam to back added to advanced settings.
+* Added 150 μm layer height
+0.15mm is now the recommended layer height.
+* Windows 7 scaling problem has been resolved.
+* Added X2 series.
+Added all metal hotend and made it the default hotend.
+* Filament unload button added.
+Only available for Z series with firmware v2.4.76+
+* Added modeling tools.
+Split model into parts option added to context menu(right click)
+
+[2.0.4]
+*Updated Z1 series dimensions.
+*Optimized support angle.
+*Updating procedure has been optimized.
+Started to exit after pressing download button.
+
+[2.0.3]
+* Slicing optimizations
+New more detailed slicing option added to advanced settings. With this
+option enabled you will have your model sliced without ignoring any part it.
+
 [2.0.2]
 *Slicer optimizations
 Configuration optimizations.

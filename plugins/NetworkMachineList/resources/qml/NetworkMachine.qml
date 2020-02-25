@@ -1252,6 +1252,15 @@ Item {
                                 color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("large_semi_bold")
                                 Layout.preferredHeight: 15
+                                Layout.preferredWidth: 130
+                            }
+                            Label {
+                                text: "v" + device.fwVersion
+                                color: UM.Theme.getColor("text_sidebar_medium")
+                                font: UM.Theme.getFont("small")
+                                Layout.alignment: Qt.AlignRight | Qt.AlignBottom
+                                Layout.leftMargin: 150
+                                Layout.preferredHeight: 15
                             }
                         }
                         // Bottom Border

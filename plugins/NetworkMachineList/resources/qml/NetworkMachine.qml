@@ -1278,7 +1278,7 @@ Item {
                                 color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("small")
                                 Layout.alignment: Qt.AlignRight | Qt.AlignBottom
-                                Layout.leftMargin: 150
+                                Layout.leftMargin: 135
                                 Layout.preferredHeight: 15
                             }
                         }

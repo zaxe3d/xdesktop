@@ -19,7 +19,14 @@ Popup {
     }
 
     onOpened: { // start here
+        imageContainer.visible = false
         popup.reload() // initial set
+    }
+
+    onClosed: {
+        // reset
+        image1.source = ""
+        image2.source = ""
     }
 
     Timer {
@@ -30,11 +37,20 @@ Popup {
         running: popup.opened
     }
 
+    Label {
+        id: lblStatus
+        font: UM.Theme.getFont("extra_large_bold")
+        color: UM.Theme.getColor("text_sidebar")
+        text: catalog.i18nc("@info:status","Connecting") + "..."
+        anchors.centerIn: parent
+    }
+
     Item {
         id: imageContainer
         anchors.fill: parent
         property int imageShown: 1 // image number that is shown
         property string initialSource: popup.url
+        visible: false
 
         Image {
             id: image1
@@ -47,6 +63,7 @@ Popup {
             id: image2
             anchors.fill: parent
             visible: imageShown === 2
+            source: initialSource
         }
 
         function setSource(source){
@@ -59,6 +76,7 @@ Popup {
                 if(imageNew.status === Component.Ready) {
                     imageNew.statusChanged.disconnect(finishImage);
                     imageShown = imageShown === 1 ? 2 : 1;
+                    imageContainer.visible = true
                 }
             }
 

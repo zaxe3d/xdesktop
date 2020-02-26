@@ -63,7 +63,7 @@ Popup {
             id: image2
             anchors.fill: parent
             visible: imageShown === 2
-            source: initialSource
+            source: ""
         }
 
         function setSource(source){

@@ -1,10 +1,10 @@
 // Copyright (c) 2017 Ultimaker B.V.
 // Cura is released under the terms of the LGPLv3 or higher.
 
-import QtQuick 2.7
+import QtQuick 2.10
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import QtQuick.Layouts 1.1
+import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
 
 import UM 1.3 as UM
@@ -83,6 +83,13 @@ UM.MainWindow
                 UM.Controller.setActiveView("SolidView")
             }
         }
+    }
+
+    ImageStreamPopup {
+        id: imageStreamPopup
+        width: 576
+        height: 766
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
     }
 
     onWidthChanged:
@@ -554,6 +561,11 @@ UM.MainWindow
                 onShowFirstrunTip: {
                     x: base.width - sidebar.width
                     base.showFirstrunTip( { x: base.width - sidebar.width, y: position.y }, title, text, nextAvailable, imgPath)
+                }
+                onShowPopup: {
+		    imageStreamPopup.url = url
+		    imageStreamPopup.title = title
+		    imageStreamPopup.open()
                 }
             }
 

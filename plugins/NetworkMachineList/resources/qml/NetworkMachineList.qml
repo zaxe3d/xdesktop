@@ -14,6 +14,7 @@ Item
     id: networkMachineList
 
     signal showFirstrunTip(point position, string title, string text, bool nextAvailable, bool imgPath)
+    signal showPopup(string title, string url)
 
     UM.I18nCatalog { id: catalog; name:"cura"}
 

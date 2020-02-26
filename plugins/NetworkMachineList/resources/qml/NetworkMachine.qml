@@ -354,6 +354,10 @@ Item {
                                 id: mouseAreaSnapshot
                                 hoverEnabled: true
                                 anchors.fill: parent
+                                onClicked: {
+                                    if (imgLive.visible)
+                                        networkMachineList.showPopup(device.name, "ftp://" + device.ip + ":9494/snapshot.jpg")
+                                }
                                 onHoveredChanged: {
                                      printerIcon.visible = containsMouse
                                         ? true
@@ -370,6 +374,21 @@ Item {
                                 cache: false
                                 width: 60
                                 height: width
+                            }
+
+                            Image {
+                                id: imgLive
+                                anchors {
+                                    right: parent.right
+                                    bottom: parent.bottom
+                                    bottomMargin: 5
+                                    rightMargin: 5
+                                }
+                                visible: device.snapshot && fwVersion.split(".") >= [2, 4, 95]
+                                source: visible ? "../images/live.png" : ""
+                                width: 13
+                                height: 11
+                                antialiasing: true
                             }
 
                             Text {

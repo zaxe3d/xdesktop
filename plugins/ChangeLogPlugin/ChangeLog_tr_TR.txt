@@ -1,4 +1,6 @@
 [2.1.0]
+* Cihazdan canlı yayın özelliği eklendi.
+Sadece Z serisi için firmware v2.4.95+
 * Türkçe karakter desteği eklendi.
 * Dikiş izini modelini arka tarafına at seçeneği eklendi.
 * 150 μm katman kalınlığı eklendi.

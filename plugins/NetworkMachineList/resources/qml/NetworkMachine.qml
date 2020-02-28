@@ -381,13 +381,13 @@ Item {
                                 anchors {
                                     right: parent.right
                                     bottom: parent.bottom
-                                    bottomMargin: 5
-                                    rightMargin: 5
+                                    bottomMargin: 2
+                                    rightMargin: 2
                                 }
                                 visible: device.snapshot && fwVersion.split(".") >= [2, 4, 95]
                                 source: visible ? "../images/live.png" : ""
-                                width: 13
-                                height: 11
+                                width: 12
+                                height: 12
                                 antialiasing: true
                             }
 

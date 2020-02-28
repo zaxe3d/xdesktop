@@ -1,13 +1,14 @@
 import QtQuick 2.10
 import QtQuick.Controls 2.2
 
+import UM 1.3 as UM
+
 Popup {
     /* Basic popup for showing a live image without flickering */
     id: popup
     property string url: "" // url of the image
     property string title: "" // title of the image (optional)
     property int counter: 0 // to show the same image like stream
-    parent: Overlay.overlay
     x: Math.round((parent.width - width) / 2)
     y: Math.round((parent.height - height) / 2)
     modal: true
@@ -55,27 +56,27 @@ Popup {
         Image {
             id: image1
             anchors.fill: parent
-            visible: imageShown === 1
-            source: initialSource
+            visible: imageContainer.imageShown === 1
+            source: imageContainer.initialSource
         }
 
         Image {
             id: image2
             anchors.fill: parent
-            visible: imageShown === 2
+            visible: imageContainer.imageShown === 2
             source: ""
         }
 
         function setSource(source){
-            var imageNew = imageShown === 1 ? image2 : image1;
-            var imageOld = imageShown === 2 ? image2 : image1;
+            var imageNew = imageContainer.imageShown === 1 ? image2 : image1;
+            var imageOld = imageContainer.imageShown === 2 ? image2 : image1;
 
             imageNew.source = source;
 
             function finishImage(){
                 if(imageNew.status === Component.Ready) {
                     imageNew.statusChanged.disconnect(finishImage);
-                    imageShown = imageShown === 1 ? 2 : 1;
+                    imageContainer.imageShown = imageContainer.imageShown === 1 ? 2 : 1;
                     imageContainer.visible = true
                 }
             }

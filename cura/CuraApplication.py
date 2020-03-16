@@ -698,6 +698,7 @@ class CuraApplication(QtApplication):
 
         Logger.log("i", "Initializing machine manager")
         self._machine_manager = MachineManager(self)
+        self._machine_manager.globalContainerChanged.connect(self._onActiveMachineChanged)
 
         Logger.log("i", "Initializing container manager")
         self._container_manager = ContainerManager(self)
@@ -1527,7 +1528,8 @@ class CuraApplication(QtApplication):
         return CuraSplashScreen.CuraSplashScreen()
 
     def _onActiveMachineChanged(self):
-        pass
+        preferences = self.getPreferences()
+        preferences.setValue("custom_material/print_speed_multiplier", 1) # Reset multiplier on machine change
 
     fileLoaded = pyqtSignal(str)
     fileCompleted = pyqtSignal(str)

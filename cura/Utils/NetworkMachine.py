@@ -135,7 +135,7 @@ class NetworkMachine(QThread, QObject):
                 self.deviceModel = "x1"
 
             # only z-series have snapshot available
-            self.hasSnapshot = self.deviceModel.find("z") >= 0
+            self.hasSnapshot = self.deviceModel.find("z1") >= 0
 
             try:
                 self.printingFile = message["filename"]

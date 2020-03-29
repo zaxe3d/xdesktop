@@ -384,7 +384,7 @@ Item {
                                     bottomMargin: 2
                                     rightMargin: 2
                                 }
-                                visible: device.snapshot && fwVersion.split(".") >= [2, 4, 95]
+                                visible: device.snapshot && fwVersion.split(".")[2] >= 95
                                 source: visible ? "../images/live.png" : ""
                                 width: 12
                                 height: 12
@@ -928,7 +928,7 @@ Item {
                 Button {
                     id: btnfwUpdate
                     // only Z series has remote update
-                    visible: deviceModel.search("z") == 0 && !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
+                    visible: deviceModel.search("z1") == 0 && !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
                     Layout.preferredHeight: 27
                     anchors {
                         verticalCenter: fwUpdateMessage.verticalCenter
@@ -1230,7 +1230,7 @@ Item {
                             Button {
                                 id: btnFilamentUnload
                                 // only Z series has remote update
-                                visible: deviceModel.search("z") == 0 && fwVersion.split(".") >= [2, 4, 76] && !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
+                                visible: deviceModel.search("z1") == 0 && fwVersion.split(".")[2] >= 76 && !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
                                 Layout.preferredHeight: parent.height / 2
                                 background: Rectangle {
                                     color: UM.Theme.getColor("button_blue")

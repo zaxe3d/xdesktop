@@ -52,6 +52,18 @@
                 <setting key="print temperature">265</setting>
                 <setting key="print temperature layer 0">270</setting>
             </hotend>
+            <hotend id="AM 0.25">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="retraction amount">0.6</setting>
+                <setting key="print temperature">265</setting>
+                <setting key="print temperature layer 0">270</setting>
+            </hotend>
+            <hotend id="AM 0.15">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="retraction amount">0.6</setting>
+                <setting key="print temperature">265</setting>
+                <setting key="print temperature layer 0">270</setting>
+            </hotend>
         </machine>
 
         <machine>
@@ -64,11 +76,19 @@
 
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe Z1"/>
+            <hotend id="0.2">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="retraction amount">0.6</setting>
+                <setting key="print temperature">243</setting>
+                <setting key="print temperature layer 0">255</setting>
+                <setting key="fan speed min">0</setting>
+                <setting key="fan speed max">0</setting>
+            </hotend>			
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="retraction amount">0.6</setting>
                 <setting key="print temperature">243</setting>
-                <setting key="print temperature layer 0">250</setting>
+                <setting key="print temperature layer 0">255</setting>
                 <setting key="fan speed min">0</setting>
                 <setting key="fan speed max">0</setting>
             </hotend>
@@ -76,7 +96,15 @@
                 <setting key="hardware compatible">yes</setting>
                 <setting key="retraction amount">0.6</setting>
                 <setting key="print temperature">250</setting>
-                <setting key="print temperature layer 0">254</setting>
+                <setting key="print temperature layer 0">255</setting>
+                <setting key="fan speed min">0</setting>
+                <setting key="fan speed max">0</setting>
+            </hotend>
+            <hotend id="0.8">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="retraction amount">0.6</setting>
+                <setting key="print temperature">250</setting>
+                <setting key="print temperature layer 0">255</setting>
                 <setting key="fan speed min">0</setting>
                 <setting key="fan speed max">0</setting>
             </hotend>
@@ -87,8 +115,8 @@
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="retraction amount">0.6</setting>
-                <setting key="print temperature">243</setting>
-                <setting key="print temperature layer 0">250</setting>
+                <setting key="print temperature">245</setting>
+                <setting key="print temperature layer 0">255</setting>
                 <setting key="fan speed min">0</setting>
                 <setting key="fan speed max">0</setting>
             </hotend>
@@ -96,7 +124,7 @@
                 <setting key="hardware compatible">yes</setting>
                 <setting key="retraction amount">0.6</setting>
                 <setting key="print temperature">250</setting>
-                <setting key="print temperature layer 0">254</setting>
+                <setting key="print temperature layer 0">255</setting>
                 <setting key="fan speed min">0</setting>
                 <setting key="fan speed max">0</setting>
             </hotend>

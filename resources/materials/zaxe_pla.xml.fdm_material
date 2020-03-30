@@ -51,6 +51,16 @@
                 <setting key="retraction amount">0.6</setting>
                 <setting key="print temperature">210</setting>
             </hotend>
+            <hotend id="AM 0.25">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="retraction amount">0.6</setting>
+                <setting key="print temperature">210</setting>
+            </hotend>
+            <hotend id="AM 0.15">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="retraction amount">0.6</setting>
+                <setting key="print temperature">210</setting>
+            </hotend>
         </machine>
 
         <machine>
@@ -64,18 +74,33 @@
 
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe Z1"/>
-
+            <hotend id="0.2">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">200</setting>
+                <setting key="print temperature layer 0">200</setting>
+                <setting key="retraction amount">0.6</setting>
+                <setting key="cool fan full layer">3</setting>
+            </hotend>
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="print temperature">200</setting>
-                <setting key="print temperature layer 0">208</setting>
+                <setting key="print temperature layer 0">200</setting>
                 <setting key="retraction amount">0.6</setting>
+                <setting key="cool fan full layer">3</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature layer 0">218</setting>
-                <setting key="print temperature">210</setting>
+                <setting key="print temperature layer 0">200</setting>
+                <setting key="print temperature">200</setting>
                 <setting key="retraction amount">0.6</setting>
+                <setting key="cool fan full layer">3</setting>
+            </hotend>
+            <hotend id="0.8">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature layer 0">200</setting>
+                <setting key="print temperature">200</setting>
+                <setting key="retraction amount">0.6</setting>
+                <setting key="cool fan full layer">3</setting>
             </hotend>
         </machine>
 

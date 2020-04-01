@@ -1,4 +1,6 @@
-[2.1.0]
+[2.1.1]
+* Yeni nozül konfigurasyonları eklendi.
+Z1 serisi için 0.2 ve 0.8. X2 için Tüm metal 0.15 ve 0.25.
 * Cihazdan canlı yayın özelliği eklendi.
 Sadece Z serisi için firmware v2.4.95+
 * Türkçe karakter desteği eklendi.

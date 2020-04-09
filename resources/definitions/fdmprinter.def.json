@@ -1501,7 +1501,7 @@
                 {
                     "label": "Extra Skin Wall Count",
                     "description": "Replaces the outermost part of the top/bottom pattern with a number of concentric lines. Using one or two lines improves roofs that start on infill material.",
-                    "default_value": 1,
+                    "default_value": 0,
                     "minimum_value": "0",
                     "maximum_value_warning": "10",
                     "type": "int",
@@ -4561,7 +4561,7 @@
                             "label": "Enable Support Roof",
                             "description": "Generate a dense slab of material between the top of support and the model. This will create a skin between the model and support.",
                             "type": "bool",
-                            "default_value": false,
+                            "default_value": true,
                             "value": "extruderValue(support_roof_extruder_nr, 'support_interface_enable')",
                             "limit_to_extruder": "support_roof_extruder_nr",
                             "enabled": "support_enable or support_tree_enable",

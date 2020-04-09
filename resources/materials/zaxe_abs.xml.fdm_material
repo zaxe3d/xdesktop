@@ -83,6 +83,7 @@
                 <setting key="print temperature layer 0">255</setting>
                 <setting key="fan speed min">0</setting>
                 <setting key="fan speed max">0</setting>
+                <setting key="linear advance gcode">M572 D0 S0.06</setting>
             </hotend>			
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
@@ -91,6 +92,7 @@
                 <setting key="print temperature layer 0">255</setting>
                 <setting key="fan speed min">0</setting>
                 <setting key="fan speed max">0</setting>
+                <setting key="linear advance gcode">M572 D0 S0.06</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
@@ -99,6 +101,7 @@
                 <setting key="print temperature layer 0">255</setting>
                 <setting key="fan speed min">0</setting>
                 <setting key="fan speed max">0</setting>
+                <setting key="linear advance gcode">M572 D0 S0.06</setting>
             </hotend>
             <hotend id="0.8">
                 <setting key="hardware compatible">yes</setting>
@@ -107,6 +110,7 @@
                 <setting key="print temperature layer 0">255</setting>
                 <setting key="fan speed min">0</setting>
                 <setting key="fan speed max">0</setting>
+                <setting key="linear advance gcode">M572 D0 S0.06</setting>
             </hotend>
         </machine>
 
@@ -119,6 +123,7 @@
                 <setting key="print temperature layer 0">255</setting>
                 <setting key="fan speed min">0</setting>
                 <setting key="fan speed max">0</setting>
+                <setting key="linear advance gcode">M572 D0 S0.06</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
@@ -127,6 +132,7 @@
                 <setting key="print temperature layer 0">255</setting>
                 <setting key="fan speed min">0</setting>
                 <setting key="fan speed max">0</setting>
+                <setting key="linear advance gcode">M572 D0 S0.06</setting>
             </hotend>
         </machine>
 

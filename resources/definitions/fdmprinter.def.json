@@ -2485,6 +2485,14 @@
                     "default_value": 0.940860215,
                     "enabled": false
                 },
+                "material_linear_advance_gcode":
+                {
+                    "label": "Linear Advance G-code",
+                    "description": "G-code commands to be executed for adjusting linear advance",
+                    "type": "str",
+                    "enabled": true,
+                    "default_value": ""
+                },
                 "material_flow":
                 {
                     "label": "Flow",

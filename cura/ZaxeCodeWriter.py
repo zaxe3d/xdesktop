@@ -29,7 +29,7 @@ TMP_FOLDER = tempfile.gettempdir()
 #
 class ZaxeCodeWriter(MeshWriter):
 
-    ZAXE_FILE_VERSION = "1.0.2"
+    ZAXE_FILE_VERSION = "1.0.3"
 
     def __init__(self) -> None:
         super().__init__(add_to_recent_files = False)

@@ -1194,7 +1194,8 @@ class XmlMaterialProfile(InstanceContainer):
         "fan speed min": "cool_fan_speed_min",
         "fan speed max": "cool_fan_speed_max",
         "retraction combing": "retraction_combing",
-        "material flow": "material_flow"
+        "material flow": "material_flow",
+        "linear advance gcode": "material_linear_advance_gcode"
     }
     __unmapped_settings = [
         "hardware compatible",

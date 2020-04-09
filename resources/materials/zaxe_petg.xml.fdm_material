@@ -91,21 +91,25 @@
                 <setting key="hardware compatible">yes</setting>
                 <setting key="fan speed min">100</setting>
                 <setting key="fan speed max">100</setting>
+                <setting key="linear advance gcode">M572 D0 S0.08</setting>
             </hotend>
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="fan speed min">100</setting>
                 <setting key="fan speed max">100</setting>
+                <setting key="linear advance gcode">M572 D0 S0.08</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="fan speed min">100</setting>
                 <setting key="fan speed max">100</setting>
+                <setting key="linear advance gcode">M572 D0 S0.08</setting>
             </hotend>
             <hotend id="0.8">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="fan speed min">100</setting>
                 <setting key="fan speed max">100</setting>
+                <setting key="linear advance gcode">M572 D0 S0.08</setting>
             </hotend>
         </machine>
 
@@ -116,11 +120,13 @@
                 <setting key="hardware compatible">yes</setting>
                 <setting key="fan speed min">100</setting>
                 <setting key="fan speed max">100</setting>
+                <setting key="linear advance gcode">M572 D0 S0.08</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="fan speed min">100</setting>
                 <setting key="fan speed max">100</setting>
+                <setting key="linear advance gcode">M572 D0 S0.08</setting>
             </hotend>
         </machine>
 

@@ -1,5 +1,5 @@
 from PyQt5 import QtNetwork
-from PyQt5.QtCore import pyqtSignal, pyqtProperty, QObject, QVariant  # For communicating data and events to Qt.
+from PyQt5.QtCore import pyqtSignal, QObject # For communicating data and events to Qt.
 
 from UM.Logger import Logger
 

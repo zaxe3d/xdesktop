@@ -55,7 +55,7 @@ class NetworkMachine(QThread, QObject):
         QObject.__init__(self)
         self.ip = ip
         self.port = port
-        self.setName(name)
+        self.name = name
         self.id = uuid.uuid4().hex
         self.currentLen = 0
         self.networkId = None
@@ -112,6 +112,8 @@ class NetworkMachine(QThread, QObject):
         if self.timer is not None:
             self.timer.stop()
         self.startTimeout()
+
+        Logger.log("d", "onMessage: %s" % message)
 
         message = json.loads(message)
 
@@ -216,7 +218,7 @@ class NetworkMachine(QThread, QObject):
     # end of connection related
 
     def setName(self, newName):
-        self.name = newName
+        self.name = tool.clearChars(newName) if (self.deviceModel.find("zlite") >= 0) else newName
 
     def getStates(self):
         return tool.merge_two_dicts(self.__states, {"uploading": self.uploader is not None and self.uploader.isUploading()})
@@ -256,7 +258,7 @@ class NetworkMachine(QThread, QObject):
         self.startPreheat()
         self.uploader = FTPUploader(filename, self.ip, self.ftpPort)
         self.uploader.uploadEvent.connect(self.uploadProgressCB)
-        Logger.log("d", "starting to upload")
+        Logger.log("d", "starting to upload %s" % filename)
         self.uploader.daemon = True
         self.uploader.start()
         # X1+ hack start
@@ -293,7 +295,7 @@ class FTPUploader(QThread, QObject):
 
     def __init__(self, filename, ip, port, parent = None):
         QObject.__init__(self)
-        self.ftp = ftplib.FTP_TLS()
+        self.ftp = ftplib.FTP()
         self.currentSize = 0
         self.totalSize = 0
         self.filename = filename
@@ -314,20 +316,20 @@ class FTPUploader(QThread, QObject):
         self.cancel = True
 
     def startUpload(self):
-        callback = lambda buf: self.onProgress(buf)
-        self.currentSize = 0
-        self.totalSize = os.path.getsize(self.filename)
-        self.ftp.connect(self.ip, self.port)
-        self.ftp.auth()
-        self.ftp.prot_p()
-        self.ftp.login("zaxe", "zaxe")
-        filePtr = open(self.filename, 'rb')
         try:
+            callback = lambda buf: self.onProgress(buf)
+            self.currentSize = 0
+            self.totalSize = os.path.getsize(self.filename)
+            self.ftp.connect(self.ip, self.port)
+            #self.ftp.auth()
+            #self.ftp.prot_p()
+            self.ftp.login("zaxe", "zaxe")
+            filePtr = open(self.filename, 'rb')
             self.ftp.storbinary("stor " + urllib.parse.quote(os.path.basename(self.filename)), filePtr, io.DEFAULT_BUFFER_SIZE, callback)
-        except ftplib.all_errors:
-            pass
-        self.ftp.close()
-        self.finished = True
+            self.ftp.close()
+            self.finished = True
+        except Exception as e:
+            Logger.log("w", traceback.format_exc())
 
     def onProgress(self, buf):
         if self.cancel:

@@ -27,6 +27,7 @@ class ZaxeVersion(QThread, QObject):
 
     def run(self):
         try:
+            return
             Logger.log("d", "Checking version: %s..." % self.path)
             connection = http.client.HTTPConnection("software.zaxe.com", 80, timeout=5)
             connection.request("GET", self.path)

@@ -765,7 +765,7 @@ Item {
                                                 device.modelCompatibilityWarning = false
                                                 device.filamentLengthWarning = false
                                                 shakeAnim.start()
-                                            } else if (Cura.MachineManager.activeMachineName.replace("+", "PLUS") != device.deviceModel.toUpperCase()) {
+                                            } else if (Cura.MachineManager.activeMachineName.replace("+", "PLUS").toUpperCase() != device.deviceModel.toUpperCase()) {
                                                 device.modelCompatibilityWarning = true
                                                 shakeAnim.start()
                                             } else if (Cura.MachineManager.activeVariantName != device.nozzle) {

@@ -36,7 +36,8 @@ class NetworkMachineManager(QObject):
         "z1": {"version": [0, 0, 0], "path": "/z1/firmware.json"},
         "z1plus": {"version": [0, 0, 0], "path": "/z1/firmware.json"},
         "z3": {"version": [0, 0, 0], "path": "/z3/firmware.json"},
-        "z3plus": {"version": [0, 0, 0], "path": "/z3/firmware.json"}
+        "z3plus": {"version": [0, 0, 0], "path": "/z3/firmware.json"},
+        "zlite": {"version": [0, 0, 0], "path": "/z3/firmware.json"}
     }
 
     ##  Registers listeners and such to listen and command network printers
@@ -86,7 +87,7 @@ class NetworkMachineManager(QObject):
             machine.machineUploadEvent.connect(self._onUpload)
 
     def _onMessage(self, eventArgs) -> None:
-        #Logger.log("d", "%s - [%s]: %s" % (eventArgs.machine.name, eventArgs.machine.ip, eventArgs.message))
+        Logger.log("d", "%s - [%s]: %s" % (eventArgs.machine.name, eventArgs.machine.ip, eventArgs.message))
         try:
             if eventArgs.message['type'] == "open":
                 self.machineList[str(eventArgs.machine.id)] = eventArgs.machine
@@ -136,15 +137,16 @@ class NetworkMachineManager(QObject):
     @pyqtSlot(str)
     def upload(self, mID) -> bool:
         machine = self.machineList[str(mID)]
+        Logger.log("w", "Machine devicemodel [%s - [%s]]" % (machine.name, machine.deviceModel))
 
-        codeGenerator = PluginRegistry.getInstance().getPluginObject("ZaxeCodeWriter")
-        success = codeGenerator.generate()
+        codeGenerator = PluginRegistry.getInstance().getPluginObject(("GCodeWriter" if machine.deviceModel == "zlite" else "ZaxeCodeWriter"))
+        success = codeGenerator.generate() 
 
         if not success:
-            Logger.log("w", "Zaxe code generation failed for device [%s - [%s]]" % (machine.name, machine.ip))
+            Logger.log("w", "Code generation failed for device [%s - [%s]]" % (machine.name, machine.ip))
             return False
         Logger.log("i", "will upload generated code to machine [%s - [%s]]" % (machine.name, machine.ip))
-        machine.upload(codeGenerator.getZaxeFile())
+        machine.upload(codeGenerator.getGCodeFile() if machine.deviceModel == "zlite" else codeGenerator.getZaxeFile())
         return True
 
     ## rename on intended machine

@@ -4,6 +4,10 @@
 import re  # For escaping characters in the settings.
 import json
 import copy
+import tempfile
+import os
+
+from io import StringIO
 
 from UM.Mesh.MeshWriter import MeshWriter
 from UM.Logger import Logger
@@ -14,6 +18,8 @@ from cura.Machines.QualityManager import getMachineDefinitionIDForQualitySearch
 
 from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
+
+TMP_FOLDER = tempfile.gettempdir()
 
 ##  Writes g-code to a file.
 #
@@ -88,6 +94,26 @@ class GCodeWriter(MeshWriter):
 
         self.setInformation(catalog.i18nc("@warning:status", "Please generate G-code before saving."))
         return False
+
+    ##  generates gcode file and saves it to temp folder
+    def generate(self) -> bool:
+
+        Logger.log("d", "generating gcode")
+        # Get the g-code from the g-code writer.
+        gcode_textio = StringIO() #We have to convert the g-code into bytes.
+        success = self.write(gcode_textio, None)
+        if not success: #Writing the g-code failed. Then I can also not write the gzipped g-code.
+            self.setInformation(self.getInformation())
+            return False
+
+        # get gcode file path
+        gcodeFilePath = self.getGCodeFile()
+        # get gcode-content
+        result = gcode_textio.getvalue().encode("utf-8")
+        # write content to file
+        open(gcodeFilePath, 'wb').write(result)
+
+        return True
 
     ##  Create a new container with container 2 as base and container 1 written over it.
     def _createFlattenedContainerInstance(self, instance_container1, instance_container2):
@@ -194,3 +220,9 @@ class GCodeWriter(MeshWriter):
         for pos in range(0, len(escaped_string), 80 - prefix_length):
             result += prefix + escaped_string[pos: pos + 80 - prefix_length] + "\n"
         return result
+
+    def getGCodeFile(self):
+        return os.path.join(TMP_FOLDER, self.getFileBaseName() + ".gcode")
+
+    def getFileBaseName(self):
+        return self._application.getPrintInformation().baseName

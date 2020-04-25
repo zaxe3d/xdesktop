@@ -1,4 +1,7 @@
 import random
+import os
+import re
+import urllib.parse
 
 def getRandChar(size=10):
         maxSize = size
@@ -48,6 +51,15 @@ def multiply(_dict, multiplier, _min, _max):
 
 def clearChars(text):
     return ''.join([i if ord(i) < 128 else ' ' for i in text.replace("\n", "")])
+
+def baseName(path):
+    return urllib.parse.quote(os.path.basename(path))
+
+def eightDot3Filename(path, suffix):
+    filename, file_extension = os.path.splitext(baseName(path))                                            
+    filename += suffix # to lengthen the filename                                                   
+    filename = re.sub('[^0-9a-zA-Z]+', '', filename)
+    return "{0}~1{1}".format(filename[:6].upper(), file_extension[:4].upper())
 
 def isNumber(s):
     try:

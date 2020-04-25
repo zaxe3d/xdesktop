@@ -87,7 +87,7 @@ class NetworkMachineManager(QObject):
             machine.machineUploadEvent.connect(self._onUpload)
 
     def _onMessage(self, eventArgs) -> None:
-        Logger.log("d", "%s - [%s]: %s" % (eventArgs.machine.name, eventArgs.machine.ip, eventArgs.message))
+        #Logger.log("d", "%s - [%s]: %s" % (eventArgs.machine.name, eventArgs.machine.ip, eventArgs.message))
         try:
             if eventArgs.message['type'] == "open":
                 self.machineList[str(eventArgs.machine.id)] = eventArgs.machine

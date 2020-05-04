@@ -15,6 +15,8 @@ from UM.Scene.SceneNode import SceneNode
 from UM.i18n import i18nCatalog
 from UM.MimeTypeDatabase import MimeTypeDatabase, MimeTypeNotFoundError
 
+from cura.Utils import tool
+
 if TYPE_CHECKING:
     from cura.CuraApplication import CuraApplication
 
@@ -379,6 +381,10 @@ class PrintInformation(QObject):
     @pyqtProperty(str, fset = setBaseName, notify = baseNameChanged)
     def baseName(self):
         return self._base_name
+
+    @pyqtProperty(str)
+    def eightDotName(self):
+        return tool.eightDot3Filename(self._base_name, "LITE")
 
     ##  Created an acronym-like abbreviated machine name from the currently
     #   active machine name.

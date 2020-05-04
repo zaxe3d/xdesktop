@@ -249,8 +249,8 @@ class ExtruderManager(QObject):
                 stack_to_use = container_registry.findContainerStacks(id = extruder_stack_id)[0]
 
             support_enabled |= stack_to_use.getProperty("support_enable", "value")
-            support_bottom_enabled |= stack_to_use.getProperty("support_bottom_enable", "value")
-            support_roof_enabled |= stack_to_use.getProperty("support_roof_enable", "value")
+            support_bottom_enabled |= bool(stack_to_use.getProperty("support_bottom_enable", "value"))
+            support_roof_enabled |= bool(stack_to_use.getProperty("support_roof_enable", "value"))
 
             # Check limit to extruders
             limit_to_extruder_feature_list = ["wall_0_extruder_nr",

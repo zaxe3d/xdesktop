@@ -334,7 +334,8 @@ Item {
                 MachineCarousel { modelName: "X2"; modelId: "zaxe_x2"; Layout.preferredWidth: 57; Layout.preferredHeight: 80 }
                 MachineCarousel { modelName: "Z1"; modelId: "zaxe_z1"; Layout.preferredWidth: 54; Layout.preferredHeight: 80 }
                 MachineCarousel { modelName: "Z1+"; modelId: "zaxe_z1+"; Layout.preferredWidth: 75; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "ZLite"; modelId: "zaxe_zlite"; Layout.preferredWidth: 67; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "XLite"; modelId: "zaxe_xlite"; Layout.preferredWidth: 67; Layout.preferredHeight: 80 }
+                //MachineCarousel { modelName: "ZLite"; modelId: "zaxe_zlite"; Layout.preferredWidth: 67; Layout.preferredHeight: 80 }
             }
 
             Button {
@@ -558,7 +559,7 @@ Item {
                         }
                         onClicked: {
                             UM.Preferences.setValue("general/firstrun_step", 9)
-                            UM.OutputDeviceManager.requestWriteToDevice(UM.OutputDeviceManager.activeDevice, PrintInformation.baseName,
+                            UM.OutputDeviceManager.requestWriteToDevice(UM.OutputDeviceManager.activeDevice, Cura.MachineManager.activeMachineId.indexOf("Lite") > -1 ? PrintInformation.eightDotName : PrintInformation.baseName,
                                 { "filter_by_machine": true, "preferred_mimetypes": preferredMimeTypes });
                         }
                     }

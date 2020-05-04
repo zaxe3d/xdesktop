@@ -128,6 +128,21 @@
         </machine>
 
         <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe XLite"/>
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">212</setting>
+                <setting key="retraction amount">4.2</setting>
+                <setting key="cool fan full layer">2</setting>
+                <setting key="print temperature layer 0">215</setting>
+                <setting key="heated bed temperature">60</setting>
+                <setting key="heated bed temperature layer 0">60</setting>
+                <setting key="fan speed min">100</setting>
+                <setting key="fan speed max">100</setting>
+            </hotend>
+        </machine>
+
+        <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe ZLite"/>
 
             <hotend id="0.4">

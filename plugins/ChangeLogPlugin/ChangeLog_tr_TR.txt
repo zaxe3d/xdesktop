@@ -1,4 +1,8 @@
 [2.1.2]
+* X-Lite serisi eklendi.
+Lite serisine özel 8nokta3 dosya isimlendirmesi eklendi.
+GCO uzantılı dosyaları deskteklenmeye başlandı.
+* Yeni dilimleme motoru parametreleri eklendi.
 * Dilimleme motoru güncellendi.
 
 [2.1.1]

@@ -49,8 +49,8 @@
             <hotend id="AM 0.4">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="retraction amount">0.6</setting>
-                <setting key="print temperature">265</setting>
-                <setting key="print temperature layer 0">270</setting>
+                <setting key="print temperature">260</setting>
+                <setting key="print temperature layer 0">265</setting>
             </hotend>
             <hotend id="AM 0.25">
                 <setting key="hardware compatible">yes</setting>

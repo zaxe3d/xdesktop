@@ -297,7 +297,7 @@ class FTPUploader(QThread, QObject):
 
     def __init__(self, filename, ip, port, isLite, filenameSuffix, parent = None):
         QObject.__init__(self)
-        self.ftp = ftplib.FTP()
+        self.ftp = ftplib.FTP() if isLite else ftplib.FTP_TLS()
         self.currentSize = 0
         self.totalSize = 0
         self.filename = filename

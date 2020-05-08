@@ -37,7 +37,8 @@ class NetworkMachineManager(QObject):
         "z1plus": {"version": [0, 0, 0], "path": "/z1/firmware.json"},
         "z3": {"version": [0, 0, 0], "path": "/z3/firmware.json"},
         "z3plus": {"version": [0, 0, 0], "path": "/z3/firmware.json"},
-        "zlite": {"version": [0, 0, 0], "path": "/z3/firmware.json"}
+        "zlite": {"version": [0, 0, 0], "path": "/z3/firmware.json"},
+        "xlite": {"version": [0, 0, 0], "path": "/z3/firmware.json"}
     }
 
     ##  Registers listeners and such to listen and command network printers
@@ -137,16 +138,16 @@ class NetworkMachineManager(QObject):
     @pyqtSlot(str)
     def upload(self, mID) -> bool:
         machine = self.machineList[str(mID)]
-        Logger.log("w", "Machine devicemodel [%s - [%s]]" % (machine.name, machine.deviceModel))
+        #Logger.log("w", "Machine devicemodel [%s - [%s]]" % (machine.name, machine.deviceModel))
 
-        codeGenerator = PluginRegistry.getInstance().getPluginObject(("GCodeWriter" if machine.deviceModel == "zlite" else "ZaxeCodeWriter"))
+        codeGenerator = PluginRegistry.getInstance().getPluginObject(("GCodeWriter" if machine.isLite else "ZaxeCodeWriter"))
         success = codeGenerator.generate() 
 
         if not success:
             Logger.log("w", "Code generation failed for device [%s - [%s]]" % (machine.name, machine.ip))
             return False
         Logger.log("i", "will upload generated code to machine [%s - [%s]]" % (machine.name, machine.ip))
-        machine.upload(codeGenerator.getGCodeFile() if machine.deviceModel == "zlite" else codeGenerator.getZaxeFile())
+        machine.upload(codeGenerator.getGCodeFile() if machine.isLite else codeGenerator.getZaxeFile())
         return True
 
     ## rename on intended machine

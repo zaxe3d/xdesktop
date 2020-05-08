@@ -97,7 +97,6 @@ class GCodeWriter(MeshWriter):
 
     ##  generates gcode file and saves it to temp folder
     def generate(self) -> bool:
-
         Logger.log("d", "generating gcode")
         # Get the g-code from the g-code writer.
         gcode_textio = StringIO() #We have to convert the g-code into bytes.

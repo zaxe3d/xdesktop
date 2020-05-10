@@ -14,7 +14,7 @@
 
     "overrides": {
         "machine_gcode_flavor": { "default_value": "RepRap (Marlin/Sprinter)" },
-        "machine_start_gcode": { "default_value": "M500\nM502\nG28\nG1 E10 F180" },
+        "machine_start_gcode": { "default_value": "M500\nM502\nM900 K0.35 T0\nG28\nG1 E10 F180" },
         "machine_end_gcode": {
             "default_value": "M104 S0\nM140 S0\nM107\nG1 X0 Y200\nM84"
         },
@@ -33,7 +33,6 @@
         "machine_max_jerk_e": { "default_value": 1.5 },
         "machine_acceleration": { "value": 1250 },
         "machine_heated_bed": { "value": true },
-        "acceleration_enabled": { "value": false },
         "acceleration_wall_0": { "value": 500 },
         "acceleration_wall_x":{ "value": 500 },
         "acceleration_roofing":{ "value": 500 },
@@ -49,6 +48,7 @@
         "raft_surface_acceleration": { "value": 500 },
         "raft_interface_acceleration": { "value": 500 },
         "raft_base_acceleration": { "value": 500 },
+		"acceleration_enabled": { "value": false },
         "jerk_enabled": { "value": false },
         "jerk_print": { "value": 8 },
         "jerk_infill": { "value": 8 },
@@ -77,7 +77,7 @@
         "speed_infill": { "value": 80 },
         "speed_wall_0": { "value": 25 },
         "speed_wall_x": { "value": 60 },
-        "speed_roofing": { "value": 35 },
+        "speed_roofing": { "value": 30 },
         "speed_slowdown_layers": { "value": 3 },
         "speed_travel_layer_0": { "value": 165 },
         "speed_travel": { "value": 165 },

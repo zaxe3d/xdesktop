@@ -10,6 +10,8 @@ import trimesh
 from UM.Extension import Extension
 from UM.Application import Application
 from UM.Message import Message
+from UM.Job import Job
+from UM.Logger import Logger
 
 from UM.Scene.Selection import Selection
 from UM.Operations.GroupedOperation import GroupedOperation
@@ -29,10 +31,11 @@ from .SetParentOperationSimplified import SetParentOperationSimplified
 from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
 
-class MeshTools(Extension, QObject,):
+class MeshTools(Extension, QObject, Job):
     def __init__(self, parent = None):
         QObject.__init__(self, parent)
         Extension.__init__(self)
+        Job.__init__(self)
 
         self._application = Application.getInstance()
         self._controller = self._application.getController()
@@ -51,7 +54,24 @@ class MeshTools(Extension, QObject,):
         #self.addMenuItem(catalog.i18nc("@item:inmenu", "Split model into parts"), self.splitMeshes)
 
         self._message = Message(title=catalog.i18nc("@info:title", "Mesh Tools"))
+        self._loading_message = None
 
+    def run(self):
+        self._loading_message = Message(catalog.i18nc("@info:status", "Repairing..."),
+                                        lifetime=0,
+                                        dismissable=False,
+                                        title = catalog.i18nc("@info:title", "Mesh Tools"))
+        self._loading_message.setProgress(-1)
+        self._loading_message.show()
+
+        Job.yieldThread()  # Yield to any other thread that might want to do something else.
+        self.fixSimpleHolesForMeshes()
+        self.fixNormalsForMeshes()
+
+    def done(self):
+        self._message.hide()
+        self._loading_message.hide()
+        
     def _onFileLoaded(self, file_name):
         self._currently_loading_files.append(file_name)
 
@@ -60,7 +80,6 @@ class MeshTools(Extension, QObject,):
             self._currently_loading_files.remove(file_name)
 
     def _onSceneChanged(self, node):
-        return # don't need these
         if not node or not node.getMeshData():
             return
 
@@ -89,13 +108,7 @@ class MeshTools(Extension, QObject,):
             message = Message(title=catalog.i18nc("@info:title", "Mesh Tools"))
             body = catalog.i18nc("@info:status", "Model %s is not watertight, and may not print properly.") % base_name
 
-            # XRayView may not be available if the plugin has been disabled
-            if "XRayView" in self._controller.getAllViews() and self._controller.getActiveView().getPluginId() != "XRayView":
-                body += " " + catalog.i18nc("@info:status", "Check X-Ray View and repair the model before printing it.")
-                message.addAction("X-Ray", catalog.i18nc("@action:button", "Show X-Ray View"), None, "")
-                message.actionTriggered.connect(self._showXRayView)
-            else:
-                body += " " +catalog.i18nc("@info:status", "Repair the model before printing it.")
+            body += " " +catalog.i18nc("@info:status", "Repair the model before printing it. (Right click on the model and select repair)")
 
             message.setText(body)
             message.show()

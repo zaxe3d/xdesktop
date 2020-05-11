@@ -1329,6 +1329,17 @@ class CuraApplication(QtApplication):
         mt.splitMeshes()
 
     @pyqtSlot()
+    def repairModel(self) -> None:
+        mt = self._plugin_registry.getPluginObject("MeshTools")
+        mt.finished.connect(self._repairFinished)
+        mt.start()
+
+    def _repairFinished(self, job):
+        # remove all loading messages when done
+        # required to do from main thread this is why this is here
+        job.done()
+        
+    @pyqtSlot()
     def takeSnapshot(self) -> None:
         # write the png to the file
         TMP_FOLDER = tempfile.gettempdir()

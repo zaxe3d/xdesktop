@@ -24,6 +24,7 @@ Item
     property alias centerSelection: centerSelectionAction;
     property alias multiplySelection: multiplySelectionAction;
     property alias layFlatSelection: layFlatSelectionAction;
+    property alias repairSelection: repairSelectionAction;
     property alias splitIntoPartsSelection: splitIntoPardsSelectionAction;
 
     property alias clearSelection: clearSelectionAction;
@@ -184,6 +185,15 @@ Item
             UM.Controller.setActiveTool("RotateTool");
             UM.ActiveTool.triggerAction("layFlat");
         }
+    }
+
+    Action
+    {
+        id: repairSelectionAction;
+        text: catalog.i18ncp("@action:inmenu menubar:edit", "Repair Selected Model", "Repair Selected Models", UM.Selection.selectionCount);
+        enabled: UM.Controller.toolsEnabled && UM.Selection.hasSelection;
+        iconName: "align-vertical-center";
+        onTriggered: CuraApplication.repairModel()
     }
 
     Action

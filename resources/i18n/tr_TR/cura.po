@@ -371,6 +371,12 @@ msgstr[0] "Seçili Modeli Parçalara Ayır"
 msgstr[1] "Seçili Modelleri Parçalara Ayır"
 
 msgctxt "@action:inmenu menubar:edit"
+msgid "Repair Selected Model"
+msgid_plural "Repair Selected Models"
+msgstr[0] "Seçili Modeli Tamir Et"
+msgstr[1] "Seçili Modelleri Tamir Et"
+
+msgctxt "@action:inmenu menubar:edit"
 msgid "Delete Selected Model"
 msgid_plural "Delete Selected Models"
 msgstr[0] "Seçili Modeli Sil"
@@ -582,6 +588,22 @@ msgstr "%d alt parçaya ayrıldı"
 msgctxt "@info:status"
 msgid "could not be split into submeshes"
 msgstr "daha fazla parçaya ayrılamıyor"
+
+msgctxt "@info:status"
+msgid "Repair the model before printing it. (Right click on the model and select repair)"
+msgstr "Baskı almadan önce modeli tamir ediniz. (Modele sağ tıklayıp \"Seçili Modeli Tamir Et\"'i seçiniz)"
+
+msgctxt "@info:status"
+msgid "Model %s is not watertight, and may not print properly."
+msgstr "%s modelinde bazı problemler tespit edildi. Tam istediğiniz gibi basılamayabilir."
+
+msgctxt "@info:status"
+msgid "The mesh needs more extensive repair to become watertight"
+msgstr "Model daha derinlemesine bir tamirat gerektiriyor"
+
+msgctxt "@info:status"
+msgid "Repairing..."
+msgstr "Tamir ediliyor..."
 
 msgctxt "@info:status"
 msgid "Parsing Code"

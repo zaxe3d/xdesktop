@@ -32,6 +32,7 @@ Menu
     MenuItem { action: Cura.Actions.deleteSelection; }
     MenuItem { action: Cura.Actions.multiplySelection; }
     MenuItem { action: Cura.Actions.layFlatSelection; }
+    MenuItem { action: Cura.Actions.repairSelection; }
     MenuItem { action: Cura.Actions.splitIntoPartsSelection; }
 
     // Extruder selection - only visible if there is more than 1 extruder

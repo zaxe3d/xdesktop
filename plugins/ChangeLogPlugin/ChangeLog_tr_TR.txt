@@ -1,4 +1,5 @@
 [2.1.2]
+* Model tamir et eklentisi eklendi.
 * X-Lite serisi eklendi.
 Lite serisine özel 8nokta3 dosya isimlendirmesi eklendi.
 GCO uzantılı dosyaları deskteklenmeye başlandı.

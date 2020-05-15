@@ -649,7 +649,7 @@ QtObject {
                 }
                 color:
                 {
-                    if(control.checkable && control.checked && control.hovered)
+                    if(control.checkable && control.checked && control.hovered || control.checked)
                     {
                         return Theme.getColor("button_text_active_hover");
                     }

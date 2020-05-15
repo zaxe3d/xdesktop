@@ -1,8 +1,8 @@
-[2.1.2]
+[2.1.3]
+* Model yüzüne göre düz şekilde yerleştirme eklendi.
 * Model tamir et eklentisi eklendi.
 * X-Lite serisi eklendi.
-Lite serisine özel 8nokta3 dosya isimlendirmesi eklendi.
-GCO uzantılı dosyaları deskteklenmeye başlandı.
+gcode uzantılı dosyaları deskteklenmeye başlandı.
 * Yeni dilimleme motoru parametreleri eklendi.
 * Dilimleme motoru güncellendi.
 

@@ -205,6 +205,10 @@ msgid "Hide advanced settings"
 msgstr "Gelişmiş ayarları gizle"
 
 msgctxt "@label"
+msgid "Raft type"
+msgstr "Destekleyici taban tipi"
+
+msgctxt "@label"
 msgid "Infill pattern"
 msgstr "Doldurma deseni"
 

@@ -696,7 +696,7 @@ Item
                             style: UM.Theme.styles.checkbox;
 
                             visible: platformAdhesionType.properties.enabled == "True"
-                            checked: platformAdhesionType.properties.value == "raft"
+                            checked: platformAdhesionType.properties.value != "none"
                             text: catalog.i18nc("@label", "Raft")
 
                             MouseArea
@@ -950,6 +950,101 @@ Item
                 {
                     width: parent.parent.width
                     spacing: UM.Theme.getSize("sidebar_spacing").height
+
+                    Item
+                    {
+                        id: adhesionTypeRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: adhesionTypeCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: adhesionTypeLabel
+                                    text: catalog.i18nc("@label", "Raft type")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors.top: parent.top
+                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    anchors.left: parent.left
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                            }
+
+                            Item
+                            {
+                                id: adhesionTypeCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: adhesionTypeCellLeft.height
+
+                                anchors.left: adhesionTypeCellLeft.right
+                                anchors.bottom: adhesionTypeCellLeft.bottom
+
+                                ComboBox
+                                {
+                                    id: adhesionTypeCB
+                                    anchors.right: parent.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    width: 100
+
+                                    model: ListModel {
+                                        id: cbRTItems
+                                        ListElement { text: "-";    value: "none"           }
+                                        ListElement { text: "Raft"; value: "raft"           }
+                                        ListElement { text: "Brim"; value: "brim"           }
+                                    }
+
+                                    currentIndex:
+                                    {
+                                        var iP = platformAdhesionType.properties.value
+                                        for(var i = 0; i < cbRTItems.count; ++i)
+                                        {
+                                            if(model.get(i).value == iP)
+                                            {
+                                                return i
+                                            }
+                                        }
+                                    }
+
+                                    onActivated: platformAdhesionType.setPropertyValue("value", model.get(index).value)
+
+                                    // Disable mouse wheel for combobox
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onWheel: {
+                                            // do nothing
+                                        }
+                                        onPressed: {
+                                            // propogate to ComboBox
+                                            mouse.accepted = false;
+                                        }
+                                        onReleased: {
+                                            // propogate to ComboBox
+                                            mouse.accepted = false;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                     Item
                     {

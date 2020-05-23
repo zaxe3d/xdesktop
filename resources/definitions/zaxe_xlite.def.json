@@ -14,7 +14,7 @@
 
     "overrides": {
         "machine_gcode_flavor": { "default_value": "RepRap (Marlin/Sprinter)" },
-        "machine_start_gcode": { "default_value": "M500\nM502\nM140 S{material_bed_temperature}\nM104 S{material_print_temperature_layer_0}\nG28\nM190 S{material_bed_temperature}\nM109 S{material_print_temperature_layer_0}\nG1 E10 F180" },
+        "machine_start_gcode": { "default_value": "M502\nM500\nM140 S{material_bed_temperature}\nM104 S{material_print_temperature_layer_0}\nG28\nM190 S{material_bed_temperature}\nM109 S{material_print_temperature_layer_0}\nG1 E10 F180" },
         "machine_end_gcode": {
             "default_value": "M104 S0\nM140 S0\nM107\nG1 X0 Y200\nM84"
         },
@@ -48,7 +48,7 @@
         "raft_surface_acceleration": { "value": 500 },
         "raft_interface_acceleration": { "value": 500 },
         "raft_base_acceleration": { "value": 500 },
-	"acceleration_enabled": { "value": false },
+        "acceleration_enabled": { "value": false },
         "jerk_enabled": { "value": false },
         "jerk_print": { "value": 8 },
         "jerk_infill": { "value": 8 },
@@ -68,7 +68,7 @@
         "jerk_travel_layer_0": { "value": 10 },
         "jerk_skirt_brim": { "value": 8 },
         "jerk_ironing": { "value": 8 },
-        "retraction_retract_speed": { "value": 70 },
+        "retraction_retract_speed": { "value": 50 },
         "retraction_prime_speed": { "value": 35 },
         "speed_topbottom": { "value": 45},
         "speed_support_infill": { "value": 60 },
@@ -79,8 +79,8 @@
         "speed_wall_x": { "value": 60 },
         "speed_roofing": { "value": 30 },
         "speed_slowdown_layers": { "value": 3 },
-        "speed_travel_layer_0": { "value": 165 },
-        "speed_travel": { "value": 165 },
+        "speed_travel_layer_0": { "value": 120 },
+        "speed_travel": { "value": 120 },
         "raft_interface_speed": { "value": 40 },
         "raft_surface_speed": { "value": 40 },
         "raft_base_speed": { "value": 25 }

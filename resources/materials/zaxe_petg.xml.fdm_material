@@ -134,15 +134,15 @@
             <machine_identifier manufacturer="Zaxe" product="Zaxe XLite"/>
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">245</setting>
-                <setting key="retraction amount">4.2</setting>
+                <setting key="print temperature">240</setting>
+                <setting key="retraction amount">1.6</setting>
                 <setting key="cool fan full layer">5</setting>
-                <setting key="print temperature layer 0">250</setting>
+                <setting key="print temperature layer 0">245</setting>
                 <setting key="heated bed temperature">75</setting>
                 <setting key="heated bed temperature layer 0">75</setting>
                 <setting key="fan speed min">60</setting>
                 <setting key="fan speed max">60</setting>
-                <setting key="linear advance gcode">M900 K0.7 T0</setting>
+                <setting key="linear advance gcode">M900 K0.5 T0</setting>
             </hotend>
         </machine>
 

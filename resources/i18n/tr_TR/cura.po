@@ -205,8 +205,20 @@ msgid "Hide advanced settings"
 msgstr "Gelişmiş ayarları gizle"
 
 msgctxt "@label"
-msgid "Raft type"
+msgid "Adhesion type"
 msgstr "Destekleyici taban tipi"
+
+msgctxt "@item:inlistbox"
+msgid "Brim"
+msgstr "Etek"
+
+msgctxt "@item:inlistbox"
+msgid "Raft"
+msgstr "Ayak"
+
+msgctxt "@item:inlistbox"
+msgid "Off"
+msgstr "Kapalı"
 
 msgctxt "@label"
 msgid "Infill pattern"
@@ -231,6 +243,26 @@ msgstr "Fan hızı"
 msgctxt "@label"
 msgid "Fan off"
 msgstr "Fan kapalı"
+
+msgctxt "@label"
+msgid "Seam type"
+msgstr "Dikiş tipi"
+
+msgctxt "@item:inlistbox"
+msgid "Back"
+msgstr "Arkasında"
+
+msgctxt "@item:inlistbox"
+msgid "Shortest"
+msgstr "En Kısa"
+
+msgctxt "@item:inlistbox"
+msgid "Random"
+msgstr "Rastgele"
+
+msgctxt "@item:inlistbox"
+msgid "Sharpest Corner"
+msgstr "Keskin Kenar"
 
 msgctxt "@label"
 msgid "Seam on back"

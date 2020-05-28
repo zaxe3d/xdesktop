@@ -953,6 +953,101 @@ Item
 
                     Item
                     {
+                        id: zSeamTypeRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: zSeamTypeCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: zSeamTypeLabel
+                                    text: catalog.i18nc("@label", "Seam type")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors.top: parent.top
+                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    anchors.left: parent.left
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                            }
+
+                            Item
+                            {
+                                id: zSeamTypeCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: zSeamTypeCellLeft.height
+
+                                anchors.left: zSeamTypeCellLeft.right
+                                anchors.bottom: zSeamTypeCellLeft.bottom
+
+                                ComboBox
+                                {
+                                    id: zSeamTypeCB
+                                    anchors.right: parent.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    width: 100
+
+                                    model: [
+                                        { text: catalog.i18nc("@item:inlistbox", "Back"),                value: "back"           },
+                                        { text: catalog.i18nc("@item:inlistbox", "Shortest"),            value: "shortest"       },
+                                        { text: catalog.i18nc("@item:inlistbox", "Random"),              value: "random"         },
+                                        { text: catalog.i18nc("@item:inlistbox", "Sharpest Corner"),     value: "sharpest_corner"}
+                                    ]
+
+                                    currentIndex:
+                                    {
+                                        var iP = zSeamType.properties.value
+                                        for(var i = 0; i < model.length; i++)
+                                        {
+                                            if(model[i].value == iP)
+                                            {
+                                                return i
+                                            }
+                                        }
+                                    }
+
+                                    onActivated: zSeamType.setPropertyValue("value", model[index].value)
+
+                                    // Disable mouse wheel for combobox
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onWheel: {
+                                            // do nothing
+                                        }
+                                        onPressed: {
+                                            // propogate to ComboBox
+                                            mouse.accepted = false;
+                                        }
+                                        onReleased: {
+                                            // propogate to ComboBox
+                                            mouse.accepted = false;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
                         id: adhesionTypeRow
 
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
@@ -977,7 +1072,7 @@ Item
                                 Label
                                 {
                                     id: adhesionTypeLabel
-                                    text: catalog.i18nc("@label", "Raft type")
+                                    text: catalog.i18nc("@label", "Adhesion type")
                                     font: UM.Theme.getFont("medium");
                                     color: UM.Theme.getColor("text_sidebar")
 
@@ -1005,26 +1100,25 @@ Item
                                     anchors.verticalCenter: parent.verticalCenter
                                     width: 100
 
-                                    model: ListModel {
-                                        id: cbRTItems
-                                        ListElement { text: "-";    value: "none"           }
-                                        ListElement { text: "Raft"; value: "raft"           }
-                                        ListElement { text: "Brim"; value: "brim"           }
-                                    }
+                                    model: [
+                                        { text: catalog.i18nc("@item:inlistbox", "Off"),         value: "none"   },
+                                        { text: catalog.i18nc("@item:inlistbox", "Raft"),        value: "raft"   },
+                                        { text: catalog.i18nc("@item:inlistbox", "Brim"),        value: "random" },
+                                    ]
 
                                     currentIndex:
                                     {
                                         var iP = platformAdhesionType.properties.value
-                                        for(var i = 0; i < cbRTItems.count; ++i)
+                                        for(var i = 0; i < model.length; i++)
                                         {
-                                            if(model.get(i).value == iP)
+                                            if(model[i].value == iP)
                                             {
                                                 return i
                                             }
                                         }
                                     }
 
-                                    onActivated: platformAdhesionType.setPropertyValue("value", model.get(index).value)
+                                    onActivated: platformAdhesionType.setPropertyValue("value", model[index].value)
 
                                     // Disable mouse wheel for combobox
                                     MouseArea {
@@ -2013,7 +2107,7 @@ Item
                                     //: Setting enable printing build-plate adhesion helper checkbox
                                     style: UM.Theme.styles.checkbox;
 
-                                    checked: seamToBack.properties.value == "back"
+                                    checked: zSeamType.properties.value == "back"
                                     text: catalog.i18nc("@label", "Seam on back")
 
                                     MouseArea
@@ -2024,7 +2118,7 @@ Item
                                         onClicked:
                                         {
                                             parent.checked = !parent.checked;
-                                            seamToBack.setPropertyValue("value", parent.checked ? "back" : "shortest");
+                                            zSeamType.setPropertyValue("value", parent.checked ? "back" : "shortest");
                                         }
                                     }
                                 }
@@ -2475,15 +2569,6 @@ Item
 
             UM.SettingPropertyProvider
             {
-                id: seamToBack
-                containerStackId: Cura.MachineManager.activeStackId
-                key: "z_seam_type"
-                watchedProperties: [ "value" ]
-                storeIndex: 0
-            }
-
-            UM.SettingPropertyProvider
-            {
                 id: zHopWhenRetracted
                 containerStackId: Cura.MachineManager.activeStackId
                 key: "retraction_hop_enabled"
@@ -2551,6 +2636,15 @@ Item
                 containerStackId: Cura.MachineManager.activeStackId
                 key: "gradual_infill_steps"
                 watchedProperties: ["value", "enabled"]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: zSeamType
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "z_seam_type"
+                watchedProperties: [ "value" ]
                 storeIndex: 0
             }
 

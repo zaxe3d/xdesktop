@@ -210,6 +210,10 @@ msgstr "Destekleyici taban tipi"
 
 msgctxt "@item:inlistbox"
 msgid "Brim"
+msgstr "Siperlik"
+
+msgctxt "@item:inlistbox"
+msgid "Skirt"
 msgstr "Etek"
 
 msgctxt "@item:inlistbox"

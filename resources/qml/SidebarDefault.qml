@@ -1104,6 +1104,7 @@ Item
                                         { text: catalog.i18nc("@item:inlistbox", "Off"),         value: "none"   },
                                         { text: catalog.i18nc("@item:inlistbox", "Raft"),        value: "raft"   },
                                         { text: catalog.i18nc("@item:inlistbox", "Brim"),        value: "brim"   },
+                                        { text: catalog.i18nc("@item:inlistbox", "Skirt"),       value: "skirt"   },
                                     ]
 
                                     currentIndex:

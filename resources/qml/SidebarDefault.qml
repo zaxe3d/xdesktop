@@ -1103,7 +1103,7 @@ Item
                                     model: [
                                         { text: catalog.i18nc("@item:inlistbox", "Off"),         value: "none"   },
                                         { text: catalog.i18nc("@item:inlistbox", "Raft"),        value: "raft"   },
-                                        { text: catalog.i18nc("@item:inlistbox", "Brim"),        value: "random" },
+                                        { text: catalog.i18nc("@item:inlistbox", "Brim"),        value: "brim"   },
                                     ]
 
                                     currentIndex:

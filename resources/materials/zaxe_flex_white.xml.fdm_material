@@ -94,6 +94,11 @@
                 <setting key="print temperature">240</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>
+            <hotend id="E3D Brass 0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">215</setting>
+                <setting key="linear advance gcode">M572 D0 S0</setting>
+            </hotend>
         </machine>
 
         <machine>
@@ -117,6 +122,11 @@
             <hotend id="0.8">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="print temperature">240</setting>
+                <setting key="linear advance gcode">M572 D0 S0</setting>
+            </hotend>
+            <hotend id="E3D Brass 0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">215</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>
         </machine>

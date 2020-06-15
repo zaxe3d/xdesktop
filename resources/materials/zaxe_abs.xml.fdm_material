@@ -112,6 +112,16 @@
                 <setting key="fan speed max">0</setting>
                 <setting key="linear advance gcode">M572 D0 S0.06</setting>
             </hotend>
+
+            <hotend id="E3D Brass 0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="retraction amount">0.6</setting>
+                <setting key="print temperature">233</setting>
+                <setting key="print temperature layer 0">245</setting>
+                <setting key="fan speed min">0</setting>
+                <setting key="fan speed max">0</setting>
+                <setting key="linear advance gcode">M572 D0 S0.04</setting>
+            </hotend>
         </machine>
 
         <machine>
@@ -133,6 +143,16 @@
                 <setting key="fan speed min">0</setting>
                 <setting key="fan speed max">0</setting>
                 <setting key="linear advance gcode">M572 D0 S0.06</setting>
+            </hotend>
+
+            <hotend id="E3D Brass 0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="retraction amount">0.6</setting>
+                <setting key="print temperature">233</setting>
+                <setting key="print temperature layer 0">245</setting>
+                <setting key="fan speed min">0</setting>
+                <setting key="fan speed max">0</setting>
+                <setting key="linear advance gcode">M572 D0 S0.04</setting>
             </hotend>
         </machine>
 

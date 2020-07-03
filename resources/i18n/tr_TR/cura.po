@@ -210,15 +210,15 @@ msgstr "Destekleyici taban tipi"
 
 msgctxt "@item:inlistbox"
 msgid "Brim"
-msgstr "Siperlik"
+msgstr "Kenar"
 
 msgctxt "@item:inlistbox"
 msgid "Skirt"
-msgstr "Etek"
+msgstr "Çizgi Tipi"
 
 msgctxt "@item:inlistbox"
 msgid "Raft"
-msgstr "Ayak"
+msgstr "Zemin"
 
 msgctxt "@item:inlistbox"
 msgid "Off"

@@ -2,7 +2,7 @@
     "id": "zaxe_xlite",
     "name": "XLite",
     "version": 2,
-    "inherits": "zaxe_z",
+    "inherits": "zaxe",
     "metadata": {
         "visible": true,
         "preferred_material": "zaxe_pla",

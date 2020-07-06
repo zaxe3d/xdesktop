@@ -214,7 +214,7 @@ msgstr "Kenar"
 
 msgctxt "@item:inlistbox"
 msgid "Skirt"
-msgstr "Çizgi Tipi"
+msgstr "Çizgi"
 
 msgctxt "@item:inlistbox"
 msgid "Raft"

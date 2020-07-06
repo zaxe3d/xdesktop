@@ -42,7 +42,7 @@ class MeshTools(Extension, QObject, Job):
 
         self._application.fileLoaded.connect(self._onFileLoaded)
         self._application.fileCompleted.connect(self._onFileCompleted)
-        self._controller.getScene().sceneChanged.connect(self._onSceneChanged)
+        #self._controller.getScene().sceneChanged.connect(self._onSceneChanged)
 
         self._currently_loading_files = [] #type: List[str]
         self._check_node_queue = [] #type: List[SceneNode]

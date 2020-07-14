@@ -1305,8 +1305,9 @@ class CuraApplication(QtApplication):
         scene = self.getController().getScene()
         gcode_dict = getattr(scene, "gcode_dict")
         gcode_list = gcode_dict.get(self.getMultiBuildPlateModel().activeBuildPlate, None)
+        model = self.getMachineManager().activeMachineName.replace("+", "PLUS")
         layerCounter = 0
-        pauseKeyword = "pause\n"
+        pauseKeyword = "M25\n" if "XLite" in model else "pause\n"
         for index, line in enumerate(gcode_list):
             for i in range(0, 2): # FIXME gcode_list some times has more than one layer in layer
                 idxOfLayerKeyword = line.find(";LAYER:", i)

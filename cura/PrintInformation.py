@@ -341,6 +341,10 @@ class PrintInformation(QObject):
 
     baseNameChanged = pyqtSignal()
 
+    @pyqtSlot(str)
+    def setBaseNameDirect(self, base_name: str):
+        self._base_name = base_name
+
     def setBaseName(self, base_name: str, is_project_file: bool = False) -> None:
         self._is_user_specified_job_name = False
 

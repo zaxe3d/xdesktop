@@ -1,10 +1,12 @@
 [2.1.3]
-* Model yüzüne göre düz şekilde yerleştirme eklendi.
-* Model tamir et eklentisi eklendi.
 * X-Lite serisi eklendi.
 gcode uzantılı dosyaları deskteklenmeye başlandı.
-* Yeni dilimleme motoru parametreleri eklendi.
+* Dosya ismi düzenlenebilir hale geldi. (Kaydetmeden önce dosya ismine
+tıklamanız yeterli)
+* Model yüzüne göre düz şekilde yerleştirme eklendi.
+* Model tamir et eklentisi eklendi.
 * Dilimleme motoru güncellendi.
+* Yeni dilimleme motoru parametreleri eklendi.
 
 [2.1.1]
 * Yeni nozül konfigurasyonları eklendi.

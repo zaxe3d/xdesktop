@@ -420,13 +420,57 @@ Item {
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.topMargin: -5
                     }
-                    Text {
-                        id: lblFileName
+                    TextField {
+                        id: inputFilename
+                        visible: false
+                        selectByMouse: true
+                        color: UM.Theme.getColor("text_sidebar_dark")
+                        font: UM.Theme.getFont("large")
+                        text: lblFilename.text
+                        padding: 0
+                        Layout.preferredHeight: 32
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.topMargin: 0
+                        Layout.leftMargin: -5
+
+                        background: Rectangle {
+                            color: UM.Theme.getColor("sidebar_item_medium_dark")
+                            border.width: 0
+                            radius: 2
+                        }
+
+                        Keys.onPressed: {
+                            if (event.key == Qt.Key_Escape) {
+                                inputFilename.text = "";
+                                event.accepted = true;
+                            } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {
+                                PrintInformation.setBaseNameDirect(inputFilename.text)
+                                lblFilename.text = PrintInformation.baseName + (isGCode ? ".gcode" : ".zaxe");
+                                inputFilename.visible = false;
+                                lblFilename.visible = true;
+                                event.accepted = true;
+                            }
+                        }
+                    }
+                    // device name label
+                    Label {
+                        id: lblFilename
                         Layout.preferredHeight: 32
                         text: PrintInformation.baseName + (isGCode ? ".gcode" : ".zaxe")
                         color: UM.Theme.getColor("text_sidebar_dark")
                         font: UM.Theme.getFont("large_nonbold")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                        clip: true
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                inputFilename.text = lblFilename.text.replace(".zaxe", "").replace(".gcode", "")
+                                lblFilename.visible = false
+                                inputFilename.visible = true
+                                inputFilename.focus = true
+                            }
+                        }
                     }
                 }
             }

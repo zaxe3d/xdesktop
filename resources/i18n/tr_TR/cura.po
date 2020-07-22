@@ -912,3 +912,34 @@ msgctxt "@color"
 msgid "Glow Blue"
 msgstr "Gece Parlayan"
 
+msgctxt "@option:check"
+msgid "Drop to Build Plate"
+msgstr "Tablaya Uzat"
+
+msgctxt "@option:check"
+msgid "Wider Base"
+msgstr "Geniş Taban"
+
+msgctxt "@label"
+msgid "Use Cube"
+msgstr "Küp Kullan"
+
+msgctxt "@label"
+msgid "Use Cylinder"
+msgstr "Silindir Kullan"
+
+msgctxt "@label"
+msgid "Size"
+msgstr "Boyut"
+
+msgctxt "@label"
+msgid "Base"
+msgstr "Taban"
+
+msgctxt "@label"
+msgid "Custom Supports"
+msgstr "Özel destek"
+
+msgctxt "@info:tooltip"
+msgid "Add Custom Supports"
+msgstr "Özel Elle Destek Atın"

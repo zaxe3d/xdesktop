@@ -1,6 +1,7 @@
 [2.1.3]
 * X-Lite serisi eklendi.
 gcode uzantılı dosyaları deskteklenmeye başlandı.
+* Özel destek ekleme özelliği eklendi.
 * Dosya ismi düzenlenebilir hale geldi. (Kaydetmeden önce dosya ismine
 tıklamanız yeterli)
 * Model yüzüne göre düz şekilde yerleştirme eklendi.

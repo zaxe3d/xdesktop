@@ -135,6 +135,8 @@ UM.Dialog
                 projectsModel.append({ name:"Requests", description: catalog.i18nc("@Label", "Python HTTP library"), license: "GPL", url: "http://docs.python-requests.org" });
 
                 projectsModel.append({ name:"AppImageKit", description: catalog.i18nc("@label", "Linux cross-distribution application deployment"), license: "MIT", url: "https://github.com/AppImage/AppImageKit" });
+
+                projectsModel.append({ name:"Custom Supports", description: catalog.i18nc("@label", "Tool for adding custom supports"), license: "LGLv3", url: "https://github.com/lokster/cura-custom-supports" });
             }
         }
     }

@@ -31,7 +31,11 @@ Item {
             onClicked: {
                 switch (mouse.button) {
                     case Qt.LeftButton:
-                        Cura.MachineManager.setActiveMachine(base.modelName)
+                        if (!Cura.MachineManager.machineExists(base.modelName)) {
+                            Cura.MachineManager.addMachine(base.modelName, base.modelId)
+                        } else {
+                            Cura.MachineManager.setActiveMachine(base.modelName)
+                        }
 
                         if (UM.Preferences.getValue("general/firstrun"))
                             UM.Preferences.setValue("general/firstrun_step", 4)

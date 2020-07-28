@@ -356,6 +356,10 @@ class MachineManager(QObject):
                     quality_group = list(quality_groups.values())[0]
             self._setQualityGroup(quality_group, empty_quality_changes = True)
 
+    @pyqtSlot(str, result = bool)
+    def machineExists(self, stack_id: str = None) -> bool:
+        return bool(CuraContainerRegistry.getInstance().findContainerStacks(id = stack_id))
+
     @pyqtSlot(str)
     def setActiveMachine(self, stack_id: str) -> None:
         self.blurSettings.emit()  # Ensure no-one has focus.

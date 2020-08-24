@@ -166,8 +166,8 @@
                 <setting key="print temperature layer 0">245</setting>
                 <setting key="heated bed temperature">75</setting>
                 <setting key="heated bed temperature layer 0">75</setting>
-                <setting key="fan speed min">60</setting>
-                <setting key="fan speed max">60</setting>
+                <setting key="fan speed min">100</setting>
+                <setting key="fan speed max">100</setting>
                 <setting key="linear advance gcode">M900 K0.5 T0</setting>
             </hotend>
         </machine>

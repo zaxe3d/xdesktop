@@ -1048,6 +1048,102 @@ Item
 
                     Item
                     {
+                        id: zSeamCornerRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: zSeamCornerCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: zSeamCornerLabel
+                                    text: catalog.i18nc("@label", "Seam Corner")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors.top: parent.top
+                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    anchors.left: parent.left
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                            }
+
+                            Item
+                            {
+                                id: zSeamCornerCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: zSeamCornerCellLeft.height
+
+                                anchors.left: zSeamCornerCellLeft.right
+                                anchors.bottom: zSeamCornerCellLeft.bottom
+
+                                ComboBox
+                                {
+                                    id: zSeamCornerCB
+                                    anchors.right: parent.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    width: 100
+
+                                    model: [
+                                        { text: catalog.i18nc("@item:inlistbox", "None"),                value: "z_seam_corner_none" },
+                                        { text: catalog.i18nc("@item:inlistbox", "Hide Seam"),           value: "z_seam_corner_inner" },
+                                        { text: catalog.i18nc("@item:inlistbox", "Expose Seam"),         value: "z_seam_corner_outer" },
+                                        { text: catalog.i18nc("@item:inlistbox", "Hide or Expose Seam"), value: "z_seam_corner_any" },
+                                        { text: catalog.i18nc("@item:inlistbox", "Smart Hiding"),        value: "z_seam_corner_weighted" }
+                                    ]
+
+                                    currentIndex:
+                                    {
+                                        var iP = zSeamCorner.properties.value
+                                        for(var i = 0; i < model.length; i++)
+                                        {
+                                            if(model[i].value == iP)
+                                            {
+                                                return i
+                                            }
+                                        }
+                                    }
+
+                                    onActivated: zSeamCorner.setPropertyValue("value", model[index].value)
+
+                                    // Disable mouse wheel for combobox
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onWheel: {
+                                            // do nothing
+                                        }
+                                        onPressed: {
+                                            // propogate to ComboBox
+                                            mouse.accepted = false;
+                                        }
+                                        onReleased: {
+                                            // propogate to ComboBox
+                                            mouse.accepted = false;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
                         id: adhesionTypeRow
 
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
@@ -2073,7 +2169,7 @@ Item
                         }
                     }
 
-                    Item
+                    /*Item
                     {
                         id: seamToBackRow
 
@@ -2125,7 +2221,7 @@ Item
                                 }
                             }
                         }
-                    }
+                    }*/
 
                     Item
                     {
@@ -2649,6 +2745,14 @@ Item
                 storeIndex: 0
             }
 
+            UM.SettingPropertyProvider
+            {
+                id: zSeamCorner
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "z_seam_corner"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
             UM.SettingPropertyProvider
             {
                 id: platformAdhesionType

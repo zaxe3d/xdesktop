@@ -249,6 +249,30 @@ msgid "Fan off"
 msgstr "Fan kapalı"
 
 msgctxt "@label"
+msgid "Seam Corner"
+msgstr "Dikiş Yeri"
+
+msgctxt "@item:inlistbox"
+msgid "None"
+msgstr "Hiçbiri"
+
+msgctxt "@item:inlistbox"
+msgid "Hide Seam"
+msgstr "Gizli"
+
+msgctxt "@item:inlistbox"
+msgid "Expose Seam"
+msgstr "Belirgin"
+
+msgctxt "@item:inlistbox"
+msgid "Hide or Expose Seam"
+msgstr "Gizli veya Belirgin"
+
+msgctxt "@item:inlistbox"
+msgid "Smart Hiding"
+msgstr "Akıllı Gizleme"
+
+msgctxt "@label"
 msgid "Seam type"
 msgstr "Dikiş tipi"
 

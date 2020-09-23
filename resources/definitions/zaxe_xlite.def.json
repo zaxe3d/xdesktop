@@ -72,7 +72,7 @@
         "jerk_travel_layer_0": { "value": 10 },
         "jerk_skirt_brim": { "value": 8 },
         "jerk_ironing": { "value": 8 },
-        "retraction_retract_speed": { "value": 50 },
+        "retraction_retract_speed": { "value": 30 },
         "retraction_prime_speed": { "value": 35 },
         "speed_topbottom": { "value": 45},
         "speed_support_infill": { "value": 60 },

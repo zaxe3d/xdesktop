@@ -22,7 +22,7 @@
         "machine_name": { "default_value": "XLite" },
         "machine_width": { "default_value": 222 },
         "machine_depth": { "default_value": 232 },
-        "machine_height": { "default_value": 200 },
+        "machine_height": { "default_value": 205 },
         "machine_extruder_count": { "default_value": 1 },
         "adhesion_type": { "default_value": "skirt" },
         "retraction_hop_enabled": { "default_value": true },

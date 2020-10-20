@@ -571,6 +571,7 @@ Item
                                         ListElement { text: "25 mm/s"; value: 25  }
                                         ListElement { text: "30 mm/s"; value: 30  }
                                         ListElement { text: "35 mm/s"; value: 35  }
+                                        ListElement { text: "40 mm/s"; value: 40  }
                                     }
 
                                     currentIndex:
@@ -673,6 +674,9 @@ Item
                                         ListElement { text: "1 mm";   value: 1   }
                                         ListElement { text: "2 mm";   value: 2   }
                                         ListElement { text: "3 mm";   value: 3   }
+                                        ListElement { text: "4 mm";   value: 4   }
+                                        ListElement { text: "5 mm";   value: 5   }
+                                        ListElement { text: "6 mm";   value: 6   }
                                     }
 
                                     currentIndex:

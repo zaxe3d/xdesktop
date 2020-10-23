@@ -564,6 +564,10 @@ Item
 
                                     model: ListModel {
                                         id: cbRSItems
+                                        ListElement { text: "1 mm/s" ; value: 1   }
+                                        ListElement { text: "2 mm/s" ; value: 2   }
+                                        ListElement { text: "3 mm/s" ; value: 3   }
+                                        ListElement { text: "4 mm/s" ; value: 4   }
                                         ListElement { text: "5 mm/s" ; value: 5   }
                                         ListElement { text: "10 mm/s"; value: 10  }
                                         ListElement { text: "15 mm/s"; value: 15  }

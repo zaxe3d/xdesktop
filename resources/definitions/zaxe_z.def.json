@@ -62,7 +62,5 @@
         "raft_interface_speed": { "value": 40 },
         "raft_surface_speed": { "value": 40 },
         "raft_base_speed": { "value": 15 }
-		
-
     }
 }

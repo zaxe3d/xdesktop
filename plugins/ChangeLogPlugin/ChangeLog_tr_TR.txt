@@ -1,3 +1,6 @@
+[2.1.5]
+* OSX Big Sur ile uyumlu hale getirildi.
+
 [2.1.4]
 * xlite konfigurasyonları iyileştirildi.
 * Dikiş yeri seçeneği eklendi.

@@ -1265,7 +1265,7 @@ QtObject {
 
     property Component text_field: Component {
         TextFieldStyle {
-            textColor: Theme.getColor("setting_control_text");
+            textColor: Theme.getColor(control.acceptableInput ? "setting_control_text" : "text_white")
             placeholderTextColor: Theme.getColor("setting_control_text")
             font: Theme.getFont("default");
 
@@ -1277,7 +1277,7 @@ QtObject {
                 border.width: Theme.getSize("default_lining").width;
                 border.color: control.hovered ? Theme.getColor("setting_control_border_highlight") : Theme.getColor("setting_control_border");
 
-                color: Theme.getColor("setting_validation_ok");
+                color: Theme.getColor(control.acceptableInput ? "setting_validation_ok" : "setting_validation_error_background")
 
                 Label {
                     anchors.right: parent.right;
@@ -1285,7 +1285,7 @@ QtObject {
                     anchors.verticalCenter: parent.verticalCenter;
 
                     text: control.unit ? control.unit : ""
-                    color: Theme.getColor("setting_unit");
+                    color: Theme.getColor(control.acceptableInput ? "setting_unit" : "text_white")
                     font: Theme.getFont("default");
                 }
             }

@@ -14,32 +14,40 @@ Item
 {
     id: base
 
-    property var lastSelectedMaterial: ""
-    property var customMaterialSelected: Cura.MachineManager.activeStack.material.name == "custom"
-    property var flexMaterialSelected: Cura.MachineManager.activeStack.material.name.indexOf("zaxe_flex") > -1
-    property var petGMaterialSelected: Cura.MachineManager.activeStack.material.name == "zaxe_petg"
+    property string lastSelectedMaterial: ""
+    property bool customMaterialSelected: Cura.MachineManager.activeStack.material.name == "custom"
+    property bool flexMaterialSelected: Cura.MachineManager.activeStack.material.name.indexOf("zaxe_flex") > -1
+    property bool petGMaterialSelected: Cura.MachineManager.activeStack.material.name == "zaxe_petg"
+    property int cmpidx: parseInt(UM.Preferences.getValue("custom_material_profile/selected_index")) // custom material profile index
 
-    onCustomMaterialSelectedChanged:  {
+    function applyCustomMaterialSettings() {
         // apply custom settings here
+
         if (customMaterialSelected) {
-            Cura.MachineManager.setSettingForAllExtruders("material_print_temperature", "value", UM.Preferences.getValue("custom_material/material_print_temperature"))
-            Cura.MachineManager.setSettingForAllExtruders("material_print_temperature_layer_0", "value", UM.Preferences.getValue("custom_material/material_print_temperature"))
-            Cura.MachineManager.setSettingForAllExtruders("material_bed_temperature", "value", UM.Preferences.getValue("custom_material/material_bed_temperature"))
-            Cura.MachineManager.setSettingForAllExtruders("material_bed_temperature_layer_0", "value", UM.Preferences.getValue("custom_material/material_bed_temperature"))
+
+            var valStr = "custom_material_profile/" + cmpidx + "_"
+            Cura.MachineManager.setSettingForAllExtruders("material_print_temperature", "value", UM.Preferences.getValue(valStr + "material_print_temperature"))
+        Cura.MachineManager.setSettingForAllExtruders("material_print_temperature_layer_0", "value", UM.Preferences.getValue(valStr + "material_print_temperature"))
+            Cura.MachineManager.setSettingForAllExtruders("material_bed_temperature", "value", UM.Preferences.getValue(valStr + "material_bed_temperature"))
+            Cura.MachineManager.setSettingForAllExtruders("material_bed_temperature_layer_0", "value", UM.Preferences.getValue(valStr + "material_bed_temperature"))
 
             // speed
-            var printSpeedMultiplier = UM.Preferences.getValue("custom_material/print_speed_multiplier")
-            speedInfill.setPropertyValue("value", (speedInfill.properties.value / printSpeedMultiplier) * printSpeedMultiplier)
-            speedTopbottom.setPropertyValue("value", (speedTopbottom.properties.value / printSpeedMultiplier) * printSpeedMultiplier)
-            speedRoofing.setPropertyValue("value", (speedRoofing.properties.value / printSpeedMultiplier) * printSpeedMultiplier)
-            speedWall0.setPropertyValue("value", (speedWall0.properties.value / printSpeedMultiplier) * printSpeedMultiplier)
-            speedWallX.setPropertyValue("value", (speedWallX.properties.value / printSpeedMultiplier) * printSpeedMultiplier)
-            speedSupportRoof.setPropertyValue("value", (speedSupportRoof.properties.value / printSpeedMultiplier) * printSpeedMultiplier)
-            speedSupportInfill.setPropertyValue("value", (speedSupportInfill.properties.value / printSpeedMultiplier) * printSpeedMultiplier)
+            speedInfill.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_infill"))
+            speedTopbottom.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_topbottom"))
+            speedRoofing.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_roofing"))
+            speedWall0.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_wall_0"))
+            speedWallX.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_wall_x"))
+            speedSupportRoof.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_support_roof"))
+            speedSupportInfill.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_support_infill"))
             // end of speed
-            Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", UM.Preferences.getValue("custom_material/material_flow"))
-            Cura.MachineManager.setSettingForAllExtruders("retraction_speed", "value", UM.Preferences.getValue("custom_material/retraction_speed"))
-            var retractionAmount = parseFloat(UM.Preferences.getValue("custom_material/retraction_amount"))
+            Cura.MachineManager.setSettingForAllExtruders("wall_line_width_0", "value", UM.Preferences.getValue(valStr + "wall_line_width_0"))
+            Cura.MachineManager.setSettingForAllExtruders("wall_line_width_x", "value", UM.Preferences.getValue(valStr + "wall_line_width_x"))
+            Cura.MachineManager.setSettingForAllExtruders("support_line_width", "value", UM.Preferences.getValue(valStr + "support_line_width"))
+            Cura.MachineManager.setSettingForAllExtruders("support_line_distance", "value", UM.Preferences.getValue(valStr + "support_line_distance"))
+            Cura.MachineManager.setSettingForAllExtruders("support_interface_density", "value", UM.Preferences.getValue(valStr + "support_interface_density"))
+            Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", UM.Preferences.getValue(valStr + "material_flow"))
+            Cura.MachineManager.setSettingForAllExtruders("retraction_speed", "value", UM.Preferences.getValue(valStr + "retraction_speed"))
+            var retractionAmount = parseFloat(UM.Preferences.getValue(valStr + "retraction_amount"))
             Cura.MachineManager.setSettingForAllExtruders("retraction_enable", "value", retractionAmount == 0 ? "False" : "True")
             Cura.MachineManager.setSettingForAllExtruders("retraction_amount", "value", retractionAmount)
         } else if (["custom", "zaxe_flex_white", "zaxe_flex_black", "zaxe_flex", "zaxe_petg"].indexOf(lastSelectedMaterial) > -1) {
@@ -53,6 +61,8 @@ Item
 
         lastSelectedMaterial = Cura.MachineManager.activeStack.material.name
     }
+
+    onCustomMaterialSelectedChanged: applyCustomMaterialSettings()
 
     onFlexMaterialSelectedChanged:  {
         if (flexMaterialSelected) {
@@ -109,618 +119,432 @@ Item
                 Layout.preferredHeight: childrenRect.height
                 Layout.alignment: Qt.AlignLeft
                 Layout.topMargin: UM.Theme.getSize("sidebar_margin").height
+                Layout.bottomMargin: 50
 
                 ColumnLayout
                 {
                     width: parent.parent.width
+
                     spacing: UM.Theme.getSize("sidebar_spacing").height
 
-                    Label
+                    // Custom material profile selection
+                    Item
                     {
+                        id: customMaterialTitleRow
+
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                        Layout.preferredHeight: 20
-                        Layout.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
-                        Layout.topMargin: UM.Theme.getSize("sidebar_item_margin").height
-                        font: UM.Theme.getFont("large");
-                        text: catalog.i18nc("@label", "Custom material settings")
+                        Layout.preferredHeight: 32
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors {
+                                fill: parent
+                                leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            }
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: customMaterialTitleCellLeft
+
+                                width: Math.round(base.width * .69)
+
+                                anchors {
+                                    top: parent.top
+                                    left: parent.left
+                                    bottom: parent.bottom
+                                }
+
+                                Label
+                                {
+                                    id: customMaterialTitleLabel
+                                    font: UM.Theme.getFont("large");
+                                    text: catalog.i18nc("@label", "Custom material settings")
+
+                                    anchors {
+                                        top: parent.top
+                                        topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                        left: parent.left
+                                        verticalCenter: parent.verticalCenter
+                                    }
+                                }
+                            }
+
+                            Item
+                            {
+                                id: customMaterialTitleCellRight
+
+                                width: Math.round(base.width * .22)
+                                height: customMaterialTitleCellLeft.height
+
+                                anchors {
+                                    left: customMaterialTitleCellLeft.right
+                                    bottom: customMaterialTitleCellLeft.bottom
+                                }
+
+                                ComboBox
+                                {
+                                    id: customMaterialProfilesCB
+                                    width: parent.width
+                                    height: UM.Theme.getSize("setting_control").height;
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    editable: true
+                                    focus: false
+
+                                    Component.onCompleted: generateData()
+
+                                    function generateData() {
+                                        cMProfileModel.clear()
+                                        for(var i = 0; i < 5; i++)
+                                            cMProfileModel.append({ "description": UM.Preferences.getValue("custom_material_profile/" + i + "_name") })
+                                        if (currentIndex != cmpidx)
+                                            currentIndex = cmpidx // set the current index to previously selected one
+                                    }
+
+                                    model: ListModel { id: cMProfileModel }
+
+                                    onAccepted: {
+                                        if (find(editText) != -1) return// searching within existing items
+                                        UM.Preferences.setValue("custom_material_profile/" + cmpidx + "_name", editText)
+                                        focus = false
+                                        generateData()
+                                    }
+
+                                    onCurrentIndexChanged: {
+                                        if (currentIndex == -1 || !visible) return // editing the current one or with 0 when initializing.
+                                        cmpidx = currentIndex
+                                        UM.Preferences.setValue("custom_material_profile/selected_index", cmpidx)
+                                        applyCustomMaterialSettings()
+                                    }
+                                }
+                            }
+                        }
                     }
                     Rectangle { Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_item_margin").width * 2)
 ; Layout.preferredHeight: UM.Theme.getSize("default_lining").height; color: UM.Theme.getColor("sidebar_item_dark"); Layout.alignment: Qt.AlignHCenter; Layout.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height }
+
                     Item
                     {
-                        id: extruderTempRow
-
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                        Layout.preferredHeight: 40
+                        Layout.preferredHeight: 32
                         Layout.alignment: Qt.AlignLeft
 
                         Rectangle {
-                            anchors.fill: parent
-                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            anchors {
+                                fill: parent
+                                leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            }
                             color: UM.Theme.getColor("sidebar_item_light")
                             width: parent.width
-                            Item
+                            Label
                             {
-                                id: extruderTempCellLeft
+                                font: UM.Theme.getFont("medium_bold");
+                                text: catalog.i18nc("@label", "Temperature settings")
 
-                                anchors.top: parent.top
-                                anchors.left: parent.left
-                                anchors.bottom: parent.bottom
-
-                                width: Math.round(base.width * .69)
-
-                                Label
-                                {
-                                    id: extruderTempLabel
-                                    text: catalog.i18nc("@label", "Extruder temperature")
-                                    font: UM.Theme.getFont("medium");
-                                    color: UM.Theme.getColor("text_sidebar")
-
-                                    anchors.top: parent.top
-                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
-                                    anchors.left: parent.left
-                                    anchors.verticalCenter: parent.verticalCenter
-                                }
-                            }
-
-                            Item
-                            {
-                                id: extruderTempCellRight
-
-                                width: Math.round(base.width * .22)
-                                height: extruderTempCellLeft.height
-
-                                anchors.left: extruderTempCellLeft.right
-                                anchors.bottom: extruderTempCellLeft.bottom
-
-                                TextField {
-                                    width: parent.width
-                                    height: UM.Theme.getSize("setting_control").height;
-                                    property string unit: "°C";
-                                    style: UM.Theme.styles.text_field;
-                                    text: parseInt(UM.Preferences.getValue("custom_material/material_print_temperature"))
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    validator: IntValidator { }
-
-                                    onEditingFinished:
-                                    {
-                                        UM.Preferences.setValue("custom_material/material_print_temperature", parseInt(text))
-                                        Cura.MachineManager.setSettingForAllExtruders("material_print_temperature", "value", parseInt(text))
-                                        Cura.MachineManager.setSettingForAllExtruders("material_print_temperature_layer_0", "value", parseInt(text))
-                                    }
+                                anchors {
+                                    top: parent.top
+                                    topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    left: parent.left
+                                    verticalCenter: parent.verticalCenter
                                 }
                             }
                         }
                     }
 
+                    Rectangle { Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_item_margin").width * 2)
+; Layout.preferredHeight: UM.Theme.getSize("default_lining").height; color: UM.Theme.getColor("sidebar_item_dark"); Layout.alignment: Qt.AlignHCenter; Layout.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Extruder temperature")
+                        type: "int"
+                        unit: "°C";
+                        profileIdx: cmpidx
+                        preferenceId: "material_print_temperature"
+                        extraPreferenceId: "material_print_temperature_layer_0"
+                        validator: IntValidator { bottom: 180; top: 300 }
+                    }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Bed temperature")
+                        type: "int"
+                        unit: "°C";
+                        profileIdx: cmpidx
+                        preferenceId: "material_bed_temperature"
+                        validator: IntValidator { bottom: 50; top: 110 }
+                    }
+
+                    CustomMaterialSettingItem {
+                        visible: Cura.MachineManager.activeMachineId != "X1" // X1 doesn't have chamber temp setting
+                        label: catalog.i18nc("@label", "Chamber temperature") + " (10-60°C)"
+                        type: "int"
+                        unit: "°C";
+                        profileIdx: cmpidx
+                        preferenceId: "material_chamber_temperature"
+                        validator: IntValidator { bottom: 10; top: 60 }
+                    }
+
                     Item
                     {
-                        id: bedTemperatureRow
-
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                        Layout.preferredHeight: 40
+                        Layout.preferredHeight: 32
                         Layout.alignment: Qt.AlignLeft
 
                         Rectangle {
-                            anchors.fill: parent
-                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            anchors {
+                                fill: parent
+                                leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            }
                             color: UM.Theme.getColor("sidebar_item_light")
                             width: parent.width
-                            Item
+                            Label
                             {
-                                id: bedTemperatureCellLeft
+                                font: UM.Theme.getFont("medium_bold");
+                                text: catalog.i18nc("@label", "Extrusion width settings")
 
-                                anchors.top: parent.top
-                                anchors.left: parent.left
-                                anchors.bottom: parent.bottom
-
-                                width: Math.round(base.width * .69)
-
-                                Label
-                                {
-                                    id: bedTemperatureLabel
-                                    text: catalog.i18nc("@label", "Bed temperature")
-                                    font: UM.Theme.getFont("medium");
-                                    color: UM.Theme.getColor("text_sidebar")
-
-                                    anchors.top: parent.top
-                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
-                                    anchors.left: parent.left
-                                    anchors.verticalCenter: parent.verticalCenter
-                                }
-                            }
-
-                            Item
-                            {
-                                id: bedTemperatureCellRight
-
-                                width: Math.round(base.width * .22)
-                                height: bedTemperatureCellLeft.height
-
-                                anchors.left: bedTemperatureCellLeft.right
-                                anchors.bottom: bedTemperatureCellLeft.bottom
-
-                                TextField {
-                                    width: parent.width
-                                    height: UM.Theme.getSize("setting_control").height;
-                                    property string unit: "°C";
-                                    style: UM.Theme.styles.text_field;
-                                    text: parseInt(UM.Preferences.getValue("custom_material/material_bed_temperature"))
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    validator: IntValidator { }
-
-                                    onEditingFinished:
-                                    {
-                                        UM.Preferences.setValue("custom_material/material_bed_temperature", parseInt(text))
-                                        Cura.MachineManager.setSettingForAllExtruders("material_bed_temperature", "value", parseInt(text))
-                                        Cura.MachineManager.setSettingForAllExtruders("material_bed_temperature_layer_0", "value", parseInt(text))
-                                    }
+                                anchors {
+                                    top: parent.top
+                                    topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    left: parent.left
+                                    verticalCenter: parent.verticalCenter
                                 }
                             }
                         }
                     }
 
+                    Rectangle { Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_item_margin").width * 2)
+; Layout.preferredHeight: UM.Theme.getSize("default_lining").height; color: UM.Theme.getColor("sidebar_item_dark"); Layout.alignment: Qt.AlignHCenter; Layout.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "First wall (0) line width")
+                        type: "float"
+                        unit: "mm";
+                        profileIdx: cmpidx
+                        preferenceId: "wall_line_width_0"
+                        validator: DoubleValidator { bottom: 0.2; top: 1; decimals: 2 }
+                    }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Other wall(s) (X) line width")
+                        type: "float"
+                        unit: "mm";
+                        profileIdx: cmpidx
+                        preferenceId: "wall_line_width_x"
+                        validator: DoubleValidator { bottom: 0.2; top: 1; decimals: 2}
+                    }
+
                     Item
                     {
-                        id: chamberTemperatureRow
-
-                        // X1 doesn't have chamber temp setting
-                        visible: Cura.MachineManager.activeMachineId != "X1"
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                        Layout.preferredHeight: 40
+                        Layout.preferredHeight: 32
                         Layout.alignment: Qt.AlignLeft
 
                         Rectangle {
-                            anchors.fill: parent
-                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            anchors {
+                                fill: parent
+                                leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            }
                             color: UM.Theme.getColor("sidebar_item_light")
                             width: parent.width
-                            Item
+                            Label
                             {
-                                id: chamberTemperatureCellLeft
+                                font: UM.Theme.getFont("medium_bold");
+                                text: catalog.i18nc("@label", "Support settings")
 
-                                anchors.top: parent.top
-                                anchors.left: parent.left
-                                anchors.bottom: parent.bottom
-
-                                width: Math.round(base.width * .69)
-
-                                Label
-                                {
-                                    id: chamberTemperatureLabel
-                                    text: catalog.i18nc("@label", "Chamber temperature") + " (10-60°C)"
-                                    font: UM.Theme.getFont("medium");
-                                    color: UM.Theme.getColor("text_sidebar")
-
-                                    anchors.top: parent.top
-                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
-                                    anchors.left: parent.left
-                                    anchors.verticalCenter: parent.verticalCenter
-                                }
-                            }
-
-                            Item
-                            {
-                                id: chamberTemperatureCellRight
-
-                                width: Math.round(base.width * .22)
-                                height: chamberTemperatureCellLeft.height
-
-                                anchors.left: chamberTemperatureCellLeft.right
-                                anchors.bottom: chamberTemperatureCellLeft.bottom
-
-                                TextField {
-                                    width: parent.width
-                                    height: UM.Theme.getSize("setting_control").height;
-                                    property string unit: "°C";
-                                    style: UM.Theme.styles.text_field;
-                                    text: parseInt(UM.Preferences.getValue("custom_material/material_chamber_temperature"))
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    validator: RegExpValidator { regExp: /^(?:[1-5][0-9]|60)$/ }
-                                    maximumLength: 2
-                                    onEditingFinished:
-                                    {
-                                        UM.Preferences.setValue("custom_material/material_chamber_temperature", parseInt(text))
-                                    }
+                                anchors {
+                                    top: parent.top
+                                    topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    left: parent.left
+                                    verticalCenter: parent.verticalCenter
                                 }
                             }
                         }
                     }
 
+                    Rectangle { Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_item_margin").width * 2)
+; Layout.preferredHeight: UM.Theme.getSize("default_lining").height; color: UM.Theme.getColor("sidebar_item_dark"); Layout.alignment: Qt.AlignHCenter; Layout.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Support line width")
+                        type: "float"
+                        unit: "mm";
+                        profileIdx: cmpidx
+                        preferenceId: "support_line_width"
+                        validator: DoubleValidator { bottom: 0.2; top: 1; decimals: 2}
+                    }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Support line distance")
+                        type: "float"
+                        unit: "mm";
+                        profileIdx: cmpidx
+                        preferenceId: "support_line_distance"
+                        validator: DoubleValidator { bottom: 0; top: 5; decimals: 2}
+                    }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Support interface density")
+                        type: "int"
+                        unit: "%";
+                        profileIdx: cmpidx
+                        preferenceId: "support_interface_density"
+                        validator: IntValidator { bottom: 0; top: 100 }
+                    }
+
                     Item
                     {
-                        id: materialFlowRow
-
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                        Layout.preferredHeight: 40
+                        Layout.preferredHeight: 32
                         Layout.alignment: Qt.AlignLeft
 
                         Rectangle {
-                            anchors.fill: parent
-                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            anchors {
+                                fill: parent
+                                leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            }
                             color: UM.Theme.getColor("sidebar_item_light")
                             width: parent.width
-                            Item
+                            Label
                             {
-                                id: materialFlowCellLeft
+                                font: UM.Theme.getFont("medium_bold");
+                                text: catalog.i18nc("@label", "Speed settings")
 
-                                anchors.top: parent.top
-                                anchors.left: parent.left
-                                anchors.bottom: parent.bottom
-
-                                width: Math.round(base.width * .69)
-
-                                Label
-                                {
-                                    id: materialFlowLabel
-                                    text: catalog.i18nc("@label", "Material flow") + " (40-120%)"
-                                    font: UM.Theme.getFont("medium");
-                                    color: UM.Theme.getColor("text_sidebar")
-
-                                    anchors.top: parent.top
-                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
-                                    anchors.left: parent.left
-                                    anchors.verticalCenter: parent.verticalCenter
-                                }
-                            }
-
-                            Item
-                            {
-                                id: materialFlowCellRight
-
-                                width: Math.round(base.width * .22)
-                                height: materialFlowCellLeft.height
-
-                                anchors.left: materialFlowCellLeft.right
-                                anchors.bottom: materialFlowCellLeft.bottom
-
-                                TextField {
-                                    width: parent.width
-                                    height: UM.Theme.getSize("setting_control").height;
-                                    property string unit: "%";
-                                    style: UM.Theme.styles.text_field;
-                                    text: parseInt(UM.Preferences.getValue("custom_material/material_flow"))
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    validator: RegExpValidator { regExp: /^([4-8][0-9]|9[0-9]|1[01][0-9]|120)$/ }
-
-                                    onEditingFinished:
-                                    {
-                                        UM.Preferences.setValue("custom_material/material_flow", parseInt(text))
-                                        Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", parseInt(text))
-                                    }
+                                anchors {
+                                    top: parent.top
+                                    topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    left: parent.left
+                                    verticalCenter: parent.verticalCenter
                                 }
                             }
                         }
                     }
 
+                    Rectangle { Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_item_margin").width * 2)
+; Layout.preferredHeight: UM.Theme.getSize("default_lining").height; color: UM.Theme.getColor("sidebar_item_dark"); Layout.alignment: Qt.AlignHCenter; Layout.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Speed top/bottom")
+                        type: "int"
+                        unit: "mm/s";
+                        profileIdx: cmpidx
+                        preferenceId: "speed_topbottom"
+                        validator: IntValidator { bottom: 1; top: 150 }
+                    }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Speed infill")
+                        type: "int"
+                        unit: "mm/s";
+                        profileIdx: cmpidx
+                        preferenceId: "speed_infill"
+                        validator: IntValidator { bottom: 1; top: 150 }
+                    }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "First wall (0) speed")
+                        type: "int"
+                        unit: "mm/s";
+                        profileIdx: cmpidx
+                        preferenceId: "speed_wall_0"
+                        validator: IntValidator { bottom: 1; top: 150 }
+                    }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Other wall(s) (X) speed(s)")
+                        type: "int"
+                        unit: "mm/s";
+                        profileIdx: cmpidx
+                        preferenceId: "speed_wall_x"
+                        validator: IntValidator { bottom: 1; top: 150 }
+                    }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Roofing speed")
+                        type: "int"
+                        unit: "mm/s";
+                        profileIdx: cmpidx
+                        preferenceId: "speed_roofing"
+                        validator: IntValidator { bottom: 1; top: 150 }
+                    }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Support roofing speed")
+                        type: "int"
+                        unit: "mm/s";
+                        profileIdx: cmpidx
+                        preferenceId: "speed_support_roof"
+                        validator: IntValidator { bottom: 1; top: 150 }
+                    }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Support infill speed")
+                        type: "int"
+                        unit: "mm/s";
+                        profileIdx: cmpidx
+                        preferenceId: "speed_support_infill"
+                        validator: IntValidator { bottom: 1; top: 150 }
+                    }
+
                     Item
                     {
-                        id: printSpeedRow
-
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                        Layout.preferredHeight: 40
+                        Layout.preferredHeight: 32
                         Layout.alignment: Qt.AlignLeft
 
                         Rectangle {
-                            anchors.fill: parent
-                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            anchors {
+                                fill: parent
+                                leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            }
                             color: UM.Theme.getColor("sidebar_item_light")
                             width: parent.width
-                            Item
+                            Label
                             {
-                                id: printSpeedCellLeft
+                                font: UM.Theme.getFont("medium_bold");
+                                text: catalog.i18nc("@label", "Other settings")
 
-                                anchors.top: parent.top
-                                anchors.left: parent.left
-                                anchors.bottom: parent.bottom
-
-                                width: Math.round(base.width * .66)
-
-                                Label
-                                {
-                                    id: printSpeedLabel
-                                    text: catalog.i18nc("@label", "Speed")
-                                    font: UM.Theme.getFont("medium");
-                                    color: UM.Theme.getColor("text_sidebar")
-
-                                    anchors.top: parent.top
-                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
-                                    anchors.left: parent.left
-                                    anchors.verticalCenter: parent.verticalCenter
-                                }
-                            }
-
-                            Item
-                            {
-                                id: printSpeedCellRight
-
-                                width: Math.round(base.width * .25)
-                                height: printSpeedCellLeft.height
-
-                                anchors.left: printSpeedCellLeft.right
-                                anchors.bottom: printSpeedCellLeft.bottom
-
-                                ComboBox
-                                {
-                                    id: printSpeedCB
-                                    anchors.right: parent.right
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    width: 100
-
-                                    model: ListModel {
-                                        id: cbPSItems
-                                        ListElement { text: "170%"; value: 1.7  }
-                                        ListElement { text: "150%"; value: 1.5  }
-                                        ListElement { text: "130%"; value: 1.3  }
-                                        ListElement { text: "110%"; value: 1.1  }
-                                        ListElement { text: "100%"; value: 1.0    }
-                                        ListElement { text: "90%";  value: 0.9  }
-                                        ListElement { text: "70%";  value: 0.7  }
-                                        ListElement { text: "60%";  value: 0.6  }
-                                        ListElement { text: "50%";  value: 0.5  }
-                                        ListElement { text: "30%";  value: 0.3  }
-                                    }
-
-                                    currentIndex:
-                                    {
-                                        var val = UM.Preferences.getValue("custom_material/print_speed_multiplier")
-                                        for(var i = 0; i < cbPSItems.count; ++i)
-                                        {
-                                            if(model.get(i).value == val)
-                                            {
-                                                return i
-                                            }
-                                        }
-                                    }
-
-                                    onActivated: {
-                                        var lastValue = UM.Preferences.getValue("custom_material/print_speed_multiplier")
-                                        var value = model.get(index).value
-
-                                        speedInfill.setPropertyValue("value", (speedInfill.properties.value / lastValue) * value)
-                                        speedTopbottom.setPropertyValue("value", (speedTopbottom.properties.value / lastValue) * value)
-                                        speedRoofing.setPropertyValue("value", (speedRoofing.properties.value / lastValue) * value)
-                                        speedWall0.setPropertyValue("value", (speedWall0.properties.value / lastValue) * value)
-                                        speedWallX.setPropertyValue("value", (speedWallX.properties.value / lastValue) * value)
-                                        speedSupportRoof.setPropertyValue("value", (speedSupportRoof.properties.value / lastValue) * value)
-                                        speedSupportInfill.setPropertyValue("value", (speedSupportInfill.properties.value / lastValue) * value)
-
-                                        UM.Preferences.setValue("custom_material/print_speed_multiplier", model.get(index).value)
-                                    }
-
-                                    // Disable mouse wheel for combobox
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onWheel: {
-                                            // do nothing
-                                        }
-                                        onPressed: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                        onReleased: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                    }
+                                anchors {
+                                    top: parent.top
+                                    topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                    left: parent.left
+                                    verticalCenter: parent.verticalCenter
                                 }
                             }
                         }
                     }
 
-                    Item
-                    {
-                        id: retractionSpeedRow
+                    Rectangle { Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_item_margin").width * 2)
+; Layout.preferredHeight: UM.Theme.getSize("default_lining").height; color: UM.Theme.getColor("sidebar_item_dark"); Layout.alignment: Qt.AlignHCenter; Layout.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height }
 
-                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                        Layout.preferredHeight: 40
-                        Layout.alignment: Qt.AlignLeft
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Material flow")
+                        type: "int"
+                        unit: "%";
+                        profileIdx: cmpidx
+                        preferenceId: "material_flow"
+                        validator: IntValidator { bottom: 40; top: 120 }
+                    }
 
-                        Rectangle {
-                            anchors.fill: parent
-                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
-                            color: UM.Theme.getColor("sidebar_item_light")
-                            width: parent.width
-                            Item
-                            {
-                                id: retractionSpeedCellLeft
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Retraction speed")
+                        type: "int"
+                        unit: "mm/s";
+                        profileIdx: cmpidx
+                        preferenceId: "retraction_speed"
+                        validator: IntValidator { bottom: 1; top: 40}
+                    }
 
-                                anchors.top: parent.top
-                                anchors.left: parent.left
-                                anchors.bottom: parent.bottom
-
-                                width: Math.round(base.width * .66)
-
-                                Label
-                                {
-                                    id: retractionSpeedLabel
-                                    text: catalog.i18nc("@label", "Retraction speed")
-                                    font: UM.Theme.getFont("medium");
-                                    color: UM.Theme.getColor("text_sidebar")
-
-                                    anchors.top: parent.top
-                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
-                                    anchors.left: parent.left
-                                    anchors.verticalCenter: parent.verticalCenter
-                                }
-                            }
-
-                            Item
-                            {
-                                id: retractionSpeedCellRight
-
-                                width: Math.round(base.width * .25)
-                                height: retractionSpeedCellLeft.height
-
-                                anchors.left: retractionSpeedCellLeft.right
-                                anchors.bottom: retractionSpeedCellLeft.bottom
-
-                                ComboBox
-                                {
-                                    id: retractionSpeedCB
-                                    anchors.right: parent.right
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    width: 100
-
-                                    model: ListModel {
-                                        id: cbRSItems
-                                        ListElement { text: "1 mm/s" ; value: 1   }
-                                        ListElement { text: "2 mm/s" ; value: 2   }
-                                        ListElement { text: "3 mm/s" ; value: 3   }
-                                        ListElement { text: "4 mm/s" ; value: 4   }
-                                        ListElement { text: "5 mm/s" ; value: 5   }
-                                        ListElement { text: "10 mm/s"; value: 10  }
-                                        ListElement { text: "15 mm/s"; value: 15  }
-                                        ListElement { text: "20 mm/s"; value: 20  }
-                                        ListElement { text: "25 mm/s"; value: 25  }
-                                        ListElement { text: "30 mm/s"; value: 30  }
-                                        ListElement { text: "35 mm/s"; value: 35  }
-                                        ListElement { text: "40 mm/s"; value: 40  }
-                                    }
-
-                                    currentIndex:
-                                    {
-                                        var val = parseInt(UM.Preferences.getValue("custom_material/retraction_speed"))
-                                        for(var i = 0; i < cbRSItems.count; ++i)
-                                        {
-                                            if(model.get(i).value == val)
-                                            {
-                                                return i
-                                            }
-                                        }
-                                    }
-
-                                    onActivated: {
-                                        var value = model.get(index).value
-                                        Cura.MachineManager.setSettingForAllExtruders("retraction_speed", "value", value)
-                                        UM.Preferences.setValue("custom_material/retraction_speed", value)
-                                    }
-
-                                    // Disable mouse wheel for combobox
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onWheel: {
-                                            // do nothing
-                                        }
-                                        onPressed: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                        onReleased: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                    }
-                                }
-                            }
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Retraction amount")
+                        type: "float"
+                        unit: "mm";
+                        profileIdx: cmpidx
+                        preferenceId: "retraction_amount"
+                        validator: DoubleValidator { bottom: 0; top: 6 }
+                        extraFunc: function() {
+                            Cura.MachineManager.setSettingForAllExtruders("retraction_enable", "value", parseFloat(UM.Preferences.getValue(valStr)) == 0 ? "False" : "True")
                         }
                     }
-                    Item
-                    {
-                        id: retractionLengthRow
 
-                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                        Layout.preferredHeight: 40
-                        Layout.alignment: Qt.AlignLeft
-
-                        Rectangle {
-                            anchors.fill: parent
-                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
-                            color: UM.Theme.getColor("sidebar_item_light")
-                            width: parent.width
-                            Item
-                            {
-                                id: retractionLengthCellLeft
-
-                                anchors.top: parent.top
-                                anchors.left: parent.left
-                                anchors.bottom: parent.bottom
-
-                                width: Math.round(base.width * .66)
-
-                                Label
-                                {
-                                    id: retractionLengthLabel
-                                    text: catalog.i18nc("@label", "Retraction amount")
-                                    font: UM.Theme.getFont("medium");
-                                    color: UM.Theme.getColor("text_sidebar")
-
-                                    anchors.top: parent.top
-                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
-                                    anchors.left: parent.left
-                                    anchors.verticalCenter: parent.verticalCenter
-                                }
-                            }
-
-                            Item
-                            {
-                                id: retractionLengthCellRight
-
-                                width: Math.round(base.width * .25)
-                                height: retractionLengthCellLeft.height
-
-                                anchors.left: retractionLengthCellLeft.right
-                                anchors.bottom: retractionLengthCellLeft.bottom
-
-                                ComboBox
-                                {
-                                    id: retractionLengthCB
-                                    anchors.right: parent.right
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    width: 100
-
-                                    model: ListModel {
-                                        id: cbRLItems
-                                        ListElement { text: "0 mm";   value: 0   }
-                                        ListElement { text: "0.4 mm"; value: 0.4 }
-                                        ListElement { text: "0.6 mm"; value: 0.6 }
-                                        ListElement { text: "0.8 mm"; value: 0.8 }
-                                        ListElement { text: "1 mm";   value: 1   }
-                                        ListElement { text: "2 mm";   value: 2   }
-                                        ListElement { text: "3 mm";   value: 3   }
-                                        ListElement { text: "4 mm";   value: 4   }
-                                        ListElement { text: "5 mm";   value: 5   }
-                                        ListElement { text: "6 mm";   value: 6   }
-                                    }
-
-                                    currentIndex:
-                                    {
-                                        var val = parseFloat(UM.Preferences.getValue("custom_material/retraction_amount"))
-                                        for(var i = 0; i < cbRLItems.count; ++i)
-                                        {
-                                            if(model.get(i).value == val)
-                                            {
-                                                return i
-                                            }
-                                        }
-                                    }
-
-                                    onActivated: {
-                                        var value = model.get(index).value
-                                        Cura.MachineManager.setSettingForAllExtruders("retraction_enable", "value", value == 0 ? "False" : "True")
-                                        Cura.MachineManager.setSettingForAllExtruders("retraction_amount", "value", value)
-                                        UM.Preferences.setValue("custom_material/retraction_amount", value)
-                                    }
-
-                                    // Disable mouse wheel for combobox
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onWheel: {
-                                            // do nothing
-                                        }
-                                        onPressed: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                        onReleased: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
                     Button {
                         id: applyButton
                         style: UM.Theme.styles.sidebar_button
@@ -728,69 +552,15 @@ Item
                         Layout.rightMargin: UM.Theme.getSize("sidebar_margin").width * 2
                         Layout.topMargin: UM.Theme.getSize("sidebar_item_margin").height * 2
                         Layout.preferredWidth: 100
+                        Layout.preferredHeight: 30
                         Layout.alignment: Qt.AlignRight
                         onClicked: {
                             prepareSidebar.switchView(0) // Default view
+                            CuraApplication.saveSettings()
                         }
                     }
                 }
 
-                UM.SettingPropertyProvider
-                {
-                    id: speedInfill
-                    containerStackId: Cura.MachineManager.activeMachineId
-                    key: "speed_infill"
-                    watchedProperties: [ "value" ]
-                    storeIndex: 0
-                }
-                UM.SettingPropertyProvider
-                {
-                    id: speedWall0
-                    containerStackId: Cura.MachineManager.activeMachineId
-                    key: "speed_wall_0"
-                    watchedProperties: [ "value" ]
-                    storeIndex: 0
-                }
-                UM.SettingPropertyProvider
-                {
-                    id: speedWallX
-                    containerStackId: Cura.MachineManager.activeMachineId
-                    key: "speed_wall_x"
-                    watchedProperties: [ "value" ]
-                    storeIndex: 0
-                }
-                UM.SettingPropertyProvider
-                {
-                    id: speedRoofing
-                    containerStackId: Cura.MachineManager.activeMachineId
-                    key: "speed_roofing"
-                    watchedProperties: [ "value" ]
-                    storeIndex: 0
-                }
-                UM.SettingPropertyProvider
-                {
-                    id: speedTopbottom
-                    containerStackId: Cura.MachineManager.activeMachineId
-                    key: "speed_topbottom"
-                    watchedProperties: [ "value" ]
-                    storeIndex: 0
-                }
-                UM.SettingPropertyProvider
-                {
-                    id: speedSupportRoof
-                    containerStackId: Cura.MachineManager.activeMachineId
-                    key: "speed_support_roof"
-                    watchedProperties: [ "value" ]
-                    storeIndex: 0
-                }
-                UM.SettingPropertyProvider
-                {
-                    id: speedSupportInfill
-                    containerStackId: Cura.MachineManager.activeMachineId
-                    key: "speed_support_infill"
-                    watchedProperties: [ "value" ]
-                    storeIndex: 0
-                }
                 UM.SettingPropertyProvider
                 {
                     id: supportEnabled
@@ -806,6 +576,67 @@ Item
                     key: "support_angle"
                     watchedProperties: [ "value", "enabled" ]
                     storeIndex: 0
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedInfill
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_infill"
+                    watchedProperties: [ "value"  ]
+                    storeIndex: 0
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedWall0
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_wall_0"
+                    watchedProperties: [ "value"  ]
+                    storeIndex: 0
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedWallX
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_wall_x"
+                    watchedProperties: [ "value"  ]
+                    storeIndex: 0
+
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedRoofing
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_roofing"
+                    watchedProperties: [ "value"  ]
+                    storeIndex: 0
+
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedTopbottom
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_topbottom"
+                    watchedProperties: [ "value"  ]
+                    storeIndex: 0
+
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedSupportRoof
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_support_roof"
+                    watchedProperties: [ "value"  ]
+                    storeIndex: 0
+
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedSupportInfill
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_support_infill"
+                    watchedProperties: [ "value"  ]
+                    storeIndex: 0
+
                 }
             }
         }

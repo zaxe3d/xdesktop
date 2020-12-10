@@ -9,7 +9,7 @@ from typing import cast, TYPE_CHECKING
 
 import numpy
 
-from PyQt5.QtCore import QObject, QTimer, QUrl, pyqtSignal, pyqtProperty, QEvent, Q_ENUMS
+from PyQt5.QtCore import QObject, QTimer, QUrl, pyqtSignal, pyqtProperty, QEvent, Q_ENUMS, QLocale
 from PyQt5.QtGui import QColor, QIcon
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtQml import qmlRegisterUncreatableType, qmlRegisterSingletonType, qmlRegisterType
@@ -243,6 +243,9 @@ class CuraApplication(QtApplication):
         self._container_registry_class = CuraContainerRegistry
         from cura.CuraPackageManager import CuraPackageManager
         self._package_manager_class = CuraPackageManager
+
+        QLocale.setDefault(QLocale(QLocale.C)) # set locale so that floating numbers seperated by dots
+
 
     # Adds command line options to the command line parser. This should be called after the application is created and
     # before the pre-start.
@@ -486,15 +489,32 @@ class CuraApplication(QtApplication):
         preferences.addPreference("slicing/support_angle", 20)
 
         # material
-        preferences.addPreference("material/settings_applied",                         False)
-        # custom material
-        preferences.addPreference("custom_material/material_print_temperature",         250)
-        preferences.addPreference("custom_material/material_bed_temperature",           80)
-        preferences.addPreference("custom_material/material_chamber_temperature",       10)
-        preferences.addPreference("custom_material/print_speed_multiplier",             1)
-        preferences.addPreference("custom_material/material_flow",                      100)
-        preferences.addPreference("custom_material/retraction_speed",                   20)
-        preferences.addPreference("custom_material/retraction_amount",                  0.6)
+        preferences.addPreference("material/settings_applied", False)
+
+        # 5 custom material profiles
+        customLbl = self._i18n_catalog.i18nc("@label", "Custom") + " "
+        preferences.addPreference("custom_material_profile/selected_index", 0)
+        for i in range(5):
+            configPrefix = "custom_material_profile/" + str(i) + "_"
+            preferences.addPreference(configPrefix + "name",                               customLbl + str(i + 1))
+            preferences.addPreference(configPrefix + "material_print_temperature",         250)
+            preferences.addPreference(configPrefix + "material_bed_temperature",           80)
+            preferences.addPreference(configPrefix + "material_chamber_temperature",       10)
+            preferences.addPreference(configPrefix + "material_flow",                      100)
+            preferences.addPreference(configPrefix + "retraction_speed",                   20)
+            preferences.addPreference(configPrefix + "retraction_amount",                  0.6)
+            preferences.addPreference(configPrefix + "wall_line_width_0",                  0.4)
+            preferences.addPreference(configPrefix + "wall_line_width_x",                  0.4)
+            preferences.addPreference(configPrefix + "support_line_width",                 0.4)
+            preferences.addPreference(configPrefix + "support_line_distance",              2.66)
+            preferences.addPreference(configPrefix + "support_interface_density",          100)
+            preferences.addPreference(configPrefix + "speed_topbottom",                    30)
+            preferences.addPreference(configPrefix + "speed_infill",                       60)
+            preferences.addPreference(configPrefix + "speed_wall_0",                       30)
+            preferences.addPreference(configPrefix + "speed_wall_x",                       60)
+            preferences.addPreference(configPrefix + "speed_roofing",                      25)
+            preferences.addPreference(configPrefix + "speed_support_roof",                 60)
+            preferences.addPreference(configPrefix + "speed_support_infill",               60)
 
         # Custom IPs
         preferences.addPreference("misc/custom_ips", "")
@@ -634,6 +654,7 @@ class CuraApplication(QtApplication):
         self._save_data_enabled = enabled
 
     # Cura has multiple locations where instance containers need to be saved, so we need to handle this differently.
+    @pyqtSlot()
     def saveSettings(self):
         if not self.started or not self._save_data_enabled:
             # Do not do saving during application start or when data should not be saved on quit.

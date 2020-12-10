@@ -1026,21 +1026,7 @@ Item
 
                                     onActivated: zSeamType.setPropertyValue("value", model[index].value)
 
-                                    // Disable mouse wheel for combobox
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onWheel: {
-                                            // do nothing
-                                        }
-                                        onPressed: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                        onReleased: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                    }
+                                    MouseWheelDisabled {}
                                 }
                             }
                         }
@@ -1122,21 +1108,7 @@ Item
 
                                     onActivated: zSeamCorner.setPropertyValue("value", model[index].value)
 
-                                    // Disable mouse wheel for combobox
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onWheel: {
-                                            // do nothing
-                                        }
-                                        onPressed: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                        onReleased: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                    }
+                                    MouseWheelDisabled {}
                                 }
                             }
                         }
@@ -1217,21 +1189,7 @@ Item
 
                                     onActivated: platformAdhesionType.setPropertyValue("value", model[index].value)
 
-                                    // Disable mouse wheel for combobox
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onWheel: {
-                                            // do nothing
-                                        }
-                                        onPressed: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                        onReleased: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                    }
+                                    MouseWheelDisabled {}
                                 }
                             }
                         }
@@ -1341,21 +1299,7 @@ Item
 
                                     onActivated: infillPattern.setPropertyValue("value", model.get(index).value)
 
-                                    // Disable mouse wheel for combobox
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onWheel: {
-                                            // do nothing
-                                        }
-                                        onPressed: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                        onReleased: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                    }
+                                    MouseWheelDisabled {}
                                 }
                             }
                         }
@@ -1460,21 +1404,7 @@ Item
 
                                     onActivated: perimeterCount.setPropertyValue("value", model.get(index).value)
 
-                                    // Disable mouse wheel for combobox
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onWheel: {
-                                            // do nothing
-                                        }
-                                        onPressed: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                        onReleased: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                    }
+                                    MouseWheelDisabled {}
                                 }
                             }
                         }
@@ -1582,21 +1512,7 @@ Item
 
                                     onActivated: topSolidLayerCount.setPropertyValue("value", model.get(index).value)
 
-                                    // Disable mouse wheel for combobox
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onWheel: {
-                                            // do nothing
-                                        }
-                                        onPressed: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                        onReleased: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                    }
+                                    MouseWheelDisabled {}
                                 }
                             }
                         }
@@ -1704,21 +1620,7 @@ Item
 
                                     onActivated: bottomSolidLayerCount.setPropertyValue("value", model.get(index).value)
 
-                                    // Disable mouse wheel for combobox
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onWheel: {
-                                            // do nothing
-                                        }
-                                        onPressed: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                        onReleased: {
-                                            // propogate to ComboBox
-                                            mouse.accepted = false;
-                                        }
-                                    }
+                                    MouseWheelDisabled {}
                                 }
                             }
                         }

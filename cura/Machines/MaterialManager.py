@@ -462,7 +462,7 @@ class MaterialManager(QObject):
     def getFallbackMaterialIdByMaterialType(self, material_type: str) -> Optional[str]:
         # For safety
         if material_type not in self._fallback_materials_map:
-            Logger.log("w", "The material type [%s] does not have a fallback material" % material_type)
+            #Logger.log("w", "The material type [%s] does not have a fallback material" % material_type)
             return None
         fallback_material = self._fallback_materials_map[material_type]
         if fallback_material:

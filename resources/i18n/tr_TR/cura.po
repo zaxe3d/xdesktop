@@ -141,6 +141,74 @@ msgid "Chamber temperature"
 msgstr "Hazne sıcaklığı"
 
 msgctxt "@label"
+msgid "Temperature settings"
+msgstr "Sıcaklık ayarları"
+
+msgctxt "@label"
+msgid "Extrusion width settings"
+msgstr "Ekstrüzyon kalınlığı ayarları"
+
+msgctxt "@label"
+msgid "First wall (0) line width"
+msgstr "İlk duvar (0) çizgi kalınlığı"
+
+msgctxt "@label"
+msgid "Other wall(s) (X) line width"
+msgstr "Sonraki duvar(lar) (X) çizgi kalınlığı"
+
+msgctxt "@label"
+msgid "Support settings"
+msgstr "Destek ayarları"
+
+msgctxt "@label"
+msgid "Support line width"
+msgstr "Desktek çizgi kalınlığı"
+
+msgctxt "@label"
+msgid "Support line distance"
+msgstr "Destek çizgi aralığı"
+
+msgctxt "@label"
+msgid "Support interface density"
+msgstr "Destek arabirim yoğunluğu"
+
+msgctxt "@label"
+msgid "Speed settings"
+msgstr "Hız ayarları"
+
+msgctxt "@label"
+msgid "Speed top/bottom"
+msgstr "Tavan/taban hızı"
+
+msgctxt "@label"
+msgid "Speed infill"
+msgstr "Doldurma hızı"
+
+msgctxt "@label"
+msgid "First wall (0) speed"
+msgstr "İlk duvar (0) hızı"
+
+msgctxt "@label"
+msgid "Other wall(s) (X) speed(s)"
+msgstr "Sonraki duvar(lar) (X) hız(ları)"
+
+msgctxt "@label"
+msgid "Roofing speed"
+msgstr "Çatı hızı"
+
+msgctxt "@label"
+msgid "Support roofing speed"
+msgstr "Desktek tavan hızı"
+
+msgctxt "@label"
+msgid "Support infill speed"
+msgstr "Desktek doldurma hızı"
+
+msgctxt "@label"
+msgid "Other settings"
+msgstr "Diğer ayarlar"
+
+msgctxt "@label"
 msgid "Speed"
 msgstr "Hız"
 

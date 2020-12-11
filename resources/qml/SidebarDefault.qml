@@ -26,6 +26,13 @@ Item
         return bool ? "True" : "False";
     }
 
+    onSupportEnabledChanged: {
+        if (!base.supportEnabled) {
+            advancedSupportSettingsPane.visible = false
+            advancedSupportSettingsButton.text = catalog.i18nc("@label", "Advanced support settings")
+        }
+    }
+
     Connections {
         target: UM.Preferences
         onPreferenceChanged:
@@ -620,6 +627,864 @@ Item
                     }
                 }
             }
+
+            //
+            // Advanced support settings
+            //
+            Item
+            {
+                id: advancedSupportSettingsPane
+                Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                Layout.preferredHeight: childrenRect.height
+                Layout.alignment: Qt.AlignLeft
+                Layout.topMargin: UM.Theme.getSize("sidebar_margin").height
+                visible: false
+
+                ColumnLayout
+                {
+                    width: parent.parent.width
+                    spacing: UM.Theme.getSize("sidebar_spacing").height
+
+                    Item
+                    {
+                        id: supportTypeRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: supportTypeCellLeft
+
+                                anchors {
+                                    top: parent.top
+                                    left: parent.left
+                                    bottom: parent.bottom
+                                }
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: supportTypeLabel
+                                    text: catalog.i18nc("@label", "Support placement")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors {
+                                        top: parent.top
+                                        topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                        left: parent.left
+                                        verticalCenter: parent.verticalCenter
+                                    }
+                                }
+                            }
+
+                            Item
+                            {
+                                id: supportTypeCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: supportTypeCellLeft.height
+
+                                anchors {
+                                    left: supportTypeCellLeft.right
+                                    bottom: supportTypeCellLeft.bottom
+                                }
+
+                                ComboBox
+                                {
+                                    id: supportTypeCB
+                                    anchors.right: parent.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    width: 100
+
+                                    model: [
+                                        { text: catalog.i18nc("@item:inlistbox", "Touching buildplate"),    value: "buildplate" },
+                                        { text: catalog.i18nc("@item:inlistbox", "Everywhere"),             value: "everywhere" }
+                                    ]
+
+                                    currentIndex:
+                                    {
+                                        var iP = supportType.properties.value
+                                        for(var i = 0; i < model.length; i++)
+                                            if(model[i].value == iP)
+                                                return i
+                                    }
+
+                                    onActivated: supportType.setPropertyValue("value", model[index].value)
+
+                                    MouseWheelDisabled {}
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: supportPatternRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: supportPatternCellLeft
+
+                                anchors {
+                                    top: parent.top
+                                    left: parent.left
+                                    bottom: parent.bottom
+                                }
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: supportPatternLabel
+                                    text: catalog.i18nc("@label", "Support pattern")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors {
+                                        top: parent.top
+                                        topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                        left: parent.left
+                                        verticalCenter: parent.verticalCenter
+                                    }
+                                }
+                            }
+
+                            Item
+                            {
+                                id: supportPatternCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: supportPatternCellLeft.height
+
+                                anchors {
+                                    left: supportPatternCellLeft.right
+                                    bottom: supportPatternCellLeft.bottom
+                                }
+
+                                ComboBox
+                                {
+                                    id: supportPatternCB
+                                    anchors {
+                                        right: parent.right
+                                        verticalCenter: parent.verticalCenter
+                                    }
+                                    width: 100
+
+                                    model: ListModel {
+                                        id: cbSPItems
+                                        ListElement { text: "Grid";           value: "grid"       }
+                                        ListElement { text: "Lines";          value: "lines"      }
+                                        ListElement { text: "Triangles";      value: "triangles"  }
+                                        ListElement { text: "Concentric";     value: "concentric" }
+                                        ListElement { text: "Zig Zag";        value: "zigzag"     }
+                                        ListElement { text: "Cross";          value: "cross"      }
+                                        ListElement { text: "Gyroid";         value: "gyroid"     }
+                                    }
+
+                                    currentIndex:
+                                    {
+                                        var iP = supportPattern.properties.value
+                                        for(var i = 0; i < cbSPItems.count; ++i)
+                                            if(model.get(i).value == iP)
+                                                return i
+                                    }
+
+                                    onActivated: supportPattern.setPropertyValue("value", model.get(index).value)
+
+                                    MouseWheelDisabled {}
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: supportWallCountRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: supportWallCountCellLeft
+
+                                anchors {
+                                    top: parent.top
+                                    left: parent.left
+                                    bottom: parent.bottom
+                                }
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: supportWallCountLabel
+                                    text: catalog.i18nc("@label", "Support wall count")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors {
+                                        top: parent.top
+                                        topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                        left: parent.left
+                                        verticalCenter: parent.verticalCenter
+                                    }
+                                }
+                            }
+
+                            Item
+                            {
+                                id: supportWallCountCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: supportWallCountCellLeft.height
+
+                                anchors {
+                                    left: supportWallCountCellLeft.right
+                                    bottom: supportWallCountCellLeft.bottom
+                                }
+
+                                ComboBox
+                                {
+                                    id: supportWallCountCB
+                                    anchors.right: parent.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    width: 100
+
+                                    model: [
+                                        { text: "0",    value: 0 },
+                                        { text: "1",    value: 1 },
+                                        { text: "2",    value: 2 },
+                                        { text: "3",    value: 3 }
+                                    ]
+
+                                    currentIndex:
+                                    {
+                                        var iP = supportWallCount.properties.value
+                                        for(var i = 0; i < model.length; i++)
+                                            if(model[i].value == iP)
+                                                return i
+                                    }
+
+                                    onActivated: supportWallCount.setPropertyValue("value", model[index].value)
+
+                                    MouseWheelDisabled {}
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: supportInfillRateRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: supportInfillRateCellLeft
+
+                                anchors {
+                                    top: parent.top
+                                    left: parent.left
+                                    bottom: parent.bottom
+                                }
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: supportInfillRateLabel
+                                    text: catalog.i18nc("@label", "Support density")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors {
+                                        top: parent.top
+                                        topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                        left: parent.left
+                                        verticalCenter: parent.verticalCenter
+                                    }
+                                }
+                            }
+
+                            Item
+                            {
+                                id: supportInfillRateCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: supportInfillRateCellLeft.height
+
+                                anchors {
+                                    left: supportInfillRateCellLeft.right
+                                    bottom: supportInfillRateCellLeft.bottom
+                                }
+
+                                TextField {
+                                    height: UM.Theme.getSize("setting_control").height
+                                    anchors {
+                                        verticalCenter: parent.verticalCenter
+                                        right: parent.right
+                                    }
+                                    style: UM.Theme.styles.text_field
+                                    width: 100
+
+                                    validator: IntValidator { bottom: 0; top: 100 }
+                                    property string unit: "%"
+
+                                    text: parseInt(supportInfillRate.properties.value)
+
+                                    onEditingFinished:
+                                    {
+                                        if (!acceptableInput) return
+                                        supportInfillRate.setPropertyValue("value", parseInt(text));
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: layer0SupportLineDistanceRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: layer0SupportLineDistanceCellLeft
+
+                                anchors {
+                                    top: parent.top
+                                    left: parent.left
+                                    bottom: parent.bottom
+                                }
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: layer0SupportLineDistanceLabel
+                                    text: catalog.i18nc("@label", "Initial layer support line distance")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors {
+                                        top: parent.top
+                                        topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                        left: parent.left
+                                        verticalCenter: parent.verticalCenter
+                                    }
+                                }
+                            }
+
+                            Item
+                            {
+                                id: layer0SupportLineDistanceCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: layer0SupportLineDistanceCellLeft.height
+
+                                anchors {
+                                    left: layer0SupportLineDistanceCellLeft.right
+                                    bottom: layer0SupportLineDistanceCellLeft.bottom
+                                }
+
+                                TextField {
+                                    height: UM.Theme.getSize("setting_control").height
+                                    anchors {
+                                        verticalCenter: parent.verticalCenter
+                                        right: parent.right
+                                    }
+                                    style: UM.Theme.styles.text_field
+                                    width: 100
+
+                                    validator: DoubleValidator { bottom: parseFloat(layer0SupportLineDistance.properties.minimum_value_warning); top: 5; decimals: 2 }
+                                    property string unit: "mm"
+
+                                    text: parseFloat(layer0SupportLineDistance.properties.value)
+
+                                    onEditingFinished:
+                                    {
+                                        if (!acceptableInput) return
+                                        layer0SupportLineDistance.setPropertyValue("value", parseFloat(text));
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: supportLineDistanceRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: supportLineDistanceCellLeft
+
+                                anchors {
+                                    top: parent.top
+                                    left: parent.left
+                                    bottom: parent.bottom
+                                }
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: supportLineDistanceLabel
+                                    text: catalog.i18nc("@label", "Support line distance")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors {
+                                        top: parent.top
+                                        topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                        left: parent.left
+                                        verticalCenter: parent.verticalCenter
+                                    }
+                                }
+                            }
+
+                            Item
+                            {
+                                id: supportLineDistanceCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: supportLineDistanceCellLeft.height
+
+                                anchors {
+                                    left: supportLineDistanceCellLeft.right
+                                    bottom: supportLineDistanceCellLeft.bottom
+                                }
+
+                                TextField {
+                                    height: UM.Theme.getSize("setting_control").height
+                                    anchors {
+                                        verticalCenter: parent.verticalCenter
+                                        right: parent.right
+                                    }
+                                    style: UM.Theme.styles.text_field
+                                    width: 100
+
+                                    validator: DoubleValidator { bottom: parseFloat(supportLineDistance.properties.minimum_value_warning); top: 5; decimals: 2 }
+                                    property string unit: "mm"
+
+                                    text: parseFloat(supportLineDistance.properties.value)
+
+                                    onEditingFinished:
+                                    {
+                                        if (!acceptableInput) return
+                                        supportLineDistance.setPropertyValue("value", parseFloat(text));
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: supportTopDistanceRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: supportTopDistanceCellLeft
+
+                                anchors {
+                                    top: parent.top
+                                    left: parent.left
+                                    bottom: parent.bottom
+                                }
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: supportTopDistanceLabel
+                                    text: catalog.i18nc("@label", "Support top distance")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors {
+                                        top: parent.top
+                                        topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                        left: parent.left
+                                        verticalCenter: parent.verticalCenter
+                                    }
+                                }
+                            }
+
+                            Item
+                            {
+                                id: supportTopDistanceCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: supportTopDistanceCellLeft.height
+
+                                anchors {
+                                    left: supportTopDistanceCellLeft.right
+                                    bottom: supportTopDistanceCellLeft.bottom
+                                }
+
+                                TextField {
+                                    height: UM.Theme.getSize("setting_control").height
+                                    anchors {
+                                        verticalCenter: parent.verticalCenter
+                                        right: parent.right
+                                    }
+                                    style: UM.Theme.styles.text_field
+                                    width: 100
+
+                                    validator: DoubleValidator { bottom: parseFloat(supportTopDistance.properties.minimum_value); top: parseFloat(supportZDistance.properties.maximum_value_warning); decimals: 2 }
+                                    property string unit: "mm"
+
+                                    text: parseFloat(Number.fromLocaleString(Qt.locale(), supportTopDistance.properties.value))
+
+                                    onEditingFinished:
+                                    {
+                                        if (!acceptableInput) return
+                                        supportTopDistance.setPropertyValue("value", parseFloat(text));
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: supportBottomDistanceRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: supportBottomDistanceCellLeft
+
+                                anchors {
+                                    top: parent.top
+                                    left: parent.left
+                                    bottom: parent.bottom
+                                }
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: supportBottomDistanceLabel
+                                    text: catalog.i18nc("@label", "Support bottom distance")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors {
+                                        top: parent.top
+                                        topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                        left: parent.left
+                                        verticalCenter: parent.verticalCenter
+                                    }
+                                }
+                            }
+
+                            Item
+                            {
+                                id: supportBottomDistanceCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: supportBottomDistanceCellLeft.height
+
+                                anchors {
+                                    left: supportBottomDistanceCellLeft.right
+                                    bottom: supportBottomDistanceCellLeft.bottom
+                                }
+
+                                TextField {
+                                    height: UM.Theme.getSize("setting_control").height
+                                    anchors {
+                                        verticalCenter: parent.verticalCenter
+                                        right: parent.right
+                                    }
+                                    style: UM.Theme.styles.text_field
+                                    width: 100
+
+                                    validator: DoubleValidator { bottom: parseFloat(supportBottomDistance.properties.minimum_value); top: parseFloat(supportZDistance.properties.maximum_value_warning); decimals: 2 }
+                                    property string unit: "mm"
+
+                                    text: parseFloat(Number.fromLocaleString(Qt.locale(), supportBottomDistance.properties.value))
+
+                                    onEditingFinished:
+                                    {
+                                        if (!acceptableInput) return
+                                        supportBottomDistance.setPropertyValue("value", parseFloat(text));
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: supportBrimEnableRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+                        Layout.topMargin: UM.Theme.getSize("sidebar_item_margin").height
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: supportBrimEnableCellLeft
+
+                                anchors {
+                                    top: parent.top
+                                    left: parent.left
+                                    bottom: parent.bottom
+                                }
+
+                                width: Math.round(base.width * .70)
+
+                                CheckBox
+                                {
+                                    id: supportBrimEnableCheckBox
+                                    property alias _hovered: supportBrimEnableMouseArea.containsMouse
+                                    property bool checkBoxSmall: true
+
+                                    anchors {
+                                        top: parent.top
+                                        left: parent.left
+                                    }
+
+                                    style: UM.Theme.styles.checkbox;
+
+                                    checked: supportBrimEnable.properties.value == "True"
+                                    text: catalog.i18nc("@label", "Support brim")
+
+                                    MouseArea
+                                    {
+                                        id: supportBrimEnableMouseArea
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onClicked:
+                                        {
+                                            parent.checked = !parent.checked;
+                                            supportBrimEnable.setPropertyValue("value", booleanToString(parent.checked));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: supportRoofEnableRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: supportRoofEnableCellLeft
+
+                                anchors {
+                                    top: parent.top
+                                    left: parent.left
+                                    bottom: parent.bottom
+                                }
+
+                                width: Math.round(base.width * .70)
+
+                                CheckBox
+                                {
+                                    id: supportRoofEnableCheckBox
+                                    property alias _hovered: supportRoofEnableMouseArea.containsMouse
+                                    property bool checkBoxSmall: true
+
+                                    anchors {
+                                        top: parent.top
+                                        left: parent.left
+                                    }
+
+                                    style: UM.Theme.styles.checkbox;
+
+                                    checked: supportRoofEnable.properties.value == "True"
+                                    text: catalog.i18nc("@label", "Support roof")
+
+                                    MouseArea
+                                    {
+                                        id: supportRoofEnableMouseArea
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onClicked:
+                                        {
+                                            parent.checked = !parent.checked;
+                                            supportRoofEnable.setPropertyValue("value", booleanToString(parent.checked));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
+                        id: supportBottomEnableRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: supportBottomEnableCellLeft
+
+                                anchors {
+                                    top: parent.top
+                                    left: parent.left
+                                    bottom: parent.bottom
+                                }
+
+                                width: Math.round(base.width * .70)
+
+                                CheckBox
+                                {
+                                    id: supportBottomEnableCheckBox
+                                    property alias _hovered: supportBottomEnableMouseArea.containsMouse
+                                    property bool checkBoxSmall: true
+
+                                    anchors {
+                                        top: parent.top
+                                        left: parent.left
+                                    }
+
+                                    style: UM.Theme.styles.checkbox;
+
+                                    checked: supportBottomEnable.properties.value == "True"
+                                    text: catalog.i18nc("@label", "Support floor")
+
+                                    MouseArea
+                                    {
+                                        id: supportBottomEnableMouseArea
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onClicked:
+                                        {
+                                            parent.checked = !parent.checked;
+                                            supportBottomEnable.setPropertyValue("value", booleanToString(parent.checked));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            //
+            // Advanced support settings button
+            //
+            Item
+            {
+                visible: supportEnabled.properties.value == "True"
+                Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                Layout.preferredHeight: childrenRect.height
+                Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                Button {
+                    id: advancedSupportSettingsButton
+                    style: UM.Theme.styles.sidebar_simple_button
+                    text: catalog.i18nc("@label", "Advanced support settings")
+                    onClicked: {
+                        if (advancedSupportSettingsPane.visible) {
+                            advancedSupportSettingsPane.visible = false
+                            advancedSupportSettingsButton.text = catalog.i18nc("@label", "Advanced support settings")
+                        } else {
+                            advancedSupportSettingsPane.visible = true
+                            advancedSupportSettingsButton.text = catalog.i18nc("@label", "Hide advanced support settings")
+                        }
+                    }
+                    anchors.right: parent.right
+                    anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width * 2
+                }
+            }
+            // Bottom Border
+            Rectangle { visible: supportEnabled.properties.value == "True"; Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_item_margin").width * 2); Layout.alignment: Qt.AlignHCenter; height: UM.Theme.getSize("default_lining").width; color: UM.Theme.getColor("sidebar_item_dark") }
 
             //
             // Raft
@@ -1926,151 +2791,6 @@ Item
                         }
                     }
 
-                    Item
-                    {
-                        id: supportContactDistanceRow
-                        visible: false // not visible until it gets figured out
-
-                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
-                        Layout.preferredHeight: 51
-                        Layout.alignment: Qt.AlignLeft
-
-                        Rectangle {
-                            anchors.fill: parent
-                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
-                            color: UM.Theme.getColor("sidebar_item_light")
-                            width: parent.width
-                            Item
-                            {
-                                id: supportContactDistanceCellLeft
-
-                                anchors.top: parent.top
-                                anchors.left: parent.left
-                                anchors.bottom: parent.bottom
-
-                                width: Math.round(base.width * .45)
-
-                                Label
-                                {
-                                    id: supportContactDistanceLabel
-                                    text: catalog.i18nc("@label", "Support contact distance")
-                                    font: UM.Theme.getFont("medium");
-                                    color: UM.Theme.getColor("text_sidebar")
-
-                                    anchors.top: parent.top
-                                    anchors.topMargin: UM.Theme.getSize("sidebar_item_margin").height
-                                    anchors.left: parent.left
-                                    anchors.verticalCenter: parent.verticalCenter
-                                }
-
-                                Image
-                                {
-                                    width: 11; height: 12
-
-                                    source: UM.Theme.getImage("info")
-
-                                    anchors { left: supportContactDistanceLabel.right; top: supportContactDistanceLabel.top; leftMargin: 5 }
-
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        cursorShape: Qt.PointingHandCursor
-
-                                        onClicked:
-                                        {
-                                            UM.Preferences.setValue("cura/help_page", 9)
-                                            UM.Controller.setActiveStage("Help")
-                                        }
-                                    }
-                                }
-                            }
-
-                            Item
-                            {
-                                id: supportContactDistanceCellRight
-
-                                width: Math.round(base.width * .38)
-                                height: supportContactDistanceCellLeft.height
-
-                                anchors.left: supportContactDistanceCellLeft.right
-                                anchors.bottom: supportContactDistanceCellLeft.bottom
-
-                                Label
-                                {
-                                    id: selectedsupportContactDistanceText
-
-                                    anchors.bottom: parent.bottom
-                                    anchors.left: supportContactDistanceSlider.left
-                                    anchors.right: parent.right
-
-                                    font: UM.Theme.getFont("medium")
-
-                                    text: parseFloat(supportContactDistance.properties.value) + " mm"
-
-                                    color: supportContactDistanceSlider.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
-                                }
-
-                                Slider
-                                {
-                                    id: supportContactDistanceSlider
-
-                                    anchors.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height / 2
-                                    anchors.bottom: selectedsupportContactDistanceText.top
-                                    anchors.left: parent.left
-                                    anchors.right: parent.right
-
-                                    height: UM.Theme.getSize("sidebar_margin").height
-
-                                    updateValueWhileDragging : true
-
-
-                                    width: parseInt(supportContactDistanceCellRight.width - UM.Theme.getSize("sidebar_margin").width - style.handleWidth)
-
-                                    minimumValue: 0
-                                    maximumValue: 0.4
-                                    stepSize: 0.1
-
-                                    value: parseFloat(supportContactDistance.properties.value)
-
-                                    onValueChanged: {
-                                        supportContactDistance.setPropertyValue("value", supportContactDistanceSlider.value);
-                                    }
-
-
-                                    style: SliderStyle
-                                    {
-                                        groove: Rectangle {
-                                            id: groove
-                                            implicitWidth: 100 * screenScaleFactor
-                                            implicitHeight: 10 * screenScaleFactor
-                                            color: control.enabled ? UM.Theme.getColor("slider_groove") : UM.Theme.getColor("quality_slider_unavailable")
-                                            radius: 5
-                                        }
-
-                                        handle: Item {
-                                            Rectangle {
-                                                id: handleButton
-                                                anchors.centerIn: parent
-                                                color: control.enabled ? UM.Theme.getColor("slider_handle") : UM.Theme.getColor("quality_slider_unavailable")
-                                                implicitWidth: 15 * screenScaleFactor
-                                                implicitHeight: 15 * screenScaleFactor
-                                                radius: 100
-                                            }
-                                        }
-                                    }
-
-                                    Component.onCompleted: {
-                                        // Disable mouse wheel on old sliders.
-                                        for (var i = 0; i < supportContactDistanceSlider.children.length; ++i) {
-                                            if (supportContactDistanceSlider.children[i].hasOwnProperty("onVerticalWheelMoved") && supportContactDistanceSlider.children[i].hasOwnProperty("onHorizontalWheelMoved")) {
-                                                supportContactDistanceSlider.children[i].destroy()
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
                     /*Item
                     {
                         id: seamToBackRow
@@ -2550,15 +3270,6 @@ Item
 
             UM.SettingPropertyProvider
             {
-                id: supportContactDistance
-                containerStackId: Cura.MachineManager.activeStackId
-                key: "support_z_distance"
-                watchedProperties: [ "value" ]
-                storeIndex: 0
-            }
-
-            UM.SettingPropertyProvider
-            {
                 id: xyToleranceLayer0
                 containerStackId: Cura.MachineManager.activeStackId
                 key: "xy_offset_layer_0"
@@ -2611,6 +3322,113 @@ Item
                 storeIndex: 0
             }
 
+            UM.SettingPropertyProvider
+            {
+                id: supportPattern
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "support_pattern"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: supportType
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "support_type"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: supportWallCount
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "support_wall_count"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: supportInfillRate
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "support_infill_rate"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: supportLineDistance
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "support_line_distance"
+                watchedProperties: [ "value", "minimum_value_warning", "default_value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: layer0SupportLineDistance
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "support_initial_layer_line_distance"
+                watchedProperties: [ "value", "minimum_value_warning", "default_value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: supportRoofEnable
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "support_roof_enable"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: supportBottomEnable
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "support_bottom_enable"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: supportBrimEnable
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "support_brim_enable"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: supportZDistance
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "support_z_distance"
+                watchedProperties: [ "value", "minimum_value", "maximum_value_warning" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: supportTopDistance
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "support_top_distance"
+                watchedProperties: [ "value", "minimum_value", "maximum_value_warning" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: supportBottomDistance
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "support_bottom_distance"
+                watchedProperties: [ "value", "minimum_value", "maximum_value_warning" ]
+                storeIndex: 0
+            }
             UM.SettingPropertyProvider
             {
                 id: infillPattern

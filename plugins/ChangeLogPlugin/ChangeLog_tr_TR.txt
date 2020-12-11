@@ -1,5 +1,6 @@
 [2.1.6]
-* Yeni gelişmiş özel materyal seçenekleri eklendi.
+* Gelişmiş destek ayarları eklendi.
+* Yeni detaylı özel materyal ayarları eklendi.
 
 [2.1.5]
 * OSX Big Sur ile uyumlu hale getirildi.

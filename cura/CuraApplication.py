@@ -508,6 +508,9 @@ class CuraApplication(QtApplication):
             preferences.addPreference(configPrefix + "support_line_width",                 0.4)
             preferences.addPreference(configPrefix + "support_line_distance",              2.66)
             preferences.addPreference(configPrefix + "support_interface_density",          100)
+            preferences.addPreference(configPrefix + "jerk_print",                         20)
+            preferences.addPreference(configPrefix + "acceleration_print",                 3000)
+            preferences.addPreference(configPrefix + "speed_travel",                       120)
             preferences.addPreference(configPrefix + "speed_topbottom",                    30)
             preferences.addPreference(configPrefix + "speed_infill",                       60)
             preferences.addPreference(configPrefix + "speed_wall_0",                       30)
@@ -515,6 +518,7 @@ class CuraApplication(QtApplication):
             preferences.addPreference(configPrefix + "speed_roofing",                      25)
             preferences.addPreference(configPrefix + "speed_support_roof",                 60)
             preferences.addPreference(configPrefix + "speed_support_infill",               60)
+            preferences.addPreference(configPrefix + "speed_z_hop",                        10)
 
         # Custom IPs
         preferences.addPreference("misc/custom_ips", "")
@@ -1561,8 +1565,9 @@ class CuraApplication(QtApplication):
         return CuraSplashScreen.CuraSplashScreen()
 
     def _onActiveMachineChanged(self):
-        preferences = self.getPreferences()
-        preferences.setValue("custom_material/print_speed_multiplier", 1) # Reset multiplier on machine change
+        pass
+        #preferences = self.getPreferences() # not using this setting anymore. completely manual custom material settings
+        #preferences.setValue("custom_material/print_speed_multiplier", 1) # Reset multiplier on machine change
 
     fileLoaded = pyqtSignal(str)
     fileCompleted = pyqtSignal(str)

@@ -32,13 +32,17 @@ Item
             Cura.MachineManager.setSettingForAllExtruders("material_bed_temperature_layer_0", "value", UM.Preferences.getValue(valStr + "material_bed_temperature"))
 
             // speed
-            speedInfill.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_infill"))
+            jerkPrint.setPropertyValue("value", UM.Preferences.getValue(valStr + "jerk_print"))
+            accelerationPrint.setPropertyValue("value", UM.Preferences.getValue(valStr + "acceleration_print"))
+            speedTravel.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_travel"))
             speedTopbottom.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_topbottom"))
-            speedRoofing.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_roofing"))
+            speedInfill.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_infill"))
             speedWall0.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_wall_0"))
             speedWallX.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_wall_x"))
+            speedRoofing.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_roofing"))
             speedSupportRoof.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_support_roof"))
             speedSupportInfill.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_support_infill"))
+            speedZHop.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_z_hop"))
             // end of speed
             Cura.MachineManager.setSettingForAllExtruders("wall_line_width_0", "value", UM.Preferences.getValue(valStr + "wall_line_width_0"))
             Cura.MachineManager.setSettingForAllExtruders("wall_line_width_x", "value", UM.Preferences.getValue(valStr + "wall_line_width_x"))
@@ -119,7 +123,7 @@ Item
                 Layout.preferredHeight: childrenRect.height
                 Layout.alignment: Qt.AlignLeft
                 Layout.topMargin: UM.Theme.getSize("sidebar_margin").height
-                Layout.bottomMargin: 50
+                Layout.bottomMargin: 30
 
                 ColumnLayout
                 {
@@ -422,6 +426,33 @@ Item
 ; Layout.preferredHeight: UM.Theme.getSize("default_lining").height; color: UM.Theme.getColor("sidebar_item_dark"); Layout.alignment: Qt.AlignHCenter; Layout.bottomMargin: UM.Theme.getSize("sidebar_item_margin").height }
 
                     CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Print acceleration")
+                        type: "int"
+                        unit: "mm/s";
+                        profileIdx: cmpidx
+                        preferenceId: "acceleration_print"
+                        validator: IntValidator { bottom: 100; top: 10000 }
+                    }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Print jerk")
+                        type: "int"
+                        unit: "mm/s";
+                        profileIdx: cmpidx
+                        preferenceId: "jerk_print"
+                        validator: IntValidator { bottom: 0; top: 50 }
+                    }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Travel speed")
+                        type: "int"
+                        unit: "mm/s";
+                        profileIdx: cmpidx
+                        preferenceId: "speed_travel"
+                        validator: IntValidator { bottom: 1; top: 300 }
+                    }
+
+                    CustomMaterialSettingItem {
                         label: catalog.i18nc("@label", "Speed top/bottom")
                         type: "int"
                         unit: "mm/s";
@@ -484,6 +515,24 @@ Item
                         validator: IntValidator { bottom: 1; top: 150 }
                     }
 
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Retraction speed")
+                        type: "int"
+                        unit: "mm/s";
+                        profileIdx: cmpidx
+                        preferenceId: "retraction_speed"
+                        validator: IntValidator { bottom: 1; top: 40}
+                    }
+
+                    CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "Z hop speed")
+                        type: "int"
+                        unit: "mm/s";
+                        profileIdx: cmpidx
+                        preferenceId: "speed_z_hop"
+                        validator: IntValidator { bottom: 0; top: 100 }
+                    }
+
                     Item
                     {
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
@@ -522,15 +571,6 @@ Item
                         profileIdx: cmpidx
                         preferenceId: "material_flow"
                         validator: IntValidator { bottom: 40; top: 120 }
-                    }
-
-                    CustomMaterialSettingItem {
-                        label: catalog.i18nc("@label", "Retraction speed")
-                        type: "int"
-                        unit: "mm/s";
-                        profileIdx: cmpidx
-                        preferenceId: "retraction_speed"
-                        validator: IntValidator { bottom: 1; top: 40}
                     }
 
                     CustomMaterialSettingItem {
@@ -616,6 +656,42 @@ Item
                     id: speedTopbottom
                     containerStackId: Cura.MachineManager.activeMachineId
                     key: "speed_topbottom"
+                    watchedProperties: [ "value"  ]
+                    storeIndex: 0
+
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: jerkPrint
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "jerk_print"
+                    watchedProperties: [ "value"  ]
+                    storeIndex: 0
+
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: accelerationPrint
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "acceleration_print"
+                    watchedProperties: [ "value"  ]
+                    storeIndex: 0
+
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedTravel
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_travel"
+                    watchedProperties: [ "value"  ]
+                    storeIndex: 0
+
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedZHop
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_z_hop"
                     watchedProperties: [ "value"  ]
                     storeIndex: 0
 

@@ -166,7 +166,7 @@ msgstr "Desktek çizgi kalınlığı"
 
 msgctxt "@label"
 msgid "Support line distance"
-msgstr "Destek çizgi aralığı"
+msgstr "Destek çizgi mesafesi"
 
 msgctxt "@label"
 msgid "Support interface density"
@@ -194,7 +194,7 @@ msgstr "Sonraki duvar(lar) (X) hız(ları)"
 
 msgctxt "@label"
 msgid "Roofing speed"
-msgstr "Çatı hızı"
+msgstr "Tavan hızı"
 
 msgctxt "@label"
 msgid "Support roofing speed"
@@ -203,6 +203,22 @@ msgstr "Desktek tavan hızı"
 msgctxt "@label"
 msgid "Support infill speed"
 msgstr "Desktek doldurma hızı"
+
+msgctxt "@label"
+msgid "Travel speed"
+msgstr "Dolaşma hızı"
+
+msgctxt "@label"
+msgid "Z hop speed"
+msgstr "Z sıçrama hızı"
+
+msgctxt "@label"
+msgid "Print acceleration"
+msgstr "Baskı ivmesi"
+
+msgctxt "@label"
+msgid "Print jerk"
+msgstr "Baskı jerk"
 
 msgctxt "@label"
 msgid "Other settings"
@@ -391,6 +407,62 @@ msgstr "Destek kontakt mesafesi"
 msgctxt "@label"
 msgid "Avoid supports"
 msgstr "Desteklerden kaçın"
+
+msgctxt "@label"
+msgid "Support placement"
+msgstr "Destek yerleşimi"
+
+msgctxt "@label"
+msgid "Support pattern"
+msgstr "Destek deseni"
+
+msgctxt "@label"
+msgid "Support density"
+msgstr "Destek yoğunluğu"
+
+msgctxt "@label"
+msgid "Support wall count"
+msgstr "Destek duvar sayısı"
+
+msgctxt "@label"
+msgid "Initial layer support line distance"
+msgstr "İlk katman destek kontakt mesafesi"
+
+msgctxt "@label"
+msgid "Support top distance"
+msgstr "Destek tavan mesafesi"
+
+msgctxt "@label"
+msgid "Support bottom distance"
+msgstr "Destek taban mesafesi"
+
+msgctxt "@label"
+msgid "Support brim"
+msgstr "Destek kenarı"
+
+msgctxt "@label"
+msgid "Support roof"
+msgstr "Destek çatısı"
+
+msgctxt "@label"
+msgid "Support floor"
+msgstr "Desktek tabanı"
+
+msgctxt "@label"
+msgid "Hide advanced support settings"
+msgstr "Gelişmiş destek ayarlarını gizle"
+
+msgctxt "@item:inlistbox"
+msgid "Touching buildplate"
+msgstr "Tablaya değenler"
+
+msgctxt "@item:inlistbox"
+msgid "Everywhere"
+msgstr "Heryerde"
+
+msgctxt "@label"
+msgid "Advanced support settings"
+msgstr "Gelişmiş destek ayarları"
 
 msgctxt "@label"
 msgid "Slice!"

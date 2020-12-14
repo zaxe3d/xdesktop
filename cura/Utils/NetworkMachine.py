@@ -1,7 +1,7 @@
 from PyQt5.QtCore import QUrl, QCoreApplication, QTimer, QObject, pyqtSignal, QThread
 from PyQt5 import QtCore, QtWebSockets, QtNetwork
 
-import ssl
+#import ssl
 import json
 import os
 import io

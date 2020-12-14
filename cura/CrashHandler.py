@@ -9,7 +9,7 @@ import os
 import os.path
 import time
 import json
-import ssl
+#import ssl
 import urllib.request
 import urllib.error
 import shutil

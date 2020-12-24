@@ -1,3 +1,6 @@
+[2.1.7]
+* X3 modeli eklendi.
+
 [2.1.6]
 * Gelişmiş destek ayarları eklendi.
 * Yeni detaylı özel materyal ayarları eklendi.

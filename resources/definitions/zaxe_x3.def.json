@@ -1,0 +1,42 @@
+{
+    "id": "zaxe_x3",
+    "name": "x3",
+    "version": 2,
+    "inherits": "zaxe_x1",
+    "metadata": {
+        "visible": true,
+        "machine_extruder_trains":
+        {
+            "0": "zaxe_x3_extruder_0"
+        },
+        "preferred_variant_name": "0.4"
+    },
+
+    "overrides": {
+        "machine_start_gcode": { "default_value": "G28\nG91\nM83\nG1 E25 F150\nG1 X20 F10000\nG90\nG1 Y0 Z0.4 F10000\nG91\nM83\nG1 X40 E15 F500\nG90\nM82\nG92 E0" },
+        "machine_name": { "default_value": "x3" },
+	"jerk_enabled": { "value": true },
+        "jerk_print": { "value": 10 },
+        "jerk_infill": { "value": 9 },
+        "jerk_wall": { "value": 8 },
+        "jerk_wall_0": { "value": 8 },
+        "jerk_wall_x": { "value": 8 },
+        "jerk_roofing": { "value": 10 },
+        "jerk_topbottom": { "value": 10 },
+        "jerk_support": { "value": 10 },
+        "jerk_support_infill": { "value": 10 },
+        "jerk_support_interface": { "value": 10 },
+        "jerk_support_bottom": { "value": 10 },
+        "jerk_prime_tower": { "value": 6 },
+        "jerk_travel": { "value": 10 },
+        "jerk_layer_0": { "value": 10 },
+        "jerk_print_layer_0": { "value": 8 },
+        "jerk_travel_layer_0": { "value": 10 },
+        "jerk_skirt_brim": { "value": 10 },
+        "jerk_ironing": { "value": 10 },
+        "retraction_retract_speed": { "value": 40 },
+        "retraction_prime_speed": { "value": 30 },
+        "speed_travel": { "value": 150 },
+        "speed_infill":{ "value": 80}
+    }
+}

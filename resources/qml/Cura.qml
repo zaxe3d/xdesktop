@@ -867,6 +867,7 @@ UM.MainWindow
                 Cura.MachineManager.addMachine("Z1+", "zaxe_z1plus")
                 Cura.MachineManager.addMachine("Z1", "zaxe_z1")
                 //Cura.MachineManager.addMachine("ZLite", "zaxe_zlite")
+                Cura.MachineManager.addMachine("XLite", "zaxe_x3")
                 Cura.MachineManager.addMachine("XLite", "zaxe_xlite")
                 Cura.MachineManager.addMachine("X2", "zaxe_x2")
                 Cura.MachineManager.addMachine("X1+", "zaxe_x1plus")

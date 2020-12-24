@@ -329,12 +329,13 @@ Item {
                 Layout.preferredHeight: 130
                 Layout.leftMargin: 10
 
-                MachineCarousel { modelName: "X1"; modelId: "zaxe_x1"; Layout.preferredWidth: 52; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "X1+"; modelId: "zaxe_x1+"; Layout.preferredWidth: 62; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "X2"; modelId: "zaxe_x2"; Layout.preferredWidth: 52; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "XLite"; modelId: "zaxe_xlite"; Layout.preferredWidth: 47; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "Z1"; modelId: "zaxe_z1"; Layout.preferredWidth: 59; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "Z1+"; modelId: "zaxe_z1+"; Layout.preferredWidth: 70; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "X1"; modelId: "zaxe_x1"; Layout.preferredWidth: 47; Layout.preferredHeight: 65 }
+                MachineCarousel { modelName: "X1+"; modelId: "zaxe_x1+"; Layout.preferredWidth: 57; Layout.preferredHeight: 65 }
+                MachineCarousel { modelName: "X2"; modelId: "zaxe_x2"; Layout.preferredWidth: 47; Layout.preferredHeight: 65 }
+                MachineCarousel { modelName: "X3"; modelId: "zaxe_x3"; Layout.preferredWidth: 40; Layout.preferredHeight: 65 }
+                MachineCarousel { modelName: "XLite"; modelId: "zaxe_xlite"; Layout.preferredWidth: 47; Layout.preferredHeight: 65 }
+                MachineCarousel { modelName: "Z1"; modelId: "zaxe_z1"; Layout.preferredWidth: 54; Layout.preferredHeight: 65 }
+                MachineCarousel { modelName: "Z1+"; modelId: "zaxe_z1+"; Layout.preferredWidth: 65; Layout.preferredHeight: 65 }
             }
 
             Button {

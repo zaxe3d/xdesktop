@@ -71,7 +71,6 @@ class NetworkMachine(QThread, QObject):
         self.hasNFCSpool = False
         self.hasSnapshot = False
         self.isLite = False
-        self.isNonTLS = False
         # anonymous ftp address (only for to serve the snapshot for now)
         self.snapshot = "ftp://" + self.ip + ":9494/snapshot.png"
         self.elapsedTime = 0
@@ -137,11 +136,10 @@ class NetworkMachine(QThread, QObject):
             except:
                 self.deviceModel = "x1"
 
+            # only z-series have snapshot available
+            self.hasSnapshot = self.deviceModel.find("z1") >= 0
             # lite series has short filename
             self.isLite = self.deviceModel.find("lite") >= 0
-            self.isNonTLS = self.deviceModel.find("x3") >= 0
-            # z-series and x3 have snapshot available
-            self.hasSnapshot = self.deviceModel.find("z1") >= 0 or self.isNonTLS
 
             try:
                 self.printingFile = message["filename"]
@@ -222,7 +220,7 @@ class NetworkMachine(QThread, QObject):
     # end of connection related
 
     def setName(self, newName):
-        self.name = tool.clearChars(newName) if self.isLite else newName
+        self.name = tool.clearChars(newName) if (self.isLite) else newName
 
     def getStates(self):
         return tool.merge_two_dicts(self.__states, {"uploading": self.uploader is not None and self.uploader.isUploading()})
@@ -260,7 +258,7 @@ class NetworkMachine(QThread, QObject):
         if self.uploader is not None and self.uploader.isUploading():
             return
         self.startPreheat()
-        self.uploader = FTPUploader(filename, self.ip, self.ftpPort, (self.isLite or self.isNonTLS), self.deviceModel)
+        self.uploader = FTPUploader(filename, self.ip, self.ftpPort, self.isLite, self.deviceModel)
         self.uploader.uploadEvent.connect(self.uploadProgressCB)
         Logger.log("d", "starting to upload %s" % filename)
         self.uploader.daemon = True
@@ -297,9 +295,9 @@ class FTPUploader(QThread, QObject):
 
     uploadEvent = pyqtSignal(int)
 
-    def __init__(self, filename, ip, port, isNonTLS, filenameSuffix, parent = None):
+    def __init__(self, filename, ip, port, isLite, filenameSuffix, parent = None):
         QObject.__init__(self)
-        self.ftp = ftplib.FTP() if isNonTLS else ftplib.FTP_TLS()
+        self.ftp = ftplib.FTP() if isLite else ftplib.FTP_TLS()
         self.currentSize = 0
         self.totalSize = 0
         self.filename = filename
@@ -310,7 +308,7 @@ class FTPUploader(QThread, QObject):
         self.finishHandler = None
         self.cancel = False
         self.finished = False
-        self.isNonTLS = isNonTLS
+        self.isLite = isLite
 
     def isUploading(self):
         return not self.cancel and not self.finished
@@ -327,13 +325,12 @@ class FTPUploader(QThread, QObject):
             self.currentSize = 0
             self.totalSize = os.path.getsize(self.filename)
             self.ftp.connect(self.ip, self.port)
-            if not self.isNonTLS: # no TLS for lite and x3 series
+            if not self.isLite: # no authentication for lite series
                 self.ftp.auth()
                 self.ftp.prot_p()
             self.ftp.login("zaxe", "zaxe")
             filePtr = open(self.filename, 'rb')
-            #filename = tool.eightDot3Filename(self.filename, self.suffix) if self.isLite else tool.baseName(self.filename)
-            filename = tool.baseName(self.filename)
+            filename = tool.eightDot3Filename(self.filename, self.suffix) if self.isLite else tool.baseName(self.filename)
             self.ftp.storbinary("stor " + filename, filePtr, io.DEFAULT_BUFFER_SIZE, callback)
             self.ftp.close()
             self.finished = True

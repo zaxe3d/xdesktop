@@ -775,7 +775,6 @@ Item {
                                                 device.materialWarning = true
                                                 shakeAnim.start()
                                             } else {
-                                                console.log('yeee')
                                                 if (device.hasNFCSpool && device.filamentRemaining - PrintInformation.materialLengths[0] <= 0) {
                                                     device.filamentLengthWarning = true
                                                 } else {

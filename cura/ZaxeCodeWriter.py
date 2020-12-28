@@ -77,7 +77,7 @@ class ZaxeCodeWriter(MeshWriter):
                 "duration": printInformation.currentPrintTime.getDisplayString(DurationFormat.Format.ISO8601),
                 "material": "zaxe_flex" if "zaxe_flex" in printInformation.materialNames[0] else printInformation.materialNames[0],
                 "sub_material": printInformation.materialNames[0],
-                "model": self._machineManager.activeMachineName.lower().replace("+", "PLUS"),
+                "model": self._machineManager.activeMachineName.replace("+", "PLUS"),
                 "version": self.ZAXE_FILE_VERSION,
                 "checksum": self.getCheckSum(),
                 "nozzle_diameter": float(vName) if tool.isNumber(vName) else str(vName)

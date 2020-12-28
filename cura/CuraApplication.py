@@ -506,7 +506,7 @@ class CuraApplication(QtApplication):
             preferences.addPreference(configPrefix + "wall_line_width_0",                  0.4)
             preferences.addPreference(configPrefix + "wall_line_width_x",                  0.4)
             preferences.addPreference(configPrefix + "support_line_width",                 0.4)
-            preferences.addPreference(configPrefix + "support_line_distance",              2.66)
+            preferences.addPreference(configPrefix + "support_line_distance",              2.0)
             preferences.addPreference(configPrefix + "support_interface_density",          100)
             preferences.addPreference(configPrefix + "jerk_print",                         20)
             preferences.addPreference(configPrefix + "acceleration_print",                 3000)

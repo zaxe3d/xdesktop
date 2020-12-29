@@ -16,8 +16,6 @@ Item
 
     property string lastSelectedMaterial: ""
     property bool customMaterialSelected: Cura.MachineManager.activeStack.material.name == "custom"
-    property bool flexMaterialSelected: Cura.MachineManager.activeStack.material.name.indexOf("zaxe_flex") > -1
-    property bool petGMaterialSelected: Cura.MachineManager.activeStack.material.name == "zaxe_petg"
     property int cmpidx: parseInt(UM.Preferences.getValue("custom_material_profile/selected_index")) // custom material profile index
 
     function applyCustomMaterialSettings() {
@@ -54,7 +52,7 @@ Item
             var retractionAmount = parseFloat(UM.Preferences.getValue(valStr + "retraction_amount"))
             Cura.MachineManager.setSettingForAllExtruders("retraction_enable", "value", retractionAmount == 0 ? "False" : "True")
             Cura.MachineManager.setSettingForAllExtruders("retraction_amount", "value", retractionAmount)
-        } else if (["custom", "zaxe_flex_white", "zaxe_flex_black", "zaxe_flex", "zaxe_petg"].indexOf(lastSelectedMaterial) > -1) {
+        } else if (["custom"].indexOf(lastSelectedMaterial) > -1) {
             Cura.ContainerManager.clearUserContainers();
             prepareSidebar.switchView(0) // Default view
             // set values coming from preferences back.
@@ -67,38 +65,6 @@ Item
     }
 
     onCustomMaterialSelectedChanged: applyCustomMaterialSettings()
-
-    onFlexMaterialSelectedChanged:  {
-        if (flexMaterialSelected) {
-            var printSpeed = 30
-            speedInfill.setPropertyValue("value", 30)
-            speedTopbottom.setPropertyValue("value", 30)
-            speedRoofing.setPropertyValue("value", 30)
-            speedWall0.setPropertyValue("value", 30)
-            speedWallX.setPropertyValue("value", 30)
-            speedSupportRoof.setPropertyValue("value", 30)
-            speedSupportInfill.setPropertyValue("value", 30)
-        }
-        lastSelectedMaterial = Cura.MachineManager.activeStack.material.name
-    }
-
-    onPetGMaterialSelectedChanged:  {
-        return
-        if (petGMaterialSelected && !UM.Preferences.getValue("material/settings_applied")) {
-            var printSpeedMultiplier = 0.7; 
-            speedInfill.setPropertyValue("value", speedInfill.properties.value * printSpeedMultiplier)
-            speedTopbottom.setPropertyValue("value", speedTopbottom.properties.value * printSpeedMultiplier)
-            speedRoofing.setPropertyValue("value", speedRoofing.properties.value * printSpeedMultiplier)
-            speedWall0.setPropertyValue("value", speedWall0.properties.value * printSpeedMultiplier)
-            speedWallX.setPropertyValue("value", speedWallX.properties.value * printSpeedMultiplier)
-            speedSupportRoof.setPropertyValue("value", speedSupportRoof.properties.value * printSpeedMultiplier)
-            speedSupportInfill.setPropertyValue("value", speedSupportInfill.properties.value * printSpeedMultiplier)
-            Cura.MachineManager.setSettingForAllExtruders("material_flow", "value", 100)
-            Cura.MachineManager.setSettingForAllExtruders("retraction_speed", "value", 25)
-            UM.Preferences.setValue("material/settings_applied", true)
-        }
-        lastSelectedMaterial = Cura.MachineManager.activeStack.material.name
-    }
 
     ScrollView
     {

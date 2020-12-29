@@ -1195,8 +1195,20 @@ class XmlMaterialProfile(InstanceContainer):
         "fan speed max": "cool_fan_speed_max",
         "retraction combing": "retraction_combing",
         "material flow": "material_flow",
-        "linear advance gcode": "material_linear_advance_gcode"
+        "linear advance gcode": "material_linear_advance_gcode",
+        "speed print": "speed_print",
+        "speed print layer 0": "speed_print_layer_0",
+        "speed top bottom": "speed_topbottom",
+        "wall line width 0": "wall_line_width_0",
+        "wall line width x": "wall_line_width_x",
+        "roofing line width x": "roofing_line_width",
+        "skin line width": "skin_line_width",
+        "infill line width": "infill_line_width",
+        "skin overlap": "skin_overlap",
+        "infill overlap": "infill_overlap",
+        "skin outline count": "skin_outline_count",
     }
+
     __unmapped_settings = [
         "hardware compatible",
         "hardware recommended"

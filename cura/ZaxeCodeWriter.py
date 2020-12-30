@@ -105,10 +105,11 @@ class ZaxeCodeWriter(MeshWriter):
     def getExportParams(self, material):
         if material == "custom":
             preferences = self._application.getPreferences()
+            profileIdxPrefix = "custom_material_profile/" + str(preferences.getValue("custom_material_profile/selected_index")) + "_"
             return {
-                "extruder_temperature": preferences.getValue("custom_material/material_print_temperature"),
-                "bed_temperature": preferences.getValue("custom_material/material_bed_temperature"),
-                "chamber_temperature": preferences.getValue("custom_material/material_chamber_temperature")
+                "extruder_temperature": preferences.getValue(profileIdxPrefix + "material_print_temperature"),
+                "bed_temperature": preferences.getValue(profileIdxPrefix + "material_bed_temperature"),
+                "chamber_temperature": preferences.getValue(profileIdxPrefix + "material_chamber_temperature")
             }
         else:
             extruderStack = self._application.getExtruderManager().getInstance().getExtruderStack(0)

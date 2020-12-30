@@ -27,8 +27,10 @@
         <setting key="fan speed max">100</setting>
         <setting key="retraction combing">all</setting>
         <setting key="material flow">105</setting>
+        <setting key="infill material flow">150</setting>
         <setting key="speed print">25</setting>
         <setting key="speed print layer 0">20</setting>
+        <setting key="speed infill">60</setting>
         <setting key="speed top bottom">15</setting>
         <setting key="wall line width 0">0.5</setting>
         <setting key="wall line width x">0.5</setting>
@@ -38,6 +40,7 @@
         <setting key="skin overlap">40</setting>
         <setting key="infill overlap">50</setting>
         <setting key="skin outline count">0</setting>
+        <setting key="top bottom pattern">lines</setting>
 
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe X1"/>

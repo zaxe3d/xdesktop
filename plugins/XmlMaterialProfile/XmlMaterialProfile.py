@@ -1195,8 +1195,10 @@ class XmlMaterialProfile(InstanceContainer):
         "fan speed max": "cool_fan_speed_max",
         "retraction combing": "retraction_combing",
         "material flow": "material_flow",
+        "infill material flow": "infill_material_flow",
         "linear advance gcode": "material_linear_advance_gcode",
         "speed print": "speed_print",
+        "speed infill": "speed_infill",
         "speed print layer 0": "speed_print_layer_0",
         "speed top bottom": "speed_topbottom",
         "wall line width 0": "wall_line_width_0",
@@ -1207,6 +1209,7 @@ class XmlMaterialProfile(InstanceContainer):
         "skin overlap": "skin_overlap",
         "infill overlap": "infill_overlap",
         "skin outline count": "skin_outline_count",
+        "top bottom pattern": "top_bottom_pattern",
     }
 
     __unmapped_settings = [

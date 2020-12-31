@@ -49,8 +49,9 @@ def multiply(_dict, multiplier, _min, _max):
         _dict[key] = limit(value * multiplier, _min, _max)
     return _dict
 
-def clearChars(text):
-    return ''.join([i if ord(i) < 128 else ' ' for i in text.replace("\n", "")])
+def translateChars(text):
+    translationTable = str.maketrans("ğĞıİöÖüÜşŞçÇ", "gGiIoOuUsScC")
+    return text.strip().translate(translationTable)
 
 def baseName(path):
     return urllib.parse.quote(os.path.basename(path))

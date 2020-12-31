@@ -131,7 +131,7 @@ class ZaxeCodeWriter(MeshWriter):
         return hash_md5.hexdigest()
 
     def getFileBaseName(self):
-        #return tool.clearChars(self._application.getPrintInformation().baseName)
+        #return tool.translateChars(self._application.getPrintInformation().baseName)
         return self._application.getPrintInformation().baseName
 
     def getZaxeFile(self):

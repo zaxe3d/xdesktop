@@ -602,7 +602,6 @@ Item {
                         }
                         onClicked: {
                             UM.Preferences.setValue("general/firstrun_step", 9)
-                            console.log(Cura.MachineManager.activeMachineId)
                             UM.OutputDeviceManager.requestWriteToDevice(
                                 UM.OutputDeviceManager.activeDevice,
                                 (Cura.MachineManager.activeMachineId.indexOf("XLite") > -1 ? PrintInformation.detailedBaseName : PrintInformation.baseName),

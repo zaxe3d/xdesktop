@@ -388,7 +388,7 @@ class PrintInformation(QObject):
 
     @pyqtProperty(str)
     def detailedBaseName(self):
-        return tool.clearChars(self._base_name) + "_" + self.materialNames[0]
+        return self.materialNames[0] + "_" + tool.translateChars(self._base_name)
 
     @pyqtProperty(str)
     def eightDotName(self):

@@ -1196,6 +1196,7 @@ class XmlMaterialProfile(InstanceContainer):
         "retraction combing": "retraction_combing",
         "material flow": "material_flow",
         "infill material flow": "infill_material_flow",
+        "skin material flow": "skin_material_flow",
         "linear advance gcode": "material_linear_advance_gcode",
         "speed print": "speed_print",
         "speed infill": "speed_infill",

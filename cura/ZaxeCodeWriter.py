@@ -75,8 +75,7 @@ class ZaxeCodeWriter(MeshWriter):
                 "name": printInformation.baseName,
                 "filament_used": printInformation.materialLengths[0] * 1000, # 0 for current build plate
                 "duration": printInformation.currentPrintTime.getDisplayString(DurationFormat.Format.ISO8601),
-                "material": "zaxe_flex" if "zaxe_flex" in printInformation.materialNames[0] else printInformation.materialNames[0],
-                "sub_material": printInformation.materialNames[0],
+                "material": printInformation.materialNames[0],
                 "model": self._machineManager.activeMachineName.replace("+", "PLUS"),
                 "version": self.ZAXE_FILE_VERSION,
                 "checksum": self.getCheckSum(),

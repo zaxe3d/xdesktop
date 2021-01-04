@@ -22,8 +22,6 @@ Item
         "zaxe_abs": "Zaxe ABS",
         "zaxe_pla": "Zaxe PLA",
         "zaxe_flex": "Zaxe FLEX",
-        "zaxe_flex_white": "Zaxe FLEX" + " " + catalog.i18nc("@color", "White"),
-        "zaxe_flex_black": "Zaxe FLEX" + " " + catalog.i18nc("@color", "Black"),
         "zaxe_petg": "Zaxe PETG",
         "custom": catalog.i18nc("@label", "Custom")
     }

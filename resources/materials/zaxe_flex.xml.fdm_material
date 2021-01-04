@@ -4,12 +4,12 @@
     <metadata>
         <name>
             <brand>Zaxe</brand>
-            <material>zaxe_flex_black</material>
+            <material>zaxe_flex</material>
             <color>Generic</color>
         </name>
-        <GUID>e1e298bf-6ee8-405c-ac07-874f94f9a0fa</GUID>
+        <GUID>52064794-7152-4e8f-86c6-fed7dd4a1c58</GUID>
         <version>1</version>
-        <color_code>#2a292a</color_code>
+        <color_code>#ecece7</color_code>
         <description></description>
         <adhesion_info></adhesion_info>
     </metadata>
@@ -18,7 +18,7 @@
         <diameter>1.75</diameter>
     </properties>
     <settings>
-        <setting key="print temperature">193</setting>
+        <setting key="print temperature">213</setting>
         <setting key="heated bed temperature">70</setting>
         <setting key="heated bed temperature layer 0">70</setting>
         <setting key="retraction amount">0</setting>
@@ -27,41 +27,33 @@
         <setting key="fan speed max">100</setting>
         <setting key="retraction combing">all</setting>
         <setting key="material flow">105</setting>
+        <setting key="infill material flow">150</setting>
+        <setting key="skin material flow">105</setting>
+        <setting key="speed print">25</setting>
+        <setting key="speed print layer 0">20</setting>
+        <setting key="speed infill">60</setting>
+        <setting key="speed top bottom">15</setting>
+        <setting key="wall line width 0">0.5</setting>
+        <setting key="wall line width x">0.5</setting>
+        <setting key="roofing line width">0.55</setting>
+        <setting key="skin line width">0.5</setting>
+        <setting key="infill line width">0.5</setting>
+        <setting key="skin overlap">40</setting>
+        <setting key="infill overlap">50</setting>
+        <setting key="skin outline count">0</setting>
+        <setting key="top bottom pattern">lines</setting>
 
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe X1"/>
 
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">200</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">200</setting>
             </hotend>
             <hotend id="0.8">
                 <setting key="hardware compatible">yes</setting>
-            </hotend>
-        </machine>
-
-        <machine>
-            <machine_identifier manufacturer="Zaxe" product="Zaxe X2"/>
-
-            <hotend id="0.4">
-                <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">200</setting>
-            </hotend>
-            <hotend id="AM 0.4">
-                <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">230</setting>
-            </hotend>
-	    <hotend id="AM 0.25">
-                <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">230</setting>
-            </hotend>
-	    <hotend id="AM 0.15">
-                <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">230</setting>
             </hotend>
         </machine>
 
@@ -75,27 +67,51 @@
         </machine>
 
         <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe X2"/>
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">200</setting>
+            </hotend>
+            <hotend id="AM 0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">250</setting>
+            </hotend>
+            <hotend id="AM 0.25">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">250</setting>
+            </hotend>
+            <hotend id="AM 0.15">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">250</setting>
+            </hotend>
+        </machine>
+
+        <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe Z1"/>
 			
-	    <hotend id="0.2">
+            <hotend id="0.2">
                 <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">240</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">235</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">240</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>
-	    <hotend id="0.8">
+            <hotend id="0.8">
                 <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">240</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>
             <hotend id="E3D Brass 0.4">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">206</setting>
+                <setting key="print temperature">216</setting>
                 <setting key="retraction amount">1.5</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>
@@ -106,23 +122,27 @@
 
             <hotend id="0.2">
                 <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">240</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">240</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>
-	    <hotend id="0.6">
+            <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">240</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>
-	    <hotend id="0.8">
+            <hotend id="0.8">
                 <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">240</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>
             <hotend id="E3D Brass 0.4">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature">206</setting>
+                <setting key="print temperature">216</setting>
                 <setting key="retraction amount">1.5</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>

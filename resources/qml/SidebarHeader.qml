@@ -89,12 +89,7 @@ Column
             ExclusiveGroup {
                 id: materialGroup
                 onCurrentChanged : {
-                    if (current.material == "zaxe_flex") {
-                        var flexMaterialObj = materialSubModel.get(flexSubMaterialCombobox.currentIndex)
-                        setMaterial(flexMaterialObj.material)
-                    } else {
-                        setMaterial(current.material)
-                    }
+                    setMaterial(current.material)
 
                     if (UM.Preferences.getValue("general/firstrun"))
                         UM.Preferences.setValue("general/firstrun_step", 6)
@@ -132,7 +127,7 @@ Column
                 id: rBMaterialFlex
                 exclusiveGroup: materialGroup
                 property string material : "zaxe_flex"
-                checked: Cura.MachineManager.currentRootMaterialId[0].indexOf("zaxe_flex") > -1
+                checked: Cura.MachineManager.currentRootMaterialId[0] == material
                 Layout.preferredHeight: 50
                 Layout.preferredWidth: 100
                 Layout.alignment: Qt.AlignLeft
@@ -164,78 +159,6 @@ Column
                 Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
                 text: catalog.i18nc("@label", "Custom")
-            }
-        }
-
-        ComboBox // Flex sub material
-        {
-            id: flexSubMaterialCombobox
-            visible: Cura.MachineManager.currentRootMaterialId[0].indexOf("zaxe_flex") > -1
-
-            width: 95
-            height: UM.Theme.getSize("setting_control").height
-
-            x: rBMaterialFlex.x + 19
-            anchors {
-                top: materialSelectionGrid.bottom
-                topMargin: -48
-            }
-
-            ListModel {
-                id: materialSubModel
-            }
-
-            Component.onCompleted: {
-                // i18 doesn't work directly when declaring items within model bug!
-                materialSubModel.append({ material: "zaxe_flex_white", color: "white", text: catalog.i18nc("@color", "White") })
-                materialSubModel.append({ material: "zaxe_flex_black", color: "black", text: catalog.i18nc("@color", "Black") })
-
-                if (Cura.MachineManager.currentRootMaterialId[0].indexOf("zaxe_flex") > -1) {
-                    currentIndex = Cura.MachineManager.currentRootMaterialId[0] == "zaxe_flex_white" ? 0 : 1
-                    var matObj = materialSubModel.get(index)
-                    color = matObj.color
-
-                }
-            }
-
-            model: materialSubModel
-
-            property string color: {
-                if (currentIndex < 0) {
-                    return "white" // return the first one from the list. Only needed for init
-                }
-                return materialSubModel.get(currentIndex).color
-            }
-            property string color_override: ""  // for manually setting values
-
-            textRole: "text"  // this solves that the combobox isn't populated in the first time XDesktop is started
-
-            Behavior on height { NumberAnimation { duration: 100 } }
-
-            style: UM.Theme.styles.combobox_color
-
-            onActivated:
-            {
-                var matObj = materialSubModel.get(index)
-                setMaterial(matObj.material)
-                color = matObj.color
-            }
-
-
-            // Disable mouse wheel for combobox
-            MouseArea {
-                anchors.fill: parent
-                onWheel: {
-                    // do nothing
-                }
-                onPressed: {
-                    // propogate to ComboBox
-                    mouse.accepted = false;
-                }
-                onReleased: {
-                    // propogate to ComboBox
-                    mouse.accepted = false;
-                }
             }
         }
 

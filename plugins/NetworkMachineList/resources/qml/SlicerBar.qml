@@ -55,13 +55,13 @@ Item {
             if (PrintInformation.preSliced) {
                 var info = PrintInformation.preSlicedInfo
                 if (isGCode) { // We don't have presliced info for gcode
-                    lblFileName.text = PrintInformation.baseName + ".gcode"
+                    lblFilename.text = PrintInformation.baseName + ".gcode"
                     lblDuration.text = lblLength.text = lblMaterial.text = "-"
                 } else {
-                    lblFileName.text = PrintInformation.baseName + ".zaxe"
+                    lblFilename.text = PrintInformation.baseName + ".zaxe"
                     lblDuration.text = info.duration
                     lblLength.text = (info.filament_used / 1000) + "m."
-                    lblMaterial.text = networkMachineList.materialNames[info.hasOwnProperty("sub_material") ? info.sub_material : info.material]
+                    lblMaterial.text = networkMachineList.materialNames[info.material]
                 }
 
                 if (info.material == undefined) {

@@ -1204,7 +1204,7 @@ class XmlMaterialProfile(InstanceContainer):
         "speed top bottom": "speed_topbottom",
         "wall line width 0": "wall_line_width_0",
         "wall line width x": "wall_line_width_x",
-        "roofing line width x": "roofing_line_width",
+        "roofing line width": "roofing_line_width",
         "skin line width": "skin_line_width",
         "infill line width": "infill_line_width",
         "skin overlap": "skin_overlap",

@@ -32,7 +32,7 @@
         <setting key="speed print">25</setting>
         <setting key="speed print layer 0">20</setting>
         <setting key="speed infill">50</setting>
-        <setting key="speed top bottom">15</setting>
+        <setting key="speed top bottom">20</setting>
         <setting key="wall line width 0">0.5</setting>
         <setting key="wall line width x">0.5</setting>
         <setting key="roofing line width">0.55</setting>
@@ -97,6 +97,7 @@
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="print temperature">235</setting>
+                <setting key="material flow layer 0">120</setting>
                 <setting key="infill material flow">130</setting>
                 <setting key="skin material flow">125</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
@@ -130,7 +131,8 @@
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="print temperature">235</setting>
-                <setting key="infill material flow">115</setting>
+                <setting key="material flow layer 0">105</setting>
+                <setting key="infill material flow">105</setting>
                 <setting key="skin material flow">110</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>

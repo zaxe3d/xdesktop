@@ -1195,6 +1195,7 @@ class XmlMaterialProfile(InstanceContainer):
         "fan speed max": "cool_fan_speed_max",
         "retraction combing": "retraction_combing",
         "material flow": "material_flow",
+        "material flow layer 0": "material_flow_layer_0",
         "infill material flow": "infill_material_flow",
         "skin material flow": "skin_material_flow",
         "linear advance gcode": "material_linear_advance_gcode",

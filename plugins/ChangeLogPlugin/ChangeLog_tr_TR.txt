@@ -1,4 +1,4 @@
-[2.1.6]
+[2.1.7]
 * Gelişmiş destek ayarları eklendi.
 * Yeni detaylı özel materyal ayarları eklendi.
 * Flex materyal ayarları optimize edildi.

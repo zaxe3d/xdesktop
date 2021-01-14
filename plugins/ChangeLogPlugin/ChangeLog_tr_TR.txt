@@ -1,4 +1,4 @@
-2.1.7]
+[2.1.7]
 * Gelişmiş destek ayarları eklendi.
 Dilimleme ekranı destek çubuğunun altına gelişmiş ayarlar tuşu eklendi.
 Eklenen ayarlar: Destek yerleşimi, deseni, duvar sayısı, yoğunluğu, ilk katman destek kontakt mesafesi, çizgi mesafesi, tavan ve taban mesafesi, kenarı çatısı ve tabanı seçenekleri eklendi.

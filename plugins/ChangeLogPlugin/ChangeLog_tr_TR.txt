@@ -1,7 +1,17 @@
-[2.1.7]
+2.1.7]
 * Gelişmiş destek ayarları eklendi.
-* Yeni detaylı özel materyal ayarları eklendi.
-* Flex materyal ayarları optimize edildi.
+Dilimleme ekranı destek çubuğunun altına gelişmiş ayarlar tuşu eklendi.
+Eklenen ayarlar: Destek yerleşimi, deseni, duvar sayısı, yoğunluğu, ilk katman destek kontakt mesafesi, çizgi mesafesi, tavan ve taban mesafesi, kenarı çatısı ve tabanı seçenekleri eklendi.
+* Yeni detaylı özel materyal ayarları ve profilleri eklendi.
+5 adet ismi değiştirilebilen profil eklendi örn: Karbon diye adlandırdığınız filament için baskı ayarlarını girilebilir hale geldi.
+Eklenen başlıklar Ekstrüzyon kalınlığı, destek, hız ve diğer ayarlar. Bu başlıklar altında çok sayıda ayar eklendi.
+* Flex materyal optimizasyonlari yapıldı.
+Z1 ve Z1+ cihazları için Flex baskı odaklı donanım değişikliğini teknik servisimize iletişime geçerek siz de yaptırabilirsiniz. !
+Z1 serisi ile Flex baskı hızları düşürüldü, baskı kalitesi arttırıldı.
+Z1 serisi için Flex malzeme optimizasyonu yapıldı.
+Z1+ için Flex ile ilk katmanda kafa tıkama sorunu çözüldü.
+Bütün yazıcılarda taban ve tavan deseni modelin sağlamlığını arttıracak şekilde değişken birbirine dik hale getirildi.
+* xlite için dilimi dışa aktarırken artık filament tipi dosya isminin başına eklenmeye başlandı.
 
 [2.1.5]
 * OSX Big Sur ile uyumlu hale getirildi.

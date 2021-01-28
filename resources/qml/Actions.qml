@@ -19,6 +19,7 @@ Item
 
     property alias expandSidebar: expandSidebarAction;
     property alias takeSnapshot: takeSnapshotAction;
+    property alias takeModelSnapshot: takeModelSnapshotAction;
 
     property alias deleteSelection: deleteSelectionAction;
     property alias centerSelection: centerSelectionAction;
@@ -394,4 +395,11 @@ Item
         onTriggered: CuraApplication.takeSnapshot();
     }
 
+    Action
+    {
+        id: takeModelSnapshotAction;
+        text: "model snapshot stl"
+        shortcut: "Ctrl+Shift+T";
+        onTriggered: CuraApplication.takeModelSnapshot();
+    }
 }

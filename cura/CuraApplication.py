@@ -109,6 +109,7 @@ import cura.Settings.cura_empty_instance_containers
 from cura.ObjectsModel import ObjectsModel
 
 from cura.Snapshot import Snapshot
+from cura.ModelSnapshot import ModelSnapshot
 
 from UM.FlameProfiler import pyqtSlot
 
@@ -1367,14 +1368,19 @@ class CuraApplication(QtApplication):
         
     @pyqtSlot()
     def takeSnapshot(self) -> None:
-        # write the png to the file
-        TMP_FOLDER = tempfile.gettempdir()
-        snapshotFilePath = os.path.join(TMP_FOLDER, "snapshot.png")
         model = self.getMachineManager().activeMachineName.replace("+", "PLUS")
-        # Z3's screen is much bigger...
-        size = 500 if "Z3" in model else 130
+        size = 250 if "Z3" in model else 130 # Z3's screen is much bigger...
+        # write the png to the file
         snapshot = Snapshot.snapshot(width = size, height = size)
-        snapshot.save(snapshotFilePath, "PNG", 100)
+        snapshot.save(os.path.join(tempfile.gettempdir(), "snapshot.png"), "PNG", 100)
+
+    @pyqtSlot()
+    def takeModelSnapshot(self) -> None:
+        model = self.getMachineManager().activeMachineName.replace("+", "PLUS")
+        if not "Z3" in model: # only for Z3
+            return
+        Logger.log("d", "Taking model snapshot for model: {0}".format(model))
+        ModelSnapshot.snapshot() # save the model snapshot
 
     @pyqtSlot()
     def showChangelog(self):

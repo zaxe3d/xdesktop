@@ -1,3 +1,6 @@
+[2.1.8]
+* Z3 serisi eklendi.
+
 [2.1.7]
 * Gelişmiş destek ayarları eklendi.
 Dilimleme ekranı destek çubuğunun altına gelişmiş ayarlar tuşu eklendi.

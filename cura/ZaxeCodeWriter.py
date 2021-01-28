@@ -16,7 +16,6 @@ from UM.Qt.Duration import DurationFormat
 from cura.Utils import tool
 
 import hashlib
-import gzip
 import zipfile
 import json
 import tempfile
@@ -29,7 +28,7 @@ TMP_FOLDER = tempfile.gettempdir()
 #
 class ZaxeCodeWriter(MeshWriter):
 
-    ZAXE_FILE_VERSION = "1.0.3"
+    ZAXE_FILE_VERSION = "1.0.4"
 
     def __init__(self) -> None:
         super().__init__(add_to_recent_files = False)
@@ -49,6 +48,7 @@ class ZaxeCodeWriter(MeshWriter):
         # Get the g-code from the g-code writer.
         gcode_textio = StringIO() #We have to convert the g-code into bytes.
         gcode_writer = cast(MeshWriter, PluginRegistry.getInstance().getPluginObject("GCodeWriter"))
+
         success = gcode_writer.write(gcode_textio, None)
         if not success: #Writing the g-code failed. Then I can also not write the gzipped g-code.
             self.setInformation(gcode_writer.getInformation())
@@ -84,6 +84,7 @@ class ZaxeCodeWriter(MeshWriter):
 
         infoFilePath = os.path.join(TMP_FOLDER, "info.json")
         snapshotFilePath = os.path.join(TMP_FOLDER, "snapshot.png")
+        modelFilePath = os.path.join(TMP_FOLDER, "model.stl")
 
         # actually write to info.json
         with open(infoFilePath, "w") as infoFp:
@@ -94,6 +95,10 @@ class ZaxeCodeWriter(MeshWriter):
         zipFile.write(infoFilePath, os.path.basename(infoFilePath))
         zipFile.write(gcodeFilePath, "data.zaxe_code")
         zipFile.write(snapshotFilePath, "snapshot.png")
+        model = self._machineManager.activeMachineName.replace("+", "PLUS")
+        if "Z3" in model: # only for Z3
+            zipFile.write(modelFilePath, "model.stl")
+            # os.remove(modelFilePath) # don't remove stl since it doesn't get changed regularly
         zipFile.close()
 
         os.remove(gcodeFilePath)

@@ -37,6 +37,7 @@ UM.MainWindow
             if (CuraApplication.platformActivity && UM.Backend.state == 1) {
                 // Take snapshot if ready to slice - 1 = Ready to slice
                 Cura.Actions.takeSnapshot.trigger()
+                Cura.Actions.takeModelSnapshot.trigger()
                 if (UM.Preferences.getValue("general/firstrun") && UM.Preferences.getValue("general/firstrun_step") == 1) {
                     UM.Preferences.setValue("general/firstrun_step", 2)
                     base.showFirstrunTip(
@@ -864,9 +865,9 @@ UM.MainWindow
             if(Cura.MachineManager.activeMachine == null)
             {
                 // Add all the machines here
+                Cura.MachineManager.addMachine("Z3", "zaxe_z3")
                 Cura.MachineManager.addMachine("Z1+", "zaxe_z1plus")
                 Cura.MachineManager.addMachine("Z1", "zaxe_z1")
-                //Cura.MachineManager.addMachine("ZLite", "zaxe_zlite")
                 Cura.MachineManager.addMachine("XLite", "zaxe_xlite")
                 Cura.MachineManager.addMachine("X2", "zaxe_x2")
                 Cura.MachineManager.addMachine("X1+", "zaxe_x1plus")

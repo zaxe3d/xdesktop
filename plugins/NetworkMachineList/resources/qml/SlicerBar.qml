@@ -18,7 +18,7 @@ Item {
     property real progress: UM.Backend.progress
     property int backendState: UM.Backend.state
     property bool activity: CuraApplication.platformActivity
-    // For now only ZLite has gcode compatibility
+    // For now only lite series, those have gcode compatibility
     property string preferredMimeTypes: Cura.MachineManager.activeMachine.preferred_output_file_formats
     property bool isGCode: preferredMimeTypes.indexOf("gcode") > -1
 
@@ -329,12 +329,13 @@ Item {
                 Layout.preferredHeight: 130
                 Layout.leftMargin: 10
 
-                MachineCarousel { modelName: "X1"; modelId: "zaxe_x1"; Layout.preferredWidth: 52; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "X1+"; modelId: "zaxe_x1+"; Layout.preferredWidth: 62; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "X2"; modelId: "zaxe_x2"; Layout.preferredWidth: 52; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "XLite"; modelId: "zaxe_xlite"; Layout.preferredWidth: 47; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "Z1"; modelId: "zaxe_z1"; Layout.preferredWidth: 59; Layout.preferredHeight: 80 }
-                MachineCarousel { modelName: "Z1+"; modelId: "zaxe_z1+"; Layout.preferredWidth: 70; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "X1"; modelId: "zaxe_x1"; Layout.preferredWidth: 50; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "X1+"; modelId: "zaxe_x1+"; Layout.preferredWidth: 60; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "X2"; modelId: "zaxe_x2"; Layout.preferredWidth: 50; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "XLite"; modelId: "zaxe_xlite"; Layout.preferredWidth: 45; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "Z1"; modelId: "zaxe_z1"; Layout.preferredWidth: 57; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "Z1+"; modelId: "zaxe_z1+"; Layout.preferredWidth: 68; Layout.preferredHeight: 80 }
+                MachineCarousel { modelName: "Z3"; modelId: "zaxe_z3"; Layout.preferredWidth: 57; Layout.preferredHeight: 80 }
             }
 
             Button {

@@ -7,8 +7,8 @@
         "visible": true,
         "machine_extruder_trains":
         {
-            "0": "zaxe_z3_extruder_right",
-            "1": "zaxe_z3_extruder_left"
+            "0": "zaxe_z3_extruder_left",
+            "1": "zaxe_z3_extruder_right"
         }
     },
 

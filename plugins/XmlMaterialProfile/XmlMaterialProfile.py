@@ -1187,6 +1187,8 @@ class XmlMaterialProfile(InstanceContainer):
         "print cooling": "cool_fan_speed",
         "retraction amount": "retraction_amount",
         "retraction speed": "retraction_speed",
+        "retraction min travel": "retraction_min_travel",
+        "retraction count max": "retraction_count_max",
         "adhesion tendency": "material_adhesion_tendency",
         "surface energy": "material_surface_energy",
         "shrinkage percentage": "material_shrinkage_percentage",
@@ -1203,6 +1205,7 @@ class XmlMaterialProfile(InstanceContainer):
         "speed infill": "speed_infill",
         "speed print layer 0": "speed_print_layer_0",
         "speed top bottom": "speed_topbottom",
+        "speed roofing": "speed_roofing",
         "wall line width 0": "wall_line_width_0",
         "wall line width x": "wall_line_width_x",
         "roofing line width": "roofing_line_width",
@@ -1212,6 +1215,9 @@ class XmlMaterialProfile(InstanceContainer):
         "infill overlap": "infill_overlap",
         "skin outline count": "skin_outline_count",
         "top bottom pattern": "top_bottom_pattern",
+        "support top distance": "support_top_distance",
+        "support xy distance": "support_xy_distance",
+        "support wall count": "support_wall_count",
     }
 
     __unmapped_settings = [

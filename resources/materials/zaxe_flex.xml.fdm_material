@@ -26,13 +26,15 @@
         <setting key="fan speed min">100</setting>
         <setting key="fan speed max">100</setting>
         <setting key="retraction combing">all</setting>
-        <setting key="material flow">105</setting>
+        <setting key="retraction count max">90</setting>
+        <setting key="retraction min travel">1.5</setting>
+        <setting key="material flow">135</setting>
         <setting key="infill material flow">100</setting>
         <setting key="skin material flow">100</setting>
         <setting key="speed print">25</setting>
         <setting key="speed print layer 0">20</setting>
         <setting key="speed infill">50</setting>
-        <setting key="speed top bottom">20</setting>
+        <setting key="speed top bottom">50</setting>
         <setting key="wall line width 0">0.5</setting>
         <setting key="wall line width x">0.5</setting>
         <setting key="roofing line width">0.55</setting>
@@ -42,6 +44,9 @@
         <setting key="infill overlap">50</setting>
         <setting key="skin outline count">0</setting>
         <setting key="top bottom pattern">lines</setting>
+        <setting key="support xy distance">0.8</setting>
+        <setting key="support wall count">1</setting>
+        <setting key="support top distance">0.4</setting>
 
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe X1"/>
@@ -100,6 +105,7 @@
                 <setting key="material flow layer 0">120</setting>
                 <setting key="infill material flow">130</setting>
                 <setting key="skin material flow">125</setting>
+                <setting key="speed roofing">50</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>
             <hotend id="0.6">
@@ -134,6 +140,7 @@
                 <setting key="material flow layer 0">105</setting>
                 <setting key="infill material flow">105</setting>
                 <setting key="skin material flow">110</setting>
+                <setting key="speed roofing">50</setting>
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>
             <hotend id="0.6">

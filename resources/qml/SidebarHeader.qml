@@ -27,6 +27,7 @@ Column
         "zaxe_pla": "Zaxe PLA",
         "zaxe_flex": "Zaxe FLEX",
         "zaxe_petg": "Zaxe PETG",
+        "basf_asa": "BASF ASA",
         "custom": catalog.i18nc("@label", "Custom")
     }
 
@@ -119,7 +120,7 @@ Column
                 Layout.preferredWidth: 90
                 Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
-                text: "Zaxe PLA"
+                text: materialNames[material]
             }
             // FLEX
             RadioButton
@@ -132,7 +133,7 @@ Column
                 Layout.preferredWidth: 100
                 Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
-                text: "Zaxe FLEX"
+                text: materialNames[material]
             }
             // PETG
             RadioButton
@@ -146,7 +147,19 @@ Column
                 Layout.leftMargin: 10
                 Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
-                text: "Zaxe PETG"
+                text: materialNames[material]
+            }
+            // PETG
+            RadioButton
+            {
+                exclusiveGroup: materialGroup
+                property string material : "basf_asa"
+                checked: Cura.MachineManager.currentRootMaterialId[0] == material
+                Layout.preferredHeight: 30
+                Layout.preferredWidth: 90
+                Layout.alignment: Qt.AlignLeft
+                style: UM.Theme.styles.radiobutton
+                text: materialNames[material]
             }
             // Custom
             RadioButton

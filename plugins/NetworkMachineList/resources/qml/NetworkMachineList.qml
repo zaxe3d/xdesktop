@@ -23,6 +23,7 @@ Item
         "zaxe_pla": "Zaxe PLA",
         "zaxe_flex": "Zaxe FLEX",
         "zaxe_petg": "Zaxe PETG",
+        "basf_asa": "BASF ASA",
         "custom": catalog.i18nc("@label", "Custom")
     }
 

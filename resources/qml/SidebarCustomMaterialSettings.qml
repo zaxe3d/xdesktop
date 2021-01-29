@@ -545,7 +545,7 @@ Item
                         unit: "mm";
                         profileIdx: cmpidx
                         preferenceId: "retraction_amount"
-                        validator: DoubleValidator { bottom: 0; top: 6 }
+                        validator: DoubleValidator { bottom: 0; top: 10 }
                         extraFunc: function() {
                             Cura.MachineManager.setSettingForAllExtruders("retraction_enable", "value", parseFloat(UM.Preferences.getValue(valStr)) == 0 ? "False" : "True")
                         }

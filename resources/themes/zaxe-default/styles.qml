@@ -1007,46 +1007,41 @@ QtObject {
         ComboBoxStyle {
 
             background: Rectangle {
-                implicitHeight: Theme.getSize("setting_control").height;
-                implicitWidth: Theme.getSize("setting_control").width;
-
-                color: control.hovered ? UM.Theme.getColor("setting_control_highlight") : UM.Theme.getColor("setting_control")
-                Behavior on color { ColorAnimation { duration: 50; } }
-
-                border.width: Theme.getSize("default_lining").width;
-                border.color: control.hovered ? Theme.getColor("setting_control_border_highlight") : Theme.getColor("setting_control_border");
+                color: !enabled ? UM.Theme.getColor("setting_control_disabled") : control._hovered ? UM.Theme.getColor("setting_control_highlight") : UM.Theme.getColor("setting_control")
+                border.width: UM.Theme.getSize("default_lining").width
+                border.color: !enabled ? UM.Theme.getColor("setting_control_disabled_border") : control._hovered ? UM.Theme.getColor("setting_control_border_highlight") : UM.Theme.getColor("setting_control_border")
             }
 
             label: Item {
 
                 Label {
-                    anchors.left: parent.left;
-                    anchors.leftMargin: Theme.getSize("default_lining").width
-                    anchors.right: downArrow.left;
-                    anchors.rightMargin: Theme.getSize("default_lining").width;
-                    anchors.verticalCenter: parent.verticalCenter;
+                    anchors.left: parent.left
+                    anchors.leftMargin: UM.Theme.getSize("default_lining").width
+                    anchors.right: downArrow.left
+                    anchors.rightMargin: UM.Theme.getSize("default_lining").width
+                    anchors.verticalCenter: parent.verticalCenter
 
-                    text: control.currentText;
-                    font: Theme.getFont("default");
-                    color: !enabled ? Theme.getColor("setting_control_disabled_text") : Theme.getColor("setting_control_text");
+                    text: control.currentText
+                    font: UM.Theme.getFont("small")
+                    color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : Theme.getColor("text_sidebar_medium")
 
-                    elide: Text.ElideRight;
-                    verticalAlignment: Text.AlignVCenter;
+                    elide: Text.ElideRight
+                    verticalAlignment: Text.AlignVCenter
                 }
 
                 UM.RecolorImage {
                     id: downArrow
-                    anchors.right: parent.right;
-                    anchors.rightMargin: Theme.getSize("default_lining").width * 2;
-                    anchors.verticalCenter: parent.verticalCenter;
+                    anchors.right: parent.right
+                    anchors.rightMargin: UM.Theme.getSize("default_lining").width * 2
+                    anchors.verticalCenter: parent.verticalCenter
 
-                    source: Theme.getIcon("arrow_bottom")
-                    width: Theme.getSize("standard_arrow").width
-                    height: Theme.getSize("standard_arrow").height
+                    source: UM.Theme.getIcon("arrow_bottom")
+                    width: UM.Theme.getSize("standard_arrow").width
+                    height: UM.Theme.getSize("standard_arrow").height
                     sourceSize.width: width + 5 * screenScaleFactor
                     sourceSize.height: width + 5 * screenScaleFactor
 
-                    color: Theme.getColor("setting_control_text");
+                    color: UM.Theme.getColor("setting_control_text")
                 }
             }
         }

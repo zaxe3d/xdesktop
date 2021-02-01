@@ -3,14 +3,14 @@
     <metadata>
         <name>
             <brand>BASF</brand>
-            <material>basf_asa</material>
+            <material>basf_pet_cf15</material>
             <color>Generic</color>
         </name>
-        <GUID>e1e298bf-6ee8-405c-ac07-874f94f9a0fa</GUID>
+        <GUID>edcde954-ee11-4a23-9f11-56d2aa03284b</GUID>
         <version>1</version>
-        <color_code>#FC6A03</color_code>
+        <color_code>#2b2d2f</color_code>
         <compatible>True</compatible>
-        <description>BASF ASA</description>
+        <description>BASF PET CF15</description>
         <adhesion_info></adhesion_info>
     </metadata>
     <properties>
@@ -18,10 +18,10 @@
         <diameter>1.75</diameter>
     </properties>
     <settings>
-        <setting key="print temperature">200</setting>
-        <setting key="print temperature layer 0">220</setting>
-        <setting key="heated bed temperature">60</setting>
-        <setting key="heated bed temperature layer 0">60</setting>
+        <setting key="print temperature">250</setting>
+        <setting key="print temperature layer 0">270</setting>
+        <setting key="heated bed temperature">100</setting>
+        <setting key="heated bed temperature layer 0">100</setting>
         <setting key="cool fan full layer">2</setting>
         <setting key="fan speed min">100</setting>
         <setting key="fan speed max">100</setting>

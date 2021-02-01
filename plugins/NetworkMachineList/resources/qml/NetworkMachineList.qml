@@ -24,6 +24,7 @@ Item
         "zaxe_flex": "Zaxe FLEX",
         "zaxe_petg": "Zaxe PETG",
         "basf_asa": "BASF ASA",
+        "basf_pet_cf15": "BASF PET CF15",
         "custom": catalog.i18nc("@label", "Custom")
     }
 

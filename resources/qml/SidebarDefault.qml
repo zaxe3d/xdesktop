@@ -1191,7 +1191,7 @@ Item
                                     style: UM.Theme.styles.text_field
                                     width: 100
 
-                                    validator: DoubleValidator { bottom: parseFloat(supportTopDistance.properties.minimum_value); top: parseFloat(supportZDistance.properties.maximum_value_warning); decimals: 2 }
+                                    validator: DoubleValidator { bottom: parseFloat(supportTopDistance.properties.minimum_value); top: parseFloat(supportTopDistance.properties.maximum_value_warning); decimals: 2 }
                                     property string unit: "mm"
 
                                     text: parseFloat(Number.fromLocaleString(Qt.locale(), supportTopDistance.properties.value))

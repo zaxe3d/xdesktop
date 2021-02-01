@@ -28,6 +28,7 @@ Column
         "zaxe_flex": "Zaxe FLEX",
         "zaxe_petg": "Zaxe PETG",
         "basf_asa": "BASF ASA",
+        "basf_pet_cf15": "BASF PET CF15",
         "custom": catalog.i18nc("@label", "Custom")
     }
 
@@ -90,7 +91,11 @@ Column
             ExclusiveGroup {
                 id: materialGroup
                 onCurrentChanged : {
-                    setMaterial(current.material)
+                    if (current.material == "basf") { // if sub model is not selected
+                        setMaterial(basfSubMaterialModel.get(basfSubMaterialCombobox.currentIndex).value)
+                    } else {
+                        setMaterial(current.material)
+                    }
 
                     if (UM.Preferences.getValue("general/firstrun"))
                         UM.Preferences.setValue("general/firstrun_step", 6)
@@ -125,7 +130,6 @@ Column
             // FLEX
             RadioButton
             {
-                id: rBMaterialFlex
                 exclusiveGroup: materialGroup
                 property string material : "zaxe_flex"
                 checked: Cura.MachineManager.currentRootMaterialId[0] == material
@@ -149,17 +153,18 @@ Column
                 style: UM.Theme.styles.radiobutton
                 text: materialNames[material]
             }
-            // PETG
+            // BASF
             RadioButton
             {
+                id: rBMaterialBasf
                 exclusiveGroup: materialGroup
-                property string material : "basf_asa"
-                checked: Cura.MachineManager.currentRootMaterialId[0] == material
+                property string material : "basf"
+                checked: Cura.MachineManager.currentRootMaterialId[0].indexOf("basf") > -1
                 Layout.preferredHeight: 30
                 Layout.preferredWidth: 90
                 Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
-                text: materialNames[material]
+                text: "BASF"
             }
             // Custom
             RadioButton
@@ -173,6 +178,46 @@ Column
                 style: UM.Theme.styles.radiobutton
                 text: catalog.i18nc("@label", "Custom")
             }
+        }
+
+        ComboBox // BASF sub material
+        {
+            id: basfSubMaterialCombobox
+            visible: rBMaterialBasf.checked
+
+            width: 90
+            height: UM.Theme.getSize("setting_control").height
+
+            x: rBMaterialBasf.x + 21
+
+            anchors {
+                top: materialSelectionGrid.bottom
+                topMargin: -5
+            }
+
+            model: ListModel {
+                id: basfSubMaterialModel
+                ListElement { text: "ASA"; value: "basf_asa" }
+                ListElement { text: "PET CF 15"; value: "basf_pet_cf15" }
+            }
+
+            textRole: "text"  // this solves that the combobox isn't populated in the first time XDesktop is started
+
+            Behavior on height { NumberAnimation { duration: 100 } }
+
+            style: UM.Theme.styles.combobox
+
+            onActivated: setMaterial(model.get(index).value)
+
+            currentIndex: {
+                for(var i = 0; i < basfSubMaterialModel.count; i++) {
+                    if(basfSubMaterialModel.get(i).value == Cura.MachineManager.currentRootMaterialId[0]) {
+                        return i
+                    }
+                }
+                return 0 // 0 for default
+            }
+            MouseWheelDisabled {}
         }
 
         Button {

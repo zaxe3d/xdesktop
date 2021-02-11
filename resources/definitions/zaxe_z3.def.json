@@ -15,8 +15,8 @@
     "overrides": {
         "machine_extruder_count": { "default_value": 2 },
         "machine_name": { "default_value": "Z3" },
-        "machine_width": { "default_value": 306 },
-        "machine_depth": { "default_value": 306 },
-        "machine_height": { "default_value": 300 }
+        "machine_width": { "default_value": 202 },
+        "machine_depth": { "default_value": 202 },
+        "machine_height": { "default_value": 200 }
     }
 }

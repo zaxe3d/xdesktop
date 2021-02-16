@@ -3170,6 +3170,59 @@ Item
                             }
                         }
                     }
+                    Item
+                    {
+                        id: adaptiveLayerHeightRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: adaptiveLayerHeightCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .70)
+
+                                CheckBox
+                                {
+                                    id: adaptiveLayerHeightCheckBox
+                                    property alias _hovered: adaptiveLayerHeightMouseArea.containsMouse
+                                    property bool checkBoxSmall: true
+
+                                    anchors.top: parent.top
+                                    anchors.left: parent.left
+
+                                    //: Setting enable printing build-plate adhesion helper checkbox
+                                    style: UM.Theme.styles.checkbox;
+
+                                    checked: adaptiveLayerHeight.properties.value == "True"
+                                    text: catalog.i18nc("@label", "Use adaptive layers")
+
+                                    MouseArea
+                                    {
+                                        id: adaptiveLayerHeightMouseArea
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onClicked:
+                                        {
+                                            parent.checked = !parent.checked;
+                                            adaptiveLayerHeight.setPropertyValue("value", parent.checked);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -3473,6 +3526,16 @@ Item
                 watchedProperties: [ "value" ]
                 storeIndex: 0
             }
+
+            UM.SettingPropertyProvider
+            {
+                id: adaptiveLayerHeight
+                containerStack: Cura.MachineManager.activeMachine
+                key: "adaptive_layer_height_enabled"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
             UM.SettingPropertyProvider
             {
                 id: platformAdhesionType

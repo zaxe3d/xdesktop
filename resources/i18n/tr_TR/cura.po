@@ -397,6 +397,10 @@ msgid "More detailed slicing"
 msgstr "Daha detaylı dilimleme"
 
 msgctxt "@label"
+msgid "Use adaptive layers"
+msgstr "Uyarlanabilir katman kalınlığı"
+
+msgctxt "@label"
 msgid "XY tolerance"
 msgstr "XY toleransı"
 

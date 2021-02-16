@@ -1,6 +1,7 @@
 [2.1.8]
 * Z3 serisi eklendi.
 * BASF marka Zaxe uyumlu filamentler eklendi.
+* Uyarlanabilir katman kullan özelliği eklendi.
 
 [2.1.7]
 * Gelişmiş destek ayarları eklendi.

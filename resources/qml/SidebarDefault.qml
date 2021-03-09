@@ -2062,6 +2062,116 @@ Item
 
                     Item
                     {
+                        id: raftAirgapRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+                        visible: platformAdhesionType.properties.value == "raft"
+                        property var stackLevels: raftAirgap.stackLevels
+                        property var stackLevel: raftAirgapRow.stackLevels[0]
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: raftAirgapCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .45)
+
+                                Label
+                                {
+                                    id: raftAirgapLabel
+                                    text: catalog.i18nc("@label", "Raft airgap")
+                                    font: UM.Theme.getFont("medium");
+                                    color: UM.Theme.getColor("text_sidebar")
+
+                                    anchors {
+                                        top: parent.top
+                                        topMargin: UM.Theme.getSize("sidebar_item_margin").height
+                                        left: parent.left
+                                        verticalCenter: parent.verticalCenter
+                                    }
+                                }
+                            }
+
+                            Item
+                            {
+                                id: raftAirgapCellRight
+
+                                width: Math.round(base.width * .38)
+                                height: raftAirgapCellLeft.height
+
+                                anchors {
+                                    left: raftAirgapCellLeft.right
+                                    bottom: raftAirgapCellLeft.bottom
+                                }
+
+                                TextField {
+                                    id: raftAirgapInput
+                                    height: UM.Theme.getSize("setting_control").height
+                                    anchors {
+                                        verticalCenter: parent.verticalCenter
+                                        right: parent.right
+                                    }
+                                    style: UM.Theme.styles.text_field
+                                    width: 100
+
+                                    validator: DoubleValidator { bottom: parseFloat(raftAirgap.properties.minimum_value); top: parseFloat(raftAirgap.properties.maximum_value_warning); decimals: 2 }
+                                    property string unit: "mm"
+
+                                    Binding {
+                                        target: raftAirgapInput
+                                        property: "text"
+                                        value: {
+                                            return raftAirgap.properties.value
+                                        }
+                                        when: !raftAirgapInput.activeFocus
+                                    }
+
+                                    onEditingFinished: {
+                                        if (!acceptableInput) return
+                                        raftAirgap.setPropertyValue("value", text)
+                                    }
+                                }
+
+                                UM.SimpleButton
+                                {
+                                    id: raftAirgapRevertButton
+
+                                    visible: raftAirgapRow.stackLevel == 0
+                                    anchors {
+                                        right: raftAirgapInput.left
+                                        rightMargin: UM.Theme.getSize("sidebar_margin").width
+                                        verticalCenter: parent.verticalCenter
+                                    }
+
+                                    height: 15
+                                    width: height
+
+                                    color: UM.Theme.getColor("setting_control_button")
+                                    hoverColor: UM.Theme.getColor("setting_control_button_hover")
+
+                                    iconSource: UM.Theme.getIcon("reset")
+
+                                    onClicked: {
+                                        raftAirgapRevertButton.focus = true
+                                        Cura.MachineManager.clearUserSettingAllCurrentStacks(raftAirgap.key)
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item
+                    {
                         id: infillPatternRow
 
                         Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
@@ -3542,6 +3652,16 @@ Item
                 containerStack: Cura.MachineManager.activeMachine
                 key: "adhesion_type"
                 watchedProperties: [ "value", "enabled" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: raftAirgap
+                containerStack: Cura.MachineManager.activeMachine
+                key: "raft_airgap"
+                watchedProperties: [ "value", "minimum_value", "maximum_value_warning" ]
+                removeUnusedValue: true
                 storeIndex: 0
             }
 

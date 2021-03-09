@@ -98,7 +98,7 @@ msgstr "Çıkart"
 
 msgctxt "@info"
 msgid "Firmware update available for your device"
-msgstr "Cihanız için yazılım güncellemesi mevcut"
+msgstr "Cihazınız için yazılım güncellemesi mevcut"
 
 msgctxt "@label"
 msgid "Custom IP..."
@@ -307,6 +307,10 @@ msgstr "Zemin"
 msgctxt "@item:inlistbox"
 msgid "Off"
 msgstr "Kapalı"
+
+msgctxt "@label"
+msgid "Raft airgap"
+msgstr "Taban destek mesafesi"
 
 msgctxt "@label"
 msgid "Infill pattern"

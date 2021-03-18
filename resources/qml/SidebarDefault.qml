@@ -3333,6 +3333,61 @@ Item
                             }
                         }
                     }
+
+                    Item
+                    {
+                        id: travelRetractionRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: travelRetractionCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .70)
+
+                                CheckBox
+                                {
+                                    id: travelRetractionCheckBox
+                                    property alias _hovered: travelRetractionMouseArea.containsMouse
+                                    property bool checkBoxSmall: true
+
+                                    anchors.top: parent.top
+                                    anchors.left: parent.left
+
+                                    //: Setting enable printing build-plate adhesion helper checkbox
+                                    style: UM.Theme.styles.checkbox;
+
+                                    checked: travelRetraction.properties.value == "False"
+                                    text: catalog.i18nc("@label", "Disable travel retraction")
+
+                                    MouseArea
+                                    {
+                                        id: travelRetractionMouseArea
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onClicked:
+                                        {
+                                            console.log("settings")
+                                            parent.checked = !parent.checked;
+                                            travelRetraction.setPropertyValue("value", !parent.checked);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -3633,6 +3688,15 @@ Item
                 id: zSeamCorner
                 containerStackId: Cura.MachineManager.activeStackId
                 key: "z_seam_corner"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+
+            UM.SettingPropertyProvider
+            {
+                id: travelRetraction
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "retraction_enable"
                 watchedProperties: [ "value" ]
                 storeIndex: 0
             }

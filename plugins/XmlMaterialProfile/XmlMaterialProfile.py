@@ -1194,6 +1194,7 @@ class XmlMaterialProfile(InstanceContainer):
         "surface energy": "material_surface_energy",
         "shrinkage percentage": "material_shrinkage_percentage",
         "cool fan full layer": "cool_fan_full_layer",
+        "cool fan top skin enabled": "cool_fan_top_skin_enabled",
         "fan speed min": "cool_fan_speed_min",
         "fan speed max": "cool_fan_speed_max",
         "retraction combing": "retraction_combing",

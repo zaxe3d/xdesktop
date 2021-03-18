@@ -93,6 +93,7 @@
                 <setting key="fan speed min">0</setting>
                 <setting key="fan speed max">0</setting>
                 <setting key="linear advance gcode">M572 D0 S0.06</setting>
+                <setting key="cool fan top skin enabled">true</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>
@@ -134,6 +135,7 @@
                 <setting key="fan speed min">0</setting>
                 <setting key="fan speed max">0</setting>
                 <setting key="linear advance gcode">M572 D0 S0.06</setting>
+                <setting key="cool fan top skin enabled">true</setting>
             </hotend>
             <hotend id="0.6">
                 <setting key="hardware compatible">yes</setting>

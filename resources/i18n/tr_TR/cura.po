@@ -405,6 +405,10 @@ msgid "Use adaptive layers"
 msgstr "Uyarlanabilir katman kalınlığı"
 
 msgctxt "@label"
+msgid "Disable travel retraction"
+msgstr "Geri çekme devredışı"
+
+msgctxt "@label"
 msgid "XY tolerance"
 msgstr "XY toleransı"
 

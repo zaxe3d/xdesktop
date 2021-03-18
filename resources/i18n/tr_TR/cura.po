@@ -752,6 +752,10 @@ msgctxt "@title:window"
 msgid "Closing XDesktop"
 msgstr "XDesktop kapatılacak"
 
+msgctxt "@title:window"
+msgid "User Agreement"
+msgstr "Kullanıcı Sözleşmesi"
+
 msgctxt "@label %1 is filled in with the name of an extruder"
 msgid "Print Selected Model with %1"
 msgid_plural "Print Selected Models with %1"
@@ -856,6 +860,14 @@ msgstr "Çıkarılabilir Sürücüye {0}, {1} olarak kaydedildi"
 msgctxt "@info:title"
 msgid "File Saved"
 msgstr "Dosya Kaydedildi"
+
+msgctxt "@action:button"
+msgid "I understand and agree"
+msgstr "Anladım ve kabul ediyorum"
+
+msgctxt "@action:button"
+msgid "I don't agree"
+msgstr "Kabul etmiyorum"
 
 msgctxt "@action:button"
 msgid "Eject"

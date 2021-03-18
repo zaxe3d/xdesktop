@@ -230,8 +230,6 @@ class CuraApplication(QtApplication):
 
         self._update_platform_activity_timer = None
 
-        self._need_to_show_user_agreement = True
-
         self._sidebar_custom_menu_items = []  # type: list # Keeps list of custom menu items for the side bar
 
         self._plugins_loaded = False
@@ -417,6 +415,7 @@ class CuraApplication(QtApplication):
             # Misc.:
             "ConsoleLogger",
             "CuraEngineBackend",
+            "UserAgreement",
             "FileLogger",
             "XmlMaterialProfile",
             "Toolbox",
@@ -462,6 +461,8 @@ class CuraApplication(QtApplication):
 
         # set the setting version for Preferences
         preferences = self.getPreferences()
+        self._need_to_show_user_agreement = not preferences.getValue("general/accepted_user_agreement")
+
         preferences.addPreference("metadata/setting_version", 0)
         preferences.setValue("metadata/setting_version", self.SettingVersion) #Don't make it equal to the default so that the setting version always gets written to the file.
 
@@ -554,7 +555,7 @@ class CuraApplication(QtApplication):
 
     @pyqtProperty(bool)
     def needToShowUserAgreement(self):
-        return False
+        return self._need_to_show_user_agreement
 
     def setNeedToShowUserAgreement(self, set_value = True):
         self._need_to_show_user_agreement = set_value

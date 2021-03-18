@@ -3379,7 +3379,6 @@ Item
                                         hoverEnabled: true
                                         onClicked:
                                         {
-                                            console.log("settings")
                                             parent.checked = !parent.checked;
                                             travelRetraction.setPropertyValue("value", !parent.checked);
                                         }

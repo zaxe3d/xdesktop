@@ -18,12 +18,75 @@
         <diameter>1.75</diameter>
     </properties>
     <settings>
-        <setting key="print temperature">200</setting>
-        <setting key="print temperature layer 0">220</setting>
-        <setting key="heated bed temperature">60</setting>
-        <setting key="heated bed temperature layer 0">60</setting>
+        <setting key="print temperature">250</setting>
+        <setting key="print temperature layer 0">255</setting>
+        <setting key="heated bed temperature">100</setting>
+        <setting key="heated bed temperature layer 0">100</setting>
         <setting key="cool fan full layer">2</setting>
         <setting key="fan speed min">100</setting>
         <setting key="fan speed max">100</setting>
+
+        <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe Z1"/>
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">250</setting>
+                <setting key="print temperature layer 0">255</setting>
+                <setting key="heated bed temperature">100</setting>
+                <setting key="retraction amount">1.4</setting>
+                <setting key="cool fan full layer">3</setting>
+                <setting key="skin overlap">40</setting>
+                <setting key="material flow">100</setting>
+                <setting key="material flow layer 0">90</setting>
+                <setting key="skin material flow">100</setting>
+                <setting key="wall_0_material flow">87</setting>
+                <setting key="wall_x_material flow">100</setting>
+                <setting key="wall_line_width_0">0.45</setting>
+                <setting key="wall_line_width_x">0.45</setting>
+                <setting key="skin line width">0.4</setting>
+                <setting key="linear advance gcode">M572 D0 S0.0635</setting>
+            </hotend>
+            <hotend id="E3D Brass 0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">290</setting>
+                <setting key="heated bed temperature">110</setting>
+                <setting key="retraction amount">1.25</setting>
+                <setting key="cool fan full layer">3</setting>
+                <setting key="skin overlap">40</setting>
+                <setting key="skin material flow">105</setting>
+                <setting key="linear advance gcode">M572 D0 S0.0635</setting>
+            </hotend>
+        </machine>
+
+        <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe Z1PLUS"/>
+
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">250</setting>
+                <setting key="print temperature layer 0">255</setting>
+                <setting key="heated bed temperature">100</setting>
+                <setting key="retraction amount">1.4</setting>
+                <setting key="cool fan full layer">3</setting>
+                <setting key="skin overlap">40</setting>
+                <setting key="material flow">87</setting>
+                <setting key="material flow layer 0">90</setting>
+                <setting key="skin material flow">100</setting>
+                <setting key="wall_line_width_0">0.45</setting>
+                <setting key="wall_line_width_x">0.45</setting>
+                <setting key="skin line width">0.4</setting>
+                <setting key="linear advance gcode">M572 D0 S0.064</setting>
+            </hotend>
+            <hotend id="E3D Brass 0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">285</setting>
+                <setting key="heated bed temperature">110</setting>
+                <setting key="retraction amount">0.75</setting>
+                <setting key="cool fan full layer">3</setting>
+                <setting key="skin overlap">40</setting>
+                <setting key="skin material flow">105</setting>
+                <setting key="linear advance gcode">M572 D0 S0.042</setting>
+            </hotend>
+        </machine>
     </settings>
 </fdmmaterial>

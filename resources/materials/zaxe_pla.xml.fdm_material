@@ -100,10 +100,19 @@
             </hotend>
             <hotend id="0.8">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature layer 0">200</setting>
-                <setting key="print temperature">200</setting>
-                <setting key="retraction amount">0.6</setting>
+                <setting key="print temperature layer 0">185</setting>
+                <setting key="print temperature">170</setting>
+                <setting key="retraction amount">0.8</setting>
                 <setting key="cool fan full layer">3</setting>
+                <setting key="skin overlap">40</setting>
+                <setting key="skin line width">0.6</setting>
+                <setting key="material flow layer 0">105</setting>
+                <setting key="infill material flow">125</setting>
+                <setting key="skin material flow">110</setting>
+                <setting key="speed print">40</setting>
+                <setting key="speed print layer 0">20</setting>
+                <setting key="speed infill">100</setting>
+                <setting key="speed top bottom">50</setting>
                 <setting key="linear advance gcode">M572 D0 S0.015</setting>
             </hotend>
 
@@ -137,7 +146,7 @@
             <hotend id="0.8">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="print temperature layer 0">200</setting>
-                <setting key="print temperature">200</setting>
+                <setting key="print temperature">190</setting>
                 <setting key="retraction amount">0.6</setting>
                 <setting key="cool fan full layer">3</setting>
                 <setting key="linear advance gcode">M572 D0 S0.015</setting>

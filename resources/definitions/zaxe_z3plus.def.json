@@ -1,0 +1,22 @@
+{
+    "id": "zaxe_z3",
+    "name": "Z3",
+    "version": 2,
+    "inherits": "zaxe_z",
+    "metadata": {
+        "visible": true,
+        "machine_extruder_trains":
+        {
+            "0": "zaxe_z3_extruder_left",
+            "1": "zaxe_z3_extruder_right"
+        }
+    },
+
+    "overrides": {
+        "machine_extruder_count": { "default_value": 2 },
+        "machine_name": { "default_value": "Z3" },
+        "machine_width": { "default_value": 202 },
+        "machine_depth": { "default_value": 202 },
+        "machine_height": { "default_value": 200 }
+    }
+}

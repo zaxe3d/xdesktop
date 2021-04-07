@@ -18,7 +18,7 @@
         "machine_width": { "default_value": 402 },
         "machine_depth": { "default_value": 302 },
         "machine_height": { "default_value": 300 },
-        "machine_start_gcode": { "default_value": "G28\nG29\nM83\nG1 E3 F150\nG90\nG1 X20 Y0 F1000\nG1 Z0.4 F500\nG91\nM83\nG1 X40 E15 F500\nG90\nM82\nG92 E0" },
+        "machine_start_gcode": { "default_value": "G28\nG29\nM83\nG1 E3 F150\nG90\nG1 Z5 F500\nG1 X20 Y0 F10000\nG1 Z0.4 F500\nG91\nM83\nG1 X40 E15 F500\nG90\nM82\nG92 E0" },
         "jerk_enabled": { "value": false }
     }
 }

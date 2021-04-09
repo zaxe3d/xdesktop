@@ -149,7 +149,7 @@
                 <setting key="print temperature">190</setting>
                 <setting key="retraction amount">0.6</setting>
                 <setting key="cool fan full layer">3</setting>
-                <setting key="linear advance gcode">M572 D0 S0.015</setting>
+                <setting key="linear advance gcode">M572 D0 S0.045</setting>
             </hotend>
             <hotend id="E3D Brass 0.4">
                 <setting key="hardware compatible">yes</setting>

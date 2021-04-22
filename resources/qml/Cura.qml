@@ -33,7 +33,6 @@ UM.MainWindow
     {
         target: CuraApplication
         onActivityChanged: {
-
             if (CuraApplication.platformActivity && UM.Backend.state == 1) {
                 // Take snapshot if ready to slice - 1 = Ready to slice
                 Cura.Actions.takeSnapshot.trigger()

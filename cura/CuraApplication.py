@@ -513,6 +513,7 @@ class CuraApplication(QtApplication):
             preferences.addPreference(configPrefix + "jerk_print",                         20)
             preferences.addPreference(configPrefix + "acceleration_print",                 3000)
             preferences.addPreference(configPrefix + "speed_travel",                       120)
+            preferences.addPreference(configPrefix + "speed_layer_0",                      30)
             preferences.addPreference(configPrefix + "speed_topbottom",                    30)
             preferences.addPreference(configPrefix + "speed_infill",                       60)
             preferences.addPreference(configPrefix + "speed_wall_0",                       30)

@@ -34,6 +34,7 @@ Item
             accelerationPrint.setPropertyValue("value", UM.Preferences.getValue(valStr + "acceleration_print"))
             speedTravel.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_travel"))
             speedTopbottom.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_topbottom"))
+            speedLayer0.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_layer_0"))
             speedInfill.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_infill"))
             speedWall0.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_wall_0"))
             speedWallX.setPropertyValue("value", UM.Preferences.getValue(valStr + "speed_wall_x"))
@@ -419,6 +420,15 @@ Item
                     }
 
                     CustomMaterialSettingItem {
+                        label: catalog.i18nc("@label", "First layer speed")
+                        type: "int"
+                        unit: "mm/s";
+                        profileIdx: cmpidx
+                        preferenceId: "speed_layer_0"
+                        validator: IntValidator { bottom: 1; top: 150 }
+                    }
+
+                    CustomMaterialSettingItem {
                         label: catalog.i18nc("@label", "Speed top/bottom")
                         type: "int"
                         unit: "mm/s";
@@ -622,6 +632,15 @@ Item
                     id: speedTopbottom
                     containerStackId: Cura.MachineManager.activeMachineId
                     key: "speed_topbottom"
+                    watchedProperties: [ "value"  ]
+                    storeIndex: 0
+
+                }
+                UM.SettingPropertyProvider
+                {
+                    id: speedLayer0
+                    containerStackId: Cura.MachineManager.activeMachineId
+                    key: "speed_layer_0"
                     watchedProperties: [ "value"  ]
                     storeIndex: 0
 

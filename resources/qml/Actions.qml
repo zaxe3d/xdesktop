@@ -182,6 +182,7 @@ Item
         text: catalog.i18ncp("@action:inmenu menubar:edit", "Lay Flat Selected Model", "Lay Flat Selected Models", UM.Selection.selectionCount);
         enabled: UM.Controller.toolsEnabled && UM.Selection.hasSelection;
         iconName: "align-vertical-center";
+        shortcut: "Ctrl+F";
         onTriggered: {
             UM.Controller.setActiveTool("RotateTool");
             UM.ActiveTool.triggerAction("layFlat");

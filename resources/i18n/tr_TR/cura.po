@@ -177,6 +177,10 @@ msgid "Speed settings"
 msgstr "Hız ayarları"
 
 msgctxt "@label"
+msgid "First layer speed"
+msgstr "İlk katman hızı"
+
+msgctxt "@label"
 msgid "Speed top/bottom"
 msgstr "Tavan/taban hızı"
 

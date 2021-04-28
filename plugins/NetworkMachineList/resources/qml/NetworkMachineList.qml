@@ -154,6 +154,7 @@ Item
             hasNFCSpool: mHasNFCSpool
             hasFWUpdate: mHasFWUpdate
             hasSnapshot: mHasSnapshot
+            isLite: mDeviceModel.toUpperCase().indexOf("LITE") > -1
 
             machineStates: mStates
         }

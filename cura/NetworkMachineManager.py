@@ -38,7 +38,7 @@ class NetworkMachineManager(QObject):
         "z3": {"version": [0, 0, 0], "path": "/z3/firmware.json"},
         #"z3plus": {"version": [0, 0, 0], "path": "/z3/firmware.json"},
         #"zlite": {"version": [0, 0, 0], "path": "/z3/firmware.json"},
-        #"xlite": {"version": [0, 0, 0], "path": "/z3/firmware.json"}
+        "xlite": {"version": [0, 0, 0], "path": "/xlite/firmware.json"}
     }
 
     ##  Registers listeners and such to listen and command network printers

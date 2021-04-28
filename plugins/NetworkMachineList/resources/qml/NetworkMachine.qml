@@ -51,6 +51,8 @@ Item {
 
     property string nextState
 
+    property bool isLite
+
     Connections
     {
         target: Cura.NetworkMachineListModel
@@ -768,6 +770,9 @@ Item {
                                             } else if (Cura.MachineManager.activeMachineName.replace("+", "PLUS").toUpperCase() != device.deviceModel.toUpperCase()) {
                                                 device.modelCompatibilityWarning = true
                                                 shakeAnim.start()
+                                            } else if (device.isLite) {
+                                                // Light models doesn' care neithter about filament type nor nozzle type.
+                                                Cura.NetworkMachineManager.upload(device.uid) == false
                                             } else if (Cura.MachineManager.activeVariantName != device.nozzle) {
                                                 device.nozzleWarning = true
                                                 shakeAnim.start()
@@ -1197,7 +1202,9 @@ Item {
                             }
                             Label {
                                 text: {
-                                    if (device.hasNFCSpool) {
+                                    if (device.isLite) {
+                                        return "-"
+                                    } else if (device.hasNFCSpool) {
                                         var colorUpper = device.filamentColor.charAt(0).toUpperCase() +
                                                          device.filamentColor.slice(1)
                                         var color = networkMachineList.materialColors[colorUpper]
@@ -1221,7 +1228,7 @@ Item {
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                             }
                             Label {
-                                text: device.nozzle + " mm"
+                                text: device.isLite ? "-" : device.nozzle + " mm"
                                 color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("large_semi_bold")
                                 Layout.preferredHeight: 15

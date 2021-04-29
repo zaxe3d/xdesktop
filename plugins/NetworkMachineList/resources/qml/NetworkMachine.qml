@@ -740,7 +740,9 @@ Item {
                                         // check if the slice is ready or if there is a model
                                         if (PrintInformation.preSliced) {
                                             var info = PrintInformation.preSlicedInfo
-                                            if (!CuraApplication.platformActivity) {
+                                            if (device.isLite) {
+                                                Cura.NetworkMachineManager.upload(device.uid) == false
+                                            } else if (!CuraApplication.platformActivity) {
                                                 device.materialWarning = false
                                                 device.modelCompatibilityWarning = false
                                                 shakeAnim.start()

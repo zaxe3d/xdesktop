@@ -261,7 +261,7 @@ class NetworkMachine(QThread, QObject):
         if self.uploader is not None and self.uploader.isUploading():
             return
         self.startPreheat()
-        self.uploader = FTPUploader(filename, self.ip, self.ftpPort, self.nonTLS, self.deviceModel)
+        self.uploader = FTPUploader(filename, self.ip, self.ftpPort, self.isLite, self.nonTLS, self.deviceModel)
         self.uploader.uploadEvent.connect(self.uploadProgressCB)
         Logger.log("d", "starting to upload %s" % filename)
         self.uploader.daemon = True
@@ -298,7 +298,7 @@ class FTPUploader(QThread, QObject):
 
     uploadEvent = pyqtSignal(int)
 
-    def __init__(self, filename, ip, port, nonTLS, filenameSuffix, parent = None):
+    def __init__(self, filename, ip, port, isLite, nonTLS, filenameSuffix, parent = None):
         QObject.__init__(self)
         self.ftp = ftplib.FTP() if nonTLS else ftplib.FTP_TLS()
         self.currentSize = 0
@@ -312,6 +312,7 @@ class FTPUploader(QThread, QObject):
         self.cancel = False
         self.finished = False
         self.nonTLS = nonTLS
+        self.isLite = isLite
 
     def isUploading(self):
         return not self.cancel and not self.finished
@@ -334,6 +335,7 @@ class FTPUploader(QThread, QObject):
             self.ftp.login("zaxe", "zaxe")
             filePtr = open(self.filename, 'rb')
             filename = tool.baseName(self.filename)
+            filename = tool.eightDot3Filename(filename, "LITE") if self.isLite else filename
             self.ftp.storbinary("stor " + filename, filePtr, io.DEFAULT_BUFFER_SIZE, callback)
             self.ftp.close()
             self.finished = True

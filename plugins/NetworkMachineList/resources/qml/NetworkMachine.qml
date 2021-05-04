@@ -741,7 +741,7 @@ Item {
                                         if (PrintInformation.preSliced) {
                                             var info = PrintInformation.preSlicedInfo
                                             if (device.isLite) {
-                                                Cura.NetworkMachineManager.upload(device.uid) == false
+                                                Cura.NetworkMachineManager.upload(device.uid)
                                             } else if (!CuraApplication.platformActivity) {
                                                 device.materialWarning = false
                                                 device.modelCompatibilityWarning = false
@@ -774,7 +774,7 @@ Item {
                                                 shakeAnim.start()
                                             } else if (device.isLite) {
                                                 // Light models doesn' care neithter about filament type nor nozzle type.
-                                                Cura.NetworkMachineManager.upload(device.uid) == false
+                                                Cura.NetworkMachineManager.upload(device.uid)
                                             } else if (Cura.MachineManager.activeVariantName != device.nozzle) {
                                                 device.nozzleWarning = true
                                                 shakeAnim.start()
@@ -790,7 +790,7 @@ Item {
                                                 device.nozzleWarning = false
                                                 device.materialWarning = false
                                                 device.modelCompatibilityWarning = false
-                                                Cura.NetworkMachineManager.upload(device.uid) == false
+                                                Cura.NetworkMachineManager.upload(device.uid)
                                             }
                                         }
                                         // final step for first-run

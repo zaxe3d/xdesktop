@@ -149,10 +149,11 @@ class NetworkMachine(QThread, QObject):
                 self.elapsedTime = 0 if "elapsed_time" not in message else float(message["elapsed_time"])
                 self.startTime = time.time() - self.elapsedTime
                 self.estimatedTime = message["estimated_time"]
-                self.hasPin = message["has_pin"].lower() == "true"
-                self.hasNFCSpool = message["has_nfc_spool"].lower() == "true" if "has_nfc_spool" in message else False
-                self.filamentRemaining = float(message["filament_remaining"]) if self.hasNFCSpool else 0
-                self.filamentColor = message["filament_color"] if self.hasNFCSpool else "unknown"
+                if not self.isLite:
+                    self.hasPin = message["has_pin"].lower() == "true"
+                    self.hasNFCSpool = message["has_nfc_spool"].lower() == "true" if "has_nfc_spool" in message else False
+                    self.filamentRemaining = float(message["filament_remaining"]) if self.hasNFCSpool else 0
+                    self.filamentColor = message["filament_color"] if self.hasNFCSpool else "unknown"
             except:
                 self.printingFile = ""
                 self.elapsedTime = 0

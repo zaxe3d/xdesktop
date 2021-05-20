@@ -1,7 +1,7 @@
 [2.1.9]
 * Z3 serisi eklendi.
 * Ek geliştirmeler
-Düz şekilde yerleştir kısayolu CTRL+F atandı.
+Düz şekilde yerleştirmek için yüz seçiniz kısayolu CTRL+F atandı.
 Özel materyal ayarlarına ilk katman hızı eklendi.
 
 [2.1.8]

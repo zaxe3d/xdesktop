@@ -25,6 +25,7 @@ Item
     property alias centerSelection: centerSelectionAction;
     property alias multiplySelection: multiplySelectionAction;
     property alias layFlatSelection: layFlatSelectionAction;
+    property alias selectFaceTolayFlatSelection: selectFaceToLayFlatSelectionAction;
     property alias repairSelection: repairSelectionAction;
     property alias splitIntoPartsSelection: splitIntoPardsSelectionAction;
 
@@ -182,10 +183,21 @@ Item
         text: catalog.i18ncp("@action:inmenu menubar:edit", "Lay Flat Selected Model", "Lay Flat Selected Models", UM.Selection.selectionCount);
         enabled: UM.Controller.toolsEnabled && UM.Selection.hasSelection;
         iconName: "align-vertical-center";
+        onTriggered: {
+            UM.ActiveTool.triggerAction("layFlat");
+        }
+    }
+
+    Action
+    {
+        id: selectFaceToLayFlatSelectionAction;
+        text: catalog.i18nc("@action:inmenu menubar:edit", "Select Face to Lay Flat Selected Model");
+        enabled: UM.Controller.toolsEnabled && UM.Selection.hasSelection && UM.Selection.selectionCount == 1;
+        iconName: "align-vertical-center";
         shortcut: "Ctrl+F";
         onTriggered: {
             UM.Controller.setActiveTool("RotateTool");
-            UM.ActiveTool.triggerAction("layFlat");
+            UM.ActiveTool.setProperty("SelectFaceToLayFlatMode", true);
         }
     }
 

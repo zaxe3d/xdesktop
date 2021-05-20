@@ -635,6 +635,10 @@ msgid "Number of Copies"
 msgstr "Kopyalama Adedi"
 
 msgctxt "@action:inmenu menubar:edit"
+msgid "Select Face to Lay Flat Selected Model"
+msgstr "Seçili Modelli Düz Şekilde Yerleştirmek İçin Yüz Seçin"
+
+msgctxt "@action:inmenu menubar:edit"
 msgid "Lay Flat Selected Model"
 msgid_plural "Lay Flat Selected Models"
 msgstr[0] "Seçili Modeli Düz Şekilde Yerleştir"

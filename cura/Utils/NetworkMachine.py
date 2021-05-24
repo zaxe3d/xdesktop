@@ -336,7 +336,8 @@ class FTPUploader(QThread, QObject):
             self.ftp.login("zaxe", "zaxe")
             filePtr = open(self.filename, 'rb')
             filename = tool.baseName(self.filename)
-            filename = tool.eightDot3Filename(filename, "LITE") if self.isLite else filename
+            # Now it has long file support
+            #filename = tool.eightDot3Filename(filename, "LITE") if self.isLite else filename
             self.ftp.storbinary("stor " + filename, filePtr, io.DEFAULT_BUFFER_SIZE, callback)
             self.ftp.close()
             self.finished = True

@@ -198,7 +198,7 @@ Column
             model: ListModel {
                 id: basfSubMaterialModel
                 ListElement { text: "ASA"; value: "basf_asa" }
-                ListElement { text: "PET CF 15"; value: "basf_pet_cf15" }
+                //ListElement { text: "PET CF 15"; value: "basf_pet_cf15" }
             }
 
             textRole: "text"  // this solves that the combobox isn't populated in the first time XDesktop is started

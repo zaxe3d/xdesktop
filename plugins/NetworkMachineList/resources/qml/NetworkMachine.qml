@@ -254,6 +254,7 @@ Item {
                         font: UM.Theme.getFont("medium_bold")
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                     onClicked: {
                         enterPinCode(inputPinCode.text)
@@ -293,6 +294,7 @@ Item {
                         font: UM.Theme.getFont("medium_bold")
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                     onClicked: {
                         applyState()
@@ -313,6 +315,7 @@ Item {
                         font: UM.Theme.getFont("medium_bold")
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                     onClicked: {
                         confirmationPane.visible = false
@@ -401,6 +404,7 @@ Item {
                                 font: UM.Theme.getFont("xx_large")
                                 color: UM.Theme.getColor("text_sidebar_light")
                                 text: device.deviceModel.replace("plus", "+").toUpperCase()
+                                renderType: Text.NativeRendering // M1 Mac garbled text fix
                             }
                         }
                     }
@@ -502,6 +506,7 @@ Item {
                                             anchors.top: parent.top
                                             horizontalAlignment: Text.AlignHCenter
                                             verticalAlignment: Text.AlignVCenter
+                                            renderType: Text.NativeRendering // M1 Mac garbled text fix
                                         }
                                         onClicked: Cura.NetworkMachineManager.TogglePreheat(device.uid)
                                         // this hover state makes it silly
@@ -531,6 +536,7 @@ Item {
                                             anchors.top: parent.top
                                             horizontalAlignment: Text.AlignHCenter
                                             verticalAlignment: Text.AlignVCenter
+                                            renderType: Text.NativeRendering // M1 Mac garbled text fix
                                         }
                                         onClicked: {
                                             if (device.hasPin) {
@@ -565,6 +571,7 @@ Item {
                                             anchors.top: parent.top
                                             horizontalAlignment: Text.AlignHCenter
                                             verticalAlignment: Text.AlignVCenter
+                                            renderType: Text.NativeRendering // M1 Mac garbled text fix
                                         }
                                         onClicked: Cura.NetworkMachineManager.Resume(device.uid)
                                         onHoveredChanged: {
@@ -605,6 +612,7 @@ Item {
                                             anchors.top: parent.top
                                             horizontalAlignment: Text.AlignHCenter
                                             verticalAlignment: Text.AlignVCenter
+                                            renderType: Text.NativeRendering // M1 Mac garbled text fix
                                         }
                                         onClicked: {
                                             if (device.hasPin) {
@@ -639,6 +647,7 @@ Item {
                                             anchors.top: parent.top
                                             horizontalAlignment: Text.AlignHCenter
                                             verticalAlignment: Text.AlignVCenter
+                                            renderType: Text.NativeRendering // M1 Mac garbled text fix
                                         }
                                         onClicked: Cura.NetworkMachineManager.SayHi(device.uid)
                                         onHoveredChanged: {
@@ -679,6 +688,7 @@ Item {
                                             text: "M"
                                             horizontalAlignment: Text.AlignHCenter
                                             verticalAlignment: Text.AlignVCenter
+                                            renderType: Text.NativeRendering // M1 Mac garbled text fix
                                         }
                                         onClicked: {
                                             if (containerExtraInfo.visible) {
@@ -735,6 +745,7 @@ Item {
                                         anchors.top: parent.top
                                         horizontalAlignment: Text.AlignHCenter
                                         verticalAlignment: Text.AlignVCenter
+                                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                                     }
                                     onClicked: {
                                         // check if the slice is ready or if there is a model
@@ -857,6 +868,7 @@ Item {
                                     horizontalAlignment: Text.AlignLeft
                                     wrapMode: Text.WordWrap
                                     text: catalog.i18nc("@label", "Please take your print!")
+                                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                                 }
                             }
 
@@ -916,6 +928,7 @@ Item {
                         left: parent.left
                     }
                     text: "d"
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
                 Text {
                     id: fwUpdateMessage
@@ -931,6 +944,7 @@ Item {
                         leftMargin: 1
                     }
                     text: catalog.i18nc("@info", "Firmware update available for your device")
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
                 Button {
                     id: btnfwUpdate
@@ -955,6 +969,7 @@ Item {
                         font: UM.Theme.getFont("small_bold")
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                     onClicked: {
                         showConfirmation("update")
@@ -982,6 +997,7 @@ Item {
                         left: parent.left
                     }
                     text: "d"
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
                 Text {
                     width: parent.width
@@ -995,6 +1011,7 @@ Item {
                         leftMargin: 1
                     }
                     text: catalog.i18nc("@warning", "The nozzle [%1] currently installed on machine does not match with the Zaxe file [%2] Please slice again with the correct nozzle diameter [%1]").arg(device.nozzle).arg(Cura.MachineManager.activeVariantName)
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
             }
 
@@ -1018,6 +1035,7 @@ Item {
                         left: parent.left
                     }
                     text: "d"
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
                 Text {
                     width: parent.width
@@ -1031,6 +1049,7 @@ Item {
                         leftMargin: 1
                     }
                     text: catalog.i18nc("@warning", "Remaining filament on device may not be enough for this print.")
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
             }
 
@@ -1054,6 +1073,7 @@ Item {
                         left: parent.left
                     }
                     text: "d"
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
                 Text {
                     width: parent.width
@@ -1067,6 +1087,7 @@ Item {
                         leftMargin: 1
                     }
                     text: catalog.i18nc("@warning", "The material in the device does not match with the material you choose. Please slice again with the correct material")
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
             }
 
@@ -1089,6 +1110,7 @@ Item {
                         left: parent.left
                     }
                     text: "d"
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
                 Text {
                     width: parent.width
@@ -1102,6 +1124,7 @@ Item {
                         verticalCenter: modelCompatibilityWarningIcon.verticalCenter
                     }
                     text: catalog.i18nc("@warning", "This print is not compatible with this device model")
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
             }
 
@@ -1162,6 +1185,7 @@ Item {
                                     color: UM.Theme.getColor("text_sidebar_medium")
                                     font: UM.Theme.getFont("large_semi_bold")
                                     text: parent.display
+                                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                                 }
                             }
                         }
@@ -1254,6 +1278,7 @@ Item {
                                     font: UM.Theme.getFont("small_bold")
                                     horizontalAlignment: Text.AlignHCenter
                                     verticalAlignment: Text.AlignVCenter
+                                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                                 }
                                 onClicked: {
                                     showConfirmation("filament_unload")

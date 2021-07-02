@@ -167,6 +167,7 @@ Item {
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                         padding: 4
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                     onClicked: {
                         itemCustomIP.visible = false
@@ -181,6 +182,7 @@ Item {
                     font: UM.Theme.getFont("large")
                     horizontalAlignment: Text.AlignHCenter
                     padding: 4
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
             }
             // Bottom Border
@@ -194,7 +196,7 @@ Item {
                 Item {
                     width: 270; height: 25
                     Row {
-                        Text { width: 250; height: 20; text: ip; font: UM.Theme.getFont("default") }
+                        Text { width: 250; height: 20; text: ip; font: UM.Theme.getFont("default"); renderType: Text.NativeRendering } // M1 Mac garbled text fix
                         Button {
                             implicitWidth: 20; implicitHeight: 20
                             background: Rectangle {
@@ -290,6 +292,7 @@ Item {
                         font: UM.Theme.getFont("medium_bold")
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                     onClicked: createManualMachine()
                 }
@@ -321,6 +324,7 @@ Item {
                 font: UM.Theme.getFont("extra_large_bold")
                 Layout.alignment: Qt.AlignHCenter
                 Layout.preferredHeight: 25
+                renderType: Text.NativeRendering // M1 Mac garbled text fix
             }
 
             RowLayout {
@@ -367,6 +371,7 @@ Item {
                     font: UM.Theme.getFont("medium");
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
                 onClicked: {
                     if (!activity) {
@@ -411,6 +416,7 @@ Item {
                 font: UM.Theme.getFont("large")
                 padding: 10
                 horizontalAlignment: Text.AlignHCenter
+                renderType: Text.NativeRendering // M1 Mac garbled text fix
             }
             // Bottom Border
             Rectangle { width: parent.width; height: 2; color: UM.Theme.getColor("sidebar_item_extra_dark") }
@@ -503,6 +509,7 @@ Item {
                         font: UM.Theme.getFont("large_nonbold")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                         Layout.preferredHeight: 32
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                 }
             }
@@ -565,6 +572,7 @@ Item {
                         font: UM.Theme.getFont("large_nonbold")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                         Layout.preferredHeight: 32
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                     Label {
                         text: "X"
@@ -580,6 +588,7 @@ Item {
                         font: UM.Theme.getFont("large_nonbold")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                         Layout.preferredHeight: 32
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                 }
             }
@@ -606,6 +615,7 @@ Item {
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             padding: 4
+                            renderType: Text.NativeRendering // M1 Mac garbled text fix
                         }
                         onClicked: {
                             UM.Preferences.setValue("general/firstrun_step", 9)
@@ -631,6 +641,7 @@ Item {
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             padding: 4
+                            renderType: Text.NativeRendering // M1 Mac garbled text fix
                         }
                         onClicked: {
                             if (base.backendState == 5) { // slicing unavailable
@@ -667,6 +678,7 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             padding: 10
             anchors { bottom: parent.bottom; bottomMargin: -UM.Theme.getSize("default_lining").height }
+            renderType: Text.NativeRendering // M1 Mac garbled text fix
         }
 
         Button {
@@ -681,6 +693,7 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 padding: 4
+                renderType: Text.NativeRendering // M1 Mac garbled text fix
             }
             onClicked: {
                 itemCustomIP.enabled = true
@@ -710,6 +723,7 @@ Item {
                 text: catalog.i18nc("@label", "Preparing...")
                 color: UM.Theme.getColor("text_sidebar")
                 font: UM.Theme.getFont("large")
+                renderType: Text.NativeRendering // M1 Mac garbled text fix
             }
             Label {
                 width: parent.width - UM.Theme.getSize("sidebar_item_margin").width
@@ -747,6 +761,7 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     padding: 4
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
                 onClicked: {
                     CuraApplication.backend.stopSlicing();

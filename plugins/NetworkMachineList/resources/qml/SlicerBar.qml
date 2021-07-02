@@ -252,6 +252,7 @@ Item {
                 TextField {
                     id: inputIPAddress
                     placeholderText: catalog.i18nc("@label", "Enter an IP address...")
+
                     selectByMouse: true
                     font: UM.Theme.getFont("medium")
                     color: UM.Theme.getColor("text_sidebar")
@@ -433,6 +434,7 @@ Item {
                         font: UM.Theme.getFont("zaxe_icon_set")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.topMargin: -5
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                     TextField {
                         id: inputFilename
@@ -486,6 +488,7 @@ Item {
                                 inputFilename.focus = true
                             }
                         }
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                 }
             }
@@ -503,6 +506,7 @@ Item {
                         font: UM.Theme.getFont("zaxe_icon_set")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.topMargin: -5
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                     Text {
                         id: lblDuration
@@ -529,6 +533,7 @@ Item {
                         font: UM.Theme.getFont("zaxe_icon_set")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.topMargin: -5
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                     Label {
                         id: lblWeight
@@ -559,6 +564,7 @@ Item {
                         font: UM.Theme.getFont("large_nonbold")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                         Layout.preferredHeight: 32
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                     Label {
                         text: "W"
@@ -566,6 +572,7 @@ Item {
                         font: UM.Theme.getFont("zaxe_icon_set")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.topMargin: -5
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                     Text {
                         id: lblLength
@@ -582,6 +589,7 @@ Item {
                         font: UM.Theme.getFont("zaxe_icon_set")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.topMargin: -5
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                     Text {
                         id: lblMaterial
@@ -733,6 +741,7 @@ Item {
                 color: UM.Theme.getColor("text_sidebar")
                 horizontalAlignment: Text.AlignRight
                 text: parseInt(base.progress * 100, 10) + "%"
+                renderType: Text.NativeRendering // M1 Mac garbled text fix
             }
             Rectangle {
                 id: progressBar

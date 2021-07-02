@@ -278,6 +278,7 @@ Item {
                     font: UM.Theme.getFont("large_semi_bold")
                     color: UM.Theme.getColor("text_sidebar")
                     text: catalog.i18nc("@label", "Are you sure?")
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
                 Button {
                     Layout.preferredHeight: 27
@@ -481,6 +482,7 @@ Item {
                                             inputDeviceName.focus = true
                                         }
                                     }
+                                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                                 }
                                 // Button pane
                                 RowLayout {
@@ -839,6 +841,7 @@ Item {
                                         else
                                             return ""
                                     }
+                                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                                 }
 
                                 Label {
@@ -848,6 +851,7 @@ Item {
                                     anchors.bottom: parent.bottom
                                     anchors.right: parent.right
                                     text: "%" + parseInt(device.progress * 100, 10)
+                                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                                 }
                             }
 
@@ -1164,6 +1168,7 @@ Item {
                                 Layout.preferredHeight: 15
                                 Layout.topMargin: -7
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                renderType: Text.NativeRendering // M1 Mac garbled text fix
                             }
                             Item {
                                 property string text: device.printingFile
@@ -1204,12 +1209,14 @@ Item {
                                 Layout.preferredHeight: 15
                                 Layout.topMargin: -7
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                renderType: Text.NativeRendering // M1 Mac garbled text fix
                             }
                             Label {
                                 text: device.elapsedTimeTxt + " / " + device.estimatedTime
                                 color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("large_semi_bold")
                                 Layout.preferredHeight: 15
+                                renderType: Text.NativeRendering // M1 Mac garbled text fix
                             }
                         }
                         // Bottom Border
@@ -1225,6 +1232,7 @@ Item {
                                 Layout.preferredHeight: 15
                                 Layout.topMargin: -7
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                renderType: Text.NativeRendering // M1 Mac garbled text fix
                             }
                             Label {
                                 text: {
@@ -1244,6 +1252,7 @@ Item {
                                 color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("large_semi_bold")
                                 Layout.preferredHeight: device.hasNFCSpool ? 20 : 15 // ?!
+                                renderType: Text.NativeRendering // M1 Mac garbled text fix
                             }
                             Label {
                                 text: "b"
@@ -1252,12 +1261,14 @@ Item {
                                 Layout.preferredHeight: 15
                                 Layout.topMargin: -7
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                renderType: Text.NativeRendering // M1 Mac garbled text fix
                             }
                             Label {
                                 text: device.isLite ? "-" : device.nozzle + " mm"
                                 color: UM.Theme.getColor("text_sidebar_medium")
                                 font: UM.Theme.getFont("large_semi_bold")
                                 Layout.preferredHeight: 15
+                                renderType: Text.NativeRendering // M1 Mac garbled text fix
                             }
 
                             Button {
@@ -1299,6 +1310,7 @@ Item {
                                 Layout.preferredHeight: 15
                                 Layout.topMargin: -7
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                renderType: Text.NativeRendering // M1 Mac garbled text fix
                             }
                             Label {
                                 text: device.ip
@@ -1306,6 +1318,7 @@ Item {
                                 font: UM.Theme.getFont("large_semi_bold")
                                 Layout.preferredHeight: 15
                                 Layout.preferredWidth: 130
+                                renderType: Text.NativeRendering // M1 Mac garbled text fix
                             }
                             Label {
                                 text: "v" + device.fwVersion
@@ -1314,6 +1327,7 @@ Item {
                                 Layout.alignment: Qt.AlignRight | Qt.AlignBottom
                                 Layout.leftMargin: 135
                                 Layout.preferredHeight: 15
+                                renderType: Text.NativeRendering // M1 Mac garbled text fix
                             }
                         }
                         // Bottom Border

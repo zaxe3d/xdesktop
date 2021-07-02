@@ -57,6 +57,7 @@ Column
         width: parent.width
         font: UM.Theme.getFont("large")
         horizontalAlignment: Text.AlignHCenter
+        renderType: Text.NativeRendering // M1 Mac garbled text fix
     }
     // Bottom Border
     Rectangle { width: parent.width; height: UM.Theme.getSize("default_lining").width; color: UM.Theme.getColor("sidebar_item_extra_dark") }

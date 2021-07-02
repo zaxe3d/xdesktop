@@ -277,6 +277,7 @@ Item {
                     onAccepted: {
                         createManualMachine()
                     }
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                 }
 
                 Button {
@@ -464,6 +465,7 @@ Item {
                                 event.accepted = true;
                             }
                         }
+                        renderType: Text.NativeRendering // M1 Mac garbled text fix
                     }
                     // device name label
                     Label {

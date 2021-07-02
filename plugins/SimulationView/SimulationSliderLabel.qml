@@ -66,6 +66,7 @@ UM.PointingRectangle {
             }
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            renderType: Text.NativeRendering // M1 Mac garbled text fix
         }
         onClicked: {
             var layerNo = sliderLabelRoot.value

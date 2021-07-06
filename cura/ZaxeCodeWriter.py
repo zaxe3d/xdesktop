@@ -107,20 +107,26 @@ class ZaxeCodeWriter(MeshWriter):
         return True
 
     def getExportParams(self, material):
+        extruderStack = self._application.getExtruderManager().getInstance().getExtruderStack(0)
+        preferences = self._application.getPreferences()
+        commonParams = {
+            "layer_height": extruderStack.getProperty("layer_height", "value"),
+            "adhesion_type": extruderStack.getProperty("adhesion_type", "value"),
+            "infill_density": extruderStack.getProperty("infill_sparse_density", "value"),
+            "support_angle": preferences.getValue("slicing/support_angle"),
+        }
         if material == "custom":
-            preferences = self._application.getPreferences()
             profileIdxPrefix = "custom_material_profile/" + str(preferences.getValue("custom_material_profile/selected_index")) + "_"
-            return {
+            return tool.merge_two_dicts({
                 "extruder_temperature": preferences.getValue(profileIdxPrefix + "material_print_temperature"),
                 "bed_temperature": preferences.getValue(profileIdxPrefix + "material_bed_temperature"),
                 "chamber_temperature": preferences.getValue(profileIdxPrefix + "material_chamber_temperature")
-            }
+            }, commonParams)
         else:
-            extruderStack = self._application.getExtruderManager().getInstance().getExtruderStack(0)
-            return {
+            return tool.merge_two_dicts({
                 "extruder_temperature": extruderStack.getProperty("material_print_temperature_layer_0", "value"),
                 "bed_temperature": extruderStack.getProperty("material_bed_temperature", "value")
-            }
+            }, commonParams)
 
     def getCheckSum(self):
         #if self._checkSum is None:

@@ -173,7 +173,7 @@
 
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe XLite"/>
-            <hotend id="0.4">
+            <hotend id="xlite 0.4">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="print temperature">210</setting>
                 <setting key="retraction amount">3</setting>
@@ -184,6 +184,29 @@
                 <setting key="fan speed min">100</setting>
                 <setting key="fan speed max">100</setting>
                 <setting key="linear advance gcode">M900 K0.3 T0</setting>
+            </hotend>
+            <hotend id="xlite+ 0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">190</setting>
+                <setting key="heated bed temperature layer 0">65</setting>
+                <setting key="heated bed temperature">60</setting>
+                <setting key="speed print">40</setting>
+                <setting key="speed print layer 0">10</setting>
+                <setting key="speed infill">50</setting>
+                <setting key="speed top bottom">30</setting>
+                <setting key="wall 0 material flow">90</setting>
+                <setting key="wall x material flow">100</setting>
+                <setting key="material flow layer 0">100</setting>
+                <setting key="infill material flow">100</setting>
+                <setting key="skin material flow">95</setting>
+                <setting key="skin overlap">15</setting>
+                <setting key="retraction amount">2.2</setting>
+                <setting key="retraction speed">30</setting>
+                <setting key="cool fan full layer">5</setting>
+                <setting key="print temperature layer 0">195</setting>
+                <setting key="fan speed min">100</setting>
+                <setting key="fan speed max">100</setting>
+                <setting key="linear advance gcode">M900 K0.415 T0</setting>
             </hotend>
         </machine>
 

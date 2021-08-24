@@ -176,7 +176,10 @@
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe XLite"/>
 
-            <hotend id="0.4">
+            <hotend id="xlite 0.4">
+                <setting key="hardware compatible">yes</setting>
+            </hotend>
+            <hotend id="xlite+ 0.4">
                 <setting key="hardware compatible">yes</setting>
             </hotend>
         </machine>

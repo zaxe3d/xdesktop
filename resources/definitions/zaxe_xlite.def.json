@@ -6,6 +6,7 @@
     "metadata": {
         "visible": true,
         "preferred_material": "zaxe_pla",
+        "preferred_variant_name": "xlite 0.4",
         "file_formats": "text/x-gcode",
         "machine_extruder_trains":
         {

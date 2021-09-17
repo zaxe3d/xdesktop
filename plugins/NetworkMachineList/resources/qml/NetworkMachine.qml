@@ -48,7 +48,7 @@ Item {
     property bool materialWarning
     property bool filamentLengthWarning
     property bool modelCompatibilityWarning
-    property bool usbNotPresentWarning
+    property bool usbNotPresentWarning: isLite && !machineStates.usb_present
 
     property string nextState
 
@@ -756,10 +756,8 @@ Item {
                                             var info = PrintInformation.preSlicedInfo
                                             if (device.isLite) {
                                                 if (!machineStates.usb_present) {
-                                                    device.usbNotPresentWarning = true
                                                     shakeAnim.start()
                                                 } else {
-                                                    device.usbNotPresentWarning = false
                                                     Cura.NetworkMachineManager.upload(device.uid)
                                                 }
                                             } else if (!CuraApplication.platformActivity) {
@@ -788,7 +786,6 @@ Item {
                                                 device.materialWarning = false
                                                 device.modelCompatibilityWarning = false
                                                 device.filamentLengthWarning = false
-                                                device.usbNotPresentWarning = false
                                                 shakeAnim.start()
                                             } else if (Cura.MachineManager.activeMachineName.replace("+", "PLUS").toUpperCase() != device.deviceModel.toUpperCase()) {
                                                 device.modelCompatibilityWarning = true
@@ -796,10 +793,8 @@ Item {
                                             } else if (device.isLite) {
                                                 // Light models doesn' care neithter about filament type nor nozzle type.
                                                 if (!machineStates.usb_present) {
-                                                    device.usbNotPresentWarning = true
                                                     shakeAnim.start()
                                                 } else {
-                                                    device.usbNotPresentWarning = false
                                                     Cura.NetworkMachineManager.upload(device.uid)
                                                 }
                                             } else if (Cura.MachineManager.activeVariantName != device.nozzle) {

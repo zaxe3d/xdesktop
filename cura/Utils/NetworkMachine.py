@@ -170,6 +170,7 @@ class NetworkMachine(QThread, QObject):
             updating = False
             calibrating = False
             bedOccupied = False
+            usbPresent = False
             if "is_calibrating" in message:
                 calibrating = message["is_calibrating"].lower() == "true"
                 bedOccupied = message["is_bed_occupied"].lower() == "true"
@@ -177,8 +178,12 @@ class NetworkMachine(QThread, QObject):
             if "is_updating" in message:
                 updating = message["is_updating"].lower() == "true"
 
+            if "is_usb_present" in message:
+                usbPresent = message["is_usb_present"].lower() == "true"
+
             self.__states = {
                 "updating": updating,
+                "usb_present": usbPresent,
                 "bed_occupied": bedOccupied,
                 "calibrating": calibrating,
                 "preheat": message["is_preheat"].lower() == "true",

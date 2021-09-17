@@ -88,6 +88,10 @@ msgctxt "@warning"
 msgid "This print is not compatible with this device model"
 msgstr "Bu baskı, bu cihaz ile uyumlu değildir"
 
+msgctxt "@warning"
+msgid "USB Flash disk is not mounted on device"
+msgstr "USB disk cihaza takılı değil"
+
 msgctxt "@label"
 msgid "Update"
 msgstr "Güncelle"

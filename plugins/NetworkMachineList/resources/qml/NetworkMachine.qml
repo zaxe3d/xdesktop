@@ -48,6 +48,7 @@ Item {
     property bool materialWarning
     property bool filamentLengthWarning
     property bool modelCompatibilityWarning
+    property bool usbNotPresentWarning
 
     property string nextState
 
@@ -754,7 +755,13 @@ Item {
                                         if (PrintInformation.preSliced) {
                                             var info = PrintInformation.preSlicedInfo
                                             if (device.isLite) {
-                                                Cura.NetworkMachineManager.upload(device.uid)
+                                                if (!machineStates.usb_present) {
+                                                    device.usbNotPresentWarning = true
+                                                    shakeAnim.start()
+                                                } else {
+                                                    device.usbNotPresentWarning = false
+                                                    Cura.NetworkMachineManager.upload(device.uid)
+                                                }
                                             } else if (!CuraApplication.platformActivity) {
                                                 device.materialWarning = false
                                                 device.modelCompatibilityWarning = false
@@ -781,13 +788,20 @@ Item {
                                                 device.materialWarning = false
                                                 device.modelCompatibilityWarning = false
                                                 device.filamentLengthWarning = false
+                                                device.usbNotPresentWarning = false
                                                 shakeAnim.start()
                                             } else if (Cura.MachineManager.activeMachineName.replace("+", "PLUS").toUpperCase() != device.deviceModel.toUpperCase()) {
                                                 device.modelCompatibilityWarning = true
                                                 shakeAnim.start()
                                             } else if (device.isLite) {
                                                 // Light models doesn' care neithter about filament type nor nozzle type.
-                                                Cura.NetworkMachineManager.upload(device.uid)
+                                                if (!machineStates.usb_present) {
+                                                    device.usbNotPresentWarning = true
+                                                    shakeAnim.start()
+                                                } else {
+                                                    device.usbNotPresentWarning = false
+                                                    Cura.NetworkMachineManager.upload(device.uid)
+                                                }
                                             } else if (Cura.MachineManager.activeVariantName != device.nozzle) {
                                                 device.nozzleWarning = true
                                                 shakeAnim.start()
@@ -1095,6 +1109,42 @@ Item {
                 }
             }
 
+            // Model warning message
+            Rectangle {
+                visible: device.usbNotPresentWarning
+                Layout.preferredWidth: Math.round(device.width - 65 - (UM.Theme.getSize("sidebar_item_margin").width * 2))
+                Layout.minimumHeight: 20
+                Layout.alignment: Qt.AlignRight
+                Layout.bottomMargin: Math.round(UM.Theme.getSize("sidebar_item_margin").height / 2)
+                Layout.rightMargin: UM.Theme.getSize("sidebar_item_margin").width
+                color: UM.Theme.getColor("sidebar_item_light")
+
+                Text {
+                    id: usbNotPresentWarningIcon
+                    font: UM.Theme.getFont("zaxe_icon_set")
+                    color: UM.Theme.getColor("text_danger")
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        left: parent.left
+                    }
+                    text: "d"
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
+                }
+                Text {
+                    width: parent.width
+                    font: UM.Theme.getFont("medium")
+                    color: UM.Theme.getColor("text_danger")
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: Text.AlignLeft
+                    anchors {
+                        left: usbNotPresentWarningIcon.right
+                        leftMargin: 1
+                        verticalCenter: usbNotPresentWarningIcon.verticalCenter
+                    }
+                    text: catalog.i18nc("@warning", "USB Flash disk is not mounted on device")
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
+                }
+            }
             // Model warning message
             Rectangle {
                 visible: device.modelCompatibilityWarning

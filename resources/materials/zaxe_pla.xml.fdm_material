@@ -73,6 +73,16 @@
         </machine>
 
         <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe Z2"/>
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature layer 0">215</setting>
+                <setting key="print temperature">210</setting>
+                <setting key="retraction amount">0.8</setting>
+            </hotend>
+        </machine>
+
+        <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe Z3"/>
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>

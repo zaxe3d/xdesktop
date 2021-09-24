@@ -1,10 +1,10 @@
 {
-    "id": "zaxe_zlite_extruder_left",
+    "id": "zaxe_x3_extruder_0",
     "version": 2,
-    "name": "Left Extruder",
+    "name": "Extruder 1",
     "inherits": "fdmextruder",
     "metadata": {
-        "machine": "zaxe_zlite",
+        "machine": "zaxe_x3",
         "position": "0"
     },
 

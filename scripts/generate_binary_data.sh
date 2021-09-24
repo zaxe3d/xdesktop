@@ -5,7 +5,7 @@ function encrypt {
     python encrypt_config.py --in ../resources/$1/$2 --out ../../xdesktop-binary-data/cura/resources/$1/$2 --key www.zaxe.com
 }
 
-definitions=( "zaxe.def.json" "zaxe_x1.def.json" "zaxe_x2.def.json" "zaxe_x1plus.def.json" "zaxe_z.def.json" "zaxe_z1.def.json" "zaxe_z1plus.def.json" "zaxe_z3.def.json" )
+definitions=( "zaxe.def.json" "zaxe_x1.def.json" "zaxe_x2.def.json" "zaxe_x1plus.def.json" "zaxe_z.def.json" "zaxe_z1.def.json" "zaxe_z1plus.def.json" "zaxe_z2.def.json" "zaxe_z3.def.json" )
 
 for def in "${definitions[@]}"
 do
@@ -19,7 +19,7 @@ done
 #    encrypt "extruders" $def
 #done
 
-variants=( "zaxe_x1_0.4.inst.cfg" "zaxe_x2_0.15_am.inst.cfg" "zaxe_x2_0.25_am.inst.cfg" "zaxe_x2_0.4_am.inst.cfg" "zaxe_x2_0.4.inst.cfg" "zaxe_x1_0.6.inst.cfg" "zaxe_x1_0.8.inst.cfg" "zaxe_x1plus_0.4.inst.cfg" "zaxe_z1_0.2.inst.cfg"  "zaxe_z1_0.4.inst.cfg" "zaxe_z1_0.6.inst.cfg" "zaxe_z1_0.8.inst.cfg" "zaxe_z1_e3d_brass_0.4.inst.cfg" "zaxe_z1plus_0.2.inst.cfg" "zaxe_z1plus_0.4.inst.cfg"  "zaxe_z1plus_0.6.inst.cfg" "zaxe_z1plus_0.8.inst.cfg" "zaxe_z1plus_e3d_brass_0.4.inst.cfg" )
+variants=( "zaxe_x1_0.4.inst.cfg" "zaxe_x2_0.15_am.inst.cfg" "zaxe_x2_0.25_am.inst.cfg" "zaxe_x2_0.4_am.inst.cfg" "zaxe_x2_0.4.inst.cfg" "zaxe_x1_0.6.inst.cfg" "zaxe_x1_0.8.inst.cfg" "zaxe_x1plus_0.4.inst.cfg" "zaxe_z1_0.2.inst.cfg"  "zaxe_z1_0.4.inst.cfg" "zaxe_z1_0.6.inst.cfg" "zaxe_z1_0.8.inst.cfg" "zaxe_z1_e3d_brass_0.4.inst.cfg" "zaxe_z1plus_0.2.inst.cfg" "zaxe_z1plus_0.4.inst.cfg"  "zaxe_z1plus_0.6.inst.cfg" "zaxe_z1plus_0.8.inst.cfg" "zaxe_z1plus_e3d_brass_0.4.inst.cfg" "zaxe_z2_0.4.inst.cfg" "zaxe_z3_0.4.inst.cfg")
 
 for def in "${variants[@]}"
 do

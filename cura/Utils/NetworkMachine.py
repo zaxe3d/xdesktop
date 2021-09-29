@@ -140,7 +140,7 @@ class NetworkMachine(QThread, QObject):
             # only z-series have snapshot available
             self.hasSnapshot = self.deviceModel[0] == "z"
             # lite series has short filename
-            self.isLite = self.deviceModel.find("lite") >= 0 or self.deviceModel == "x3"
+            self.isLite = self.deviceModel.find("lite") >= 0 or self.deviceModel in ["x3"]
             # Z3 and Z2 series has no TLS (also lite series)
             self.nonTLS = self.deviceModel in ["z2", "z3"] or self.isLite
 

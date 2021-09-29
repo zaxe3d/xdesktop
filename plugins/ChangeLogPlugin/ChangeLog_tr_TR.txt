@@ -1,5 +1,6 @@
 [2.1.9]
-* Z3 serisi eklendi.
+* xlite+, X3, Z2 ve Z3 serisi eklendi.
+xlite+ seçmek için xlite seçip sağ tıklayıp xlite+ 0.4 nozülünü seçebilirsiniz.
 * Ek geliştirmeler
 Düz şekilde yerleştirmek için yüz seçiniz kısayolu CTRL+F atandı.
 Özel materyal ayarlarına ilk katman hızı eklendi.

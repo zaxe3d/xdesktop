@@ -74,6 +74,7 @@ class NetworkMachineListModel(ListModel):
             "mHasSnapshot": networkMachine.hasSnapshot,
             "mHasFWUpdate": self._compareVersion(networkMachine),
             "mSnapshot": networkMachine.snapshot,
+            "mIsLite": networkMachine.isLite,
             "mStates": networkMachine.getStates()
         }
 

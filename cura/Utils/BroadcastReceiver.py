@@ -28,10 +28,11 @@ class BroadcastReceiver(QObject):
     def processPendingDatagrams(self):
         try:
             datagram, host, port = self.udpSocket.readDatagram(self.udpSocket.pendingDatagramSize())
-            msg = json.loads(str(datagram, encoding='ascii'))
+            msg = json.loads(str(datagram, encoding='utf8'))
             self.broadcastReceived.emit(msg)
         except Exception as ex:
             Logger.log("e","unexpected error %s" % ex)
 
     def stop(self):
         self.udpSocket.close()
+

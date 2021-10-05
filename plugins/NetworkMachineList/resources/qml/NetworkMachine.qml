@@ -212,6 +212,7 @@ Item {
                     selectByMouse: true
                     font: UM.Theme.getFont("medium")
                     color: UM.Theme.getColor("text_sidebar")
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                     padding: 0
                     Layout.preferredWidth: 212; Layout.preferredHeight: 30
                     anchors {
@@ -430,6 +431,7 @@ Item {
                                 // device name input
                                 TextField {
                                     id: inputDeviceName
+                                    renderType: Text.NativeRendering // M1 Mac garbled text fix
                                     visible: false
                                     selectByMouse: true
                                     font: UM.Theme.getFont("large")

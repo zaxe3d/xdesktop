@@ -1263,6 +1263,7 @@ QtObject {
             textColor: Theme.getColor(control.acceptableInput ? "setting_control_text" : "text_white")
             placeholderTextColor: Theme.getColor("setting_control_text")
             font: Theme.getFont("default");
+            renderType: Text.NativeRendering // M1 Mac garbled text fix
 
             background: Rectangle
             {

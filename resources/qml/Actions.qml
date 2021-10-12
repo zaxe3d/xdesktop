@@ -290,7 +290,10 @@ Item
         enabled: UM.Scene.numObjectsSelected > 1 ? true: false
         iconName: "merge";
         shortcut: "Ctrl+Alt+G";
-        onTriggered: CuraApplication.mergeSelected();
+        onTriggered: {
+            CuraApplication.mergeSelected();
+            CuraActions.centerSelection(); // after merge op. model placed out of origin.
+        }
     }
 
     Action

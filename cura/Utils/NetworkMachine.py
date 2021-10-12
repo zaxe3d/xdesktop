@@ -142,7 +142,7 @@ class NetworkMachine(QThread, QObject):
             # lite series has short filename
             self.isLite = self.deviceModel.find("lite") >= 0 or self.deviceModel in ["x3"]
             # Z3 and Z2 series has no TLS (also lite series)
-            self.nonTLS = self.deviceModel in ["z2", "z3"] or self.isLite
+            self.nonTLS = self.deviceModel in ["z2", "z3", "z3plus"] or self.isLite
 
             try:
                 self.printingFile = message["filename"]

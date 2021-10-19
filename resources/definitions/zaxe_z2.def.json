@@ -20,7 +20,20 @@
         "machine_height": { "default_value": 250 },
         "machine_start_gcode": { "default_value": "G28\nG29\nM83\nG1 E3 F150\nG90\nG1 Z5 F500\nG1 X20 Y0 F10000\nG1 Z0.4 F500\nG91\nM83\nG1 X40 E15 F500\nG90\nM82\nG92 E0" },
         "jerk_enabled": { "value": false },
-        "speed_travel_layer_0": { "value": 150 },
-        "speed_travel": { "value": 250 }
+        "speed_travel_layer_0": { "value": 180 },
+        "speed_travel": { "value": 250 },
+        "speed_roofing": { "value": 70 },
+        "acceleration_infill": { "value": 1000 },
+        "acceleration_wall_0": { "value": 800 },
+        "acceleration_wall_x":{ "value": 1000 },
+        "acceleration_roofing":{ "value": 1000 },
+        "acceleration_topbottom": { "value": 1000 },
+        "acceleration_support_infill": { "value": 1000 },
+        "acceleration_support_roof": { "value": 1000 },
+        "acceleration_support_interface": { "value": 1000 },
+        "acceleration_support_bottom": { "value": 1000 },
+        "acceleration_travel": { "value": 1000 },
+        "acceleration_print_layer_0": { "value": 1000 },
+        "acceleration_travel_layer_0": { "value": 1000 }
     }
 }

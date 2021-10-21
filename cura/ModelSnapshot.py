@@ -5,6 +5,7 @@ from io import BytesIO
 from typing import cast
 import tempfile
 import os
+import time
 
 from UM.Application import Application
 from UM.PluginRegistry import PluginRegistry
@@ -23,6 +24,7 @@ class ModelSnapshot:
 
     @staticmethod
     def _snapshot():
+        time.sleep(0.5) # delay a bit for the gui
         model_io = BytesIO() #We have to convert the stl into bytes.
         model_writer = cast(MeshWriter, PluginRegistry.getInstance().getPluginObject("STLWriter"))
         nodes = BreadthFirstIterator(Application.getInstance().getController().getScene().getRoot())

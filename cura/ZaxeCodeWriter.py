@@ -95,8 +95,8 @@ class ZaxeCodeWriter(MeshWriter):
         zipFile.write(infoFilePath, os.path.basename(infoFilePath))
         zipFile.write(gcodeFilePath, "data.zaxe_code")
         zipFile.write(snapshotFilePath, "snapshot.png")
-        model = self._machineManager.activeMachineName.replace("+", "PLUS")
-        if model in ["Z2", "Z3", "Z3PLUS"]: # only for Z2, Z3 and Z3+
+        model = self._machineManager.activeMachineName.replace("+", "")
+        if model in ["Z2", "Z3"]: # only for Z2, Z3
             zipFile.write(modelFilePath, "model.stl")
             # os.remove(modelFilePath) # don't remove stl since it doesn't get changed regularly
         zipFile.close()

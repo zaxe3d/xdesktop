@@ -33,12 +33,6 @@ UM.MainWindow
     {
         target: CuraApplication
         onActivityChanged: {
-            if (UM.Backend.state == 2) { // loading
-                // Take snapshot while loading is a better idea
-                Cura.Actions.takeSnapshot.trigger()
-                Cura.Actions.takeModelSnapshot.trigger()
-            }
-
             if (CuraApplication.platformActivity && UM.Backend.state == 1) {
                 if (UM.Preferences.getValue("general/firstrun") && UM.Preferences.getValue("general/firstrun_step") == 1) {
                     UM.Preferences.setValue("general/firstrun_step", 2)
@@ -76,14 +70,18 @@ UM.MainWindow
 
             base.currentBackendState = UM.Backend.state
 
-            if (base.currentBackendState == 1) {
-                UM.Controller.setActiveView("SolidView")
-            }
-            if (base.currentBackendState == 2) {
-                UM.Controller.setActiveView("SimulationView")
-                UM.Controller.setActiveStage("NetworkMachineList")
-            } else if (UM.Backend.state == 4) {
-                UM.Controller.setActiveView("SolidView")
+            switch (base.currentBackendState) {
+                case 1:
+                case 4:
+                    UM.Controller.setActiveView("SolidView")
+                    break;
+                case 2:
+                    UM.Controller.setActiveView("SimulationView")
+                    UM.Controller.setActiveStage("NetworkMachineList")
+                    // Take snapshot while loading is a better idea
+                    Cura.Actions.takeSnapshot.trigger()
+                    Cura.Actions.takeModelSnapshot.trigger()
+                    break;
             }
         }
     }

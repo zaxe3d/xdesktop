@@ -1372,9 +1372,13 @@ class CuraApplication(QtApplication):
     def takeSnapshot(self) -> None:
         model = self.getMachineManager().activeMachineName.replace("+", "")
         size = 250 if model in ["Z2", "Z3"] else 130 # Z3's screen is much bigger...
+        path = os.path.join(tempfile.gettempdir(), "snapshot.png")
+        # remove if it does exist. Otherwise it doesn't get overwritten
+        if os.path.exists(path):
+            os.remove(path)
         # write the png to the file
         snapshot = Snapshot.snapshot(width = size, height = size)
-        snapshot.save(os.path.join(tempfile.gettempdir(), "snapshot.png"), "PNG", 100)
+        snapshot.save(path, "PNG", 100)
 
     @pyqtSlot()
     def takeModelSnapshot(self) -> None:

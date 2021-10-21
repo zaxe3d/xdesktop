@@ -29,5 +29,9 @@ class ModelSnapshot:
         if not model_writer.write(model_io, nodes, model_writer.OutputMode.BinaryMode): #Writing the stl failed.
             Logger.log("w", "Model exporting failed.")
             return False
-        open(os.path.join(tempfile.gettempdir(), "model.stl"), 'wb').write(model_io.getvalue())
+        path = os.path.join(tempfile.gettempdir(), "model.stl")
+        # remove if it does exist. Otherwise it doesn't get overwritten
+        if os.path.exists(path):
+            os.remove(path)
+        open(path, 'wb').write(model_io.getvalue())
         Logger.log("d", "Model exporting succeeded.")

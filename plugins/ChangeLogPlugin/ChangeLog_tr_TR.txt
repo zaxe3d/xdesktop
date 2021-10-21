@@ -1,10 +1,10 @@
 [2.2.0]
-* xlite+, X3, Z2 ve Z3 serisi eklendi.
+* xlite+, X3, Z2, Z3 ve Z3+ serisi eklendi.
 xlite+ seçmek için xlite seçip sağ tıklayıp xlite+ 0.4 nozülünü seçebilirsiniz.
 * Ek geliştirmeler
 Düz şekilde yerleştirmek için yüz seçiniz kısayolu CTRL+F atandı.
 Özel materyal ayarlarına ilk katman hızı eklendi.
-* Mac M1 bozuk karakterler hatası düzeltildi.
+Mac M1 bozuk karakterler hatası düzeltildi.
 
 [2.1.8]
 * BASF marka Zaxe uyumlu filamentler eklendi.

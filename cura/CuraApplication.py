@@ -1370,7 +1370,7 @@ class CuraApplication(QtApplication):
         
     @pyqtSlot()
     def takeSnapshot(self) -> None:
-        model = self.getMachineManager().activeMachineName.replace("+", "PLUS")
+        model = self.getMachineManager().activeMachineName.replace("+", "")
         size = 250 if model in ["Z2", "Z3"] else 130 # Z3's screen is much bigger...
         # write the png to the file
         snapshot = Snapshot.snapshot(width = size, height = size)
@@ -1378,7 +1378,7 @@ class CuraApplication(QtApplication):
 
     @pyqtSlot()
     def takeModelSnapshot(self) -> None:
-        model = self.getMachineManager().activeMachineName.replace("+", "PLUS")
+        model = self.getMachineManager().activeMachineName.replace("+", "")
         if model not in ["Z2", "Z3"]: # only for Z2 and Z3
             return
         Logger.log("d", "Taking model snapshot for model: {0}".format(model))

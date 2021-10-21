@@ -33,10 +33,13 @@ UM.MainWindow
     {
         target: CuraApplication
         onActivityChanged: {
-            if (CuraApplication.platformActivity && UM.Backend.state == 1) {
-                // Take snapshot if ready to slice - 1 = Ready to slice
+            if (UM.Backend.state == 2) { // loading
+                // Take snapshot while loading is a better idea
                 Cura.Actions.takeSnapshot.trigger()
                 Cura.Actions.takeModelSnapshot.trigger()
+            }
+
+            if (CuraApplication.platformActivity && UM.Backend.state == 1) {
                 if (UM.Preferences.getValue("general/firstrun") && UM.Preferences.getValue("general/firstrun_step") == 1) {
                     UM.Preferences.setValue("general/firstrun_step", 2)
                     base.showFirstrunTip(

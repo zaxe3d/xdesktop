@@ -11,12 +11,18 @@ from UM.PluginRegistry import PluginRegistry
 from UM.Mesh.MeshWriter import MeshWriter #The class we're extending/implementing.
 from UM.Scene.Iterator.BreadthFirstIterator import BreadthFirstIterator
 from UM.Logger import Logger
+import threading
 
 class ModelSnapshot:
 
     # Exports contents of build plate as binary STL
     @staticmethod
     def snapshot():
+        # Do it on another thread. Don't make the main thread hiccup while saving...
+        threading.Thread(target=ModelSnapshot._snapshot).start()
+
+    @staticmethod
+    def _snapshot():
         model_io = BytesIO() #We have to convert the stl into bytes.
         model_writer = cast(MeshWriter, PluginRegistry.getInstance().getPluginObject("STLWriter"))
         nodes = BreadthFirstIterator(Application.getInstance().getController().getScene().getRoot())

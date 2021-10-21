@@ -172,7 +172,30 @@
                 <setting key="linear advance gcode">M572 D0 S0.04</setting>
             </hotend>
         </machine>
-
+        <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe Z2"/>
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="retraction amount">0.6</setting>
+                <setting key="print temperature">233</setting>
+                <setting key="print temperature layer 0">245</setting>
+                <setting key="fan speed min">0</setting>
+                <setting key="fan speed max">50</setting>
+                <setting key="cool fan full layer">4</setting>
+            </hotend>
+        </machine>
+        <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe Z3"/>
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="retraction amount">0.6</setting>
+                <setting key="print temperature">233</setting>
+                <setting key="print temperature layer 0">245</setting>
+                <setting key="fan speed min">0</setting>
+                <setting key="fan speed max">50</setting>
+                <setting key="cool fan full layer">4</setting>
+            </hotend>
+        </machine>
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe XLite"/>
 

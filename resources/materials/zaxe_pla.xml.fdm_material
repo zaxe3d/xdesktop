@@ -79,6 +79,8 @@
                 <setting key="print temperature layer 0">215</setting>
                 <setting key="print temperature">210</setting>
                 <setting key="retraction amount">0.8</setting>
+                <setting key="speed infill">250</setting>
+                <setting key="speed print layer 0">20</setting>
                 <setting key="linear advance gcode">ZXM900 K=0.01</setting>
             </hotend>
         </machine>
@@ -90,7 +92,10 @@
                 <setting key="print temperature layer 0">215</setting>
                 <setting key="print temperature">210</setting>
                 <setting key="retraction amount">0.8</setting>
+                <setting key="speed infill">250</setting>
+                <setting key="speed print layer 0">20</setting>
                 <setting key="linear advance gcode">ZXM900 K=0.01</setting>
+                
             </hotend>
         </machine>
 

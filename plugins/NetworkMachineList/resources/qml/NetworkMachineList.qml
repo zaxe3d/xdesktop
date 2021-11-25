@@ -18,6 +18,8 @@ Item
 
     UM.I18nCatalog { id: catalog; name:"cura"}
 
+    property string activeMachine: Cura.MachineManager.activeMachineName.replace("+", "PLUS").toUpperCase()
+
     property var materialNames : {
         "zaxe_abs": "Zaxe ABS",
         "zaxe_pla": "Zaxe PLA",

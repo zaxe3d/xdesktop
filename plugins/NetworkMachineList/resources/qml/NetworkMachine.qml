@@ -22,7 +22,9 @@ Item {
     property string material
     property string nozzle
     property string deviceModel
-    property string  fwVersion
+    property string deviceModelUpperCased: deviceModel.toUpperCase()
+    property string deviceModelBeautified: deviceModelUpperCased.replace("PLUS", "+")
+    property string fwVersion
     property string printingFile
     property var startTime
     property string elapsedTimeTxt
@@ -33,6 +35,8 @@ Item {
     property bool hasPin
     property bool hasNFCSpool
     property bool hasFWUpdate
+    property bool hasRemoteUpdate: hasSnapshot && deviceModel.startsWith("z1")
+    property bool hasImageStreaming: hasRemoteUpdate
     property var progress: 0
     property var filamentRemaining: 0
 
@@ -392,7 +396,7 @@ Item {
                                     bottomMargin: 2
                                     rightMargin: 2
                                 }
-                                visible: device.snapshot && fwVersion.split(".")[2] >= 95
+                                visible: device.hasImageStreaming
                                 source: visible ? "../images/live.png" : ""
                                 width: 12
                                 height: 12
@@ -406,7 +410,7 @@ Item {
                                 visible: isVisible
                                 font: UM.Theme.getFont("xx_large")
                                 color: UM.Theme.getColor("text_sidebar_light")
-                                text: device.deviceModel.replace("plus", "+").toUpperCase()
+                                text: device.deviceModelBeautified
                                 renderType: Text.NativeRendering // M1 Mac garbled text fix
                             }
                         }
@@ -766,7 +770,7 @@ Item {
                                                 device.materialWarning = false
                                                 device.modelCompatibilityWarning = false
                                                 shakeAnim.start()
-                                            } else if (info.model != device.deviceModel.toUpperCase()) {
+                                            } else if (info.model != device.deviceModelUpperCased) {
                                                 device.modelCompatibilityWarning = true
                                                 shakeAnim.start()
                                             } else if (info.material.indexOf(device.material) == -1) {
@@ -789,7 +793,7 @@ Item {
                                                 device.modelCompatibilityWarning = false
                                                 device.filamentLengthWarning = false
                                                 shakeAnim.start()
-                                            } else if (Cura.MachineManager.activeMachineName.replace("+", "PLUS").toUpperCase() != device.deviceModel.toUpperCase()) {
+                                            } else if (networkMachineList.activeMachine != device.deviceModelUpperCased) {
                                                 device.modelCompatibilityWarning = true
                                                 shakeAnim.start()
                                             } else if (device.isLite) {
@@ -1286,12 +1290,7 @@ Item {
                                     if (device.isLite) {
                                         return "-"
                                     } else if (device.hasNFCSpool) {
-                                        var colorUpper = device.filamentColor.charAt(0).toUpperCase() +
-                                                         device.filamentColor.slice(1)
-                                        var color = networkMachineList.materialColors[colorUpper]
-                                        return color + " " +
-                                               networkMachineList.materialNames[device.material] +
-                                               " ~" + device.filamentRemaining + "m"
+                                        return device.filamentColor + " ~" + device.filamentRemaining + "m"
                                     } else {
                                         return networkMachineList.materialNames[device.material]
                                     }

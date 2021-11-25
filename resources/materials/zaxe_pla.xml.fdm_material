@@ -81,6 +81,7 @@
                 <setting key="retraction amount">0.8</setting>
                 <setting key="speed infill">250</setting>
                 <setting key="speed print layer 0">20</setting>
+                <setting key="speed print">80</setting>
                 <setting key="linear advance gcode">ZXM900 K=0.01</setting>
             </hotend>
         </machine>
@@ -96,6 +97,21 @@
                 <setting key="speed print layer 0">20</setting>
                 <setting key="linear advance gcode">ZXM900 K=0.01</setting>
                 
+            </hotend>
+        </machine>
+
+        <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe Z3PLUS"/>
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature layer 0">215</setting>
+                <setting key="print temperature">210</setting>
+                <setting key="retraction amount">0.6</setting>
+                <setting key="retraction speed">30</setting>
+                <setting key="speed infill">250</setting>
+                <setting key="speed print layer 0">20</setting>
+                <setting key="linear advance gcode">ZXM900 K=0.01</setting>
+
             </hotend>
         </machine>
 

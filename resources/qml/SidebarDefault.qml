@@ -2258,6 +2258,7 @@ Item
                                         ListElement { text: "Cross";                  value: "cross"          }
                                         ListElement { text: "Cross 3D";               value: "cross_3d"       }
                                         ListElement { text: "Gyroid";                 value: "gyroid"         }
+                                        ListElement { text: "Lightning";              value: "lightning"      }
                                     }
 
                                     currentIndex:

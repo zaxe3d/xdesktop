@@ -1209,6 +1209,8 @@ class XmlMaterialProfile(InstanceContainer):
         "speed top bottom": "speed_topbottom",
         "speed roofing": "speed_roofing",
         "speed travel": "speed_travel",
+        "speed wall 0": "speed_wall_0",
+        "speed wall x": "speed_wall_x",
         "wall line width 0": "wall_line_width_0",
         "wall line width x": "wall_line_width_x",
         "wall 0 inset": "wall_0_inset",

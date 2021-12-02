@@ -266,6 +266,7 @@ class NetworkMachine(QThread, QObject):
     def upload(self, filename):
         if self.uploader is not None and self.uploader.isUploading():
             return
+        self.timer.stop() # ignore for a while while uploading...
         self.startPreheat()
         self.uploader = FTPUploader(filename, self.ip, self.ftpPort, self.isLite, self.nonTLS, self.deviceModel)
         self.uploader.uploadEvent.connect(self.uploadProgressCB)

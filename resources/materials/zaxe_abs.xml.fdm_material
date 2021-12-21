@@ -176,8 +176,8 @@
             <machine_identifier manufacturer="Zaxe" product="Zaxe Z2"/>
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="retraction amount">0.6</setting>
-                <setting key="print temperature">233</setting>
+                <setting key="retraction amount">0.8</setting>
+                <setting key="print temperature">230</setting>
                 <setting key="print temperature layer 0">245</setting>
                 <setting key="fan speed min">0</setting>
                 <setting key="fan speed max">50</setting>
@@ -189,11 +189,26 @@
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="retraction amount">0.6</setting>
-                <setting key="print temperature">233</setting>
+                <setting key="retraction speed">45</setting>
+                <setting key="heated bed temperature">90</setting>
+                <setting key="heated bed temperature layer 0">95</setting>
+                <setting key="print temperature">220</setting>
                 <setting key="print temperature layer 0">245</setting>
                 <setting key="fan speed min">0</setting>
-                <setting key="fan speed max">50</setting>
-                <setting key="cool fan full layer">4</setting>
+                <setting key="fan speed max">100</setting>
+                <setting key="cool fan full layer">3</setting>
+                <setting key="speed infill">80</setting>
+                <setting key="speed wall 0">30</setting>
+                <setting key="speed wall x">60</setting>
+                <setting key="wall 0 material flow">98</setting>
+                <setting key="wall x material flow">100</setting>
+                <setting key="material flow layer 0">100</setting>
+                <setting key="infill material flow">100</setting>
+                <setting key="skin overlap">20</setting>
+                <setting key="infill overlap">25</setting>
+                <setting key="support top distance">0.4</setting>
+
+                <setting key="linear advance gcode">ZXM900 K=0.0675</setting>
             </hotend>
         </machine>
         <machine>

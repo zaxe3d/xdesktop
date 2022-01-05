@@ -1,3 +1,6 @@
+[2.2.1]
+* Konfigurasyon iyileştirmeleri yapıldı.
+
 [2.2.0]
 * xlite+, X3, Z2, Z3 ve Z3+ serisi eklendi.
 xlite+ seçmek için xlite seçip sağ tıklayıp xlite+ 0.4 nozülünü seçebilirsiniz.

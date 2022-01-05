@@ -192,10 +192,10 @@
                 <setting key="retraction speed">45</setting>
                 <setting key="heated bed temperature">90</setting>
                 <setting key="heated bed temperature layer 0">95</setting>
-                <setting key="print temperature">220</setting>
+                <setting key="print temperature">230</setting>
                 <setting key="print temperature layer 0">245</setting>
-                <setting key="fan speed min">0</setting>
-                <setting key="fan speed max">100</setting>
+                <setting key="fan speed min">30</setting>
+                <setting key="fan speed max">30</setting>
                 <setting key="cool fan full layer">3</setting>
                 <setting key="speed infill">80</setting>
                 <setting key="speed wall 0">30</setting>

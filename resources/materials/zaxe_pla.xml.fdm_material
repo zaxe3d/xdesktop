@@ -105,6 +105,7 @@
                 <setting key="material flow layer 0">115</setting>
                 <setting key="infill material flow">94</setting>
                 <setting key="skin overlap">20</setting>
+                <setting key="skin material flow">99</setting>
                 <setting key="infill overlap">20</setting>
                 <setting key="cool fan full layer">3</setting>
                 <setting key="linear advance gcode">ZXM900 K=0.017</setting>

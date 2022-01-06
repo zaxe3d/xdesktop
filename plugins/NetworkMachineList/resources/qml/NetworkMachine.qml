@@ -1289,15 +1289,16 @@ Item {
                                 text: {
                                     if (device.isLite) {
                                         return "-"
-                                    } else if (device.hasNFCSpool) {
-                                        return device.filamentColor + " ~" + device.filamentRemaining + "m"
-                                    } else {
-                                        return networkMachineList.materialNames[device.material]
                                     }
+                                    var material = networkMachineList.materialNames[device.material]
+                                    material = material.brand + (material.description ? " " + material.description : "")
+                                    if (device.hasNFCSpool)
+                                        material = device.filamentColor + " " + material + " ~" + device.filamentRemaining + "m"
+                                    return material
                                 }
                                 color: UM.Theme.getColor("text_sidebar_medium")
-                                font: UM.Theme.getFont("large_semi_bold")
-                                Layout.preferredHeight: device.hasNFCSpool ? 20 : 15 // ?!
+                                font: UM.Theme.getFont(device.hasNFCSpool ? "medium_semi_bold" : "large_semi_bold")
+                                Layout.preferredHeight: 15
                                 renderType: Text.NativeRendering // M1 Mac garbled text fix
                             }
                             Label {

@@ -20,16 +20,7 @@ Item
 
     property string activeMachine: Cura.MachineManager.activeMachineName.replace("+", "PLUS").toUpperCase()
 
-    property var materialNames : {
-        "zaxe_abs": "Zaxe ABS",
-        "zaxe_pla": "Zaxe PLA",
-        "zaxe_flex": "Zaxe FLEX",
-        "zaxe_petg": "Zaxe PETG",
-        "basf_asa": "BASF ASA",
-        "basf_pet_cf15": "BASF PET CF15",
-        "custom": catalog.i18nc("@label", "Custom")
-    }
-
+    property var materialNames : materialBrandsModel.materials
     property var materialColors : {
         "White": catalog.i18nc("@color", "White"), "Gray": catalog.i18nc("@color", "Gray"),
         "Black": catalog.i18nc("@color", "Black"), "Chocolate": catalog.i18nc("@color", "Chocolate"),

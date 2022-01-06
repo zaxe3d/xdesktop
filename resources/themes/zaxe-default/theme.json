@@ -61,6 +61,10 @@
             "size": 1.05,
             "family": "Mark-Bold"
         },
+        "medium_semi_bold": {
+            "size": 1.05,
+            "family": "Mark-Medium"
+        },
         "default": {
             "size": 1.0,
             "family": "Mark-Regular"

@@ -590,7 +590,13 @@ Item {
                     }
                     Text {
                         id: lblMaterial
-                        text: PrintInformation.materialNames[0] ? networkMachineList.materialNames[PrintInformation.materialNames[0]] : ""
+                        text: {
+                            if (PrintInformation.materialNames[0]) {
+                                var material = networkMachineList.materialNames[PrintInformation.materialNames[0]]
+                                return material.brand + (material.description ? " " + material.description : "")
+                            }
+                            return ""
+                        }
                         color: UM.Theme.getColor("text_sidebar_dark")
                         font: UM.Theme.getFont("large_nonbold")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter

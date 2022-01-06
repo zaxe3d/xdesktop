@@ -22,6 +22,8 @@ UM.MainWindow
 
     property int currentBackendState: 1 // Solidview
 
+    Cura.MaterialBrandsModel { id: materialBrandsModel } // make this global here.
+
     function firstrunOpenFile() {
         base.showFirstrunTip(
             { x: toolbarBackground.width, y: openFileButton.y + 15 },

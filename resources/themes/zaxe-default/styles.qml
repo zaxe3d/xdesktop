@@ -1333,7 +1333,7 @@ QtObject {
                                             ? Math.round(Theme.getSize("default_margin").height / 2)
                                             : control.topMargin
                     horizontalAlignment: Text.AlignRight
-                    color: UM.Theme.getColor("text_sidebar_medium")
+                    color: UM.Theme.getColor(control.hovered ? "text_sidebar_dark" : "text_sidebar_medium")
                     font: control.font ? control.font : UM.Theme.getFont("large_semi_bold")
                     text: control.text
                 }

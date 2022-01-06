@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material" version="1.3">
+    <metadata>
+        <name>
+            <brand>BASF</brand>
+            <material>basf_bvoh</material>
+            <color>Generic</color>
+        </name>
+        <GUID>9c404cda-33bb-49c6-97f4-b32400669116</GUID>
+        <version>1</version>
+        <color_code>#FC6A03</color_code>
+        <compatible>True</compatible>
+        <description>BvOH</description>
+        <adhesion_info></adhesion_info>
+    </metadata>
+    <properties>
+        <density>1.21</density>
+        <diameter>1.75</diameter>
+    </properties>
+    <settings>
+        <setting key="print temperature">250</setting>
+        <setting key="print temperature layer 0">255</setting>
+        <setting key="heated bed temperature">100</setting>
+        <setting key="heated bed temperature layer 0">100</setting>
+        <setting key="cool fan full layer">2</setting>
+        <setting key="fan speed min">100</setting>
+        <setting key="fan speed max">100</setting>
+
+        <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe Z3"/>
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="retraction amount">0.6</setting>
+                <setting key="retraction speed">45</setting>
+                <setting key="heated bed temperature">90</setting>
+                <setting key="heated bed temperature layer 0">95</setting>
+                <setting key="print temperature">230</setting>
+                <setting key="print temperature layer 0">245</setting>
+                <setting key="fan speed min">30</setting>
+                <setting key="fan speed max">30</setting>
+                <setting key="cool fan full layer">3</setting>
+                <setting key="speed infill">80</setting>
+                <setting key="speed wall 0">30</setting>
+                <setting key="speed wall x">60</setting>
+                <setting key="wall 0 material flow">98</setting>
+                <setting key="wall x material flow">100</setting>
+                <setting key="material flow layer 0">100</setting>
+                <setting key="infill material flow">100</setting>
+                <setting key="skin overlap">20</setting>
+                <setting key="infill overlap">25</setting>
+                <setting key="support top distance">0.4</setting>
+
+                <setting key="linear advance gcode">ZXM900 K=0.0675</setting>
+            </hotend>
+        </machine>
+    </settings>
+</fdmmaterial>

@@ -3,6 +3,7 @@
 
 import QtQuick 2.7
 import QtQuick.Controls 1.2
+import QtQuick.Controls 2.2 as Q2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.1
 import QtGraphicalEffects 1.0
@@ -21,6 +22,7 @@ Column
     UM.I18nCatalog { id: catalog; name:"cura" }
 
     property int extruderIndex: Cura.ExtruderManager.activeExtruderIndex;
+    property string currentRootMaterialId: Cura.MachineManager.currentRootMaterialId[0]
 
     property var materialNames : {
         "zaxe_abs": "Zaxe ABS",
@@ -29,6 +31,7 @@ Column
         "zaxe_petg": "Zaxe PETG",
         "basf_asa": "BASF ASA",
         "basf_pet_cf15": "BASF PET CF15",
+        "verified": catalog.i18nc("@label", "Verified"),
         "custom": catalog.i18nc("@label", "Custom")
     }
 
@@ -92,8 +95,8 @@ Column
             ExclusiveGroup {
                 id: materialGroup
                 onCurrentChanged : {
-                    if (current.material == "basf") { // if sub model is not selected
-                        setMaterial(basfSubMaterialModel.get(basfSubMaterialCombobox.currentIndex).value)
+                    if (current.material == "verified") { // if sub model is not selected
+                        setMaterial(Object.keys(materialBrandsModel.materials)[0]) // set the first key which is the material code
                     } else {
                         setMaterial(current.material)
                     }
@@ -108,7 +111,7 @@ Column
                 // can't get the id of the current item from onCurrentChanged so I created another field
                 exclusiveGroup: materialGroup
                 property string material : "zaxe_abs"
-                checked: Cura.MachineManager.currentRootMaterialId[0] == material
+                checked: currentRootMaterialId == material
                 Layout.preferredHeight: 50
                 Layout.preferredWidth: 90
                 Layout.leftMargin: 10
@@ -121,7 +124,7 @@ Column
             {
                 exclusiveGroup: materialGroup
                 property string material : "zaxe_pla"
-                checked: Cura.MachineManager.currentRootMaterialId[0] == material
+                checked: currentRootMaterialId == material
                 Layout.preferredHeight: 50
                 Layout.preferredWidth: 90
                 Layout.alignment: Qt.AlignLeft
@@ -133,7 +136,7 @@ Column
             {
                 exclusiveGroup: materialGroup
                 property string material : "zaxe_flex"
-                checked: Cura.MachineManager.currentRootMaterialId[0] == material
+                checked: currentRootMaterialId == material
                 Layout.preferredHeight: 50
                 Layout.preferredWidth: 100
                 Layout.alignment: Qt.AlignLeft
@@ -146,7 +149,7 @@ Column
                 // can't get the id of the current item from onCurrentChanged so I created another field
                 exclusiveGroup: materialGroup
                 property string material : "zaxe_petg"
-                checked: Cura.MachineManager.currentRootMaterialId[0] == material
+                checked: currentRootMaterialId == material
                 Layout.preferredHeight: 30
                 Layout.preferredWidth: 90
                 Layout.leftMargin: 10
@@ -154,25 +157,25 @@ Column
                 style: UM.Theme.styles.radiobutton
                 text: materialNames[material]
             }
-            // BASF
+            // Verified Materials
             RadioButton
             {
-                id: rBMaterialBasf
+                id: rBVerifiedMaterials
                 exclusiveGroup: materialGroup
-                property string material : "basf"
-                checked: Cura.MachineManager.currentRootMaterialId[0].indexOf("basf") > -1
+                property string material : "verified"
+                checked: currentRootMaterialId != "custom" && currentRootMaterialId.indexOf("zaxe") == -1
                 Layout.preferredHeight: 30
                 Layout.preferredWidth: 90
                 Layout.alignment: Qt.AlignLeft
                 style: UM.Theme.styles.radiobutton
-                text: "BASF"
+                text: materialNames[material]
             }
             // Custom
             RadioButton
             {
                 exclusiveGroup: materialGroup
                 property string material : "custom"
-                checked: Cura.MachineManager.currentRootMaterialId[0] == material
+                checked: currentRootMaterialId == material
                 Layout.preferredHeight: 30
                 Layout.preferredWidth: 90
                 Layout.alignment: Qt.AlignLeft
@@ -181,44 +184,27 @@ Column
             }
         }
 
-        ComboBox // BASF sub material
-        {
-            id: basfSubMaterialCombobox
-            visible: rBMaterialBasf.checked
-
-            width: 90
-            height: UM.Theme.getSize("setting_control").height
-
-            x: rBMaterialBasf.x + 21
-
-            anchors {
-                top: materialSelectionGrid.bottom
-                topMargin: -5
+        Button { // verified materials menu button
+            id: btnVerifiedMaterial
+            visible: rBVerifiedMaterials.checked
+            style: UM.Theme.styles.sidebar_simple_button
+            text: {
+                var material = materialBrandsModel.materials[currentRootMaterialId]
+                return material ? material.brand + " " + material.description : ""
             }
-
-            model: ListModel {
-                id: basfSubMaterialModel
-                ListElement { text: "ASA"; value: "basf_asa" }
-                ListElement { text: "PET CF 15"; value: "basf_pet_cf15" }
+            x: rBVerifiedMaterials.x + UM.Theme.getSize("checkbox").width + 5
+            y: rBVerifiedMaterials.y + rBVerifiedMaterials.height + 10
+            property font font: UM.Theme.getFont("small")
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: verifiedMaterialMenu.popup()
             }
+        }
 
-            textRole: "text"  // this solves that the combobox isn't populated in the first time XDesktop is started
-
-            Behavior on height { NumberAnimation { duration: 100 } }
-
-            style: UM.Theme.styles.combobox
-
-            onActivated: setMaterial(model.get(index).value)
-
-            currentIndex: {
-                for(var i = 0; i < basfSubMaterialModel.count; i++) {
-                    if(basfSubMaterialModel.get(i).value == Cura.MachineManager.currentRootMaterialId[0]) {
-                        return i
-                    }
-                }
-                return 0 // 0 for default
-            }
-            MouseWheelDisabled {}
+        VerifiedMaterialMenu {
+            id: verifiedMaterialMenu
+            menuModel: materialBrandsModel
         }
 
         Button {
@@ -233,9 +219,7 @@ Column
                 topMargin: 3
                 rightMargin: -UM.Theme.getSize("sidebar_margin").width
             }
-            onClicked: {
-                prepareSidebar.switchView(1) // Custom material settings view
-            }
+            onClicked: prepareSidebar.switchView(1) // Custom material settings view
         }
 
         UM.SettingPropertyProvider

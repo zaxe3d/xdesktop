@@ -253,6 +253,10 @@ msgid "Custom"
 msgstr "Özel"
 
 msgctxt "@label"
+msgid "Verified"
+msgstr "Onaylı"
+
+msgctxt "@label"
 msgid "OK"
 msgstr "Tamam"
 

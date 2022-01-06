@@ -10,7 +10,7 @@
         <GUID>11c33c26-a85e-4a85-a3fe-890b45e4dd1f</GUID>
         <version>1</version>
         <color_code>#009bdf</color_code>
-        <description>Tough and durable. ABS is good for mechanical parts. It is impact resistant, dimensionally stable and handles temperatures up to 85ºC.</description>
+        <description>ABS</description>
         <adhesion_info>Use glue, to avoid chipping of the glass.</adhesion_info>
     </metadata>
     <properties>

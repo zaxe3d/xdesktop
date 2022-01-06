@@ -10,7 +10,7 @@
         <version>1</version>
         <color_code>#FC6A03</color_code>
         <compatible>True</compatible>
-        <description>BASF ASA</description>
+        <description>ASA</description>
         <adhesion_info></adhesion_info>
     </metadata>
     <properties>
@@ -39,10 +39,10 @@
                 <setting key="material flow">100</setting>
                 <setting key="material flow layer 0">90</setting>
                 <setting key="skin material flow">100</setting>
-                <setting key="wall_0_material flow">87</setting>
-                <setting key="wall_x_material flow">100</setting>
-                <setting key="wall_line_width_0">0.45</setting>
-                <setting key="wall_line_width_x">0.45</setting>
+                <setting key="wall 0 material flow">87</setting>
+                <setting key="wall x material flow">100</setting>
+                <setting key="wall line width 0">0.45</setting>
+                <setting key="wall line width x">0.45</setting>
                 <setting key="skin line width">0.4</setting>
                 <setting key="linear advance gcode">M572 D0 S0.0635</setting>
             </hotend>
@@ -72,8 +72,8 @@
                 <setting key="material flow">87</setting>
                 <setting key="material flow layer 0">90</setting>
                 <setting key="skin material flow">100</setting>
-                <setting key="wall_line_width_0">0.45</setting>
-                <setting key="wall_line_width_x">0.45</setting>
+                <setting key="wall line width 0">0.45</setting>
+                <setting key="wall line width x">0.45</setting>
                 <setting key="skin line width">0.4</setting>
                 <setting key="linear advance gcode">M572 D0 S0.064</setting>
             </hotend>

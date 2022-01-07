@@ -5,7 +5,7 @@ function encrypt {
     python encrypt_config.py --in ../resources/$1/$2 --out ../../xdesktop-binary-data/cura/resources/$1/$2 --key www.zaxe.com
 }
 
-definitions=( "zaxe.def.json" "zaxe_x1.def.json" "zaxe_x2.def.json" "zaxe_x1plus.def.json" "zaxe_z.def.json" "zaxe_z1.def.json" "zaxe_z1plus.def.json" "zaxe_z2.def.json" "zaxe_z3.def.json" )
+definitions=( "zaxe.def.json" "zaxe_x1.def.json" "zaxe_x2.def.json" "zaxe_x1plus.def.json" "zaxe_z.def.json" "zaxe_new_z.def.json" "zaxe_z1.def.json" "zaxe_z1plus.def.json" "zaxe_z2.def.json" "zaxe_z3.def.json" )
 
 for def in "${definitions[@]}"
 do

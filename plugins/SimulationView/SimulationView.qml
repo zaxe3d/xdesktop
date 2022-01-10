@@ -24,7 +24,7 @@ Item
         }
     }
     height: {
-        if (viewSettings.collapsed)
+        if (viewSettings && viewSettings.collapsed)
         {
             if (UM.SimulationView.compatibilityMode)
             {

@@ -12,6 +12,7 @@
         <compatible>True</compatible>
         <description>PET</description>
         <adhesion_info></adhesion_info>
+        <removed>True</removed>
     </metadata>
     <properties>
         <density>1.21</density>

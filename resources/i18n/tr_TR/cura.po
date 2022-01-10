@@ -401,6 +401,14 @@ msgid "Z hop when retracted"
 msgstr "Geri çekildiğinde Z sıçraması"
 
 msgctxt "@label"
+msgid "Monotonic skin"
+msgstr "Monotonic dış katman"
+
+msgctxt "@label"
+msgid "Fuzzy skin"
+msgstr "Belirsiz dış katman"
+
+msgctxt "@label"
 msgid "Spiral vase mode"
 msgstr "Spiral vazo modu"
 

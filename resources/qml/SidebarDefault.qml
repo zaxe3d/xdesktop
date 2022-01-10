@@ -3028,6 +3028,59 @@ Item
                             }
                         }
                     }
+                    Item
+                    {
+                        id: skinMonotonicRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: skinMonotonicCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .70)
+
+                                CheckBox
+                                {
+                                    id: skinMonotonicCheckBox
+                                    property alias _hovered: skinMonotonicMouseArea.containsMouse
+                                    property bool checkBoxSmall: true
+
+                                    anchors.top: parent.top
+                                    anchors.left: parent.left
+
+                                    //: Setting enable printing build-plate adhesion helper checkbox
+                                    style: UM.Theme.styles.checkbox;
+
+                                    checked: skinMonotonic.properties.value == "True"
+                                    text: catalog.i18nc("@label", "Monotonic skin")
+
+                                    MouseArea
+                                    {
+                                        id: skinMonotonicMouseArea
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onClicked:
+                                        {
+                                            parent.checked = !parent.checked;
+                                            skinMonotonic.setPropertyValue("value", booleanToString(parent.checked));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                     Item
                     {
@@ -3222,6 +3275,59 @@ Item
                                         {
                                             parent.checked = !parent.checked;
                                             outerInsetFirst.setPropertyValue("value", booleanToString(parent.checked));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Item
+                    {
+                        id: fuzzySkinRow
+
+                        Layout.preferredWidth: parent.width - (UM.Theme.getSize("sidebar_margin").width * 2)
+                        Layout.preferredHeight: 40
+                        Layout.alignment: Qt.AlignLeft
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: UM.Theme.getSize("sidebar_item_margin").width
+                            color: UM.Theme.getColor("sidebar_item_light")
+                            width: parent.width
+                            Item
+                            {
+                                id: fuzzySkinCellLeft
+
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.bottom: parent.bottom
+
+                                width: Math.round(base.width * .70)
+
+                                CheckBox
+                                {
+                                    id: fuzzySkinCheckBox
+                                    property alias _hovered: fuzzySkinMouseArea.containsMouse
+                                    property bool checkBoxSmall: true
+
+                                    anchors.top: parent.top
+                                    anchors.left: parent.left
+
+                                    //: Setting enable printing build-plate adhesion helper checkbox
+                                    style: UM.Theme.styles.checkbox;
+
+                                    checked: fuzzySkin.properties.value == "True"
+                                    text: catalog.i18nc("@label", "Fuzzy skin")
+
+                                    MouseArea
+                                    {
+                                        id: fuzzySkinMouseArea
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onClicked:
+                                        {
+                                            parent.checked = !parent.checked;
+                                            fuzzySkin.setPropertyValue("value", booleanToString(parent.checked));
                                         }
                                     }
                                 }
@@ -3527,6 +3633,22 @@ Item
                 id: outerInsetFirst
                 containerStackId: Cura.MachineManager.activeStackId
                 key: "outer_inset_first"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+            UM.SettingPropertyProvider
+            {
+                id: fuzzySkin
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "magic_fuzzy_skin_enabled"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+            UM.SettingPropertyProvider
+            {
+                id: skinMonotonic
+                containerStackId: Cura.MachineManager.activeStackId
+                key: "skin_monotonic"
                 watchedProperties: [ "value" ]
                 storeIndex: 0
             }

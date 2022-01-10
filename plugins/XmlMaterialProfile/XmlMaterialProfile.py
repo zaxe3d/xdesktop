@@ -1182,6 +1182,7 @@ class XmlMaterialProfile(InstanceContainer):
         "print temperature layer 0": "material_print_temperature_layer_0",
         "heated bed temperature": "default_material_bed_temperature",
         "heated bed temperature layer 0": "material_bed_temperature_layer_0",
+        "final print temperature": "material_final_print_temperature",
         "standby temperature": "material_standby_temperature",
         "processing temperature graph": "material_flow_temp_graph",
         "print cooling": "cool_fan_speed",

@@ -402,7 +402,7 @@ msgstr "Geri çekildiğinde Z sıçraması"
 
 msgctxt "@label"
 msgid "Monotonic skin"
-msgstr "Monotonic dış katman"
+msgstr "Monotonik dış katman"
 
 msgctxt "@label"
 msgid "Fuzzy skin"

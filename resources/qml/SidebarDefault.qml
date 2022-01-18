@@ -3064,7 +3064,7 @@ Item
                                     style: UM.Theme.styles.checkbox;
 
                                     checked: skinMonotonic.properties.value == "True"
-                                    text: catalog.i18nc("@label", "Monotonic skin")
+                                    text: catalog.i18nc("@label", "Monotonic top/bottom skin")
 
                                     MouseArea
                                     {

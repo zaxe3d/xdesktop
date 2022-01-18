@@ -401,8 +401,8 @@ msgid "Z hop when retracted"
 msgstr "Geri çekildiğinde Z sıçraması"
 
 msgctxt "@label"
-msgid "Monotonic skin"
-msgstr "Monotonik dış katman"
+msgid "Monotonic top/bottom skin"
+msgstr "Monotonik alt/üst katman"
 
 msgctxt "@label"
 msgid "Fuzzy skin"

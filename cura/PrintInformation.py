@@ -194,6 +194,7 @@ class PrintInformation(QObject):
             total_estimated_time += time
             duration.setDuration(time)
 
+        total_estimated_time += total_estimated_time * 0.3 # Zaxe average constant for simulating real print time.
         if build_plate_number not in self._current_print_time:
             self._current_print_time[build_plate_number] = Duration(None, self)
         self._current_print_time[build_plate_number].setDuration(total_estimated_time)

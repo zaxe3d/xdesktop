@@ -191,9 +191,9 @@
                 <setting key="retraction amount">0.6</setting>
                 <setting key="retraction speed">45</setting>
                 <setting key="heated bed temperature">100</setting>
-                <setting key="heated bed temperature layer 0">105</setting>
-                <setting key="print temperature layer 0">245</setting>
-                <setting key="print temperature">230</setting>
+                <setting key="heated bed temperature layer 0">100</setting>
+                <setting key="print temperature layer 0">250</setting>
+                <setting key="print temperature">235</setting>
                 <setting key="final print temperature">220</setting>
                 <setting key="fan speed min">30</setting>
                 <setting key="fan speed max">30</setting>
@@ -208,7 +208,6 @@
                 <setting key="skin overlap">40</setting>
                 <setting key="infill overlap">25</setting>
                 <setting key="support top distance">0.4</setting>
-
                 <setting key="linear advance gcode">ZXM900 K=0.0675</setting>
             </hotend>
         </machine>

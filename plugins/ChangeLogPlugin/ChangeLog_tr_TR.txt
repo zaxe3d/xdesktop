@@ -1,7 +1,7 @@
 [2.3.0 beta]
 * Z2 ve Z3+ eklendi.
 
-[2.2.3]
+[2.2.4]
 * Monotonik alt/üst katman ve Belirsiz dış katman ayarları eklendi.
 * Konfigurasyon iyileştirmeleri yapıldı.
 

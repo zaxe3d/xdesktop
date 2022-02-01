@@ -29,11 +29,12 @@
         "acceleration_print_layer_0": { "value": 1000 },
         "acceleration_travel_layer_0": { "value": 1000 },
         "speed_print":  { "value": 80 },
-        "material_flow": {"value":100},
-        "roofing_monotonic": { "default_value": true },
+        "material_flow": {"value": 100},
+        "roofing_monotonic": { "default_value": false },
         "infill_before_walls" : { "value": false },
-        "support_bottom_material_flow" :  {"value":110},
-        "speed_support_bottom" : {"value":20},
-        "retraction_hop_enabled" : { "default_value": true }
+        "support_bottom_material_flow" :  {"value": 110},
+        "speed_support_bottom" : {"value": 20},
+        "retraction_hop_enabled": { "default_value": true },
+        "roofing_material_flow" : {"value": 90}
     }
 }

@@ -234,7 +234,7 @@
                 <setting key="wall x material flow">100</setting>
                 <setting key="material flow layer 0">100</setting>
                 <setting key="infill material flow">105</setting>
-                <setting key="skin material flow">100</setting>
+                <setting key="skin material flow">105</setting>
                 <setting key="support top distance">0.4</setting>
 
                 <setting key="linear advance gcode">ZXM900 K=0.0675</setting>

@@ -217,26 +217,26 @@
             <machine_identifier manufacturer="Zaxe" product="Zaxe Z3"/>
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature layer 0">250</setting>
+                <setting key="print temperature">235</setting>
+                <setting key="final print temperature">220</setting>
+                <setting key="heated bed temperature">105</setting>
+                <setting key="heated bed temperature layer 0">100</setting>
                 <setting key="retraction amount">0.9</setting>
                 <setting key="retraction speed">50</setting>
-                <setting key="heated bed temperature">100</setting>
-                <setting key="heated bed temperature layer 0">105</setting>
-                <setting key="print temperature layer 0">250</setting>
-                <setting key="print temperature">237</setting>
-                <setting key="final print temperature">220</setting>
-                <setting key="fan speed min">30</setting>
-                <setting key="fan speed max">30</setting>
-                <setting key="cool fan full layer">5</setting>
                 <setting key="speed infill">80</setting>
                 <setting key="speed wall 0">30</setting>
                 <setting key="speed wall x">60</setting>
                 <setting key="wall 0 material flow">98</setting>
                 <setting key="wall x material flow">100</setting>
                 <setting key="material flow layer 0">100</setting>
-                <setting key="infill material flow">105</setting>
-                <setting key="skin material flow">105</setting>
+                <setting key="infill material flow">100</setting>
+                <setting key="skin material flow">100</setting>
+                <setting key="infill overlap">25</setting>
+                <setting key="fan speed min">30</setting>
+                <setting key="fan speed max">30</setting>
+                <setting key="cool fan full layer">5</setting>
                 <setting key="support top distance">0.4</setting>
-
                 <setting key="linear advance gcode">ZXM900 K=0.0675</setting>
             </hotend>
         </machine>

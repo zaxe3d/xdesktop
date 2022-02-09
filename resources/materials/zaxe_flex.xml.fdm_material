@@ -160,7 +160,27 @@
                 <setting key="linear advance gcode">M572 D0 S0</setting>
             </hotend>
         </machine>
-
+        <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe Z3"/>
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="material flow layer 0">100</setting>
+                <setting key="infill material flow">100</setting>
+                <setting key="skin material flow">110</setting>
+                <setting key="speed roofing">50</setting>
+                <setting key="linear advance gcode">M572 D0 S0</setting>
+                <setting key="print temperature">230</setting>
+                <setting key="heated bed temperature">70</setting>
+                <setting key="heated bed temperature layer 0">70</setting>
+                <setting key="retraction amount">0.5</setting>
+                <setting key="material flow">135</setting>
+                <setting key="infill material flow">100</setting>
+                <setting key="skin material flow">100</setting>
+                <setting key="speed print layer 0">20</setting>
+                <setting key="speed wall x">50</setting>
+                <setting key="speed infill">50</setting>
+            </hotend>
+        </machine>
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe ZLite"/>
 

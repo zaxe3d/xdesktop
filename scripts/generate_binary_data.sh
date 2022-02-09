@@ -38,7 +38,7 @@ do
     encrypt "quality" $quality
 done
 
-materials=( "custom.xml.fdm_material" "zaxe_abs.xml.fdm_material" "zaxe_flex.xml.fdm_material" "zaxe_pla.xml.fdm_material" "zaxe_petg.xml.fdm_material" "basf_asa.xml.fdm_material" "basf_pet_cf15.xml.fdm_material" )
+materials=( "custom.xml.fdm_material" "zaxe_abs.xml.fdm_material" "zaxe_flex.xml.fdm_material" "zaxe_pla.xml.fdm_material" "zaxe_petg.xml.fdm_material" "basf_asa.xml.fdm_material" "basf_pet_cf15.xml.fdm_material" "basf_pa.xml.fdm_material" )
 
 for def in "${materials[@]}"
 do

@@ -1,4 +1,4 @@
-[2.3.2 beta]
+[2.3.3 beta]
 * Dilimleme motoru güncellendi.
 * Z2 ve Z3+ eklendi.
 * Konfigurasyon iyileştirmeleri yapıldı.

@@ -1,6 +1,8 @@
-[2.3.1 beta]
+[2.3.2 beta]
+* Dilimleme motoru güncellendi.
 * Z2 ve Z3+ eklendi.
 * Konfigurasyon iyileştirmeleri yapıldı.
+
 
 [2.2.4]
 * Monotonik alt/üst katman ve Belirsiz dış katman ayarları eklendi.

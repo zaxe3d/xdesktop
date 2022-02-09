@@ -1321,7 +1321,7 @@ Item {
                             Button {
                                 id: btnFilamentUnload
                                 // only Z series has remote update
-                                visible: deviceModel.search("z1") == 0 && fwVersion.split(".")[2] >= 76 && !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
+                                visible: deviceModel.search("z") == 0 && !machineStates.paused && !machineStates.printing && !machineStates.uploading && !machineStates.heating && !canceling && !machineStates.calibrating && !machineStates.bed_occupied
                                 Layout.preferredHeight: parent.height / 2
                                 background: Rectangle {
                                     color: UM.Theme.getColor("button_blue")

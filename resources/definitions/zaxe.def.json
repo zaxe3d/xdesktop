@@ -39,6 +39,8 @@
         "acceleration_enabled": { "value": true },
         "raft_surface_layers": { "value": 2 },
         "adhesion_type": { "default_value": "raft" },
+        "raft_margin": { "default_value": 3 },
+        "raft_airgap": { "default_value": 0.1 },
         "raft_surface_speed": { "value": 40 },
         "raft_interface_speed": { "value": 40 },
         "raft_base_speed": { "value": 15 },

@@ -3226,7 +3226,7 @@ Item
                                 }
                             }
                         }
-                    }*/
+                    }
 
                     Item
                     {
@@ -3280,7 +3280,7 @@ Item
                                 }
                             }
                         }
-                    }
+                    }*/
                     Item
                     {
                         id: fuzzySkinRow
@@ -3628,14 +3628,14 @@ Item
                 storeIndex: 0
             }
 
-            UM.SettingPropertyProvider
+            /*UM.SettingPropertyProvider
             {
                 id: outerInsetFirst
                 containerStackId: Cura.MachineManager.activeStackId
                 key: "outer_inset_first"
                 watchedProperties: [ "value" ]
                 storeIndex: 0
-            }
+            }*/
             UM.SettingPropertyProvider
             {
                 id: fuzzySkin

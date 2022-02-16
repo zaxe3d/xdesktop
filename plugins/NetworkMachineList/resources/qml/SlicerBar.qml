@@ -58,10 +58,11 @@ Item {
                     lblFilename.text = PrintInformation.baseName + ".gcode"
                     lblDuration.text = lblLength.text = lblMaterial.text = "-"
                 } else {
+                    var material = networkMachineList.materialNames[info.material]
+                    lblMaterial.text = material.brand + (material.description ? " " + material.description : "")
                     lblFilename.text = PrintInformation.baseName + ".zaxe"
                     lblDuration.text = info.duration
                     lblLength.text = (info.filament_used / 1000) + "m."
-                    lblMaterial.text = networkMachineList.materialNames[info.material]
                 }
 
                 if (info.material == undefined) {

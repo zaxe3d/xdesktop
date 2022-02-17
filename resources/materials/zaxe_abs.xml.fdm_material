@@ -90,8 +90,8 @@
                 <setting key="skin overlap">40</setting>
                 <setting key="infill overlap">25</setting>
                 <setting key="support top distance">0.4</setting>
-
                 <setting key="linear advance gcode">ZXM900 K=0.0675</setting>
+                <setting key="chamber temp gcode">M141 S50</setting>
             </hotend>
         </machine>
 

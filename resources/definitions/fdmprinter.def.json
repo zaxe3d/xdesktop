@@ -2720,7 +2720,15 @@
                 "material_linear_advance_gcode":
                 {
                     "label": "Linear Advance G-code",
-                    "description": "G-code commands to be executed for adjusting linear advance",
+                    "description": "G-code commands to be executed for adjusting linear advance.",
+                    "type": "str",
+                    "enabled": true,
+                    "default_value": ""
+                },
+                "material_chamber_temp_gcode":
+                {
+                    "label": "Chamber set temp G-code",
+                    "description": "G-code commands to be executed for adjusting chamber temperature.",
                     "type": "str",
                     "enabled": true,
                     "default_value": ""

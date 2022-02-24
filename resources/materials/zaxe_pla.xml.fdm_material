@@ -74,18 +74,6 @@
                 <setting key="heated bed temperature layer 0">65</setting>
                 <setting key="retraction amount">0.6</setting>
                 <setting key="retraction speed">45</setting>
-                <setting key="speed print layer 0">20</setting>
-                <setting key="speed infill">70</setting>
-                <setting key="speed wall 0">25</setting>
-                <setting key="speed wall x">50</setting>
-                <setting key="wall 0 material flow">94</setting>
-                <setting key="wall x material flow">94</setting>
-                <setting key="material flow layer 0">115</setting>
-                <setting key="infill material flow">94</setting>
-                <setting key="skin material flow">105</setting>
-                <setting key="skin overlap">25</setting>
-                <setting key="skin material flow">100</setting>
-                <setting key="infill overlap">25</setting>
                 <setting key="cool fan full layer">3</setting>
                 <setting key="linear advance gcode">M900 K=0.12</setting>
                 <setting key="chamber temp gcode">M141 S20</setting>

@@ -222,12 +222,13 @@
                 <setting key="final print temperature">220</setting>
                 <setting key="heated bed temperature">105</setting>
                 <setting key="heated bed temperature layer 0">100</setting>
-                <setting key="retraction amount">0.8</setting>
+                <setting key="retraction amount">0.6</setting>
                 <setting key="retraction speed">30</setting>
                 <setting key="fan speed min">60</setting>
                 <setting key="fan speed max">60</setting>
                 <setting key="cool fan full layer">5</setting>
                 <setting key="support top distance">0.4</setting>
+                <setting key="linear advance gcode">ZXM900 K=0.0675</setting>
             </hotend>
         </machine>
         <machine>

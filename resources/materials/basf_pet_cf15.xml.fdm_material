@@ -27,8 +27,7 @@
         <setting key="fan speed max">100</setting>
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe Z3"/>
-
-            <hotend id="0.6">
+            <hotend id="0.5">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="fan speed min">100</setting>
                 <setting key="fan speed max">100</setting>
@@ -37,15 +36,11 @@
                 <setting key="heated bed temperature">75</setting>
                 <setting key="heated bed temperature layer 0">75</setting>
                 <setting key="cool fan full layer">5</setting>
-                <setting key="retraction amount">1.5</setting>
-                <setting key="retraction speed">70</setting>
+                <setting key="retraction amount">2.4</setting>
+                <setting key="retraction speed">50</setting>
                 <setting key="speed infill">50</setting>
                 <setting key="speed wall 0">25</setting>
                 <setting key="speed wall x">40</setting>
-                <setting key="wall 0 material flow">70</setting>
-                <setting key="wall x material flow">100</setting>
-                <setting key="material flow layer 0">100</setting>
-                <setting key="infill material flow">80</setting>
                 <setting key="speed print layer 0">20</setting>
                 <setting key="skin overlap">20</setting>
                 <setting key="infill overlap">15</setting>

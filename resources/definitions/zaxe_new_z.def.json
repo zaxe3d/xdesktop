@@ -2,23 +2,35 @@
     "id": "zaxe_new_z",
     "name": "New Z Series",
     "version": 2,
-    "inherits": "zaxe_z",
+    "inherits": "fdmprinter",
     "metadata": {
+        "author": "Zaxe",
+        "manufacturer": "Zaxe",
         "visible": false,
-        "quality_definition": "zaxe_z"
+        "has_machine_quality": true,
+        "preferred_quality_type": "normal",
+        "category": "Zaxe",
+        "has_materials": true,
+        "has_variants": true,
+        "variants_name": "Nozzle",
+        "preferred_material": "zaxe_abs",
+        "preferred_variant_name": "0.4",
+        "file_formats": "application/zaxe",
+        "exclude_materials": [ ],
+        "weight": 4
     },
 
     "overrides": {
         "machine_gcode_flavor": { "default_value": "RepRap (RepRap)" },
         "machine_extruder_count": { "default_value": 1 },
         "machine_end_gcode": { "default_value": "" },
-        "speed_travel_layer_0": { "value": 100 },
+        "speed_travel_layer_0": { "value": 80 },
         "speed_print":  { "value": 60 },
         "speed_wall_0":  { "value": 40 },
         "speed_wall_x":  { "value": 60 },
         "speed_topbottom": { "value": 30 },
         "speed_travel": { "value": 200 },
-        "speed_infill":  { "value": 60 },
+        "speed_infill":  { "value": 80 },
         "speed_layer_0":  { "value": 30 },
         "skirt_brim_speed":  { "value": 30 },
         "speed_z_hop":  { "value": 10 },
@@ -26,6 +38,7 @@
         "infill_before_walls" : { "value": false },
         "support_bottom_material_flow" :  {"value": 110},
         "speed_support_bottom" : {"value": 20},
-        "retraction_hop_enabled": { "default_value": true }
+        "retraction_hop_enabled": { "default_value": true },
+        "raft_margin": { "default_value": 3 }
     }
 }

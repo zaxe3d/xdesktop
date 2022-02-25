@@ -8,6 +8,7 @@
         "manufacturer": "Zaxe",
         "visible": false,
         "has_machine_quality": true,
+        "quality_definition": "zaxe_new_z",
         "preferred_quality_type": "normal",
         "category": "Zaxe",
         "has_materials": true,

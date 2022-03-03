@@ -33,12 +33,12 @@ qualities=( "expert.inst.cfg" "high.inst.cfg" "recommended.inst.cfg" "fast.inst.
             "zaxe_z/0.6/0.6_fast.inst.cfg" "zaxe_z/0.6/0.6_draft.inst.cfg" "zaxe_z/0.6/0.6_low.inst.cfg"
             "zaxe_z/0.8/0.8_expert.inst.cfg" "zaxe_z/0.8/0.8_high.inst.cfg" "zaxe_z/0.8/0.8_recommended.inst.cfg" "zaxe_z/0.8/0.8_fast.inst.cfg" "zaxe_z/0.8/0.8_draft.inst.cfg" "zaxe_z/0.8/0.8_low.inst.cfg" "zaxe_z/0.8/0.8_lowest.inst.cfg"
             "zaxe_z/e3d_brass_0.4/e3d_brass_0.4_expert.inst.cfg" "zaxe_z/e3d_brass_0.4/e3d_brass_0.4_high.inst.cfg" "zaxe_z/e3d_brass_0.4/e3d_brass_0.4_recommended.inst.cfg" "zaxe_z/e3d_brass_0.4/e3d_brass_0.4_fast.inst.cfg" "zaxe_z/e3d_brass_0.4/e3d_brass_0.4_draft.inst.cfg" "zaxe_z/e3d_brass_0.4/e3d_brass_0.4_low.inst.cfg"
-            "zaxe_new_z/0.2/0.2_expert.inst.cfg" "zaxe_z/0.2/0.2_high.inst.cfg" "zaxe_z/0.2/0.2_recommended.inst.cfg" "zaxe_z/0.2/0.2_fast.inst.cfg" "zaxe_z/0.2/0.2_draft.inst.cfg" "zaxe_z/0.2/0.2_low.inst.cfg"
-            "zaxe_new_z/0.4/0.4_expert.inst.cfg" "zaxe_z/0.4/0.4_high.inst.cfg" "zaxe_z/0.4/0.4_recommended.inst.cfg" "zaxe_z/0.4/0.4_fast.inst.cfg" "zaxe_z/0.4/0.4_draft.inst.cfg" "zaxe_z/0.4/0.4_low.inst.cfg"
-            "zaxe_new_z/0.5/0.5_expert.inst.cfg" "zaxe_z/0.5/0.5_high.inst.cfg" "zaxe_z/0.5/0.5_recommended.inst.cfg" "zaxe_z/0.5/0.5_fast.inst.cfg" "zaxe_z/0.5/0.5_draft.inst.cfg" "zaxe_z/0.5/0.5_low.inst.cfg"
-            "zaxe_new_z/0.6/0.6_fast.inst.cfg" "zaxe_z/0.6/0.6_draft.inst.cfg" "zaxe_z/0.6/0.6_low.inst.cfg"
-            "zaxe_new_z/0.8/0.8_expert.inst.cfg" "zaxe_z/0.8/0.8_high.inst.cfg" "zaxe_z/0.8/0.8_recommended.inst.cfg" "zaxe_z/0.8/0.8_fast.inst.cfg" "zaxe_z/0.8/0.8_draft.inst.cfg" "zaxe_z/0.8/0.8_low.inst.cfg" "zaxe_z/0.8/0.8_lowest.inst.cfg"
-            "zaxe_new_z/e3d_brass_0.4/e3d_brass_0.4_expert.inst.cfg" "zaxe_z/e3d_brass_0.4/e3d_brass_0.4_high.inst.cfg" "zaxe_z/e3d_brass_0.4/e3d_brass_0.4_recommended.inst.cfg" "zaxe_z/e3d_brass_0.4/e3d_brass_0.4_fast.inst.cfg" "zaxe_z/e3d_brass_0.4/e3d_brass_0.4_draft.inst.cfg" "zaxe_z/e3d_brass_0.4/e3d_brass_0.4_low.inst.cfg"
+            "zaxe_new_z/0.2/0.2_expert.inst.cfg" "zaxe_new_z/0.2/0.2_high.inst.cfg" "zaxe_new_z/0.2/0.2_recommended.inst.cfg" "zaxe_new_z/0.2/0.2_fast.inst.cfg" "zaxe_new_z/0.2/0.2_draft.inst.cfg" "zaxe_new_z/0.2/0.2_low.inst.cfg"
+            "zaxe_new_z/0.4/0.4_expert.inst.cfg" "zaxe_new_z/0.4/0.4_high.inst.cfg" "zaxe_new_z/0.4/0.4_recommended.inst.cfg" "zaxe_new_z/0.4/0.4_fast.inst.cfg" "zaxe_new_z/0.4/0.4_draft.inst.cfg" "zaxe_new_z/0.4/0.4_low.inst.cfg"
+            "zaxe_new_z/0.5/0.5_expert.inst.cfg" "zaxe_new_z/0.5/0.5_high.inst.cfg" "zaxe_new_z/0.5/0.5_recommended.inst.cfg" "zaxe_new_z/0.5/0.5_fast.inst.cfg" "zaxe_new_z/0.5/0.5_draft.inst.cfg" "zaxe_new_z/0.5/0.5_low.inst.cfg"
+            "zaxe_new_z/0.6/0.6_fast.inst.cfg" "zaxe_new_z/0.6/0.6_draft.inst.cfg" "zaxe_new_z/0.6/0.6_low.inst.cfg"
+            "zaxe_new_z/0.8/0.8_expert.inst.cfg" "zaxe_new_z/0.8/0.8_high.inst.cfg" "zaxe_new_z/0.8/0.8_recommended.inst.cfg" "zaxe_new_z/0.8/0.8_fast.inst.cfg" "zaxe_new_z/0.8/0.8_draft.inst.cfg" "zaxe_new_z/0.8/0.8_low.inst.cfg" "zaxe_new_z/0.8/0.8_lowest.inst.cfg"
+            "zaxe_new_z/e3d_brass_0.4/e3d_brass_0.4_expert.inst.cfg" "zaxe_new_z/e3d_brass_0.4/e3d_brass_0.4_high.inst.cfg" "zaxe_new_z/e3d_brass_0.4/e3d_brass_0.4_recommended.inst.cfg" "zaxe_new_z/e3d_brass_0.4/e3d_brass_0.4_fast.inst.cfg" "zaxe_new_z/e3d_brass_0.4/e3d_brass_0.4_draft.inst.cfg" "zaxe_new_z/e3d_brass_0.4/e3d_brass_0.4_low.inst.cfg"
           )
 for quality in "${qualities[@]}"
 do

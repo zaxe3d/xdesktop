@@ -23,6 +23,7 @@
 
     "overrides": {
         "machine_gcode_flavor": { "default_value": "RepRap (RepRap)" },
+        "machine_heated_bed": { "value": true },
         "machine_extruder_count": { "default_value": 1 },
         "machine_end_gcode": { "default_value": "" },
         "speed_travel_layer_0": { "value": 80 },

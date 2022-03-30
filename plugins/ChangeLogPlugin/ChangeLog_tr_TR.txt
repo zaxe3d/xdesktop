@@ -1,3 +1,6 @@
+[2.3.8]
+* Dilimleme motoru güncellendi.
+
 [2.3.7]
 * Dilimleme motoru güncellendi.
 * Konfigurasyon iyileştirmeleri yapıldı.

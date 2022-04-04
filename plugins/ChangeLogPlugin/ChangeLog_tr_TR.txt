@@ -1,3 +1,8 @@
+[2.3.10]
+* Taban destek mesafesi ayarlanamıyor hatası çözüldü.
+* İyileştirmeler yapıldı.
+* X2 için 0.6mm ve 0.8mm nozül seçenekleri eklendi.
+
 [2.3.9]
 * Fan hızı yanlış geliyor hatası düzeltildi.
 * Z3 için Z sıçraması varsayılan olmaktan çıkartıldı.

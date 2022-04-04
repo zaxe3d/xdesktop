@@ -2130,15 +2130,13 @@ Item
                                     Binding {
                                         target: raftAirgapInput
                                         property: "text"
-                                        value: {
-                                            return raftAirgap.properties.value
-                                        }
+                                        value: parseFloat(raftAirgap.properties.value)
                                         when: !raftAirgapInput.activeFocus
                                     }
 
                                     onEditingFinished: {
                                         if (!acceptableInput) return
-                                        raftAirgap.setPropertyValue("value", text)
+                                        raftAirgap.setPropertyValue("value", parseFloat(text))
                                     }
                                 }
 

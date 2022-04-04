@@ -55,7 +55,7 @@
                 {
                     "label": "Start G-code",
                     "description": "G-code commands to be executed at the very start - separated by \\n.",
-                    "default_value": "G28 ;Home\nG1 Z15.0 F6000 ;Move the platform down 15mm\n;Prime the extruder\nG92 E0\nG1 F200 E3\nG92 E0",
+                    "default_value": "G28\nG91\nG1 Z5 F500\nM83\nG1 E25 F150\nG1 X20 F10000\nG90\nG1 Z0.4 F500\nG91\nM83\nG1 X40 E15 F500\nG90\nM82\nG92 E0",
                     "type": "str",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false,

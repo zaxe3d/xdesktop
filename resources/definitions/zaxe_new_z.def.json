@@ -23,7 +23,7 @@
 
     "overrides": {
         "machine_gcode_flavor": { "default_value": "RepRap (RepRap)" },
-        "machine_heated_bed": { "value": true },
+        "machine_heated_bed": { "default_value": true },
         "machine_extruder_count": { "default_value": 1 },
         "machine_end_gcode": { "default_value": "" },
         "speed_travel_layer_0": { "value": 80 },
@@ -41,8 +41,6 @@
         "speed_print_layer_0": { "value": 20 },
         "speed_travel_layer_0": { "value": 100 },
         "speed_slowdown_layers": { "value": 3 },
-        "retraction_retract_speed": { "value": 35 },
-        "retraction_prime_speed": { "value": 25 },
         "skirt_brim_speed":  { "value": 30 },
         "raft_interface_speed": { "value": 40 },
         "raft_surface_speed": { "value": 40 },
@@ -52,7 +50,6 @@
         "roofing_monotonic": { "default_value": false },
         "infill_before_walls" : { "value": false },
         "support_bottom_material_flow" :  {"value": 110},
-        "retraction_hop_enabled": { "default_value": true },
         "raft_margin": { "default_value": 3 },
         "adhesion_type": { "default_value": "raft" },
         "acceleration_enabled": { "value": true },
@@ -74,7 +71,9 @@
         "raft_base_acceleration": { "value": 1000 },
         "cool_min_layer_time": { "default_value": 15 },
         "cool_min_speed": { "default_value": 20 },
-        "retraction_combing": { "default_value": "no_outer_surfaces" }
-
+        "retraction_combing": { "default_value": "no_outer_surfaces" },
+        "retraction_retract_speed": { "value": 35 },
+        "retraction_prime_speed": { "value": 25 },
+        "retraction_hop_enabled": { "default_value": false }
     }
 }

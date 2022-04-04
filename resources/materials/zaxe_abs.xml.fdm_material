@@ -217,7 +217,7 @@
             <machine_identifier manufacturer="Zaxe" product="Zaxe Z3"/>
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
-                <setting key="print temperature layer 0">250</setting>
+                <setting key="print temperature layer 0">240</setting>
                 <setting key="print temperature">235</setting>
                 <setting key="final print temperature">220</setting>
                 <setting key="heated bed temperature">100</setting>

@@ -1,3 +1,8 @@
+[2.3.9]
+* Fan hızı yanlış geliyor hatası düzeltildi.
+* Z3 için Z sıçraması varsayılan olmaktan çıkartıldı.
+* ABS materyalde yatak sıcaklığı gelmiyor hatası düzeltildi.
+
 [2.3.8]
 * Dilimleme motoru güncellendi.
 

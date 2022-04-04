@@ -20,7 +20,7 @@
     },
     "overrides": {
         "machine_acceleration": { "value": 500 },
-        "machine_heated_bed": { "value": true },
+        "machine_heated_bed": { "default_value": true },
         "acceleration_infill": { "value": 500 },
         "acceleration_wall_0": { "value": 500 },
         "acceleration_wall_x":{ "value": 500 },

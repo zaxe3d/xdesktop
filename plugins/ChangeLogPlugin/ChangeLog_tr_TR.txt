@@ -1,4 +1,8 @@
 [2.3.10]
+* Dilimleme motoru güncellendi.
+Dilimlerken takılıyor hatası giderildi.
+
+[2.3.10]
 * Taban destek mesafesi ayarlanamıyor hatası çözüldü.
 * İyileştirmeler yapıldı.
 * X2 için 0.6mm ve 0.8mm nozül seçenekleri eklendi.

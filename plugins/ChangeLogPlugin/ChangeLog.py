@@ -55,7 +55,7 @@ class ChangeLog(Extension, QObject,):
 
     def loadChangeLogs(self):
         self._change_logs = collections.OrderedDict()
-        with open(os.path.join(PluginRegistry.getInstance().getPluginPath(self.getPluginId()), "ChangeLog_tr_TR.txt"), "r", encoding = "utf-8") as f:
+        with open(os.path.join(PluginRegistry.getInstance().getPluginPath(self.getPluginId()), "ChangeLog_en_US.txt"), "r", encoding = "utf-8") as f:
             open_version = None
             open_header = "" # Initialise to an empty header in case there is no "*" in the first line of the changelog
             for line in f:

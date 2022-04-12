@@ -1,6 +1,6 @@
-[2.3.11]
+[2.3.12]
 * Dilimleme motoru güncellendi.
-Dilimlerken takılıyor hatası giderildi.
+Bazı konfigurasyonlarda dilimlerken takılıyor hatası giderildi.
 
 [2.3.10]
 * Taban destek mesafesi ayarlanamıyor hatası çözüldü.
@@ -83,8 +83,6 @@ Tüm metal nozül eklendi.
 Sadece Z serisi için firmware v2.4.76+
 * Modelleme Araçları eklendi.
 Modeli parçalara ayırma özelliği kontekst menüsüne eklendi.
-*Zaxe ZLite eklendi.
-Çift kafa optimizasyonları yapıldı.
 *Destek açısı optimize edildi.
 *Güncelleme süreci optimize edildi.
 İndir tuşuna basılınca programdan çıkış sağlandı.

@@ -1,6 +1,87 @@
+[2.3.12]
+* Updated slicing engine.
+Fixed the bug which causes engine to hang with some configurations.
+
+[2.3.10]
+* Fixed raft airgap wasn't changing from UI.
+* General optimization.
+* Added 0.6mm and 0.8mm nozzle options for X2.
+
+[2.3.9]
+* Fixed fan speeds were in different scale.
+* Z hop is not enabled by default for Z3 from now on.
+* Fixed bed temperature is not showing on advanced settings for Z3.
+
+[2.3.8]
+* Updated slicing engine.
+
+[2.3.7]
+* Updated slicing engine.
+* Configuration optimizations.
+
+[2.2.4]
+* Added Monotonic top/bottom layer and fuzzy skin options.
+* Configuration optimizations.
+
+[2.2.0]
+* xlite+, X3 ve Z3 series added.
+to select xlite+ right click on xlite and select xlite+ 0.4 nozzle option.
+* Additional development
+added shortcut CTLF+F for lay flat select face.
+Added first layer speed for custom material settings.
+Mac M1 garbled font characters problem fixed.
+
+[2.1.8]
+* BASF brand materials those compatible with Zaxe have been added.
+* Addaptive layer height feature has been added.
+
+[2.1.7]
+* Advanced support options have been added.
+Added advanced settings  under support angle bar.
+* New custom support options and profiles have been added.
+* Flex material optimizations.
+* For xlite added material type as prefix to filename when exporting.
+
+[2.1.5]
+* Now XDesktop is compatible with OSX Big Sur.
+
+[2.1.4]
+* xlite configuration optimizations.
+* added seam position feature.
+
+[2.1.3]
+* X-Lite series have been added.
+Now supporting .gcode files.
+* Custom support tool has been added.
+* File names are now editable.
+(Just click on the file name right before you save)
+* Added lay flat feature.
+* Added model repair plugin.
+* Updated slicing engine.
+* New slicing parameters have been added.
+
+[2.1.1]
+* New nozzle configurations have been added.
+For Z1 series 0.2mm and 0.8mm. For X2 series all metal 0.15mm ve 0.25mm.
+* Live streaming feature has been added.
+Only for Z series for firmware v2.4.95+
+* Turkish character support is now available.
+* Seam to model's rear option is now available.
+* 150 μm layer height has been added.
+0.15mm is now the recommended layer height.
+* X2 series have been added.
+With all metal nozzle.
+* Unload filament button has been added.
+Only for Z series with firmware v2.4.76+
+* Modeling tools have been added.
+Added seperate model to parts in context menu.
+* Optimized support angle.
+* Optimized software update procedure.
+Upon clicking on update we exit the application to avoid clash.
+
 [2.1.0]
 * Added Turkish character support for file names when exporting.
-* Seam to back added to advanced settings.
+* Seam to back added to advanced settings
 * Added 150 μm layer height
 0.15mm is now the recommended layer height.
 * Windows 7 scaling problem has been resolved.
@@ -41,5 +122,4 @@ Showing moves option is now available.
 
 *Removed avoid supports option
 Avoid supports option has been removed due to causing ambiguity.
-
 

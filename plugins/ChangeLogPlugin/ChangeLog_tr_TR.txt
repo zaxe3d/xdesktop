@@ -1,3 +1,6 @@
+[2.3.13]
+* X serisi icin konfigürasyon güncellemesi yapıldı.
+
 [2.3.12]
 * Dilimleme motoru güncellendi.
 Bazı konfigurasyonlarda dilimlerken takılıyor hatası giderildi.

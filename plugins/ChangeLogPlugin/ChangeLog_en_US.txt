@@ -1,3 +1,6 @@
+[2.3.13]
+* Updated configurations for X series.
+
 [2.3.12]
 * Updated slicing engine.
 Fixed the bug which causes engine to hang with some configurations.

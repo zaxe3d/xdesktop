@@ -33,7 +33,7 @@ class UserAgreement(QObject, Extension):
     @pyqtSlot(result = str)
     def getAgreementString(self):
         result = ""
-        with open(os.path.join(PluginRegistry.getInstance().getPluginPath(self.getPluginId()), "UserAgreement_tr_TR.txt"), "r", encoding = "utf-8") as f:
+        with open(os.path.join(PluginRegistry.getInstance().getPluginPath(self.getPluginId()), "UserAgreement_en_US.txt"), "r", encoding = "utf-8") as f:
              result = f.read()
         return result
 

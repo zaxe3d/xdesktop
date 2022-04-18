@@ -1,0 +1,44 @@
+                                       END-USER LICENSE AGREEMENT
+
+This is an End-User License Agreement (hereinafter referred to as the “Agreement”) executed by and between you, as a natural person, legal entity, and/or any other institution (hereinafter referred to as the “User”), and Z Eksen Bakı Sistemleri Sanayi ve Ticaret Anonim Şirketi residing at “Yeşilce Mah. Seçilmiş Sok. No:2 Kağıthane/İstanbul” (hereinafter referred to as “Zaxe”) for the use of the Software defined in Article 1 of this Agreement.
+
+Using a Zaxe device or downloading this Software update shall constitute your acceptance of the restrictions set forth in this Agreement.
+
+1. Software
+1.1 For the purposes of this Agreement, “Software” refers to: (i) the “xdesktop” program published by Zaxe and all components of the program; (ii) all content of discs, CD-ROMs, DVDs, emails, and any attachments or other media provided under this Agreement, as well as the object code format of the Software downloaded on a data carrier, via electronic mail, or over the Internet; (iii) all relevant written explanatory material and any other possible documentation relating to the Software,  all kinds of explanations, technical specifications, all explanations about the features or operation of the Software, all descriptions of the working environment where the Software is used, instructions for use or installation of the Software, or any explanation of how the Software is used; (iv) copies of the Software, patches for possible bugs in the Software, additions to the Software, extensions of the Software, modified versions of the Software and (if any) updates of the Software components.
+1.2 Unless otherwise agreed, the Software covered by this Agreement shall be limited to the scope provided in the Agreement, whether stored in read-only memory or any other medium or format or located in an online download platform authorized by Zaxe.
+2. Restrictions on Usage
+2.1 Unless otherwise expressly permitted;
+(a) You may not copy, reproduce, decompile, disassemble, modify, or make derivative works of the Software, or and may not cause or allow any third-party to do so.
+(b) You may not sell, sub-license, rent out, lend or borrow the Software or use it to provide commercial services. You may not distribute, transmit, or otherwise perform similar actions to the Software over networks in a manner that one or more devices and/or computers other than your own device can use the Software at the same time.
+(c) Except where this restriction is expressly prohibited by law, you may not reverse engineer, decompile, export the source code of the Software, decrypt or modify the Software or any part of the Software or the services it provides, attempt to do so, or and may not cause or allow any third-party to do so.
+(d) You agree to use the Software complying with all applicable laws, including, but not limited to, applicable copyright and other intellectual property rights restrictions.
+
+2.2 You agree not to use the Software and related update content to perform the following activities:
+(a) to copy or use any part of the Software outside the scope of this Agreement;
+(b) to use the Software in a deceptive manner or for deceptive purposes;
+(c) to remove any copyright notices or command prompts contained in the Software;
+(d) to attempt to destroy, bypass, alter, override or avoid the Software and/or any digital rights management system that is an organic part of the Software;
+(e) to commit any other improper and/or illegal activity.
+2.3 You agree to use the Software only in accordance with all applicable laws and regulations of the countries or regions where you reside or where you use the Software, including, but not limited to, local laws of the countries or regions where you live or where you download or use the Software and services.
+3. General Provisions
+3.1 Zaxe owns exclusively and reserves all rights, title, and interest in and to the Software, including other rights not expressly defined in this Agreement.
+3.2According to the terms of this Agreement, all rights of this Software belong to Zaxe. The User shall only have the license right to use the Software. In addition, the license right to use the Software is perpetual and free of charge, unless specified for a period of time that you pay or for a fee.
+3.3 Zaxe has no obligation to provide any technical support for the Software described in this Agreement, except as required by applicable law.
+3.4 Zaxe has no responsibility for data loss arising from misuse of the software system.
+4. Intellectual Property
+The Software and all its rights, including but not limited to the intellectual property rights attached to it, are the property of Zaxe and protected by applicable legislation. The Software’s structure, layout, and code are crucial trade secrets and confidential information of Zaxe. You may not copy the Software except as provided in this Agreement. In case of unlawful copying out of the scope of this Agreement, Zaxe is entitled to resort to all kinds of legal remedies without the need for any warning.
+5. Updates
+5.1 Zaxe may provide updates for the Software. These updates may include, without limitation, system and application updates.
+5.2 Unless otherwise stated, this Agreement governs the updates provided by Zaxe. You acknowledge and agree that the Software may become unusable or unstable if you choose not to download updates offered by Zaxe.
+6. Commencement and Termination of the Agreement
+6.1 This Agreement will enter into effect as soon as you download the Software and approve the Agreement. You may terminate this Agreement at any time, at your own expense, by permanently deleting, destroying, and returning the Software, all backup copies, and all related materials provided by Zaxe.
+6.2 If you fail to comply with any of the terms or conditions of this Agreement, Zaxe may terminate this Agreement without any notice. When and if the Agreement is terminated for any reason, you must, at your own expense, immediately stop using the Software and delete all Software and associated materials already copied and/or installed on your computer.
+7. Disclaimer of Warranties
+7.1 You agree that the Software is provided “as is” and “as available” without warranty of any kind, express or implied, and to the fullest extent permitted by applicable law. You agree that Zaxe makes no representations or warranties of any kind, express or implied, or warranties of any kind, including but not limited to the warranties of merchantability, satisfactory quality, fitness for a particular purpose, accuracy, and non-infringement of third-party rights. Zaxe does not warrant that the functions contained in this Software will meet the requirements or that the operation of the Software will be uninterrupted or error-free. With the selection of the Software to achieve your intended results, the installation, use, and the consequences arising from the same will be at your own risk and responsibility.
+7.2 Zaxe does not warrant that this Software includes functionality or services that will provide ongoing, permanent services or that this Software will be compatible with any third-party software or service.
+8. Limitation of Liability
+8.1 Zaxe disclaims any liability for software usage problems caused by abuse, misuse, or unauthorized modification.
+8.2 Zaxe assumes no liabilities under this Agreement, except as expressly stated in this Agreement.
+8.3 Under no circumstances is Zaxe liable for any loss of profits, revenue, sales or data or spare parts or service costs, damage to property, personal injury, loss of business information, or any direct, indirect, incidental, economic, compensatory, punitive, special or consequential damages, damages arising out of or caused by usage or failure to use the Software, contract, tort, negligence or any other liability, and any use in violation of Articles 2.1 and 2.2, even if informed of their possibility.
+8.4 If the Software is used for purposes that disrupt public order, violate public morals, or are unlawful, the responsibility belongs to the User, and Zaxe does not accept any respon

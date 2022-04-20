@@ -1,3 +1,6 @@
+[2.3.14]
+* Fixed Z3 0.5mm Nozzle not working.
+
 [2.3.13]
 * Updated configurations for X series.
 

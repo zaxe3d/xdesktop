@@ -1,5 +1,6 @@
 [2.3.14]
-* updated X3 configurations.
+* Fixed initial layer line width factor not working for raft.
+* Updated X3 configurations.
 * Fixed Z3 0.5mm Nozzle not working.
 * Optimized Z3 0.4mm and 0.5mm nozzle configurations.
 

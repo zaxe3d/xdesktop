@@ -96,7 +96,8 @@ Column
                 id: materialGroup
                 onCurrentChanged : {
                     if (current.material == "verified") { // if sub model is not selected
-                        setMaterial(Object.keys(materialBrandsModel.materials)[0]) // set the first key which is the material code
+                        if (currentRootMaterialId == "custom" || currentRootMaterialId.startsWith("zaxe_")) // is not one of verified materials
+                            setMaterial(Object.keys(materialBrandsModel.materials)[0]) // set the first key which is the material code
                     } else {
                         setMaterial(current.material)
                     }
@@ -163,7 +164,7 @@ Column
                 id: rBVerifiedMaterials
                 exclusiveGroup: materialGroup
                 property string material : "verified"
-                checked: currentRootMaterialId != "custom" && currentRootMaterialId.indexOf("zaxe") == -1
+                checked: currentRootMaterialId != "custom" && !currentRootMaterialId.startsWith("zaxe_")
                 Layout.preferredHeight: 30
                 Layout.preferredWidth: 90
                 Layout.alignment: Qt.AlignLeft

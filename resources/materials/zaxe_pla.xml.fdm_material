@@ -72,7 +72,7 @@
                 <setting key="final print temperature">200</setting>
                 <setting key="heated bed temperature">60</setting>
                 <setting key="heated bed temperature layer 0">65</setting>
-                <setting key="retraction amount">0.6</setting>
+                <setting key="retraction amount">1.4</setting>
                 <setting key="retraction speed">45</setting>
                 <setting key="cool fan full layer">3</setting>
                 <setting key="linear advance gcode">M900 K=0.12</setting>

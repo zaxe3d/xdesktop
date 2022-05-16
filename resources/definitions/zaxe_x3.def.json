@@ -25,7 +25,7 @@
         "machine_depth": { "default_value": 232 },
         "machine_height": { "default_value": 255 },
         "machine_extruder_count": { "default_value": 1 },
-        "retraction_hop_enabled": { "default_value": true },
+        "retraction_hop_enabled": { "default_value": false },
         "machine_max_feedrate_z": { "default_value": 12 },
         "machine_max_feedrate_e": { "default_value": 120 },
         "machine_max_acceleration_z": { "default_value": 500 },

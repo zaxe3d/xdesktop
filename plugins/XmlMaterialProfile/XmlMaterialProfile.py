@@ -1204,6 +1204,7 @@ class XmlMaterialProfile(InstanceContainer):
         "infill material flow": "infill_material_flow",
         "skin material flow": "skin_material_flow",
         "linear advance gcode": "material_linear_advance_gcode",
+        "raft airgap diff": "material_raft_airgap_diff",
         "chamber temp gcode": "material_chamber_temp_gcode",
         "speed print": "speed_print",
         "speed infill": "speed_infill",

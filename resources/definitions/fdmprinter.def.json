@@ -2634,6 +2634,14 @@
                     "enabled": true,
                     "default_value": ""
                 },
+                "material_raft_airgap_diff":
+                {
+                    "label": "Material based difference in raft airgap.",
+                    "description": "Raft airgap + material based difference in gap in mm.",
+                    "type": "float",
+                    "enabled": true,
+                    "default_value": 0
+                },
                 "material_flow":
                 {
                     "label": "Flow",

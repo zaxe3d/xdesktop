@@ -82,6 +82,7 @@
                 <setting key="linear advance gcode">M900 K=0.03</setting>
                 <setting key="chamber temp gcode">M141 S50</setting>
                 <setting key="material flow">90</setting>
+                <setting key="raft airgap diff">0.06</setting>
             </hotend>
         </machine>
 

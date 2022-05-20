@@ -68,8 +68,8 @@
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="print temperature layer 0">210</setting>
-                <setting key="print temperature">200</setting>
-                <setting key="final print temperature">200</setting>
+                <setting key="print temperature">195</setting>
+                <setting key="final print temperature">190</setting>
                 <setting key="heated bed temperature">60</setting>
                 <setting key="heated bed temperature layer 0">65</setting>
                 <setting key="retraction amount">1.4</setting>
@@ -77,6 +77,7 @@
                 <setting key="cool fan full layer">3</setting>
                 <setting key="linear advance gcode">M900 K=0.12</setting>
                 <setting key="chamber temp gcode">M141 S20</setting>
+                <setting key="raft airgap diff">0.06</setting>
             </hotend>
         </machine>
 
@@ -116,6 +117,7 @@
                 <setting key="retraction speed">45</setting>
                 <setting key="cool fan full layer">3</setting>
                 <setting key="linear advance gcode">ZXM900 K=0.015</setting>
+                <setting key="raft airgap diff">0.06</setting>
             </hotend>
         </machine>
 

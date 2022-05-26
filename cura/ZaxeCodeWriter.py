@@ -42,7 +42,6 @@ class ZaxeCodeWriter(MeshWriter):
     ##  generates zaxe file and saves it to temp folder if stream is None
     #   else writes zaxe file to input stream
     def generate(self, stream: BufferedIOBase = None, mode = MeshWriter.OutputMode.BinaryMode) -> bool:
-
         self._machineManager = self._application.getMachineManager()
         Logger.log("d", "generating zaxe code")
         # Get the g-code from the g-code writer.
@@ -120,12 +119,13 @@ class ZaxeCodeWriter(MeshWriter):
             return tool.merge_two_dicts({
                 "extruder_temperature": preferences.getValue(profileIdxPrefix + "material_print_temperature"),
                 "bed_temperature": preferences.getValue(profileIdxPrefix + "material_bed_temperature"),
-                "chamber_temperature": preferences.getValue(profileIdxPrefix + "material_chamber_temperature")
+                "chamber_temperature": preferences.getValue(profileIdxPrefix + "material_chamber_temperature"),
             }, commonParams)
         else:
             return tool.merge_two_dicts({
                 "extruder_temperature": extruderStack.getProperty("material_print_temperature_layer_0", "value"),
-                "bed_temperature": extruderStack.getProperty("material_bed_temperature", "value")
+                "bed_temperature": extruderStack.getProperty("material_bed_temperature", "value"),
+                "standby_temperature": extruderStack.getProperty("material_standby_temperature", "value")
             }, commonParams)
 
     def getCheckSum(self):

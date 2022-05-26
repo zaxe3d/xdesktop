@@ -1,4 +1,5 @@
-[2.3.14]
+[2.3.15]
+* Added Z3+ series.
 * Updated Z3 and X3 configurations.
 * Fixed initial layer line width factor not working for raft.
 * Fixed Z3 0.5mm Nozzle not working.

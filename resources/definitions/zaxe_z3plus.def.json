@@ -14,10 +14,11 @@
 
     "overrides": {
         "machine_extruder_count": { "default_value": 2 },
+        "machine_heat_zone_length": { "default_value": 8 },
         "machine_name": { "default_value": "Z3+" },
-        "machine_width": { "default_value": 222 },
-        "machine_depth": { "default_value": 232 },
-        "machine_height": { "default_value": 250 },
-        "machine_start_gcode": { "default_value": "T0\nG28\nG29\nM83\nG1 E3 F150\nG90\nG1 Z5 F500\nG1 X20 Y0 F10000\nG1 Z0.4 F500\nG91\nM83\nG1 X40 E15 F500\nG90\nM82\nG92 E0" }
+        "machine_width": { "default_value": 352 },
+        "machine_depth": { "default_value": 310 },
+        "machine_height": { "default_value": 352 },
+        "machine_start_gcode": { "default_value": "T0\nG28\nG30\nG29\nM83\nG1 E3 F150\nG90\nG1 Z5 F500\nG1 X20 Y0 F10000\nG1 Z0.4 F500\nG91\nM83\nG1 X40 E15 F500\nG90\nM82\nG92 E0" }
     }
 }

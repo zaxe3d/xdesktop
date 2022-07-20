@@ -200,5 +200,22 @@
             </hotend>
         </machine>
 
+        <machine>
+            <machine_identifier manufacturer="Zaxe" product="Zaxe X3"/>
+            <hotend id="0.4">
+                <setting key="hardware compatible">yes</setting>
+                <setting key="print temperature">225</setting>
+                <setting key="retraction amount">1.2</setting>
+                <setting key="retraction speed">80</setting>
+                <setting key="cool fan full layer">5</setting>
+                <setting key="print temperature layer 0">230</setting>
+                <setting key="heated bed temperature">75</setting>
+                <setting key="heated bed temperature layer 0">80</setting>
+                <setting key="fan speed min">100</setting>
+                <setting key="fan speed max">100</setting>
+                <setting key="linear advance gcode">M900 K=0.008</setting>
+                <setting key="material flow">84</setting>
+            </hotend>
+        </machine>
     </settings>
 </fdmmaterial>

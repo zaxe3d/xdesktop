@@ -50,7 +50,7 @@ def multiply(_dict, multiplier, _min, _max):
     return _dict
 
 def translateChars(text):
-    translationTable = str.maketrans("ğĞıİöÖüÜşŞçÇ", "gGiIoOuUsScC")
+    translationTable = str.maketrans("ğĞıİöÖüÜşŞçÇ ", "gGiIoOuUsScC_")
     return text.strip().translate(translationTable)
 
 def baseName(path):

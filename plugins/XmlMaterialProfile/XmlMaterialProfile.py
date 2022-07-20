@@ -1198,6 +1198,7 @@ class XmlMaterialProfile(InstanceContainer):
         "cool fan top skin enabled": "cool_fan_top_skin_enabled",
         "fan speed min": "cool_fan_speed_min",
         "fan speed max": "cool_fan_speed_max",
+        "bridge fan speed": "bridge_fan_speed",
         "retraction combing": "retraction_combing",
         "material flow": "material_flow",
         "material flow layer 0": "material_flow_layer_0",

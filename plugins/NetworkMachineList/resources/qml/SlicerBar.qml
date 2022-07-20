@@ -633,9 +633,10 @@ Item {
                         }
                         onClicked: {
                             UM.Preferences.setValue("general/firstrun_step", 9)
+                            console.warn(Cura.MachineManager.activeMachineId.search("XLite|X3"))
                             UM.OutputDeviceManager.requestWriteToDevice(
                                 UM.OutputDeviceManager.activeDevice,
-                                (Cura.MachineManager.activeMachineId.indexOf("XLite") > -1 ? PrintInformation.detailedBaseName : PrintInformation.baseName),
+                                (Cura.MachineManager.activeMachineId.search("XLite|X3") == 0 ? PrintInformation.detailedBaseName : PrintInformation.baseName),
                                 { "filter_by_machine": true, "preferred_mimetypes": preferredMimeTypes }
                             )
                         }

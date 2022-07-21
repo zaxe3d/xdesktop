@@ -334,14 +334,14 @@ class FTPUploader(QThread, QObject):
         try:
             callback = lambda buf: self.onProgress(buf)
             self.currentSize = 0
-            self.totalSize = os.path.getsize(filename)
+            self.totalSize = os.path.getsize(self.filename)
             self.ftp.connect(self.ip, self.port)
             if not self.nonTLS: # no authentication for some series
                 self.ftp.auth()
                 self.ftp.prot_p()
             self.ftp.login("zaxe", "zaxe")
-            filePtr = open(filename, 'rb')
-            filename = tool.baseName(filename)
+            filePtr = open(self.filename, 'rb')
+            filename = tool.baseName(self.filename)
             filename = tool.translateChars(filename) if self.isLite else filename
             self.ftp.storbinary("stor " + filename, filePtr, io.DEFAULT_BUFFER_SIZE, callback)
             self.ftp.close()

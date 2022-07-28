@@ -389,6 +389,10 @@ class PrintInformation(QObject):
 
     @pyqtProperty(str)
     def detailedBaseName(self):
+        return self.materialNames[0] + " - " + self._base_name
+
+    @pyqtProperty(str)
+    def simpleBaseName(self):
         return self.materialNames[0] + "_" + tool.translateChars(self._base_name)
 
     @pyqtProperty(str)

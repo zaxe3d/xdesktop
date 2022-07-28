@@ -1,4 +1,6 @@
 [2.3.16]
+* Fixed layer pause not working for X3 series.
+* Prepended filament info when exporting for all devices.
 * Updated X3 PETG and CF configurations.
 * Detailed file name for X3 with filament info.
 * Added bridge fan speed configuration for individual filament settings..

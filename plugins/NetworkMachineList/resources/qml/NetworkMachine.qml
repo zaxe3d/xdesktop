@@ -53,6 +53,7 @@ Item {
     property bool filamentLengthWarning
     property bool modelCompatibilityWarning
     property bool usbNotPresentWarning: isLite && !machineStates.usb_present
+    property bool hasError: machineStates.has_error
 
     property string nextState
 
@@ -1072,6 +1073,43 @@ Item {
                 }
             }
 
+            // Device error message
+            Rectangle {
+                visible: device.hasError
+                Layout.preferredWidth: Math.round(device.width - 65 - (UM.Theme.getSize("sidebar_item_margin").width * 2))
+                Layout.minimumHeight: childrenRect.height
+                Layout.alignment: Qt.AlignRight
+                Layout.bottomMargin: Math.round(UM.Theme.getSize("sidebar_item_margin").height / 2)
+                Layout.rightMargin: UM.Theme.getSize("sidebar_item_margin").width
+                color: UM.Theme.getColor("sidebar_item_light")
+
+                Text {
+                    id: deviceErrorIcon
+                    font: UM.Theme.getFont("zaxe_icon_set")
+                    color: UM.Theme.getColor("text_danger")
+                    horizontalAlignment: Text.AlignLeft
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                    }
+                    text: "d"
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
+                }
+                Text {
+                    width: parent.width
+                    font: UM.Theme.getFont("medium")
+                    color: UM.Theme.getColor("text_danger")
+                    horizontalAlignment: Text.AlignLeft
+                    wrapMode: Text.WordWrap
+                    anchors {
+                        verticalCenter: deviceErrorIcon.verticalCenter
+                        left: deviceErrorIcon.right
+                        leftMargin: 1
+                    }
+                    text: catalog.i18nc("@warning", "Device is in error state!")
+                    renderType: Text.NativeRendering // M1 Mac garbled text fix
+                }
+            }
             // Material warning message
             Rectangle {
                 visible: device.materialWarning && PrintInformation.materialNames[0] != device.material

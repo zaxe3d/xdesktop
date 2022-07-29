@@ -92,6 +92,10 @@ msgctxt "@warning"
 msgid "USB Flash disk is not mounted on device"
 msgstr "USB disk cihaza takılı değil"
 
+msgctxt "@warning"
+msgid "Device is in error state!"
+msgstr "Cihaz hata durumunda!"
+
 msgctxt "@label"
 msgid "Update"
 msgstr "Güncelle"

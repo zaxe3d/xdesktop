@@ -1,4 +1,5 @@
 [2.3.16]
+* Now showing device error on carousel for Z3 series.
 * Fixed layer pause not working for X3 series.
 * Prepended filament info when exporting for all devices.
 * Updated X3 PETG and CF configurations.

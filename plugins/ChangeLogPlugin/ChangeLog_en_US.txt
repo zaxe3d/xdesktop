@@ -1,3 +1,6 @@
+[2.3.17]
+* Added Z2 series.
+
 [2.3.16]
 * Now showing device error on carousel for Z3 series.
 * Fixed layer pause not working for X3 series.

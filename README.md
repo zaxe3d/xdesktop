@@ -1,21 +1,5 @@
-Cura
+XDesktop - Cura
 ====
-This is the new, shiny frontend for Cura. Check [daid/LegacyCura](https://github.com/daid/LegacyCura) for the legacy Cura that everyone knows and loves/hates. We re-worked the whole GUI code at Ultimaker, because the old code started to become unmaintainable.
-
-Logging Issues
-------------
-For crashes and similar issues, please attach the following information:
-
-* (On Windows) The log as produced by dxdiag (start -> run -> dxdiag -> save output)
-* The Cura GUI log file, located at
-  * `%APPDATA%\cura\<Cura version>\cura.log` (Windows), or usually `C:\Users\\<your username>\AppData\Roaming\cura\<Cura version>\cura.log`
-  * `$USER/Library/Application Support/cura/<Cura version>/cura.log` (OSX)
-  * `$USER/.local/share/cura/<Cura version>/cura.log` (Ubuntu/Linux)
-
-If the Cura user interface still starts, you can also reach this directory from the application menu in Help -> Show settings folder
-
-For additional support, you could also ask in the #cura channel on FreeNode IRC. For help with development, there is also the #cura-dev channel.
-
 Dependencies
 ------------
 * [Uranium](https://github.com/Ultimaker/Uranium) Cura is built on top of the Uranium framework.

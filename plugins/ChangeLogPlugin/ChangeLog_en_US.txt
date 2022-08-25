@@ -1,7 +1,6 @@
-[2.3.17]
+[2.3.18]
+* Updated Zaxe FLEX, PETG and ASA materials.
 * Added Z2 series.
-
-[2.3.16]
 * Now showing device error on carousel for Z3 series.
 * Fixed layer pause not working for X3 series.
 * Prepended filament info when exporting for all devices.

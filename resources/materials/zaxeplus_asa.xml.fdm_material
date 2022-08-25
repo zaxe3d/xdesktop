@@ -65,25 +65,29 @@
                 <setting key="print temperature layer 0">270</setting>
             </hotend>
         </machine>
-           <machine>
-            <machine_identifier manufacturer="Zaxe" product="Zaxe X3"/>
+       <machine>
+        <machine_identifier manufacturer="Zaxe" product="Zaxe X3"/>
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="retraction amount">0.6</setting>
                 <setting key="retraction speed">30</setting>
-                <setting key="heated bed temperature">100</setting>
-                <setting key="heated bed temperature layer 0">110</setting>
-                <setting key="print temperature layer 0">245</setting>
-                <setting key="print temperature">235</setting>
-                <setting key="final print temperature">220</setting>
-                <setting key="fan speed min">40</setting>
-                <setting key="fan speed max">40</setting>
-                <setting key="cool fan full layer">3</setting>
+                <setting key="material_bed_temperature">95</setting>
+                <setting key="material_bed_temperature_layer_0">100</setting>
+                <setting key="print temperature layer 0">255</setting>
+                <setting key="print temperature">250</setting>
+                <setting key="final print temperature">245</setting>
+                <setting key="cool fan speed 0">0</setting>
+                <setting key="cool fan speed min">40</setting>
+                <setting key="cool fan speed max">60</setting>
+                <setting key="cool fan full layer">5</setting>
                 <setting key="linear advance gcode">M900 K=0.0375</setting>
-                <setting key="chamber temp gcode">M141 S50</setting>
-                <setting key="skin overlap">40</setting>
+                <setting key="chamber temp gcode">M141 S65</setting>
+                <setting key="skin overlap">20</setting>
                 <setting key="infill overlap">10</setting>
-                <setting key="skin material flow">110</setting>
+                <setting key="material flow">84</setting>
+                <setting key="skin material flow">84</setting>
+                <setting key="bridge fan speed">60</setting>
+                <setting key="support supported skin fan speed">80</setting>
             </hotend>
         </machine>
 
@@ -94,7 +98,7 @@
                 <setting key="hardware compatible">yes</setting>
             </hotend>
         </machine>
-
+		
         <machine>
             <machine_identifier manufacturer="Zaxe" product="Zaxe Z1"/>
             <hotend id="0.2">
@@ -216,10 +220,11 @@
                 <setting key="heated bed temperature layer 0">110</setting>
                 <setting key="retraction amount">0.6</setting>
                 <setting key="retraction speed">30</setting>
-                <setting key="fan speed min">60</setting>
-                <setting key="fan speed max">60</setting>
+                <setting key="fan speed min">80</setting>
+                <setting key="fan speed max">80</setting>
                 <setting key="cool fan full layer">5</setting>
                 <setting key="support top distance">0.4</setting>
+                <setting key="linear advance gcode">ZXM900 K=0.001</setting>
             </hotend>
         </machine>
         <machine>

@@ -36,7 +36,7 @@
                 <setting key="heated bed temperature">75</setting>
                 <setting key="heated bed temperature layer 0">75</setting>
                 <setting key="cool fan full layer">5</setting>
-                <setting key="retraction amount">2.4</setting>
+                <setting key="retraction amount">2.8</setting>
                 <setting key="retraction speed">50</setting>
                 <setting key="speed infill">50</setting>
                 <setting key="speed wall 0">25</setting>
@@ -44,6 +44,7 @@
                 <setting key="speed print layer 0">20</setting>
                 <setting key="skin overlap">20</setting>
                 <setting key="infill overlap">15</setting>
+                <setting key="material flow">70</setting>
                 <setting key="linear advance gcode">ZXM900 K=0.017</setting>
             </hotend>
         </machine>
@@ -67,6 +68,8 @@
                 <setting key="speed print layer 0">20</setting>
                 <setting key="skin overlap">20</setting>
                 <setting key="infill overlap">15</setting>
+                <setting key="material flow">78</setting>
+                <setting key="material flow layer 0">80</setting>
                 <setting key="chamber temp gcode">M141 S50</setting>
                 <setting key="linear advance gcode">M900 K=0.05</setting>
             </hotend>

@@ -1,4 +1,5 @@
-[2.3.18]
+[2.3.19]
+* Updated Zaxe PC ABS and BASF PET CF15 material configurations.
 * Updated Zaxe FLEX, PETG and ASA materials.
 * Added Z2 series.
 * Now showing device error on carousel for Z3 series.

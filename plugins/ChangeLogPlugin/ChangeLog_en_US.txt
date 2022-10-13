@@ -1,4 +1,5 @@
 [2.3.19]
+* X3 bed heating patch.
 * Updated Zaxe PC ABS and BASF PET CF15 material configurations.
 * Updated Zaxe FLEX, PETG and ASA materials.
 * Added Z2 series.

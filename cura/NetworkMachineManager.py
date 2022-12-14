@@ -35,9 +35,9 @@ class NetworkMachineManager(QObject):
         "x2": {"version": [0, 0, 0], "path": "/x2/firmware.json"},
         "z1": {"version": [0, 0, 0], "path": "/z1/firmware.json"},
         "z1plus": {"version": [0, 0, 0], "path": "/z1/firmware.json"},
-        "z3": {"version": [0, 0, 0], "path": "/z3/firmware.json"},
-        "z2": {"version": [0, 0, 0], "path": "/z3/firmware.json"},
-        "z3plus": {"version": [0, 0, 0], "path": "/z3/firmware.json"},
+        "z3": {"version": [0, 0, 0], "path": "/z3new/firmware.json"},
+        "z2": {"version": [0, 0, 0], "path": "/z3new/firmware.json"},
+        #"z3plus": {"version": [0, 0, 0], "path": "/z3new/firmware.json"},
         "xlite": {"version": [0, 0, 0], "path": "/xlite/firmware.json"},
         "x3": {"version": [0, 0, 0], "path": "/xlite/firmware.json"}
     }

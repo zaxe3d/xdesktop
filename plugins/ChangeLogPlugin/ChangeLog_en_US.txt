@@ -1,3 +1,7 @@
+[2.3.21]
+* Temperature adjustments for 0.4mm nozzle and 100 micron layer height.
+* X3 now goes bottom upon completion of print job.
+
 [2.3.20]
 * Minor changes.
 * X3 bed heating patch.

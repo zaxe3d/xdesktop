@@ -25,7 +25,10 @@ Menu
 
         MenuItem
         {
-            text: model.hotend_name + " mm"
+            text: {
+                var hen = model.hotend_name
+                return !isNaN(hen[hen.length - 1]) ? hen + " mm" : hen
+            }
             checkable: true
             checked: {
                 return Cura.MachineManager.activeVariantNames[extruderIndex] == model.hotend_name

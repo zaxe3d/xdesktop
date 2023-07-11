@@ -1,3 +1,5 @@
+[2.3.22]
+* Fixed nozzle naming issue.
 [2.3.21]
 * Temperature adjustments for 0.4mm nozzle and 100 micron layer height.
 * X3 now goes bottom upon completion of print job.

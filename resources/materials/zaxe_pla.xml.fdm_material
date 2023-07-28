@@ -68,8 +68,8 @@
             <hotend id="0.4">
                 <setting key="hardware compatible">yes</setting>
                 <setting key="print temperature layer 0">210</setting>
-                <setting key="print temperature">195</setting>
-                <setting key="final print temperature">190</setting>
+                <setting key="print temperature">205</setting>
+                <setting key="final print temperature">205</setting>
                 <setting key="heated bed temperature">60</setting>
                 <setting key="heated bed temperature layer 0">65</setting>
                 <setting key="retraction amount">1.4</setting>

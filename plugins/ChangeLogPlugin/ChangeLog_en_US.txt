@@ -1,4 +1,5 @@
-[2.3.22]
+[2.3.23]
+* Increased X3's print temperature.
 * Fixed nozzle naming issue.
 [2.3.21]
 * Temperature adjustments for 0.4mm nozzle and 100 micron layer height.
